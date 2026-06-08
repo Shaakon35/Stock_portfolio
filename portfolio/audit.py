@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from portfolio.allocations import (
     TARGET_WEIGHTS, MONTHLY_DEPOSIT, SELL_TRIGGER_CEILING,
     NUCLEAR_BASKET_TARGETS, QUANTUM_BASKET_TARGETS, CYBER_BASKET_TARGETS,
+    INDUSTRIAL_BASKET_TARGETS, SPECGROWTH_BASKET_TARGETS,
     ETF_LOOK_THROUGH, my_current_shares,
 )
 from portfolio.helpers import is_in_uptrend, get_price
@@ -17,12 +18,15 @@ def run_audit():
     """Fetch prices, compute drift, and print the portfolio audit."""
     print("🔄 Fetching market data...")
 
-    category_labels = ["NUCLEAR_SATELLITE", "QUANTUM_SATELLITE", "CYBER_SATELLITE"]
+    category_labels = ["NUCLEAR_SATELLITE", "QUANTUM_SATELLITE", "CYBER_SATELLITE",
+                       "INDUSTRIAL_SATELLITE", "SPECGROWTH_SATELLITE"]
     all_assets = set(
         list(TARGET_WEIGHTS.keys())
         + list(NUCLEAR_BASKET_TARGETS.keys())
         + list(QUANTUM_BASKET_TARGETS.keys())
         + list(CYBER_BASKET_TARGETS.keys())
+        + list(INDUSTRIAL_BASKET_TARGETS.keys())
+        + list(SPECGROWTH_BASKET_TARGETS.keys())
     )
     actual_tickers = [t for t in all_assets if t not in category_labels]
 
@@ -35,6 +39,8 @@ def run_audit():
     nuclear_val = sum(portfolio_values.get(s, 0.0) for s in NUCLEAR_BASKET_TARGETS)
     quantum_val = sum(portfolio_values.get(s, 0.0) for s in QUANTUM_BASKET_TARGETS)
     cyber_val = sum(portfolio_values.get(s, 0.0) for s in CYBER_BASKET_TARGETS)
+    industrial_val = sum(portfolio_values.get(s, 0.0) for s in INDUSTRIAL_BASKET_TARGETS)
+    specgrowth_val = sum(portfolio_values.get(s, 0.0) for s in SPECGROWTH_BASKET_TARGETS)
 
     macro_values = {
         "VWCE.DE": portfolio_values.get("VWCE.DE", 0),
@@ -44,6 +50,8 @@ def run_audit():
         "NUCLEAR_SATELLITE": nuclear_val,
         "QUANTUM_SATELLITE": quantum_val,
         "CYBER_SATELLITE": cyber_val,
+        "INDUSTRIAL_SATELLITE": industrial_val,
+        "SPECGROWTH_SATELLITE": specgrowth_val,
     }
     total_val = sum(macro_values.values())
 
@@ -67,10 +75,13 @@ def run_audit():
 
     for asset, val in macro_values.items():
         current_pct = val / total_val
-        proxy = (
-            "SMH" if asset in ["SMH", "XAIX.DE"]
-            else (list(NUCLEAR_BASKET_TARGETS.keys())[0] if "NUCLEAR" in asset else "CRWD")
-        )
+        proxy_map = {
+            "SMH": "SMH", "XAIX.DE": "SMH",
+            "NUCLEAR_SATELLITE": list(NUCLEAR_BASKET_TARGETS.keys())[0],
+            "INDUSTRIAL_SATELLITE": list(INDUSTRIAL_BASKET_TARGETS.keys())[0],
+            "SPECGROWTH_SATELLITE": list(SPECGROWTH_BASKET_TARGETS.keys())[0],
+        }
+        proxy = proxy_map.get(asset, "CRWD")
         if is_in_uptrend(proxy):
             continue
 
@@ -81,6 +92,8 @@ def run_audit():
                 "NUCLEAR": NUCLEAR_BASKET_TARGETS,
                 "QUANTUM": QUANTUM_BASKET_TARGETS,
                 "CYBER": CYBER_BASKET_TARGETS,
+                "INDUSTRIAL": INDUSTRIAL_BASKET_TARGETS,
+                "SPECGROWTH": SPECGROWTH_BASKET_TARGETS,
             }
             for key in basket:
                 if key in asset:
@@ -140,6 +153,20 @@ def build_exposure_matrix():
             "Source Component": "CYBER",
         })
 
+    for stock, sub_weight in INDUSTRIAL_BASKET_TARGETS.items():
+        exposure_ledger.append({
+            "Stock/Asset": stock,
+            "Net Weight": TARGET_WEIGHTS["INDUSTRIAL_SATELLITE"] * sub_weight,
+            "Source Component": "INDUSTRIAL",
+        })
+
+    for stock, sub_weight in SPECGROWTH_BASKET_TARGETS.items():
+        exposure_ledger.append({
+            "Stock/Asset": stock,
+            "Net Weight": TARGET_WEIGHTS["SPECGROWTH_SATELLITE"] * sub_weight,
+            "Source Component": "SPECGROWTH",
+        })
+
     df = pd.DataFrame(exposure_ledger)
     summary_df = df.groupby("Stock/Asset").agg({
         "Net Weight": "sum",
@@ -149,24 +176,28 @@ def build_exposure_matrix():
 
     # --- Render matplotlib table ---
     HEX_COLORS = {
-        "SMH":     "#E6F0FA",
-        "IUIT.L":  "#E6F7F9",
-        "XAIX.DE": "#E6F4EA",
-        "VWCE.DE": "#FFFFFF",
-        "NUCLEAR": "#FCF7E6",
-        "QUANTUM": "#FAE6FA",
-        "CYBER":   "#FCE8E6",
+        "SMH":        "#E6F0FA",
+        "IUIT.L":     "#E6F7F9",
+        "XAIX.DE":    "#E6F4EA",
+        "VWCE.DE":    "#FFFFFF",
+        "NUCLEAR":    "#FCF7E6",
+        "QUANTUM":    "#FAE6FA",
+        "CYBER":      "#FCE8E6",
+        "INDUSTRIAL": "#E8EAF6",
+        "SPECGROWTH": "#E0F7FA",
     }
     HEX_MULTI = "#F3E6FA"
 
     SOURCE_LABELS = {
-        "SMH":     "Core Semiconductors (SMH)",
-        "IUIT.L":  "S&P 500 Info Tech (IUIT.L)",
-        "XAIX.DE": "AI & Big Data Index (XAIX.DE)",
-        "VWCE.DE": "Global Base Anchor (VWCE.DE)",
-        "NUCLEAR": "Satellite Layer (NUCLEAR)",
-        "QUANTUM": "Satellite Layer (QUANTUM)",
-        "CYBER":   "Satellite Layer (CYBER)",
+        "SMH":        "Core Semiconductors (SMH)",
+        "IUIT.L":     "S&P 500 Info Tech (IUIT.L)",
+        "XAIX.DE":    "AI & Big Data Index (XAIX.DE)",
+        "VWCE.DE":    "Global Base Anchor (VWCE.DE)",
+        "NUCLEAR":    "Satellite Layer (NUCLEAR)",
+        "QUANTUM":    "Satellite Layer (QUANTUM)",
+        "CYBER":      "Satellite Layer (CYBER)",
+        "INDUSTRIAL": "Satellite Layer (INDUSTRIAL)",
+        "SPECGROWTH": "Satellite Layer (SPECGROWTH)",
     }
 
     table_data = []

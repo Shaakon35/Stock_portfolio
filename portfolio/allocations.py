@@ -7,12 +7,14 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 
 TARGET_WEIGHTS = {
     "VWCE.DE":           0.05,  # 5% Core Global Safety Anchor
-    "XAIX.DE":           0.30,  # 30% Core AI & Big Data Index
-    "SMH":               0.30,  # 30% Core Semiconductors (NVIDIA, ASML, TSMC)
+    "XAIX.DE":           0.25,  # 25% Core AI & Big Data Index
+    "SMH":               0.25,  # 25% Core Semiconductors (NVIDIA, ASML, TSMC)
     "IUIT.L":            0.10,  # 10% iShares S&P 500 Info Tech (Apple, MSFT, AVGO)
-    "NUCLEAR_SATELLITE": 0.15,  # 15% Single Stock Nuclear Picking
-    "QUANTUM_SATELLITE": 0.10,  # 10% Single Stock Quantum Speculative Rockets
+    "NUCLEAR_SATELLITE": 0.12,  # 12% Single Stock Nuclear Picking
+    "QUANTUM_SATELLITE": 0.08,  # 8% Single Stock Quantum Speculative Rockets
     "CYBER_SATELLITE":   0.05,  # 5% Single Stock Cybersecurity Satellite
+    "INDUSTRIAL_SATELLITE": 0.05,  # 5% Industrials & Defense (data center infra, nuclear defense)
+    "SPECGROWTH_SATELLITE": 0.05,  # 5% Speculative Growth (high-growth semis, AI infra, aerospace)
 }
 
 # =========================================================================
@@ -44,13 +46,29 @@ CYBER_BASKET_TARGETS = {
     "PANW":  0.20,  # 20% of Cyber Slice
 }
 
+INDUSTRIAL_BASKET_TARGETS = {
+    "BWXT":  0.40,  # 40% of Industrials Slice — Navy nuclear monopoly, SMR fuel
+    "POWL":  0.25,  # 25% of Industrials Slice — Electrical switchgear, data center orders
+    "VRT":   0.20,  # 20% of Industrials Slice — Data center power & cooling
+    "FIX":   0.15,  # 15% of Industrials Slice — Data center HVAC & electrical buildout
+}
+
+SPECGROWTH_BASKET_TARGETS = {
+    "RKLB":  0.30,  # 30% of Spec Growth Slice — Rocket Lab, satellite constellation
+    "LSCC":  0.25,  # 25% of Spec Growth Slice — Lattice Semi, edge AI, automotive
+    "CRDO":  0.25,  # 25% of Spec Growth Slice — Credo Tech, AI connectivity
+    "NBIS":  0.20,  # 20% of Spec Growth Slice — Nebius, GPU cloud for AI
+}
+
 # Aggressive Profit-Taking Triggers (1.25x original for "Let Winners Run")
 SELL_TRIGGER_CEILING = {
-    "NUCLEAR_SATELLITE": 0.1875,
-    "QUANTUM_SATELLITE": 0.125,
-    "CYBER_SATELLITE":   0.0625,
-    "SMH":               0.375,
-    "IUIT.L":            0.1875,
+    "NUCLEAR_SATELLITE":     0.15,
+    "QUANTUM_SATELLITE":     0.10,
+    "CYBER_SATELLITE":       0.0625,
+    "INDUSTRIAL_SATELLITE":  0.0625,
+    "SPECGROWTH_SATELLITE":  0.0625,
+    "SMH":                   0.3125,
+    "IUIT.L":                0.125,
 }
 
 # =========================================================================
@@ -62,6 +80,10 @@ my_current_shares = {
     "CCJ": 15, "GEV": 5, "SRUUF": 25, "LEU": 10, "SMR": 50, "OKLO": 30,
     "IONQ": 100, "QNT": 0, "QBTS": 250, "RGTI": 400, "QUBT": 150,
     "CRWD": 2, "PANW": 3,
+    # Industrials & Defense — new positions (not yet purchased)
+    "BWXT": 0, "POWL": 0, "VRT": 0, "FIX": 0,
+    # Speculative Growth — new positions (not yet purchased)
+    "RKLB": 0, "LSCC": 0, "CRDO": 0, "NBIS": 0,
 }
 
 # =========================================================================
@@ -97,7 +119,9 @@ def verify_allocations():
     total_target = sum(TARGET_WEIGHTS.values())
     print(f"Total Portfolio Weight: {total_target * 100}%")
 
-    assert sum(NUCLEAR_BASKET_TARGETS.values()) == 1.0
-    assert sum(QUANTUM_BASKET_TARGETS.values()) == 1.0
-    assert sum(CYBER_BASKET_TARGETS.values()) == 1.0
+    assert abs(sum(NUCLEAR_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Nuclear basket doesn't sum to 100%"
+    assert abs(sum(QUANTUM_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Quantum basket doesn't sum to 100%"
+    assert abs(sum(CYBER_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Cyber basket doesn't sum to 100%"
+    assert abs(sum(INDUSTRIAL_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Industrial basket doesn't sum to 100%"
+    assert abs(sum(SPECGROWTH_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Spec Growth basket doesn't sum to 100%"
     print("All sub-baskets verified.")
