@@ -11,18 +11,18 @@ from portfolio.allocations import (
 
 
 # =========================================================================
-# ASSET METADATA — strategy, buy/sell targets, catalysts
+# ASSET METADATA — strategy, sell targets, catalysts
 # =========================================================================
 # strategy: "hold_forever" | "accumulate" | "catalyst" | "swing"
 #   hold_forever  — core ETFs, DCA monthly, never sell
-#   accumulate    — buy dips to buy_target, sell at sell_target
-#   catalyst      — binary event, buy before event, sell on outcome
+#   accumulate    — buy dips, sell at sell_target
+#   catalyst      — binary event, sell on outcome
 #   swing         — speculative momentum, sell on exhaustion
 #
-# buy_target:  ideal entry price (buy at or below this)
-# sell_target: take-profit price (sell at or above this)
-# Both are based on analyst consensus, technicals, and fundamentals
-# as of June 2026.
+# buy_target is NOT hardcoded — it's computed dynamically from live
+# technical data (200-SMA, 50-SMA, support levels) each time you run.
+#
+# sell_target: take-profit price (based on analyst consensus Jun 2026)
 
 ASSET_META = {
     # --- ETFs (hold forever, DCA monthly) ---
@@ -30,8 +30,7 @@ ASSET_META = {
         "name": "Xtrackers AI & Big Data",
         "basket": "Core ETF",
         "strategy": "hold_forever",
-        "buy_target": None,       # DCA any price
-        "sell_target": None,      # Never sell
+        "sell_target": None,
         "sell_date": None,
         "catalyst": "Secular AI/data growth — DCA monthly, never sell",
     },
@@ -39,7 +38,6 @@ ASSET_META = {
         "name": "VanEck Semiconductor",
         "basket": "Core ETF",
         "strategy": "hold_forever",
-        "buy_target": None,
         "sell_target": None,
         "sell_date": None,
         "catalyst": "Secular semi demand (AI, auto, IoT) — DCA monthly, never sell",
@@ -48,227 +46,184 @@ ASSET_META = {
         "name": "iShares S&P 500 Info Tech",
         "basket": "Core ETF",
         "strategy": "hold_forever",
-        "buy_target": None,
         "sell_target": None,
         "sell_date": None,
         "catalyst": "Mega-cap tech compounding — DCA monthly, never sell",
     },
 
-    # --- Nuclear (prices as of Jun 2026) ---
-    # CCJ: ~$103, analyst target $129, 52w $59-$135
+    # --- Nuclear ---
     "CCJ": {
         "name": "Cameco",
         "basket": "Nuclear",
         "strategy": "accumulate",
-        "buy_target": 90.0,
         "sell_target": 135.0,
         "sell_date": "2027-2028",
         "catalyst": "Uranium supply deficit, utility contract cycle 2026-2030",
     },
-    # GEV: ~$934, analyst target $1216, 52w $459-$1182
     "GEV": {
         "name": "GE Vernova",
         "basket": "Nuclear",
         "strategy": "accumulate",
-        "buy_target": 850.0,
         "sell_target": 1200.0,
         "sell_date": "2028+",
         "catalyst": "Grid modernization + gas turbine + SMR deployment orders",
     },
-    # SRUUF: ~$25, tracks uranium spot
     "SRUUF": {
         "name": "Sprott Physical Uranium",
         "basket": "Nuclear",
         "strategy": "accumulate",
-        "buy_target": 22.0,
         "sell_target": 38.0,
         "sell_date": "2027-2028",
         "catalyst": "Uranium spot price breakout above $120/lb",
     },
-    # LEU: ~$100, analyst targets $120-$150
     "LEU": {
         "name": "Centrus Energy",
         "basket": "Nuclear",
         "strategy": "accumulate",
-        "buy_target": 85.0,
         "sell_target": 150.0,
         "sell_date": "2027-2028",
         "catalyst": "HALEU production ramp, DOE contracts",
     },
-    # SMR: ~$11, BofA target $12, pre-revenue
     "SMR": {
         "name": "NuScale Power",
         "basket": "Nuclear",
         "strategy": "catalyst",
-        "buy_target": 9.0,
         "sell_target": 25.0,
         "sell_date": "2027-2029",
         "catalyst": "First SMR deployment order (TVA/RoPower)",
     },
-    # OKLO: ~$55, pre-revenue, NRC license pending
     "OKLO": {
         "name": "Oklo Inc.",
         "basket": "Nuclear",
         "strategy": "catalyst",
-        "buy_target": 40.0,
         "sell_target": 90.0,
         "sell_date": "2028-2030",
         "catalyst": "NRC license approval for Aurora reactor",
     },
 
     # --- Quantum ---
-    # IONQ: ~$45, revenue +755% YoY, RPO $470M
     "IONQ": {
         "name": "IonQ",
         "basket": "Quantum",
         "strategy": "swing",
-        "buy_target": 35.0,
         "sell_target": 65.0,
         "sell_date": "2027-2028",
         "catalyst": "Enterprise quantum revenue inflection, gov contracts",
     },
-    # QNT: ~$47, Honeywell-backed
     "QNT": {
         "name": "Quantinuum",
         "basket": "Quantum",
         "strategy": "catalyst",
-        "buy_target": 38.0,
         "sell_target": 80.0,
         "sell_date": "2027-2028",
         "catalyst": "Post-IPO re-rating, error correction milestones",
     },
-    # QBTS: ~$8, speculative
     "QBTS": {
         "name": "D-Wave Quantum",
         "basket": "Quantum",
         "strategy": "swing",
-        "buy_target": 6.0,
         "sell_target": 15.0,
         "sell_date": "2027",
         "catalyst": "Annealing quantum advantage proof + revenue growth",
     },
-    # RGTI: ~$15, speculative
     "RGTI": {
         "name": "Rigetti Computing",
         "basket": "Quantum",
         "strategy": "swing",
-        "buy_target": 10.0,
         "sell_target": 22.0,
         "sell_date": "2027",
         "catalyst": "QPU chip scaling milestones, Ankaa-3",
     },
-    # QUBT: ~$7, paused at 0% allocation
     "QUBT": {
         "name": "Quantum Computing Inc.",
         "basket": "Quantum (paused)",
         "strategy": "swing",
-        "buy_target": 5.0,
         "sell_target": 14.0,
         "sell_date": "2027",
         "catalyst": "Thin-film lithium niobate photonics orders",
     },
 
     # --- Cyber ---
-    # CRWD: ~$430, analyst targets $400-$500+
     "CRWD": {
         "name": "CrowdStrike",
         "basket": "Cyber",
         "strategy": "accumulate",
-        "buy_target": 380.0,
         "sell_target": 520.0,
         "sell_date": "2028+",
         "catalyst": "Platform consolidation, $10B ARR trajectory",
     },
-    # PANW: ~$257, analyst targets $250-$300
     "PANW": {
         "name": "Palo Alto Networks",
         "basket": "Cyber",
         "strategy": "accumulate",
-        "buy_target": 230.0,
         "sell_target": 310.0,
         "sell_date": "2028+",
         "catalyst": "Platformization, NGS ARR growth",
     },
 
     # --- Industrial ---
-    # BWXT: $186, analyst target $238, backlog +77% YoY
     "BWXT": {
         "name": "BWX Technologies",
         "basket": "Industrial",
         "strategy": "accumulate",
-        "buy_target": 170.0,
         "sell_target": 260.0,
         "sell_date": "2028-2030",
         "catalyst": "Navy nuclear monopoly + SMR fuel + backlog +77% YoY",
     },
-    # POWL: $285, analyst target $316
     "POWL": {
         "name": "Powell Industries",
         "basket": "Industrial",
         "strategy": "accumulate",
-        "buy_target": 250.0,
         "sell_target": 380.0,
         "sell_date": "2027-2028",
         "catalyst": "Data center electrical switchgear backlog peak",
     },
-    # VRT: $301, analyst target $377, revenue +36% YoY
     "VRT": {
         "name": "Vertiv Holdings",
         "basket": "Industrial",
         "strategy": "accumulate",
-        "buy_target": 270.0,
         "sell_target": 420.0,
         "sell_date": "2027-2028",
         "catalyst": "Data center power/cooling, revenue +36% YoY, EPS +55%",
     },
-    # FIX: $1844, analyst target $2026, revenue +31% YoY
     "FIX": {
         "name": "Comfort Systems USA",
         "basket": "Industrial",
         "strategy": "accumulate",
-        "buy_target": 1700.0,
         "sell_target": 2200.0,
         "sell_date": "2028+",
         "catalyst": "Data center HVAC/electrical buildout, revenue +31% YoY",
     },
 
     # --- Speculative Growth ---
-    # RKLB: $110, analyst target $105 (lagging), 52w high ~$150
     "RKLB": {
         "name": "Rocket Lab",
         "basket": "SpecGrowth",
         "strategy": "catalyst",
-        "buy_target": 85.0,
         "sell_target": 150.0,
         "sell_date": "2027-2028",
         "catalyst": "Neutron rocket first launch + constellation contracts",
     },
-    # LSCC: $136, analyst target $147, recovery cycle
     "LSCC": {
         "name": "Lattice Semiconductor",
         "basket": "SpecGrowth",
         "strategy": "accumulate",
-        "buy_target": 115.0,
         "sell_target": 175.0,
         "sell_date": "2027-2028",
         "catalyst": "Edge AI FPGA design win cycle, revenue +44% YoY recovery",
     },
-    # CRDO: $207, analyst target $256, revenue +206% YoY
     "CRDO": {
         "name": "Credo Technology",
         "basket": "SpecGrowth",
         "strategy": "accumulate",
-        "buy_target": 180.0,
         "sell_target": 300.0,
         "sell_date": "2027-2028",
         "catalyst": "AI data center connectivity, revenue +82% YoY forecast",
     },
-    # VKTX: $28, analyst target $93, Phase III H1 2027
     "VKTX": {
         "name": "Viking Therapeutics",
         "basket": "SpecGrowth",
         "strategy": "catalyst",
-        "buy_target": 24.0,
         "sell_target": 95.0,
         "sell_date": "H1 2027",
         "catalyst": "Phase III VK2735 obesity data readout — binary event",
@@ -281,7 +236,10 @@ ASSET_META = {
 # =========================================================================
 
 def compute_signals(ticker):
-    """Compute technical signals for a single ticker."""
+    """Compute technical signals for a single ticker.
+
+    Returns price, SMAs, RSI, 52w range, trend, and a dynamic buy_target.
+    """
     try:
         data = yf.Ticker(ticker).history(period="1y")
         if data.empty or len(data) < 20:
@@ -293,16 +251,19 @@ def compute_signals(ticker):
         sma_50 = float(close.rolling(50).mean().iloc[-1]) if len(close) >= 50 else price
         sma_200 = float(close.rolling(200).mean().iloc[-1]) if len(close) >= 200 else price
 
+        # RSI-14
         delta = close.diff()
         gain = delta.where(delta > 0, 0).rolling(14).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
         rs = gain.iloc[-1] / loss.iloc[-1] if loss.iloc[-1] != 0 else 100
         rsi = 100 - (100 / (1 + rs))
 
+        # 52-week range
         high_52w = float(close.max())
         low_52w = float(close.min())
         pct_from_high = ((price - high_52w) / high_52w) * 100
 
+        # Trend classification
         if len(close) >= 200:
             if price > sma_200 and sma_50 > sma_200:
                 trend = "UPTREND"
@@ -315,6 +276,9 @@ def compute_signals(ticker):
         else:
             trend = "N/A"
 
+        # Dynamic buy target
+        buy_target = compute_buy_target(price, sma_50, sma_200, low_52w, trend, len(close))
+
         return {
             "price": price,
             "sma_50": sma_50,
@@ -324,16 +288,61 @@ def compute_signals(ticker):
             "high_52w": high_52w,
             "low_52w": low_52w,
             "trend": trend,
+            "buy_target": buy_target,
         }
     except Exception as e:
         print(f"  ⚠️ {ticker}: {e}")
         return None
 
 
+def compute_buy_target(price, sma_50, sma_200, low_52w, trend, data_len):
+    """Compute a dynamic buy target from live technical data.
+
+    Logic:
+    - UPTREND:  buy near the 50-SMA (short-term support in a rising market)
+    - NEUTRAL:  buy near the 200-SMA (major support level)
+    - DOWNTREND: buy near the 52w low + 10% buffer (wait for bottom)
+    - If not enough data for SMA-200, use SMA-50 or 52w low
+
+    The target is always floored at the 52w low (never below where it
+    actually traded) and capped at 95% of current price (always a discount).
+    """
+    # Pick the primary support level based on trend
+    if trend == "UPTREND":
+        # In uptrend, the 50-SMA acts as dynamic support
+        primary = sma_50
+    elif trend == "NEUTRAL":
+        # In neutral, the 200-SMA is the key level
+        if data_len >= 200:
+            primary = sma_200
+        else:
+            primary = sma_50
+    else:
+        # In downtrend, target near 52w low with a 10% buffer above it
+        primary = low_52w * 1.10
+
+    # Secondary: midpoint between 52w low and 200-SMA (a "value zone")
+    if data_len >= 200:
+        value_zone = (low_52w + sma_200) / 2
+    else:
+        value_zone = (low_52w + sma_50) / 2
+
+    # Take the higher of primary and value_zone (don't set unrealistically low)
+    target = max(primary, value_zone)
+
+    # Floor: never below 52w low (it actually traded there)
+    target = max(target, low_52w)
+
+    # Cap: always at least a 5% discount from current price
+    target = min(target, price * 0.95)
+
+    return round(target, 2)
+
+
 def evaluate_buy(price, meta, signals):
-    """Determine buy signal using buy_target + technicals."""
+    """Determine buy signal using dynamic buy_target + technicals."""
     strategy = meta["strategy"]
-    buy_target = meta.get("buy_target")
+    buy_target = signals.get("buy_target")
     rsi = signals["rsi"]
     trend = signals["trend"]
     pct_from_high = signals["pct_from_high"]
@@ -346,22 +355,33 @@ def evaluate_buy(price, meta, signals):
 
     pct_above_target = ((price - buy_target) / buy_target) * 100
 
+    # At or below the computed buy zone
     if price <= buy_target:
-        return "BUY NOW", f"At/below target ${buy_target:.0f}"
+        return "BUY NOW", f"At/below support ${buy_target:,.0f}"
     if pct_above_target < 5:
-        return "BUY NOW", f"Near target ${buy_target:.0f} ({pct_above_target:+.0f}%)"
+        return "BUY NOW", f"Near support ${buy_target:,.0f} ({pct_above_target:+.0f}%)"
+
+    # Oversold override — buy regardless of target
     if rsi < 30:
-        return "BUY NOW", f"Oversold RSI {rsi:.0f} — buy the dip"
+        return "BUY NOW", f"Oversold RSI {rsi:.0f}"
+
+    # RSI pullback in uptrend
     if rsi < 40 and trend == "UPTREND":
         return "BUY DIP", f"RSI pullback ({rsi:.0f}) in uptrend"
+
+    # Big drawdown from highs
     if pct_from_high < -20:
         return "BUY DIP", f"{pct_from_high:.0f}% off highs — scale in"
-    if rsi > 70:
-        return "WAIT", f"Overbought RSI {rsi:.0f} — wait for ${buy_target:.0f}"
-    if pct_above_target > 15:
-        return "WAIT", f"{pct_above_target:.0f}% above target ${buy_target:.0f}"
 
-    return "BUY DIP", f"Scale in toward ${buy_target:.0f}"
+    # Overbought — wait
+    if rsi > 70:
+        return "WAIT", f"Overbought RSI {rsi:.0f} — wait for ${buy_target:,.0f}"
+
+    # Far above support
+    if pct_above_target > 20:
+        return "WAIT", f"{pct_above_target:.0f}% above support ${buy_target:,.0f}"
+
+    return "BUY DIP", f"Scale in toward ${buy_target:,.0f}"
 
 
 def evaluate_sell(price, meta):
@@ -379,13 +399,13 @@ def evaluate_sell(price, meta):
     pct_to_target = ((sell_target - price) / price) * 100
 
     if price >= sell_target:
-        return "SELL NOW", f"At/above target ${sell_target:.0f}!"
+        return "SELL NOW", f"At/above target ${sell_target:,.0f}!"
     if pct_to_target < 10:
-        return "NEAR TARGET", f"${sell_target:.0f} is {pct_to_target:.0f}% away — tighten stop"
+        return "NEAR TARGET", f"${sell_target:,.0f} is {pct_to_target:.0f}% away — tighten stop"
     if strategy == "catalyst":
-        return "SELL @ EVENT", f"Target ${sell_target:.0f} (+{pct_to_target:.0f}%) — {sell_date}"
+        return "SELL @ EVENT", f"Target ${sell_target:,.0f} (+{pct_to_target:.0f}%) — {sell_date}"
 
-    return "HOLD", f"Target ${sell_target:.0f} (+{pct_to_target:.0f}%) — sell by {sell_date}"
+    return "HOLD", f"Target ${sell_target:,.0f} (+{pct_to_target:.0f}%) — sell by {sell_date}"
 
 
 # =========================================================================
@@ -411,7 +431,7 @@ def build_signal_table():
         if signals is None:
             print("failed")
             continue
-        print(f"${signals['price']:.2f}")
+        print(f"${signals['price']:.2f}  buy@${signals['buy_target']:,.2f}")
 
         buy_signal, buy_reason = evaluate_buy(signals["price"], meta, signals)
         sell_action, sell_detail = evaluate_sell(signals["price"], meta)
@@ -422,7 +442,7 @@ def build_signal_table():
             "basket": meta["basket"],
             "strategy": meta["strategy"],
             "price": signals["price"],
-            "buy_target": meta.get("buy_target"),
+            "buy_target": signals["buy_target"],
             "sell_target": meta.get("sell_target"),
             "rsi": signals["rsi"],
             "trend": signals["trend"],
