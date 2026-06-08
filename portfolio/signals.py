@@ -35,7 +35,7 @@ ASSET_META = {
         "sell_date": None,
         "catalyst": "Secular AI/data growth — DCA monthly, never sell",
     },
-    "SMH": {
+    "SMHV.SW": {
         "name": "VanEck Semiconductor",
         "basket": "Core ETF",
         "strategy": "hold_forever",
@@ -43,8 +43,8 @@ ASSET_META = {
         "sell_date": None,
         "catalyst": "Secular semi demand (AI, auto, IoT) — DCA monthly, never sell",
     },
-    "IUIT.L": {
-        "name": "iShares S&P 500 Info Tech",
+    "QDVE.DE": {
+        "name": "S&P 500 Info Tech",
         "basket": "Core ETF",
         "strategy": "hold_forever",
         "sell_target": None,

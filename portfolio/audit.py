@@ -44,8 +44,8 @@ def run_audit():
 
     macro_values = {
         "XAIX.DE": portfolio_values.get("XAIX.DE", 0),
-        "SMH": portfolio_values.get("SMH", 0),
-        "IUIT.L": portfolio_values.get("IUIT.L", 0),
+        "SMHV.SW": portfolio_values.get("SMHV.SW", 0),
+        "QDVE.DE": portfolio_values.get("QDVE.DE", 0),
         "NUCLEAR_SATELLITE": nuclear_val,
         "QUANTUM_SATELLITE": quantum_val,
         "CYBER_SATELLITE": cyber_val,
@@ -75,7 +75,7 @@ def run_audit():
     for asset, val in macro_values.items():
         current_pct = val / total_val
         proxy_map = {
-            "SMH": "SMH", "XAIX.DE": "SMH",
+            "SMHV.SW": "SMHV.SW", "XAIX.DE": "SMHV.SW",
             "NUCLEAR_SATELLITE": list(NUCLEAR_BASKET_TARGETS.keys())[0],
             "INDUSTRIAL_SATELLITE": list(INDUSTRIAL_BASKET_TARGETS.keys())[0],
             "SPECGROWTH_SATELLITE": list(SPECGROWTH_BASKET_TARGETS.keys())[0],
@@ -175,8 +175,8 @@ def build_exposure_matrix():
 
     # --- Render matplotlib table ---
     HEX_COLORS = {
-        "SMH":        "#E6F0FA",
-        "IUIT.L":     "#E6F7F9",
+        "SMHV.SW":        "#E6F0FA",
+        "QDVE.DE":     "#E6F7F9",
         "XAIX.DE":    "#E6F4EA",
         "NUCLEAR":    "#FCF7E6",
         "QUANTUM":    "#FAE6FA",
@@ -187,8 +187,8 @@ def build_exposure_matrix():
     HEX_MULTI = "#F3E6FA"
 
     SOURCE_LABELS = {
-        "SMH":        "Core Semiconductors (SMH)",
-        "IUIT.L":     "S&P 500 Info Tech (IUIT.L)",
+        "SMHV.SW":        "Core Semiconductors (SMHV.SW)",
+        "QDVE.DE":     "S&P 500 Info Tech (QDVE.DE)",
         "XAIX.DE":    "AI & Big Data Index (XAIX.DE)",
         "NUCLEAR":    "Satellite Layer (NUCLEAR)",
         "QUANTUM":    "Satellite Layer (QUANTUM)",

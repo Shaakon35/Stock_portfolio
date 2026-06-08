@@ -314,7 +314,7 @@ All assets are tagged with a sector label that determines grouping, styling, and
 
 | Tag | Sector | Description |
 | :--- | :--- | :--- |
-| `[CORE]` | Core ETFs | Broad-market and semiconductor index funds (EQQQ.L, SMH, V3AA.L, IUIT.L) |
+| `[CORE]` | Core ETFs | Broad-market and semiconductor index funds (EQQQ.L, SMHV.SW, V3AA.L, QDVE.DE) |
 | `[AI]` | AI & Robotics | Thematic ETFs covering AI, robotics, quantum computing, and big data |
 | `[TECH]` | Mega-Cap Tech | Individual large-cap technology stocks (NVDA, MSFT, AMZN, AAPL, GOOG, etc.) |
 | `[NUC]` | Nuclear | SMR, uranium, and nuclear fuel chain (CCJ, GEV, OKLO, SMR, LEU, SRUUF) |
@@ -387,7 +387,7 @@ Forecasted CAGR = Base Index Return + Secular Alpha Premium - Risk/Cyclicality D
 | Low-Med (Moat) | Strong competitive position, moderate beta (AVGO, PANW) |
 | Medium (Stable) | Established growth with manageable volatility (GOOG, CRWD) |
 | Medium (Capex) | Growth tied to capital expenditure cycles (AMZN, GEV) |
-| Med-High (Beta) | High-beta growth with sector concentration (SMH, AMD) |
+| Med-High (Beta) | High-beta growth with sector concentration (SMHV.SW, AMD) |
 | High (Growth) | Rapid growth, unproven unit economics (PLTR, BE) |
 | High (Turnaround) | Restructuring or strategic pivot in progress (INTC) |
 | Extreme (Burn) | Pre-revenue, high cash burn, binary outcome (OKLO, SMR) |
@@ -558,7 +558,7 @@ Format output strictly using the following layout. Each stock must include both 
 
 ### Preferred Sectors (Ranked by Portfolio Weight)
 
-1. **`[CORE]`** — Semiconductor & broad tech index ETFs (XAIX.DE 25%, SMH 25%, IUIT.L 10%)
+1. **`[CORE]`** — Semiconductor & broad tech index ETFs (XAIX.DE 25%, SMHV.SW 25%, QDVE.DE 10%)
 2. **`[NUC]`** — Nuclear / SMR / uranium fuel chain 12% (CCJ, GEV, SRUUF, LEU, SMR, OKLO)
 3. **`[IND]`** — Industrials & Defense 10% (BWXT, POWL, VRT, FIX)
 4. **`[QTM]`** — Quantum computing pure-plays 8% (IONQ, QNT, QBTS, RGTI)

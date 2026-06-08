@@ -4,9 +4,9 @@
 etfs = {
     # --- CORE ETFs ---
     "[CORE] Invesco NASDAQ-100 (25%)": "EQQQ.L",
-    "[CORE] VanEck Semiconductor (40%)": "SMH",
+    "[CORE] VanEck Semiconductor (40%)": "SMHV.SW",
     "[CORE] Vanguard FTSE Dev World (13%)": "V3AA.L",
-    "[CORE] iShares S&P 500 Info Tech (22%)": "IUIT.L",
+    "[CORE] S&P 500 Info Tech (22%)": "QDVE.DE",
 
     # --- AI & ROBOTICS ETFs ---
     "[AI] ARK AI & Robotics": "ARKI.L",

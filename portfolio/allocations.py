@@ -7,8 +7,8 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 
 TARGET_WEIGHTS = {
     "XAIX.DE":           0.25,  # 25% Core AI & Big Data Index
-    "SMH":               0.25,  # 25% Core Semiconductors (NVIDIA, ASML, TSMC)
-    "IUIT.L":            0.10,  # 10% iShares S&P 500 Info Tech (Apple, MSFT, AVGO)
+    "SMHV.SW":               0.25,  # 25% Core Semiconductors (NVIDIA, ASML, TSMC)
+    "QDVE.DE":            0.10,  # 10% S&P 500 Info Tech (Apple, MSFT, AVGO)
     "NUCLEAR_SATELLITE": 0.12,  # 12% Single Stock Nuclear Picking
     "QUANTUM_SATELLITE": 0.08,  # 8% Single Stock Quantum Speculative Rockets
     "CYBER_SATELLITE":   0.05,  # 5% Single Stock Cybersecurity Satellite
@@ -66,8 +66,8 @@ SELL_TRIGGER_CEILING = {
     "CYBER_SATELLITE":       0.0625,
     "INDUSTRIAL_SATELLITE":  0.125,
     "SPECGROWTH_SATELLITE":  0.0625,
-    "SMH":                   0.3125,
-    "IUIT.L":                0.125,
+    "SMHV.SW":                   0.3125,
+    "QDVE.DE":                0.125,
 }
 
 # =========================================================================
@@ -75,7 +75,7 @@ SELL_TRIGGER_CEILING = {
 # =========================================================================
 
 my_current_shares = {
-    "XAIX.DE": 45, "SMH": 22, "IUIT.L": 5,
+    "XAIX.DE": 45, "SMHV.SW": 22, "QDVE.DE": 5,
     "CCJ": 15, "GEV": 5, "SRUUF": 25, "LEU": 10, "SMR": 50, "OKLO": 30,
     "IONQ": 100, "QNT": 0, "QBTS": 250, "RGTI": 400, "QUBT": 150,
     "CRWD": 2, "PANW": 3,
@@ -90,12 +90,12 @@ my_current_shares = {
 # =========================================================================
 
 ETF_LOOK_THROUGH = {
-    "SMH": {
+    "SMHV.SW": {
         "TSM": 0.1009, "ASML": 0.1008, "NVDA": 0.0992, "AVGO": 0.0959, "MU": 0.0829,
         "AMD": 0.0801, "AMAT": 0.0647, "LRCX": 0.0629, "INTC": 0.0513, "TXN": 0.0422,
         "OTHER_SEMI": 0.2191,
     },
-    "IUIT.L": {
+    "QDVE.DE": {
         "NVDA": 0.2301, "AAPL": 0.1853, "MSFT": 0.1536, "AVGO": 0.0820, "MU": 0.0212,
         "PLTR": 0.0187, "AMD": 0.0185, "CSCO": 0.0171, "AMAT": 0.0152, "LRCX": 0.0149,
         "OTHER_TECH": 0.2434,
