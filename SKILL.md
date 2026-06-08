@@ -12,6 +12,278 @@ You operate within the context of this portfolio's existing sector taxonomy, CAG
 
 - **Never remove comments** from any script, notebook, or configuration file unless explicitly asked to do so. Comments are intentional documentation — preserve them even when refactoring, reformatting, or moving code between files.
 - When editing existing code, keep all inline comments, section headers, and TODO markers intact.
+- **Always use `importlib.reload()`** after git pull or code changes — both `config.*` and `portfolio.*` modules are cached by Colab's runtime.
+
+---
+
+## Notebook Editing Rules (No Python Environment)
+
+This repo is developed in GitHub Codespaces / Ona where **no Python runtime is available**. All `.ipynb` editing must use `jq` for JSON manipulation.
+
+### Workflow
+
+1. **Extract source** from the target cell:
+   ```bash
+   jq -r '.cells[CELL_INDEX].source[]' notebook.ipynb > /tmp/cell_src.py
+   ```
+2. **Edit** `/tmp/cell_src.py` using normal text tools (str_replace, sed, etc.)
+3. **Convert back to JSON source array** — every line MUST end with `\n`:
+   ```bash
+   jq -R -s 'split("\n") | if .[-1] == "" then .[:-1] else . end | [.[] + "\n"]' /tmp/cell_src.py > /tmp/cell_source.json
+   ```
+4. **Inject back** into the notebook:
+   ```bash
+   jq --slurpfile src /tmp/cell_source.json '.cells[CELL_INDEX].source = $src[0] | .cells[CELL_INDEX].outputs = []' notebook.ipynb > /tmp/notebook_new.ipynb
+   cp /tmp/notebook_new.ipynb notebook.ipynb
+   ```
+5. **Validate** the result:
+   ```bash
+   jq empty notebook.ipynb && echo "Valid JSON"
+   ```
+
+### Critical Rule: Trailing Newlines
+
+Every element in a cell's `source` array **MUST** end with `\n`. Without it, Colab/Jupyter joins adjacent lines and creates syntax errors like `import systry:`. This is the single most common bug when editing notebooks via jq.
+
+### Finding the Right Cell
+
+```bash
+# Find cell index containing a specific string
+jq '[.cells | to_entries[] | select(.value.cell_type == "code" and (.value.source | join("") | test("SEARCH_STRING")))] | .[0].key' notebook.ipynb
+```
+
+### Clean Up Temp Files
+
+Always remove `/tmp/*.py`, `/tmp/*.json`, `/tmp/*_new.ipynb` after rebuilding.
+
+---
+
+## Module Architecture
+
+The codebase is split into two Python packages:
+
+```
+config/          — static data (what we own, forecasts, styling)
+  assets.py      — ETF and stock universe with sector tags
+  forecasts.py   — CAGR forecast models per asset
+  settings.py    — paths, API keys, constants
+  styling.py     — HTML color maps, CSS
+  watchlist.py   — PUMP watchlist entries
+
+portfolio/       — runtime logic (what to do with what we own)
+  allocations.py — target weights, basket sub-allocations, current shares
+  audit.py       — portfolio audit engine (value calc, sell triggers, exposure)
+  helpers.py     — shared utilities (FX rates, formatting)
+  crypto.py      — crypto-specific logic
+  signals.py     — buy/sell signal engine (technical analysis)
+```
+
+### Reload Pattern (Colab)
+
+After any code change, notebooks must reload both packages:
+
+```python
+import importlib
+import config.assets, config.forecasts, config.styling, config.settings, config.watchlist
+import portfolio.allocations, portfolio.audit, portfolio.helpers, portfolio.signals
+for mod in [config.assets, config.forecasts, config.styling, config.settings, config.watchlist,
+            portfolio.allocations, portfolio.audit, portfolio.helpers, portfolio.signals]:
+    importlib.reload(mod)
+```
+
+---
+
+## Portfolio Strategy Classification
+
+Every asset is classified into one of three strategies that determine buy depth, sell behavior, and stop-loss:
+
+| Strategy | Hold Period | Buy Depth | Sell Rule | Stop-Loss |
+| :--- | :--- | :--- | :--- | :--- |
+| `hold_forever` | 3-10+ years | Shallow (50-SMA, 10% off highs) | Never sell | None |
+| `cycle` | 1-3 years | Medium (blended avg 50/200-SMA, 15% off highs) | Sell when growth decelerates | 20% below buy target |
+| `catalyst` | <18 months | Deep (200-SMA, 20% off highs) | Sell on binary event outcome | 25% below buy target |
+
+### Strategy Assignment Rules
+
+- **hold_forever**: Core ETFs, monopoly businesses (BWXT navy nuclear), secular growth (CRWD cybersecurity), uranium miners (CCJ)
+- **cycle**: Capex-driven businesses where revenue growth will peak and decline (VRT data center cooling, POWL switchgear, CRDO connectivity)
+- **catalyst**: Pre-revenue or binary-event stocks (OKLO NRC license, VKTX Phase III data, RKLB Neutron launch)
+
+### Cycle Timing Signals
+
+Watch for these deceleration indicators to time cycle exits:
+- Revenue growth YoY dropping (e.g., POWL went from +45% to +4.5%)
+- Backlog growth flattening
+- Gross margin compression
+- Insider selling acceleration
+
+---
+
+## Signal Engine Architecture
+
+The signal engine (`portfolio/signals.py`) computes live buy/sell signals for every portfolio asset.
+
+### Data Fetching
+
+- **Always fetch 2 years** of history (`period="2y"`) — this ensures accurate 200-SMA values and a true 252-trading-day 52-week range
+- 52-week range uses `close.iloc[-252:]`, not the full 2-year window
+- Skip private/pre-IPO tickers: `XNDU`, `INFQ`, `HQ`
+
+### RSI Calculation (Wilder's Method)
+
+Use exponential smoothing, NOT simple rolling mean:
+
+```python
+delta = close.diff()
+gain = delta.where(delta > 0, 0)
+loss = (-delta.where(delta < 0, 0))
+avg_gain = gain.ewm(alpha=1/14, min_periods=14, adjust=False).mean()
+avg_loss = loss.ewm(alpha=1/14, min_periods=14, adjust=False).mean()
+rs = avg_gain.iloc[-1] / avg_loss.iloc[-1]
+rsi = 100 - (100 / (1 + rs))
+```
+
+Simple rolling mean (`gain.rolling(14).mean()`) diverges from TradingView/Bloomberg by 5-15 points. Wilder's exponential method matches industry-standard charting tools.
+
+### Dynamic Buy Targets
+
+Buy targets are **never hardcoded** — they're computed from live SMA and support data each run:
+
+1. Pick SMA support: `hold_forever` → 50-SMA (shallow), `cycle` → blended avg(50-SMA, 200-SMA), `catalyst` → 200-SMA (deep)
+2. Pick pullback target from 52w high: 10% / 15% / 20% depending on strategy
+3. Combine: `hold_forever` takes the higher (easier to hit), others take the lower (deeper discount)
+4. **Safety rails**:
+   - Floor: never below 52-week low
+   - Cap: always at least 5% discount from current price
+   - **Never above 80% of sell_target** (prevents buy target > sell target)
+
+### Volume Spike Detection
+
+Compare today's volume to 20-day average:
+- `🔥 2.0x+ avg` = strong institutional interest
+- `📈 1.5x+ avg` = elevated activity
+
+### Stop-Loss Computation
+
+Relative to buy_target (expected entry), not current price:
+- `hold_forever` → no stop (ride it out)
+- `cycle` → 20% below buy_target
+- `catalyst` → 25% below buy_target (wider, these are volatile)
+
+Flag `⚠️ BELOW STOP` in red when current price is at or below stop level.
+
+---
+
+## HTML Table Conventions
+
+### Yahoo Finance Links
+
+All ticker symbols in HTML tables must link to Yahoo Finance:
+
+```python
+yf_url = f'https://finance.yahoo.com/quote/{ticker}/'
+html.append(f'<a href="{yf_url}" target="_blank">{ticker}</a>')
+```
+
+### Crypto Ticker Links
+
+Crypto tickers already contain `-USD` suffix (e.g., `BTC-USD`). Do NOT double it:
+
+```python
+# WRONG: f'https://finance.yahoo.com/quote/{ticker}-USD/'  → BTC-USD-USD
+# RIGHT: f'https://finance.yahoo.com/quote/{ticker}/'       → BTC-USD
+```
+
+### Trailing Slashes
+
+Always include trailing `/` on Yahoo Finance URLs to avoid redirects.
+
+### Basket Color Coding
+
+Each basket has a designated background color for table rows:
+
+| Basket | Color |
+| :--- | :--- |
+| Core ETF | `#E3F2FD` |
+| Nuclear | `#FFF8DC` |
+| Quantum | `#F3E6F5` |
+| Cyber | `#FFEBEE` |
+| Industrial | `#E8EAF6` |
+| SpecGrowth | `#E0F7FA` |
+
+### Signal Color Coding
+
+| Signal | Color | Meaning |
+| :--- | :--- | :--- |
+| `DCA` | `#1565C0` (blue) | Buy monthly at any price (ETFs) |
+| `BUY NOW` | `#1B5E20` (green) | At/near buy target or oversold |
+| `BUY DIP` | `#E65100` (orange) | Scale in on weakness |
+| `WAIT` | `#B71C1C` (red) | Overbought or too far above target |
+| `HOLD FOREVER` | `#1565C0` (blue) | Core position, never sell |
+| `SELL @ PEAK` | `#1B5E20` (green) | Cycle play, sell when growth decelerates |
+| `SELL @ EVENT` | `#6A1B9A` (purple) | Binary catalyst, sell on outcome |
+| `NEAR TARGET` | `#E65100` (orange) | Within 10% of sell target |
+| `SELL NOW` | `#B71C1C` (red) | At/above sell target |
+
+---
+
+## Common Pitfalls & Bugs
+
+These are real bugs encountered during development. Check for them proactively.
+
+### 1. Notebook Source Array Missing `\n`
+
+**Symptom**: `SyntaxError: invalid syntax` when running in Colab — lines merge (e.g., `import systry:`)
+**Cause**: Source array element without trailing `\n`
+**Fix**: Ensure every element in `.cells[].source` ends with `\n`
+
+### 2. Buy Target Exceeds Sell Target
+
+**Symptom**: Dashboard shows buy target higher than sell target (nonsensical)
+**Cause**: Dynamic buy target computed from SMA can exceed a low sell target
+**Fix**: Cap buy target at 80% of sell_target: `target = min(target, sell_target * 0.80)`
+
+### 3. Stale Sell Targets
+
+**Symptom**: `⚠️ SELL TARGET OUTDATED` warning — price has already passed the target
+**Cause**: Sell targets are static analyst consensus that becomes outdated as stocks rally
+**Fix**: Update sell_target in `ASSET_META` when price exceeds it. Use latest analyst consensus.
+
+### 4. RSI Divergence from TradingView
+
+**Symptom**: RSI values off by 5-15 points compared to charting tools
+**Cause**: Using `rolling(14).mean()` instead of Wilder's exponential smoothing
+**Fix**: Use `ewm(alpha=1/14, min_periods=14, adjust=False).mean()`
+
+### 5. Crypto Yahoo Finance Double Suffix
+
+**Symptom**: Links go to `BTC-USD-USD` (404)
+**Cause**: Appending `-USD` to tickers that already contain it
+**Fix**: Use ticker as-is for URL construction; only append `-USD` when fetching via yfinance if needed
+
+### 6. Shallow Buy Targets in Strong Uptrends
+
+**Symptom**: Buy target is only 2-3% below current price (not useful)
+**Cause**: 50-SMA tracks price closely in strong uptrends
+**Fix**: Use strategy-aware depth — `cycle`/`catalyst` use 200-SMA for deeper discounts
+
+### 7. Git Divergent Branches
+
+**Symptom**: `git push` fails with divergent branch error
+**Cause**: Force-push from another environment created divergent history
+**Fix**: `git fetch origin && git reset --hard origin/main` (loses local changes)
+
+### 8. 200-SMA Inaccurate with 1-Year Data
+
+**Symptom**: 200-SMA values don't match TradingView
+**Cause**: Only fetching 1 year of data — first ~200 days have NaN SMA
+**Fix**: Fetch 2 years (`period="2y"`) so the 200-SMA has a full year of valid values
+
+### 9. No BUY NOW Signals in Bull Markets
+
+**Symptom**: Every cycle/catalyst stock shows WAIT — zero BUY NOW signals
+**Cause**: Using pure 200-SMA as buy target anchor. In sustained uptrends, 200-SMA lags 30-50% behind price, creating unreachable buy targets.
+**Fix**: Cycle stocks use blended `avg(50-SMA, 200-SMA)` instead of pure 200-SMA. This brings targets ~15-25% below price (reachable on a normal pullback) instead of 30-50% below (only reachable in a crash). Catalyst stocks keep pure 200-SMA since they need deeper margin of safety.
 
 ---
 
@@ -51,10 +323,11 @@ All assets are tagged with a sector label that determines grouping, styling, and
 | `[FIN]` | Financials | Crypto-adjacent and digital finance (CRCL) |
 | `[ENG]` | Energy | Traditional and clean energy (CVX, BE) |
 | `[HC]` | Healthcare | Pharma and biotech (RO.SW) |
+| `[IND]` | Industrials & Defense | Data center infrastructure and defense (BWXT, POWL, VRT, FIX) |
+| `[SPEC]` | Speculative Growth | High-growth satellite picks (RKLB, LSCC, CRDO, VKTX) |
 | `[GEN]` | Genomics | Genomic revolution ETFs (ARKG, IDNA) — currently paused |
 | `[DEF]` | Defense | Sovereign defense ETFs (DFNS.L) — currently paused |
 | `[INF]` | Infrastructure | Data center and digital infrastructure (SRVR) — currently paused |
-| `[SPEC]` | Speculative | High-beta thematic plays (WGMI, HYDR, EWY) — currently paused |
 
 ---
 
@@ -167,16 +440,28 @@ The speculative watchlist tracks high-volatility, high-upside candidates. Each e
 
 ## Trend Detection
 
-The portfolio uses a **200-day Simple Moving Average (SMA)** to determine trend status:
+The portfolio uses a multi-factor trend classification:
 
 ```python
-def is_in_uptrend(ticker):
-    sma_200 = data['Close'].rolling(window=200).mean().iloc[-1]
-    return data['Close'].iloc[-1] > sma_200
+# Trend classification logic
+if price > sma_200 and sma_50 > sma_200:
+    trend = "UPTREND"
+elif price < sma_200 and sma_50 < sma_200:
+    trend = "DOWNTREND"
+else:
+    trend = "NEUTRAL"
 ```
 
-- **Above SMA-200** → uptrend → eligible for accumulation
-- **Below SMA-200** → downtrend → flagged in portfolio audit, allocation paused
+- **UPTREND** (price > SMA-200 AND SMA-50 > SMA-200) → eligible for accumulation
+- **DOWNTREND** (price < SMA-200 AND SMA-50 < SMA-200) → allocation paused, buy target drops to 52w low + 10%
+- **NEUTRAL** (mixed signals) → proceed with caution
+
+### Supporting Indicators
+
+- **RSI-14 (Wilder's)**: <30 oversold (buy signal), >70 overbought (wait signal)
+- **Volume spikes**: 1.5x+ or 2x+ average volume flags institutional activity
+- **52-week position**: % from 52w high used for pullback-based buy targets
+- **SMA crossovers**: SMA-50 crossing below SMA-200 (death cross) confirms downtrend
 
 ---
 
@@ -273,15 +558,17 @@ Format output strictly using the following layout. Each stock must include both 
 
 ### Preferred Sectors (Ranked by Portfolio Weight)
 
-1. **`[CORE]`** — Semiconductor & broad tech index ETFs (largest allocation)
-2. **`[TECH]`** — Mega-cap individual stock picks (NVDA, MSFT, AMZN, GOOG, AAPL, AVGO, AMD, PLTR)
-3. **`[NUC]`** — Nuclear / SMR / uranium fuel chain (CCJ, GEV, LEU, OKLO, SMR, SRUUF)
-4. **`[QTM]`** — Quantum computing pure-plays (IONQ, QBTS, RGTI, QUBT)
-5. **`[AI]`** — AI & robotics thematic ETFs
-6. **`[CYBER]`** — Cybersecurity platforms (CRWD, PANW)
-7. **`[ENG]`** — Energy infrastructure and data center electrification (CVX, BE)
-8. **`[FIN]`** — Digital finance / stablecoin infrastructure (CRCL)
-9. **`[HC]`** — Defensive pharma (RO.SW)
+1. **`[CORE]`** — Semiconductor & broad tech index ETFs (XAIX.DE 25%, SMH 25%, IUIT.L 10%)
+2. **`[NUC]`** — Nuclear / SMR / uranium fuel chain 12% (CCJ, GEV, SRUUF, LEU, SMR, OKLO)
+3. **`[IND]`** — Industrials & Defense 10% (BWXT, POWL, VRT, FIX)
+4. **`[QTM]`** — Quantum computing pure-plays 8% (IONQ, QNT, QBTS, RGTI)
+5. **`[CYBER]`** — Cybersecurity platforms 5% (CRWD, PANW)
+6. **`[SPEC]`** — Speculative Growth 5% (RKLB, LSCC, CRDO, VKTX)
+7. **`[TECH]`** — Mega-cap individual stock picks (NVDA, MSFT, AMZN, GOOG, AAPL, AVGO, AMD, PLTR)
+8. **`[AI]`** — AI & robotics thematic ETFs
+9. **`[ENG]`** — Energy infrastructure and data center electrification (CVX, BE)
+10. **`[FIN]`** — Digital finance / stablecoin infrastructure (CRCL)
+11. **`[HC]`** — Defensive pharma (RO.SW)
 
 ### Watchlist Focus (PUMP Dashboard Candidates)
 
@@ -322,6 +609,8 @@ Generated HTML reports use tabbed navigation with sector-grouped charts. Each se
 | `[NUC]` | `#FFF8DC` |
 | `[QTM]` | `#F8F8FF` |
 | `[CYBER]` | `#FFEBEE` |
+| `[IND]` | `#E8EAF6` |
+| `[SPEC]` | `#E0F7FA` |
 
 ---
 

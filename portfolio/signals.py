@@ -346,8 +346,9 @@ def compute_buy_target(price, sma_50, sma_200, high_52w, low_52w,
 
     hold_forever: shallow dip is fine (50-SMA or 10% off highs)
       — you're holding for years, don't wait for a crash that may never come
-    cycle: want a real discount (200-SMA or 15% off highs)
-      — you'll sell in 1-3 years, entry price matters for returns
+    cycle: moderate discount (blended avg of 50/200-SMA, or 15% off highs)
+      — you'll sell in 1-3 years, entry price matters but 200-SMA alone
+        is too deep in bull markets and creates unreachable targets
     catalyst: want deep discount (200-SMA or 20% off highs)
       — binary bet, need margin of safety in case the event fails
 
@@ -368,8 +369,10 @@ def compute_buy_target(price, sma_50, sma_200, high_52w, low_52w,
     if data_len >= 200:
         if strategy == "hold_forever":
             sma_support = sma_50           # shallow: 50-SMA
+        elif strategy == "cycle":
+            sma_support = (sma_50 + sma_200) / 2  # blended: avg of 50/200-SMA
         else:
-            sma_support = sma_200          # deeper: 200-SMA for cycle/catalyst
+            sma_support = sma_200          # deep: 200-SMA for catalyst
     elif data_len >= 50:
         sma_support = sma_50
     else:
