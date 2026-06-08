@@ -102,5 +102,5 @@ stock_forecast_models = {
     "[SPEC] Rocket Lab USA, Inc.":           {"min_rate": 5.0,  "max_rate": 35.0, "risk": "High (Aerospace)",  "cyclic": "No",  "loss_risk": "High"},
     "[SPEC] Lattice Semiconductor Corp.":    {"min_rate": 8.0,  "max_rate": 22.0, "risk": "Med-High (Edge AI)","cyclic": "Yes", "loss_risk": "Medium"},
     "[SPEC] Credo Technology Group":         {"min_rate": 15.0, "max_rate": 35.0, "risk": "High (Growth)",     "cyclic": "Yes", "loss_risk": "Medium"},
-    "[SPEC] Nebius Group N.V.":              {"min_rate": -5.0, "max_rate": 40.0, "risk": "High (Burn/Geo)",   "cyclic": "No",  "loss_risk": "High"},
+    "[SPEC] Viking Therapeutics, Inc.":       {"min_rate": -30.0, "max_rate": 50.0, "risk": "High (Binary)",    "cyclic": "No",  "loss_risk": "High"},
 }

@@ -92,7 +92,7 @@ single_stocks = {
     "[SPEC] Rocket Lab USA, Inc.": "RKLB",
     "[SPEC] Lattice Semiconductor Corp.": "LSCC",
     "[SPEC] Credo Technology Group": "CRDO",
-    "[SPEC] Nebius Group N.V.": "NBIS",
+    "[SPEC] Viking Therapeutics, Inc.": "VKTX",
 }
 
 # =========================================================================

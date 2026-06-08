@@ -56,7 +56,7 @@ SPECGROWTH_BASKET_TARGETS = {
     "RKLB":  0.30,  # 30% of Spec Growth Slice — Rocket Lab, satellite constellation
     "LSCC":  0.25,  # 25% of Spec Growth Slice — Lattice Semi, edge AI, automotive
     "CRDO":  0.25,  # 25% of Spec Growth Slice — Credo Tech, AI connectivity
-    "NBIS":  0.20,  # 20% of Spec Growth Slice — Nebius, GPU cloud for AI
+    "VKTX":  0.20,  # 20% of Spec Growth Slice — Viking Therapeutics, GLP-1 obesity Phase III
 }
 
 # Aggressive Profit-Taking Triggers (1.25x original for "Let Winners Run")
@@ -82,7 +82,7 @@ my_current_shares = {
     # Industrials & Defense — new positions (not yet purchased)
     "BWXT": 0, "POWL": 0, "VRT": 0, "FIX": 0,
     # Speculative Growth — new positions (not yet purchased)
-    "RKLB": 0, "LSCC": 0, "CRDO": 0, "NBIS": 0,
+    "RKLB": 0, "LSCC": 0, "CRDO": 0, "VKTX": 0,
 }
 
 # =========================================================================
