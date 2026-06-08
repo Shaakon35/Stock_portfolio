@@ -13,11 +13,10 @@ from portfolio.allocations import (
 # =========================================================================
 # ASSET METADATA — strategy, sell targets, catalysts
 # =========================================================================
-# strategy: "hold_forever" | "accumulate" | "catalyst" | "swing"
-#   hold_forever  — core ETFs, DCA monthly, never sell
-#   accumulate    — buy dips, sell at sell_target
-#   catalyst      — binary event, sell on outcome
-#   swing         — speculative momentum, sell on exhaustion
+# strategy: "hold_forever" | "cycle" | "catalyst"
+#   hold_forever  — core positions, DCA monthly, never sell
+#   cycle         — buy for the cycle (1-3y), sell when growth decelerates
+#   catalyst      — binary event (<18m), sell on the outcome
 #
 # buy_target is NOT hardcoded — it's computed dynamically from live
 # technical data (200-SMA, 50-SMA, support levels) each time you run.
@@ -25,7 +24,9 @@ from portfolio.allocations import (
 # sell_target: take-profit price (based on analyst consensus Jun 2026)
 
 ASSET_META = {
-    # --- ETFs (hold forever, DCA monthly) ---
+    # =================================================================
+    # LONG-TERM HOLDS (3-10+ years) — never sell unless thesis breaks
+    # =================================================================
     "XAIX.DE": {
         "name": "Xtrackers AI & Big Data",
         "basket": "Core ETF",
@@ -50,183 +51,202 @@ ASSET_META = {
         "sell_date": None,
         "catalyst": "Mega-cap tech compounding — DCA monthly, never sell",
     },
-
-    # --- Nuclear ---
+    # CCJ: ~$103, analyst $129. Uranium deficit lasts to 2035+
     "CCJ": {
         "name": "Cameco",
         "basket": "Nuclear",
-        "strategy": "accumulate",
-        "sell_target": 135.0,
-        "sell_date": "2027-2028",
-        "catalyst": "Uranium supply deficit, utility contract cycle 2026-2030",
+        "strategy": "hold_forever",
+        "sell_target": None,
+        "sell_date": None,
+        "catalyst": "Uranium supply deficit to 2035+, monopoly miner — never sell",
     },
+    # GEV: ~$934, analyst $1216. Grid modernization is a 20-year cycle
     "GEV": {
         "name": "GE Vernova",
         "basket": "Nuclear",
-        "strategy": "accumulate",
-        "sell_target": 1200.0,
-        "sell_date": "2028+",
-        "catalyst": "Grid modernization + gas turbine + SMR deployment orders",
+        "strategy": "hold_forever",
+        "sell_target": None,
+        "sell_date": None,
+        "catalyst": "Grid modernization 20-year cycle + gas turbine + SMR — never sell",
     },
+    # CRWD: ~$430, analyst $520. Cybersecurity spend only grows
+    "CRWD": {
+        "name": "CrowdStrike",
+        "basket": "Cyber",
+        "strategy": "hold_forever",
+        "sell_target": None,
+        "sell_date": None,
+        "catalyst": "Cybersecurity platform moat, $10B ARR trajectory — never sell",
+    },
+    # PANW: ~$257, analyst $310. Enterprise security duopoly
+    "PANW": {
+        "name": "Palo Alto Networks",
+        "basket": "Cyber",
+        "strategy": "hold_forever",
+        "sell_target": None,
+        "sell_date": None,
+        "catalyst": "Enterprise security duopoly, platformization — never sell",
+    },
+    # BWXT: $186, analyst $238. Navy nuclear monopoly, decades of contracts
+    "BWXT": {
+        "name": "BWX Technologies",
+        "basket": "Industrial",
+        "strategy": "hold_forever",
+        "sell_target": None,
+        "sell_date": None,
+        "catalyst": "Navy nuclear monopoly + SMR fuel, decades of backlog — never sell",
+    },
+    # FIX: $1844, analyst $2026. Steady compounder, infrastructure backbone
+    "FIX": {
+        "name": "Comfort Systems USA",
+        "basket": "Industrial",
+        "strategy": "hold_forever",
+        "sell_target": None,
+        "sell_date": None,
+        "catalyst": "Data center + infrastructure compounder, +31% YoY — never sell",
+    },
+
+    # =================================================================
+    # CYCLE HOLDS (1-3 years) — sell when cycle peaks
+    # =================================================================
+    # SRUUF: ~$19, tracks uranium spot. Mid-cycle, spot ~$90/lb
     "SRUUF": {
         "name": "Sprott Physical Uranium",
         "basket": "Nuclear",
-        "strategy": "accumulate",
-        "sell_target": 38.0,
+        "strategy": "cycle",
+        "sell_target": 30.0,
         "sell_date": "2027-2028",
-        "catalyst": "Uranium spot price breakout above $120/lb",
+        "catalyst": "Mid-cycle: uranium spot ~$90/lb, sell when spot peaks >$120/lb",
     },
+    # LEU: $162, analyst $200. HALEU ramp early cycle
     "LEU": {
         "name": "Centrus Energy",
         "basket": "Nuclear",
-        "strategy": "accumulate",
-        "sell_target": 150.0,
-        "sell_date": "2027-2028",
-        "catalyst": "HALEU production ramp, DOE contracts",
+        "strategy": "cycle",
+        "sell_target": 220.0,
+        "sell_date": "2028-2029",
+        "catalyst": "Early cycle: HALEU production ramp, DOE contracts through 2030",
     },
+    # VRT: $301, analyst $377. Data center capex mid-cycle
+    "VRT": {
+        "name": "Vertiv Holdings",
+        "basket": "Industrial",
+        "strategy": "cycle",
+        "sell_target": 420.0,
+        "sell_date": "2028-2029",
+        "catalyst": "Mid-cycle: DC power/cooling +29% YoY, capex wave runs to 2029",
+    },
+    # POWL: $285, analyst $316. Revenue growth decelerating (+4.5% vs +45%)
+    "POWL": {
+        "name": "Powell Industries",
+        "basket": "Industrial",
+        "strategy": "cycle",
+        "sell_target": 350.0,
+        "sell_date": "2027-2028",
+        "catalyst": "Late-mid cycle: growth slowing +4.5% YoY, sell when backlog peaks",
+    },
+    # LSCC: $136, analyst $147. Recovery from -31% crash, early recovery
+    "LSCC": {
+        "name": "Lattice Semiconductor",
+        "basket": "SpecGrowth",
+        "strategy": "cycle",
+        "sell_target": 175.0,
+        "sell_date": "2027-2028",
+        "catalyst": "Early recovery: bottomed 2024, +42% last Q, sell at prior peak revenue",
+    },
+    # CRDO: $207, analyst $256. Hyper-growth but priced for perfection
+    "CRDO": {
+        "name": "Credo Technology",
+        "basket": "SpecGrowth",
+        "strategy": "cycle",
+        "sell_target": 300.0,
+        "sell_date": "2027-2028",
+        "catalyst": "Early-mid cycle: revenue tripled, sell when growth drops below 30%",
+    },
+
+    # =================================================================
+    # EVENT-DRIVEN (<18 months) — sell on the catalyst outcome
+    # =================================================================
+    # SMR: ~$11, pre-revenue. Binary: deployment order or bust
     "SMR": {
         "name": "NuScale Power",
         "basket": "Nuclear",
         "strategy": "catalyst",
         "sell_target": 25.0,
         "sell_date": "2027-2029",
-        "catalyst": "First SMR deployment order (TVA/RoPower)",
+        "catalyst": "Sell on first SMR deployment order (TVA/RoPower)",
     },
+    # OKLO: ~$55, pre-revenue. Binary: NRC license or bust
     "OKLO": {
         "name": "Oklo Inc.",
         "basket": "Nuclear",
         "strategy": "catalyst",
         "sell_target": 90.0,
         "sell_date": "2028-2030",
-        "catalyst": "NRC license approval for Aurora reactor",
+        "catalyst": "Sell on NRC license approval for Aurora reactor",
     },
-
-    # --- Quantum ---
+    # IONQ: ~$45, revenue growing but speculative
     "IONQ": {
         "name": "IonQ",
         "basket": "Quantum",
-        "strategy": "swing",
+        "strategy": "catalyst",
         "sell_target": 65.0,
         "sell_date": "2027-2028",
-        "catalyst": "Enterprise quantum revenue inflection, gov contracts",
+        "catalyst": "Sell on quantum revenue inflection or hype cycle peak",
     },
+    # QNT: ~$47, Honeywell-backed
     "QNT": {
         "name": "Quantinuum",
         "basket": "Quantum",
         "strategy": "catalyst",
         "sell_target": 80.0,
         "sell_date": "2027-2028",
-        "catalyst": "Post-IPO re-rating, error correction milestones",
+        "catalyst": "Sell on post-IPO re-rating or error correction milestone",
     },
+    # QBTS: ~$10, speculative
     "QBTS": {
         "name": "D-Wave Quantum",
         "basket": "Quantum",
-        "strategy": "swing",
-        "sell_target": 15.0,
+        "strategy": "catalyst",
+        "sell_target": 18.0,
         "sell_date": "2027",
-        "catalyst": "Annealing quantum advantage proof + revenue growth",
+        "catalyst": "Sell on quantum advantage proof or momentum peak (RSI>70)",
     },
+    # RGTI: ~$21, speculative
     "RGTI": {
         "name": "Rigetti Computing",
         "basket": "Quantum",
-        "strategy": "swing",
-        "sell_target": 22.0,
+        "strategy": "catalyst",
+        "sell_target": 30.0,
         "sell_date": "2027",
-        "catalyst": "QPU chip scaling milestones, Ankaa-3",
+        "catalyst": "Sell on QPU scaling milestone or hype peak",
     },
+    # QUBT: ~$10, paused allocation
     "QUBT": {
         "name": "Quantum Computing Inc.",
         "basket": "Quantum (paused)",
-        "strategy": "swing",
-        "sell_target": 14.0,
+        "strategy": "catalyst",
+        "sell_target": 16.0,
         "sell_date": "2027",
-        "catalyst": "Thin-film lithium niobate photonics orders",
+        "catalyst": "Sell on any spike — paused allocation, thin thesis",
     },
-
-    # --- Cyber ---
-    "CRWD": {
-        "name": "CrowdStrike",
-        "basket": "Cyber",
-        "strategy": "accumulate",
-        "sell_target": 520.0,
-        "sell_date": "2028+",
-        "catalyst": "Platform consolidation, $10B ARR trajectory",
-    },
-    "PANW": {
-        "name": "Palo Alto Networks",
-        "basket": "Cyber",
-        "strategy": "accumulate",
-        "sell_target": 310.0,
-        "sell_date": "2028+",
-        "catalyst": "Platformization, NGS ARR growth",
-    },
-
-    # --- Industrial ---
-    "BWXT": {
-        "name": "BWX Technologies",
-        "basket": "Industrial",
-        "strategy": "accumulate",
-        "sell_target": 260.0,
-        "sell_date": "2028-2030",
-        "catalyst": "Navy nuclear monopoly + SMR fuel + backlog +77% YoY",
-    },
-    "POWL": {
-        "name": "Powell Industries",
-        "basket": "Industrial",
-        "strategy": "accumulate",
-        "sell_target": 380.0,
-        "sell_date": "2027-2028",
-        "catalyst": "Data center electrical switchgear backlog peak",
-    },
-    "VRT": {
-        "name": "Vertiv Holdings",
-        "basket": "Industrial",
-        "strategy": "accumulate",
-        "sell_target": 420.0,
-        "sell_date": "2027-2028",
-        "catalyst": "Data center power/cooling, revenue +36% YoY, EPS +55%",
-    },
-    "FIX": {
-        "name": "Comfort Systems USA",
-        "basket": "Industrial",
-        "strategy": "accumulate",
-        "sell_target": 2200.0,
-        "sell_date": "2028+",
-        "catalyst": "Data center HVAC/electrical buildout, revenue +31% YoY",
-    },
-
-    # --- Speculative Growth ---
+    # RKLB: $110, Neutron launch is the catalyst
     "RKLB": {
         "name": "Rocket Lab",
         "basket": "SpecGrowth",
         "strategy": "catalyst",
         "sell_target": 150.0,
         "sell_date": "2027-2028",
-        "catalyst": "Neutron rocket first launch + constellation contracts",
+        "catalyst": "Sell on Neutron first launch hype peak",
     },
-    "LSCC": {
-        "name": "Lattice Semiconductor",
-        "basket": "SpecGrowth",
-        "strategy": "accumulate",
-        "sell_target": 175.0,
-        "sell_date": "2027-2028",
-        "catalyst": "Edge AI FPGA design win cycle, revenue +44% YoY recovery",
-    },
-    "CRDO": {
-        "name": "Credo Technology",
-        "basket": "SpecGrowth",
-        "strategy": "accumulate",
-        "sell_target": 300.0,
-        "sell_date": "2027-2028",
-        "catalyst": "AI data center connectivity, revenue +82% YoY forecast",
-    },
+    # VKTX: $28, Phase III data is the binary event
     "VKTX": {
         "name": "Viking Therapeutics",
         "basket": "SpecGrowth",
         "strategy": "catalyst",
         "sell_target": 95.0,
         "sell_date": "H1 2027",
-        "catalyst": "Phase III VK2735 obesity data readout — binary event",
+        "catalyst": "Sell on Phase III VK2735 data readout — win or lose",
     },
 }
 
@@ -415,6 +435,8 @@ def evaluate_sell(price, meta):
         return "NEAR TARGET", f"${sell_target:,.0f} is {pct_to_target:.0f}% away — tighten stop"
     if strategy == "catalyst":
         return "SELL @ EVENT", f"Target ${sell_target:,.0f} (+{pct_to_target:.0f}%) — {sell_date}"
+    if strategy == "cycle":
+        return "SELL @ PEAK", f"Target ${sell_target:,.0f} (+{pct_to_target:.0f}%) — sell by {sell_date}"
 
     return "HOLD", f"Target ${sell_target:,.0f} (+{pct_to_target:.0f}%) — sell by {sell_date}"
 
