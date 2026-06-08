@@ -262,7 +262,7 @@ def compute_signals(ticker, strategy="hold_forever", sell_target=None):
     strategy and sell_target shape the buy_target calculation.
     """
     try:
-        data = yf.Ticker(ticker).history(period="1y")
+        data = yf.Ticker(ticker).history(period="2y")
         if data.empty or len(data) < 20:
             return None
 
@@ -272,16 +272,19 @@ def compute_signals(ticker, strategy="hold_forever", sell_target=None):
         sma_50 = float(close.rolling(50).mean().iloc[-1]) if len(close) >= 50 else price
         sma_200 = float(close.rolling(200).mean().iloc[-1]) if len(close) >= 200 else price
 
-        # RSI-14
+        # RSI-14 (Wilder's exponential smoothing, matches TradingView)
         delta = close.diff()
-        gain = delta.where(delta > 0, 0).rolling(14).mean()
-        loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
-        rs = gain.iloc[-1] / loss.iloc[-1] if loss.iloc[-1] != 0 else 100
+        gain = delta.where(delta > 0, 0)
+        loss = (-delta.where(delta < 0, 0))
+        avg_gain = gain.ewm(alpha=1/14, min_periods=14, adjust=False).mean()
+        avg_loss = loss.ewm(alpha=1/14, min_periods=14, adjust=False).mean()
+        rs = avg_gain.iloc[-1] / avg_loss.iloc[-1] if avg_loss.iloc[-1] != 0 else 100
         rsi = 100 - (100 / (1 + rs))
 
-        # 52-week range
-        high_52w = float(close.max())
-        low_52w = float(close.min())
+        # 52-week range (last 252 trading days, even though we fetch 2y for SMA)
+        close_52w = close.iloc[-252:] if len(close) >= 252 else close
+        high_52w = float(close_52w.max())
+        low_52w = float(close_52w.min())
         pct_from_high = ((price - high_52w) / high_52w) * 100
 
         # Trend classification
@@ -296,6 +299,19 @@ def compute_signals(ticker, strategy="hold_forever", sell_target=None):
             trend = "UPTREND" if price > sma_50 else "NEUTRAL"
         else:
             trend = "N/A"
+
+        # Volume spike detection (today vs 20-day avg)
+        volume_signal = ""
+        if 'Volume' in data.columns and len(data) >= 20:
+            vol = data['Volume']
+            vol_today = float(vol.iloc[-1])
+            vol_avg_20 = float(vol.iloc[-20:].mean())
+            if vol_avg_20 > 0:
+                vol_ratio = vol_today / vol_avg_20
+                if vol_ratio >= 2.0:
+                    volume_signal = f"🔥 {vol_ratio:.1f}x avg"
+                elif vol_ratio >= 1.5:
+                    volume_signal = f"📈 {vol_ratio:.1f}x avg"
 
         # Dynamic buy target (strategy-aware)
         buy_target = compute_buy_target(
@@ -314,6 +330,7 @@ def compute_signals(ticker, strategy="hold_forever", sell_target=None):
             "low_52w": low_52w,
             "trend": trend,
             "buy_target": buy_target,
+            "volume_signal": volume_signal,
         }
     except Exception as e:
         print(f"  ⚠️ {ticker}: {e}")
@@ -455,6 +472,31 @@ def evaluate_sell(price, meta):
     return "HOLD", f"Target ${sell_target:,.0f} (+{pct_to_target:.0f}%) — sell by {sell_date}"
 
 
+def compute_stop_loss(price, buy_target, strategy):
+    """Compute stop-loss price based on strategy.
+
+    hold_forever: no stop-loss (ride it out)
+    cycle:        20% below buy_target (protects against cycle turning)
+    catalyst:     25% below buy_target (wider, these are volatile)
+
+    If current price is already below stop-loss, flags it.
+    """
+    if strategy == "hold_forever":
+        return None, "—"
+
+    stop_pcts = {"cycle": 0.20, "catalyst": 0.25}
+    pct = stop_pcts.get(strategy, 0.20)
+
+    # Stop-loss is relative to buy_target (your expected entry)
+    stop = round(buy_target * (1 - pct), 2)
+
+    if price <= stop:
+        return stop, f"⚠️ BELOW STOP ${stop:,.0f}!"
+    else:
+        pct_to_stop = ((price - stop) / price) * 100
+        return stop, f"${stop:,.0f} ({pct_to_stop:.0f}% below)"
+
+
 # =========================================================================
 # MAIN: BUILD SIGNAL TABLE
 # =========================================================================
@@ -481,14 +523,17 @@ def build_signal_table():
             print("failed")
             continue
 
-        # Warn if sell target is stale (below current price)
+        # Warn if sell target is outdated (below current price)
         warn = ""
         if sell_target and signals["price"] >= sell_target:
-            warn = "  ⚠️ SELL TARGET STALE"
+            warn = "  ⚠️ SELL TARGET OUTDATED"
         print(f"${signals['price']:.2f}  buy@${signals['buy_target']:,.2f}{warn}")
 
         buy_signal, buy_reason = evaluate_buy(signals["price"], meta, signals)
         sell_action, sell_detail = evaluate_sell(signals["price"], meta)
+        stop_price, stop_detail = compute_stop_loss(
+            signals["price"], signals["buy_target"], strategy,
+        )
 
         results.append({
             "ticker": ticker,
@@ -498,9 +543,12 @@ def build_signal_table():
             "price": signals["price"],
             "buy_target": signals["buy_target"],
             "sell_target": meta.get("sell_target"),
+            "stop_loss": stop_price,
+            "stop_detail": stop_detail,
             "rsi": signals["rsi"],
             "trend": signals["trend"],
             "pct_from_high": signals["pct_from_high"],
+            "volume_signal": signals.get("volume_signal", ""),
             "buy_signal": buy_signal,
             "buy_reason": buy_reason,
             "sell_action": sell_action,
