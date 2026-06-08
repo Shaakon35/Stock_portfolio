@@ -185,12 +185,12 @@ ASSET_META = {
         "sell_date": "2028-2030",
         "catalyst": "Sell on NRC license approval for Aurora reactor",
     },
-    # IONQ: ~$45, revenue growing but speculative
+    # IONQ: ~$63, analyst consensus $68. Revenue doubling YoY
     "IONQ": {
         "name": "IonQ",
         "basket": "Quantum",
         "strategy": "catalyst",
-        "sell_target": 65.0,
+        "sell_target": 85.0,
         "sell_date": "2027-2028",
         "catalyst": "Sell on quantum revenue inflection or hype cycle peak",
     },
@@ -203,12 +203,12 @@ ASSET_META = {
         "sell_date": "2027-2028",
         "catalyst": "Sell on post-IPO re-rating or error correction milestone",
     },
-    # QBTS: ~$10, speculative
+    # QBTS: ~$26, analyst consensus $36. Strong momentum
     "QBTS": {
         "name": "D-Wave Quantum",
         "basket": "Quantum",
         "strategy": "catalyst",
-        "sell_target": 18.0,
+        "sell_target": 36.0,
         "sell_date": "2027",
         "catalyst": "Sell on quantum advantage proof or momentum peak (RSI>70)",
     },
