@@ -255,11 +255,11 @@ ASSET_META = {
 # TECHNICAL SIGNAL ENGINE
 # =========================================================================
 
-def compute_signals(ticker, sell_target=None):
+def compute_signals(ticker, strategy="hold_forever", sell_target=None):
     """Compute technical signals for a single ticker.
 
     Returns price, SMAs, RSI, 52w range, trend, and a dynamic buy_target.
-    sell_target is passed through to ensure buy_target stays below it.
+    strategy and sell_target shape the buy_target calculation.
     """
     try:
         data = yf.Ticker(ticker).history(period="1y")
@@ -297,10 +297,11 @@ def compute_signals(ticker, sell_target=None):
         else:
             trend = "N/A"
 
-        # Dynamic buy target (constrained by sell_target)
+        # Dynamic buy target (strategy-aware)
         buy_target = compute_buy_target(
-            price, sma_50, sma_200, low_52w, trend, len(close),
-            sell_target=sell_target,
+            price, sma_50, sma_200, high_52w, low_52w,
+            trend, len(close),
+            strategy=strategy, sell_target=sell_target,
         )
 
         return {
@@ -319,51 +320,64 @@ def compute_signals(ticker, sell_target=None):
         return None
 
 
-def compute_buy_target(price, sma_50, sma_200, low_52w, trend, data_len,
+def compute_buy_target(price, sma_50, sma_200, high_52w, low_52w,
+                       trend, data_len, strategy="hold_forever",
                        sell_target=None):
     """Compute a dynamic buy target from live technical data.
 
-    Logic:
-    - UPTREND:  buy near the 50-SMA (short-term support in a rising market)
-    - NEUTRAL:  buy near the 200-SMA (major support level)
-    - DOWNTREND: buy near the 52w low + 10% buffer (wait for bottom)
-    - If not enough data for SMA-200, use SMA-50 or 52w low
+    Different strategies get different depth of discount:
+
+    hold_forever: shallow dip is fine (50-SMA or 10% off highs)
+      — you're holding for years, don't wait for a crash that may never come
+    cycle: want a real discount (200-SMA or 15% off highs)
+      — you'll sell in 1-3 years, entry price matters for returns
+    catalyst: want deep discount (200-SMA or 20% off highs)
+      — binary bet, need margin of safety in case the event fails
 
     Safety rails:
-    - Floor: never below 52w low (it actually traded there)
+    - Floor: never below 52w low
     - Cap: always at least 5% discount from current price
-    - Never above 80% of sell_target (must leave room for profit)
+    - Never above 80% of sell_target
     """
-    # Pick the primary support level based on trend
-    if trend == "UPTREND":
-        # In uptrend, the 50-SMA acts as dynamic support
-        primary = sma_50
-    elif trend == "NEUTRAL":
-        # In neutral, the 200-SMA is the key level
-        if data_len >= 200:
-            primary = sma_200
-        else:
-            primary = sma_50
-    else:
-        # In downtrend, target near 52w low with a 10% buffer above it
-        primary = low_52w * 1.10
+    # Strategy-specific pullback depth from 52w high
+    pullback_targets = {
+        "hold_forever": high_52w * 0.90,   # 10% off highs
+        "cycle":        high_52w * 0.85,    # 15% off highs
+        "catalyst":     high_52w * 0.80,    # 20% off highs
+    }
+    pullback_target = pullback_targets.get(strategy, high_52w * 0.85)
 
-    # Secondary: midpoint between 52w low and 200-SMA (a "value zone")
+    # SMA-based support levels
     if data_len >= 200:
-        value_zone = (low_52w + sma_200) / 2
+        if strategy == "hold_forever":
+            sma_support = sma_50           # shallow: 50-SMA
+        else:
+            sma_support = sma_200          # deeper: 200-SMA for cycle/catalyst
+    elif data_len >= 50:
+        sma_support = sma_50
     else:
-        value_zone = (low_52w + sma_50) / 2
+        sma_support = low_52w * 1.10
 
-    # Take the higher of primary and value_zone (don't set unrealistically low)
-    target = max(primary, value_zone)
+    # Downtrend override: always use 52w low + buffer
+    if trend == "DOWNTREND":
+        sma_support = low_52w * 1.10
 
-    # Floor: never below 52w low (it actually traded there)
+    # Pick the lower of pullback target and SMA support
+    # (we want a meaningful discount, so take the more conservative one)
+    if strategy == "hold_forever":
+        # For long-term holds, take the higher (easier to hit)
+        target = max(pullback_target, sma_support)
+    else:
+        # For cycle/catalyst, take the lower (deeper discount)
+        target = min(pullback_target, sma_support)
+
+    # Floor: never below 52w low
     target = max(target, low_52w)
 
-    # Cap: always at least a 5% discount from current price
+    # Cap: always at least 5% discount from current price
     target = min(target, price * 0.95)
 
-    # Never above 80% of sell_target (must leave room for profit)
+    # Never above 80% of sell_target
     if sell_target is not None and sell_target > 0:
         target = min(target, sell_target * 0.80)
 
@@ -461,7 +475,8 @@ def build_signal_table():
 
         print(f"  {ticker}...", end=" ")
         sell_target = meta.get("sell_target")
-        signals = compute_signals(ticker, sell_target=sell_target)
+        strategy = meta.get("strategy", "hold_forever")
+        signals = compute_signals(ticker, strategy=strategy, sell_target=sell_target)
         if signals is None:
             print("failed")
             continue
