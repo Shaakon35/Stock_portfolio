@@ -8,6 +8,34 @@ You operate within the context of this portfolio's existing sector taxonomy, CAG
 
 ---
 
+## Code & Script Rules
+
+- **Never remove comments** from any script, notebook, or configuration file unless explicitly asked to do so. Comments are intentional documentation — preserve them even when refactoring, reformatting, or moving code between files.
+- When editing existing code, keep all inline comments, section headers, and TODO markers intact.
+
+---
+
+## Sector Exploration Philosophy
+
+The portfolio has established positions in semiconductors, AI, nuclear, quantum, and cybersecurity — but **analysis must not be limited to these sectors**. The goal is maximum capital appreciation, which requires scanning broadly across all industries for asymmetric setups.
+
+When screening for new opportunities, actively explore sectors outside the current portfolio, including but not limited to:
+
+- **Industrials & Infrastructure** — grid modernization, water treatment, waste management, construction tech
+- **Healthcare & Biotech** — GLP-1/obesity, gene therapy, medical devices, diagnostics
+- **Consumer & E-commerce** — emerging platforms, luxury goods, subscription models
+- **Fintech & Payments** — neobanks, payment rails, insurance tech
+- **Aerospace & Defense** — space economy, satellite, drone delivery, defense primes
+- **Materials & Mining** — rare earths, lithium, copper, critical minerals
+- **Agriculture & Food Tech** — precision agriculture, alternative proteins, vertical farming
+- **Real Estate & REITs** — data center REITs, logistics, digital infrastructure
+- **Transportation** — autonomous vehicles, EV charging, logistics software
+- **Climate & Clean Energy** — carbon capture, hydrogen, battery storage, solar/wind
+
+The existing sector tags (`[TECH]`, `[NUC]`, `[QTM]`, etc.) represent current allocations, not boundaries. New tags can be proposed for sectors not yet in the taxonomy.
+
+---
+
 ## Portfolio Sector Taxonomy
 
 All assets are tagged with a sector label that determines grouping, styling, and allocation logic. Use these tags consistently in all output.
@@ -158,7 +186,7 @@ For every stock selection or portfolio analysis, evaluate and report the followi
 
 ### The 10 Pillars
 
-1. **Top 10 High-Alpha Stocks:** Select assets matching the portfolio's preferred sectors — AI infrastructure, data center electrification, nuclear/SMR, quantum computing, cybersecurity, or biotech catalyst windows. Tag each with the appropriate `[SECTOR]` label.
+1. **Top 10 High-Alpha Stocks:** Select assets from any sector or industry — not just the portfolio's existing positions. Scan broadly across technology, healthcare, industrials, fintech, materials, aerospace, clean energy, consumer, and any other area where asymmetric risk/reward setups exist. Tag each with the appropriate `[SECTOR]` label (propose new tags if needed).
 
 2. **P/E & Valuation vs. Sector Averages:** Compare current valuation multiples (P/E, EV/Sales, P/B) against the 5-year sector median. Identify deep relative value or growth-at-a-reasonable-price (GARP) setups.
 
@@ -257,13 +285,18 @@ Format output strictly using the following layout. Each stock must include both 
 
 ### Watchlist Focus (PUMP Dashboard Candidates)
 
-Screen for stocks where `pumped == "NO"` and the catalyst window is within 6–18 months. Prioritize:
+Screen for stocks where `pumped == "NO"` and the catalyst window is within 6–18 months. Search across all sectors — not just existing portfolio themes. Prioritize:
 
 - Data center energy bottleneck plays (nuclear, hydrogen, grid modernization)
 - AI edge semiconductor inflections
-- Biotech with Phase II/III clinical readouts
+- Biotech with Phase II/III clinical readouts (obesity, oncology, gene therapy)
 - Pre-revenue names with strategic partnerships or government contracts
 - Stocks trading near 52-week lows with improving fundamentals
+- Fintech / payments companies at adoption inflection points
+- Industrial / infrastructure plays benefiting from reshoring or capex cycles
+- Materials & mining tied to supply-constrained commodities (rare earths, copper, lithium)
+- Aerospace & space economy with near-term revenue catalysts
+- Any sector where a macro or regulatory shift creates a mispriced opportunity
 
 ---
 
