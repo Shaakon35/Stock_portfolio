@@ -6,58 +6,81 @@ A Jupyter-notebook-based stock portfolio tracker and analysis dashboard. It fetc
 
 ```
 Stock_portfolio/
-├── CONFIGURATION.ipynb   # Shared configuration (assets, tickers, styling, forecast models)
-├── main.ipynb            # Portfolio audit — allocation targets, live prices, FX rates
-├── PLOT.ipynb            # Chart generation and HTML report builder
-├── PUMP.ipynb            # Speculative / small-cap stock watchlist dashboard
-├── output/               # Generated reports and charts (git-ignored contents)
+├── config/                   # Data definitions (what you own & track)
+│   ├── __init__.py
+│   ├── assets.py             # ETF and single stock universe, ticker lookups
+│   ├── forecasts.py          # CAGR forecast models for ETFs and stocks
+│   ├── settings.py           # Output paths, cache config, timeframes
+│   └── styling.py            # Per-asset chart colors, HTML tag colors
+│
+├── portfolio/                # Portfolio logic (allocations, audit, crypto)
+│   ├── __init__.py
+│   ├── allocations.py        # Target weights, basket sub-allocations, holdings
+│   ├── audit.py              # Portfolio drift audit, sell/buy engine, exposure matrix
+│   ├── crypto.py             # Crypto target weights, holdings, deployment engine
+│   └── helpers.py            # is_in_uptrend (SMA-200), get_price, get_live_fx_rate
+│
+├── main.ipynb                # Entry point — runs CONFIGURATION then PLOT
+├── CONFIGURATION.ipynb       # Imports from config/, sets up runtime state
+├── PLOT.ipynb                # Chart generation and HTML report builder
+├── PUMP.ipynb                # Speculative / small-cap stock watchlist dashboard
+├── output/                   # Generated reports and charts (not committed)
+├── skill.md                  # Quant analysis framework and prompt template
 └── README.md
 ```
 
+## Modules
+
+### `config/` — Data Definitions
+
+| File | Contents |
+|---|---|
+| `assets.py` | ETF universe (`etfs`), single stock universe (`single_stocks`), derived lookups (`all_groups`, `ticker_to_name`, `current_tickers`) |
+| `forecasts.py` | ETF CAGR models (`growth_forecast_models`) with single-rate estimates; stock CAGR models (`stock_forecast_models`) with min/max ranges. Includes risk, cyclicality, and loss-risk ratings. |
+| `settings.py` | `OUTPUT_PATH`, `HTML_FILE`, `CACHE_FILE`, `TIMEFRAMES` |
+| `styling.py` | `theme_styles` (per-asset colors/linestyles), `HTML_TAG_COLORS`, `get_row_bg_color()` |
+
+### `portfolio/` — Portfolio Logic
+
+| File | Contents |
+|---|---|
+| `allocations.py` | `TARGET_WEIGHTS`, `NUCLEAR/QUANTUM/CYBER_BASKET_TARGETS`, `my_current_shares`, `ETF_LOOK_THROUGH`, `SELL_TRIGGER_CEILING`, `verify_allocations()` |
+| `audit.py` | `run_audit()` — fetches prices, computes drift, runs sell/buy engine. `build_exposure_matrix()` — ETF look-through table. |
+| `crypto.py` | `CRYPTO_TARGET_WEIGHTS`, `my_current_crypto`, `run_crypto_engine()` — CHF-denominated crypto allocation. |
+| `helpers.py` | `is_in_uptrend()` (200-day SMA filter), `get_price()`, `get_live_fx_rate()` |
+
 ## Notebooks
-
-### CONFIGURATION.ipynb
-
-Central configuration imported by the other notebooks. Defines:
-
-- **Asset universe** — ETFs and individual stocks grouped by theme (`[CORE]`, `[AI]`, `[TECH]`, `[NUC]`, `[QTM]`, `[CYBER]`, `[FIN]`, `[ENG]`).
-- **Output paths** — `OUTPUT_PATH` for the generated HTML report (`Stock_report.html`).
-- **Thematic styling** — per-asset colors and line styles for consistent charting.
-- **CAGR forecast models** — growth-rate estimates, risk ratings, and cyclicality flags for every tracked asset.
-- **Cache settings** — yfinance market data cache with configurable expiration.
 
 ### main.ipynb
 
-Portfolio management and audit notebook:
+Entry point. Two cells:
+1. Mount Google Drive + `%run CONFIGURATION.ipynb` (loads all config)
+2. `%run PLOT.ipynb` (generates charts and HTML report)
 
-- Defines **target allocation weights** and a monthly deposit amount (EUR).
-- Tracks **current share counts** across all positions.
-- Fetches **live prices** via yfinance and **FX rates** (USD/CHF, EUR/CHF).
-- Runs `verify_allocations()` to check that sub-allocation matrices sum to 100%.
-- Performs a **portfolio audit** — compares actual vs. target weights and flags positions that are not in an uptrend.
+### CONFIGURATION.ipynb
+
+Imports everything from `config/` and sets up runtime state variables (`plot_data`, `earliest_dates`, `use_cache`). Clears stale cache on load.
 
 ### PLOT.ipynb
 
 Visualization and reporting:
-
-- Pulls historical price data for all configured assets over multiple timeframes (6-month, 1-year).
-- Generates **sector-grouped performance charts** with themed styling.
-- Builds a self-contained **HTML report** with tabbed navigation, embedded charts, and a summary table.
+- Pulls historical price data for all configured assets over multiple timeframes.
+- Generates sector-grouped performance charts with themed styling.
+- Builds a self-contained HTML report with tabbed navigation, embedded charts, and summary tables.
 - Writes the final report to `OUTPUT_PATH/Stock_report.html`.
 
 ### PUMP.ipynb
 
-Speculative stock watchlist dashboard:
-
-- Maintains a curated list of small-cap / high-volatility stocks with metadata (52-week range, analyst ratings, price targets, profitability).
-- Tracks a **"pumped"** flag indicating whether a stock has already had its breakout move.
-- Renders a formatted table for quick screening.
+Self-contained speculative stock watchlist dashboard:
+- Maintains a curated list of small-cap / high-volatility stocks with full fundamental metrics (revenue, margins, P/E, 52-week range, analyst ratings).
+- Tracks a "pumped" flag (YES / PARTIAL / NO) indicating breakout status.
+- Renders a formatted table with footnotes and disclaimers.
 
 ## Output
 
 The `output/` directory is where generated artifacts (HTML reports, charts) are stored. Its contents are not committed to version control.
 
-When running in Google Colab, the default output path points to Google Drive (`/content/drive/MyDrive/Stocks/output/`). Update `OUTPUT_PATH` in `CONFIGURATION.ipynb` to change the destination.
+When running in Google Colab, the default output path points to Google Drive (`/content/drive/MyDrive/Stocks/output/`). Update `OUTPUT_PATH` in `config/settings.py` to change the destination.
 
 ## Dependencies
 
@@ -78,10 +101,18 @@ pip install yfinance matplotlib pandas numpy
 ## Usage
 
 1. Open the notebooks in **Google Colab** (or any Jupyter environment).
-2. Run `CONFIGURATION.ipynb` first to load shared config.
-3. Run `main.ipynb` for the portfolio audit.
-4. Run `PLOT.ipynb` to generate charts and the HTML report.
-5. Run `PUMP.ipynb` for the speculative watchlist.
+2. Run `main.ipynb` — it loads configuration and generates the report.
+3. Run `PUMP.ipynb` separately for the speculative watchlist.
+4. To run the portfolio audit or crypto engine, import from `portfolio/`:
+
+```python
+from portfolio.audit import run_audit, build_exposure_matrix
+from portfolio.crypto import run_crypto_engine
+
+run_audit()
+build_exposure_matrix()
+run_crypto_engine()
+```
 
 > When using Colab, mount Google Drive first so the HTML report can be saved to `OUTPUT_PATH`.
 

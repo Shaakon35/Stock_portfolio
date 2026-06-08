@@ -1,0 +1,103 @@
+# =========================================================================
+# PORTFOLIO TARGET WEIGHTS (100% total)
+# =========================================================================
+
+MONTHLY_DEPOSIT = 1000.0  # Monthly fresh cash allocation in Euros
+DEGIRO_FEE = 3.00         # Flat transaction fee
+
+TARGET_WEIGHTS = {
+    "VWCE.DE":           0.05,  # 5% Core Global Safety Anchor
+    "XAIX.DE":           0.30,  # 30% Core AI & Big Data Index
+    "SMH":               0.30,  # 30% Core Semiconductors (NVIDIA, ASML, TSMC)
+    "IUIT.L":            0.10,  # 10% iShares S&P 500 Info Tech (Apple, MSFT, AVGO)
+    "NUCLEAR_SATELLITE": 0.15,  # 15% Single Stock Nuclear Picking
+    "QUANTUM_SATELLITE": 0.10,  # 10% Single Stock Quantum Speculative Rockets
+    "CYBER_SATELLITE":   0.05,  # 5% Single Stock Cybersecurity Satellite
+}
+
+# =========================================================================
+# SUB-ALLOCATION BASKETS (each sums to 1.0 = 100% of its slice)
+# =========================================================================
+
+NUCLEAR_BASKET_TARGETS = {
+    "CCJ":   0.40,  # 40% of Nuclear Slice
+    "GEV":   0.24,  # 24% of Nuclear Slice
+    "SRUUF": 0.16,  # 16% of Nuclear Slice
+    "LEU":   0.12,  # 12% of Nuclear Slice
+    "SMR":   0.04,  # 4% of Nuclear Slice
+    "OKLO":  0.04,  # 4% of Nuclear Slice
+}
+
+QUANTUM_BASKET_TARGETS = {
+    "IONQ":  0.40,  # 40% of Quantum Slice
+    "QNT":   0.25,  # 25% of Quantum Slice
+    "QBTS":  0.25,  # 25% of Quantum Slice
+    "RGTI":  0.10,  # 10% of Quantum Slice
+    "QUBT":  0.00,  # Paused allocation
+    "XNDU":  0.00,  # Private Stage Gate
+    "INFQ":  0.00,  # Private Stage Gate
+    "HQ":    0.00,  # Private Stage Gate
+}
+
+CYBER_BASKET_TARGETS = {
+    "CRWD":  0.80,  # 80% of Cyber Slice
+    "PANW":  0.20,  # 20% of Cyber Slice
+}
+
+# Aggressive Profit-Taking Triggers (1.25x original for "Let Winners Run")
+SELL_TRIGGER_CEILING = {
+    "NUCLEAR_SATELLITE": 0.1875,
+    "QUANTUM_SATELLITE": 0.125,
+    "CYBER_SATELLITE":   0.0625,
+    "SMH":               0.375,
+    "IUIT.L":            0.1875,
+}
+
+# =========================================================================
+# CURRENT HOLDINGS (share counts)
+# =========================================================================
+
+my_current_shares = {
+    "VWCE.DE": 10, "XAIX.DE": 45, "SMH": 22, "IUIT.L": 5,
+    "CCJ": 15, "GEV": 5, "SRUUF": 25, "LEU": 10, "SMR": 50, "OKLO": 30,
+    "IONQ": 100, "QNT": 0, "QBTS": 250, "RGTI": 400, "QUBT": 150,
+    "CRWD": 2, "PANW": 3,
+}
+
+# =========================================================================
+# ETF LOOK-THROUGH (underlying stock exposures per ETF)
+# =========================================================================
+
+ETF_LOOK_THROUGH = {
+    "SMH": {
+        "TSM": 0.1009, "ASML": 0.1008, "NVDA": 0.0992, "AVGO": 0.0959, "MU": 0.0829,
+        "AMD": 0.0801, "AMAT": 0.0647, "LRCX": 0.0629, "INTC": 0.0513, "TXN": 0.0422,
+        "OTHER_SEMI": 0.2191,
+    },
+    "IUIT.L": {
+        "NVDA": 0.2301, "AAPL": 0.1853, "MSFT": 0.1536, "AVGO": 0.0820, "MU": 0.0212,
+        "PLTR": 0.0187, "AMD": 0.0185, "CSCO": 0.0171, "AMAT": 0.0152, "LRCX": 0.0149,
+        "OTHER_TECH": 0.2434,
+    },
+    "XAIX.DE": {
+        "TSLA": 0.0934, "TER": 0.0730, "AMD": 0.0669, "PLTR": 0.0552, "TSM": 0.0412,
+        "KTOS": 0.0380, "META": 0.0370, "SHOP": 0.0367, "GOOGL": 0.0353, "RBLX": 0.0304,
+        "OTHER_AI": 0.4929,
+    },
+    "VWCE.DE": {
+        "NVDA": 0.0458, "AAPL": 0.0383, "MSFT": 0.0297, "AMZN": 0.0249, "GOOGL": 0.0219,
+        "AVGO": 0.0189, "TSM": 0.0161, "META": 0.0131, "TSLA": 0.0106,
+        "OTHER_GLOBAL": 0.7777,
+    },
+}
+
+
+def verify_allocations():
+    """Assert that all allocation matrices sum correctly."""
+    total_target = sum(TARGET_WEIGHTS.values())
+    print(f"Total Portfolio Weight: {total_target * 100}%")
+
+    assert sum(NUCLEAR_BASKET_TARGETS.values()) == 1.0
+    assert sum(QUANTUM_BASKET_TARGETS.values()) == 1.0
+    assert sum(CYBER_BASKET_TARGETS.values()) == 1.0
+    print("All sub-baskets verified.")
