@@ -81,6 +81,18 @@ single_stocks = {
     # --- [CYBER] CYBERSECURITY SATELLITE ENGINE ---
     "[CYBER] CrowdStrike Holdings, Inc.": "CRWD",
     "[CYBER] Palo Alto Networks, Inc.": "PANW",
+
+    # --- [IND] INDUSTRIALS & DEFENSE SATELLITE ---
+    "[IND] BWX Technologies, Inc.": "BWXT",
+    "[IND] Powell Industries, Inc.": "POWL",
+    "[IND] Vertiv Holdings Co": "VRT",
+    "[IND] Comfort Systems USA, Inc.": "FIX",
+
+    # --- [SPEC] SPECULATIVE GROWTH SATELLITE ---
+    "[SPEC] Rocket Lab USA, Inc.": "RKLB",
+    "[SPEC] Lattice Semiconductor Corp.": "LSCC",
+    "[SPEC] Credo Technology Group": "CRDO",
+    "[SPEC] Nebius Group N.V.": "NBIS",
 }
 
 # =========================================================================

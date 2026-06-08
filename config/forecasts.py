@@ -91,4 +91,16 @@ stock_forecast_models = {
     # --- CYBER ---
     "[CYBER] CrowdStrike Holdings, Inc.":    {"min_rate": 12.0, "max_rate": 26.0, "risk": "Medium (Moat)",     "cyclic": "No",  "loss_risk": "Low-Med"},
     "[CYBER] Palo Alto Networks, Inc.":      {"min_rate": 10.0, "max_rate": 22.0, "risk": "Low-Med (Stable)",  "cyclic": "No",  "loss_risk": "Low"},
+
+    # --- IND (Industrials & Defense) ---
+    "[IND] BWX Technologies, Inc.":          {"min_rate": 10.0, "max_rate": 18.0, "risk": "Low-Med (Monopoly)","cyclic": "No",  "loss_risk": "Low"},
+    "[IND] Powell Industries, Inc.":         {"min_rate": 12.0, "max_rate": 24.0, "risk": "Med-High (Capex)",  "cyclic": "Yes", "loss_risk": "Medium"},
+    "[IND] Vertiv Holdings Co":              {"min_rate": 14.0, "max_rate": 26.0, "risk": "Medium (DC Infra)", "cyclic": "Yes", "loss_risk": "Medium"},
+    "[IND] Comfort Systems USA, Inc.":       {"min_rate": 10.0, "max_rate": 20.0, "risk": "Low-Med (Backlog)", "cyclic": "Yes", "loss_risk": "Low-Med"},
+
+    # --- SPEC (Speculative Growth) ---
+    "[SPEC] Rocket Lab USA, Inc.":           {"min_rate": 5.0,  "max_rate": 35.0, "risk": "High (Aerospace)",  "cyclic": "No",  "loss_risk": "High"},
+    "[SPEC] Lattice Semiconductor Corp.":    {"min_rate": 8.0,  "max_rate": 22.0, "risk": "Med-High (Edge AI)","cyclic": "Yes", "loss_risk": "Medium"},
+    "[SPEC] Credo Technology Group":         {"min_rate": 15.0, "max_rate": 35.0, "risk": "High (Growth)",     "cyclic": "Yes", "loss_risk": "Medium"},
+    "[SPEC] Nebius Group N.V.":              {"min_rate": -5.0, "max_rate": 40.0, "risk": "High (Burn/Geo)",   "cyclic": "No",  "loss_risk": "High"},
 }

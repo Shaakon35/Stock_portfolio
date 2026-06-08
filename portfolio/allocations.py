@@ -6,14 +6,13 @@ MONTHLY_DEPOSIT = 1000.0  # Monthly fresh cash allocation in Euros
 DEGIRO_FEE = 3.00         # Flat transaction fee
 
 TARGET_WEIGHTS = {
-    "VWCE.DE":           0.05,  # 5% Core Global Safety Anchor
     "XAIX.DE":           0.25,  # 25% Core AI & Big Data Index
     "SMH":               0.25,  # 25% Core Semiconductors (NVIDIA, ASML, TSMC)
     "IUIT.L":            0.10,  # 10% iShares S&P 500 Info Tech (Apple, MSFT, AVGO)
     "NUCLEAR_SATELLITE": 0.12,  # 12% Single Stock Nuclear Picking
     "QUANTUM_SATELLITE": 0.08,  # 8% Single Stock Quantum Speculative Rockets
     "CYBER_SATELLITE":   0.05,  # 5% Single Stock Cybersecurity Satellite
-    "INDUSTRIAL_SATELLITE": 0.05,  # 5% Industrials & Defense (data center infra, nuclear defense)
+    "INDUSTRIAL_SATELLITE": 0.10,  # 10% Industrials & Defense (data center infra, nuclear defense)
     "SPECGROWTH_SATELLITE": 0.05,  # 5% Speculative Growth (high-growth semis, AI infra, aerospace)
 }
 
@@ -65,7 +64,7 @@ SELL_TRIGGER_CEILING = {
     "NUCLEAR_SATELLITE":     0.15,
     "QUANTUM_SATELLITE":     0.10,
     "CYBER_SATELLITE":       0.0625,
-    "INDUSTRIAL_SATELLITE":  0.0625,
+    "INDUSTRIAL_SATELLITE":  0.125,
     "SPECGROWTH_SATELLITE":  0.0625,
     "SMH":                   0.3125,
     "IUIT.L":                0.125,
@@ -76,7 +75,7 @@ SELL_TRIGGER_CEILING = {
 # =========================================================================
 
 my_current_shares = {
-    "VWCE.DE": 10, "XAIX.DE": 45, "SMH": 22, "IUIT.L": 5,
+    "XAIX.DE": 45, "SMH": 22, "IUIT.L": 5,
     "CCJ": 15, "GEV": 5, "SRUUF": 25, "LEU": 10, "SMR": 50, "OKLO": 30,
     "IONQ": 100, "QNT": 0, "QBTS": 250, "RGTI": 400, "QUBT": 150,
     "CRWD": 2, "PANW": 3,
@@ -105,11 +104,6 @@ ETF_LOOK_THROUGH = {
         "TSLA": 0.0934, "TER": 0.0730, "AMD": 0.0669, "PLTR": 0.0552, "TSM": 0.0412,
         "KTOS": 0.0380, "META": 0.0370, "SHOP": 0.0367, "GOOGL": 0.0353, "RBLX": 0.0304,
         "OTHER_AI": 0.4929,
-    },
-    "VWCE.DE": {
-        "NVDA": 0.0458, "AAPL": 0.0383, "MSFT": 0.0297, "AMZN": 0.0249, "GOOGL": 0.0219,
-        "AVGO": 0.0189, "TSM": 0.0161, "META": 0.0131, "TSLA": 0.0106,
-        "OTHER_GLOBAL": 0.7777,
     },
 }
 

@@ -43,7 +43,6 @@ def run_audit():
     specgrowth_val = sum(portfolio_values.get(s, 0.0) for s in SPECGROWTH_BASKET_TARGETS)
 
     macro_values = {
-        "VWCE.DE": portfolio_values.get("VWCE.DE", 0),
         "XAIX.DE": portfolio_values.get("XAIX.DE", 0),
         "SMH": portfolio_values.get("SMH", 0),
         "IUIT.L": portfolio_values.get("IUIT.L", 0),
@@ -179,7 +178,6 @@ def build_exposure_matrix():
         "SMH":        "#E6F0FA",
         "IUIT.L":     "#E6F7F9",
         "XAIX.DE":    "#E6F4EA",
-        "VWCE.DE":    "#FFFFFF",
         "NUCLEAR":    "#FCF7E6",
         "QUANTUM":    "#FAE6FA",
         "CYBER":      "#FCE8E6",
@@ -192,7 +190,6 @@ def build_exposure_matrix():
         "SMH":        "Core Semiconductors (SMH)",
         "IUIT.L":     "S&P 500 Info Tech (IUIT.L)",
         "XAIX.DE":    "AI & Big Data Index (XAIX.DE)",
-        "VWCE.DE":    "Global Base Anchor (VWCE.DE)",
         "NUCLEAR":    "Satellite Layer (NUCLEAR)",
         "QUANTUM":    "Satellite Layer (QUANTUM)",
         "CYBER":      "Satellite Layer (CYBER)",
