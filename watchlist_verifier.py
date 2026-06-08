@@ -34,7 +34,10 @@ PCT_DIFF_THRESHOLD = 25.0            # % gap that triggers a "differs" flag
 # ---------------------------------------------------------------------------
 
 # Ensure the repo root is on the path so config/ is importable
-REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+try:
+    REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+except NameError:
+    REPO_ROOT = os.getcwd()
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
