@@ -235,10 +235,11 @@ ASSET_META = {
 # TECHNICAL SIGNAL ENGINE
 # =========================================================================
 
-def compute_signals(ticker):
+def compute_signals(ticker, sell_target=None):
     """Compute technical signals for a single ticker.
 
     Returns price, SMAs, RSI, 52w range, trend, and a dynamic buy_target.
+    sell_target is passed through to ensure buy_target stays below it.
     """
     try:
         data = yf.Ticker(ticker).history(period="1y")
@@ -276,8 +277,11 @@ def compute_signals(ticker):
         else:
             trend = "N/A"
 
-        # Dynamic buy target
-        buy_target = compute_buy_target(price, sma_50, sma_200, low_52w, trend, len(close))
+        # Dynamic buy target (constrained by sell_target)
+        buy_target = compute_buy_target(
+            price, sma_50, sma_200, low_52w, trend, len(close),
+            sell_target=sell_target,
+        )
 
         return {
             "price": price,
@@ -295,7 +299,8 @@ def compute_signals(ticker):
         return None
 
 
-def compute_buy_target(price, sma_50, sma_200, low_52w, trend, data_len):
+def compute_buy_target(price, sma_50, sma_200, low_52w, trend, data_len,
+                       sell_target=None):
     """Compute a dynamic buy target from live technical data.
 
     Logic:
@@ -304,8 +309,10 @@ def compute_buy_target(price, sma_50, sma_200, low_52w, trend, data_len):
     - DOWNTREND: buy near the 52w low + 10% buffer (wait for bottom)
     - If not enough data for SMA-200, use SMA-50 or 52w low
 
-    The target is always floored at the 52w low (never below where it
-    actually traded) and capped at 95% of current price (always a discount).
+    Safety rails:
+    - Floor: never below 52w low (it actually traded there)
+    - Cap: always at least 5% discount from current price
+    - Never above 80% of sell_target (must leave room for profit)
     """
     # Pick the primary support level based on trend
     if trend == "UPTREND":
@@ -335,6 +342,10 @@ def compute_buy_target(price, sma_50, sma_200, low_52w, trend, data_len):
 
     # Cap: always at least a 5% discount from current price
     target = min(target, price * 0.95)
+
+    # Never above 80% of sell_target (must leave room for profit)
+    if sell_target is not None and sell_target > 0:
+        target = min(target, sell_target * 0.80)
 
     return round(target, 2)
 
@@ -427,11 +438,17 @@ def build_signal_table():
             continue
 
         print(f"  {ticker}...", end=" ")
-        signals = compute_signals(ticker)
+        sell_target = meta.get("sell_target")
+        signals = compute_signals(ticker, sell_target=sell_target)
         if signals is None:
             print("failed")
             continue
-        print(f"${signals['price']:.2f}  buy@${signals['buy_target']:,.2f}")
+
+        # Warn if sell target is stale (below current price)
+        warn = ""
+        if sell_target and signals["price"] >= sell_target:
+            warn = "  ⚠️ SELL TARGET STALE"
+        print(f"${signals['price']:.2f}  buy@${signals['buy_target']:,.2f}{warn}")
 
         buy_signal, buy_reason = evaluate_buy(signals["price"], meta, signals)
         sell_action, sell_detail = evaluate_sell(signals["price"], meta)
