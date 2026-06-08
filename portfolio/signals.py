@@ -221,15 +221,9 @@ ASSET_META = {
         "sell_date": "2027",
         "catalyst": "Sell on QPU scaling milestone or hype peak",
     },
-    # QUBT: ~$10, paused allocation
-    "QUBT": {
-        "name": "Quantum Computing Inc.",
-        "basket": "Quantum (paused)",
-        "strategy": "catalyst",
-        "sell_target": 16.0,
-        "sell_date": "2027",
-        "catalyst": "Sell on any spike — paused allocation, thin thesis",
-    },
+    # QUBT: REMOVED from signal dashboard.
+    # Paused because weakest thesis in quantum basket — no real quantum IP,
+    # meme/momentum play. Still own 150 shares, sell on any spike manually.
     # RKLB: $110, Neutron launch is the catalyst
     "RKLB": {
         "name": "Rocket Lab",

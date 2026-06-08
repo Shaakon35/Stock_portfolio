@@ -34,7 +34,7 @@ QUANTUM_BASKET_TARGETS = {
     "QNT":   0.25,  # 25% of Quantum Slice
     "QBTS":  0.25,  # 25% of Quantum Slice
     "RGTI":  0.10,  # 10% of Quantum Slice
-    "QUBT":  0.00,  # Paused allocation
+    "QUBT":  0.00,  # Paused — weakest quantum thesis, no real IP, sell on any spike
     "XNDU":  0.00,  # Private Stage Gate
     "INFQ":  0.00,  # Private Stage Gate
     "HQ":    0.00,  # Private Stage Gate
