@@ -502,7 +502,7 @@ def compute_stop_loss(price, buy_target, strategy):
 
 def build_signal_table():
     """Fetch signals for all portfolio assets and return structured data."""
-    print("Fetching signals for all portfolio assets...")
+    
 
     skip_tickers = {"XNDU", "INFQ", "HQ"}
     all_tickers = [t for t in my_current_shares.keys() if t not in skip_tickers]
@@ -514,19 +514,15 @@ def build_signal_table():
             print(f"  ⚠️ {ticker}: no metadata, skipping")
             continue
 
-        print(f"  {ticker}...", end=" ")
         sell_target = meta.get("sell_target")
         strategy = meta.get("strategy", "hold_forever")
         signals = compute_signals(ticker, strategy=strategy, sell_target=sell_target)
         if signals is None:
-            print("failed")
+            print(f"  ⚠️ {ticker}: fetch failed, skipping")
             continue
 
-        # Warn if sell target is outdated (below current price)
-        warn = ""
         if sell_target and signals["price"] >= sell_target:
-            warn = "  ⚠️ SELL TARGET OUTDATED"
-        print(f"${signals['price']:.2f}  buy@${signals['buy_target']:,.2f}{warn}")
+            print(f"  ⚠️ {ticker}: price ${signals['price']:.2f} above sell target ${sell_target:,.0f} — target outdated")
 
         buy_signal, buy_reason = evaluate_buy(signals["price"], meta, signals)
         sell_action, sell_detail = evaluate_sell(signals["price"], meta)
@@ -557,5 +553,4 @@ def build_signal_table():
             "shares": my_current_shares.get(ticker, 0),
         })
 
-    print(f"\nDone — {len(results)} assets analyzed.")
     return results

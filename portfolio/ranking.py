@@ -312,11 +312,11 @@ def fetch_stock_data(ticker):
 # Weights — adjust these to change ranking priorities
 # Positive factors sum to 1.0, penalties are subtracted after
 WEIGHTS = {
-    "upside":     0.25,   # was 0.30
-    "growth":     0.20,   # was 0.25 (now revenue quality)
+    "upside":     0.30,
+    "growth":     0.25,
     "conviction": 0.15,
-    "entry":      0.10,   # was 0.15
-    "momentum":   0.10,   # was 0.15
+    "entry":      0.15,
+    "momentum":   0.15,
     # Risk adjustments (applied as penalties/bonuses to final score)
     "profitability_bonus": 5,    # +5 if profitable, -5 if not, -8 if burning cash
     "fragility_penalty": 10,     # max -10 for binary thesis
@@ -396,11 +396,10 @@ def build_ranking():
         if ticker in SKIP_TICKERS:
             continue
 
-        print(f"  Fetching {ticker}...")
         data = fetch_stock_data(ticker)
 
         if data.get("error"):
-            print(f"  ⚠️ {ticker} failed: {data['error']}")
+            print(f"  ⚠️ {ticker}: {data['error']}")
             results.append({
                 "ticker": ticker,
                 "name": meta["name"],
