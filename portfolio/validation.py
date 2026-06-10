@@ -129,9 +129,12 @@ BACKTEST_EXTRA = {
 def fetch_historical_data(ticker, lookback_date):
     """Fetch stock data as it would have appeared on lookback_date.
 
-    Uses historical prices and financials to reconstruct the ranking
-    inputs from a past date. Analyst target/consensus use current values
-    as a proxy (not available historically via yfinance).
+    Reconstructs historical fundamentals from quarterly financials:
+    - Revenue, EPS, FCF, cash: from quarterly statements available at lookback_date
+    - Market cap: price_then × current shares (approximation)
+    - SMAs, 52w range, 2y high: from historical price data
+    - Analyst targets/consensus: only used for lookbacks ≤18 months;
+      older periods get neutral values to avoid fake upside signals
 
     Args:
         ticker: stock ticker
@@ -220,34 +223,90 @@ def fetch_historical_data(ticker, lookback_date):
         except Exception:
             pass
 
-        # Fall back to info if quarterly didn't work
-        if rev_growth is None:
+        # Fall back to info only for recent lookbacks (≤18 months)
+        months_ago = (datetime.now() - lookback_date).days / 30
+        is_recent = months_ago <= 18
+
+        if rev_growth is None and is_recent:
             rg = info.get("revenueGrowth")
             rev_growth = (rg * 100) if rg is not None else None
             if not total_revenue:
                 total_revenue = info.get("totalRevenue", 0)
 
         # --- Valuation: compute historical P/S ---
+        shares = info.get("sharesOutstanding")
         ps_ratio = None
-        if total_revenue and total_revenue > 0:
-            shares = info.get("sharesOutstanding")
-            if shares and shares > 0:
-                ps_ratio = (price_then * shares) / total_revenue
+        if total_revenue and total_revenue > 0 and shares and shares > 0:
+            ps_ratio = (price_then * shares) / total_revenue
 
-        # Fall back to current P/S if we couldn't compute historical
-        if ps_ratio is None:
+        # Fall back to current P/S only for recent lookbacks
+        if ps_ratio is None and is_recent:
             ps_ratio = info.get("priceToSalesTrailing12Months")
 
-        # --- Cash and profitability (use current as proxy) ---
-        eps = info.get("trailingEps")
-        free_cash_flow = info.get("freeCashflow")
-        total_cash = info.get("totalCash")
-        market_cap = info.get("marketCap")
+        # --- Historical market cap (price_then × shares) ---
+        market_cap = None
+        if shares and shares > 0:
+            market_cap = price_then * shares
+        elif is_recent:
+            market_cap = info.get("marketCap")
 
-        # --- Analyst data (current as proxy — not available historically) ---
-        target = info.get("targetMeanPrice")
-        rec = info.get("recommendationKey", "none")
-        num_analysts = info.get("numberOfAnalystOpinions", 0)
+        # --- Cash and profitability ---
+        # Try to reconstruct from quarterly financials
+        eps = None
+        free_cash_flow = None
+        total_cash = None
+        try:
+            # EPS from quarterly income statement
+            qf = t.quarterly_income_stmt
+            if qf is not None:
+                avail_cols = [c for c in qf.columns if c <= lookback_date + timedelta(days=45)]
+                if len(avail_cols) >= 4:
+                    # Net income TTM / shares = approximate EPS
+                    if "Net Income" in qf.index and shares and shares > 0:
+                        net_income_ttm = sum(qf.loc["Net Income", avail_cols[:4]])
+                        if net_income_ttm is not None:
+                            eps = net_income_ttm / shares
+
+            # FCF from quarterly cash flow statement
+            qcf = t.quarterly_cashflow
+            if qcf is not None:
+                avail_cols = [c for c in qcf.columns if c <= lookback_date + timedelta(days=45)]
+                if len(avail_cols) >= 4:
+                    if "Free Cash Flow" in qcf.index:
+                        free_cash_flow = sum(qcf.loc["Free Cash Flow", avail_cols[:4]])
+
+            # Cash from balance sheet (most recent quarter before lookback)
+            qbs = t.quarterly_balance_sheet
+            if qbs is not None:
+                avail_cols = [c for c in qbs.columns if c <= lookback_date + timedelta(days=45)]
+                if len(avail_cols) >= 1:
+                    if "Cash And Cash Equivalents" in qbs.index:
+                        total_cash = qbs.loc["Cash And Cash Equivalents", avail_cols[0]]
+                        if total_cash is not None:
+                            total_cash = float(total_cash)
+        except Exception:
+            pass
+
+        # Fall back to current values only for recent lookbacks
+        if is_recent:
+            if eps is None:
+                eps = info.get("trailingEps")
+            if free_cash_flow is None:
+                free_cash_flow = info.get("freeCashflow")
+            if total_cash is None:
+                total_cash = info.get("totalCash")
+
+        # --- Analyst data ---
+        # Current analyst targets are only a reasonable proxy for recent periods.
+        # For older lookbacks, use neutral values to avoid fake upside signals.
+        if is_recent:
+            target = info.get("targetMeanPrice")
+            rec = info.get("recommendationKey", "none")
+            num_analysts = info.get("numberOfAnalystOpinions", 0)
+        else:
+            target = None       # → upside scores neutral (50)
+            rec = "none"        # → conviction scores neutral
+            num_analysts = 0
 
         return {
             "price": price_then,
