@@ -272,9 +272,24 @@ def fetch_stock_data(ticker):
         low_52w = info.get("fiftyTwoWeekLow")
         market_cap = info.get("marketCap", 0)
 
-        # Revenue growth from quarterly data
+        # Revenue growth — try info first, fallback to quarterly financials
         total_revenue = info.get("totalRevenue", 0)
         rev_growth = info.get("revenueGrowth")  # YoY as decimal (0.25 = 25%)
+
+        # Fallback: compute YoY from quarterly income statement
+        if rev_growth is None:
+            try:
+                qf = t.quarterly_income_stmt
+                if qf is not None and "Total Revenue" in qf.index and len(qf.columns) >= 5:
+                    # Sum last 4 quarters (TTM) vs prior 4 quarters
+                    recent_4 = qf.loc["Total Revenue"].iloc[:4].sum()
+                    prior_4 = qf.loc["Total Revenue"].iloc[4:8].sum()
+                    if prior_4 and prior_4 > 0 and recent_4 and recent_4 > 0:
+                        rev_growth = (recent_4 - prior_4) / prior_4
+                        if not total_revenue:
+                            total_revenue = recent_4
+            except Exception:
+                pass
 
         # Profitability data (auto-fetched for Option B)
         eps = info.get("trailingEps")
