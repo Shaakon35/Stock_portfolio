@@ -205,6 +205,10 @@ def score_valuation(ps_ratio):
 
     Returns 50 (neutral) for pre-revenue or missing data.
     """
+    try:
+        ps_ratio = float(ps_ratio)
+    except (TypeError, ValueError):
+        return 50
     if ps_ratio is None or ps_ratio <= 0:
         return 50
     if ps_ratio < 3:
