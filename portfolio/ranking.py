@@ -194,6 +194,112 @@ def score_momentum(price, sma_50, sma_200):
         return 30   # Neutral
 
 
+def score_valuation(ps_ratio):
+    """Score based on Price-to-Sales ratio. Lower = cheaper = better.
+
+    P/S < 3  → 100 (deep value)
+    P/S 3-10 → 70-100 (reasonable for growth)
+    P/S 10-30 → 30-70 (expensive, needs high growth to justify)
+    P/S 30-60 → 10-30 (very expensive)
+    P/S > 60 → 0-10 (extreme, priced for perfection)
+
+    Returns 50 (neutral) for pre-revenue or missing data.
+    """
+    if ps_ratio is None or ps_ratio <= 0:
+        return 50
+    if ps_ratio < 3:
+        return 100
+    elif ps_ratio < 10:
+        # 3 → 100, 10 → 70 (linear)
+        return 100 - (ps_ratio - 3) * (30 / 7)
+    elif ps_ratio < 30:
+        # 10 → 70, 30 → 30 (linear)
+        return 70 - (ps_ratio - 10) * (40 / 20)
+    elif ps_ratio < 60:
+        # 30 → 30, 60 → 5 (linear)
+        return 30 - (ps_ratio - 30) * (25 / 30)
+    else:
+        return 5
+
+
+def score_long_term_health(price, high_2y, history_years):
+    """Score based on price vs 2-year high.
+
+    Measures structural health: a stock near its 2y high is healthy,
+    one at 10% of its 2y high is likely dying.
+
+    Only applies penalty when stock has 3+ years of history to avoid
+    penalizing SPACs/IPOs for inflated early prices.
+
+    Returns 50 (neutral) when insufficient history.
+    """
+    if not high_2y or not price or price <= 0:
+        return 50
+    if history_years is not None and history_years < 3:
+        return 50  # Too young — SPAC/IPO noise
+
+    pct_of_high = (price / high_2y) * 100
+
+    if pct_of_high >= 80:
+        return 100  # Near highs — healthy
+    elif pct_of_high >= 60:
+        return 75   # Moderate pullback
+    elif pct_of_high >= 40:
+        return 50   # Significant decline
+    elif pct_of_high >= 20:
+        return 25   # Severe decline
+    else:
+        return 5    # Structural collapse (<20% of 2y high)
+
+
+def score_cash_runway(total_cash, free_cash_flow, eps):
+    """Score based on years of cash remaining at current burn rate.
+
+    Only relevant for unprofitable companies (EPS <= 0).
+    Profitable companies get 80 (good but not max — cash still matters).
+
+    runway > 10y → 100 (no concern)
+    5-10y → 80
+    3-5y  → 60
+    2-3y  → 40
+    1-2y  → 20
+    < 1y  → 0 (imminent dilution or death)
+
+    Returns 50 (neutral) when data is missing.
+    """
+    # Profitable companies don't need cash runway analysis
+    if eps is not None and eps > 0:
+        return 80
+
+    if total_cash is None or total_cash <= 0:
+        return 50  # No data
+    if free_cash_flow is None:
+        return 50  # No data
+
+    # Positive FCF = generating cash, no runway concern
+    if free_cash_flow >= 0:
+        return 90
+
+    # Burning cash — compute years of runway
+    burn_rate = abs(free_cash_flow)
+    if burn_rate == 0:
+        return 50
+    runway_years = total_cash / burn_rate
+
+    if runway_years > 10:
+        return 100
+    elif runway_years > 5:
+        return 80
+    elif runway_years > 3:
+        return 60
+    elif runway_years > 2:
+        return 40
+    elif runway_years > 1:
+        return 20
+    else:
+        return 0
+
+
 # =========================================================================
 # RISK PENALTY FUNCTIONS — reduce score for fragile/risky stocks
 # =========================================================================
@@ -291,27 +397,31 @@ def fetch_stock_data(ticker):
             except Exception:
                 pass
 
-        # Profitability data (auto-fetched for Option B)
+        # Profitability data
         eps = info.get("trailingEps")
         free_cash_flow = info.get("freeCashflow")
 
-        # Dilution: compare current shares to prior year
-        shares_outstanding = info.get("sharesOutstanding", 0)
-        # yfinance doesn't give historical shares easily, so we check
-        # floatShares vs sharesOutstanding as a proxy for recent dilution
-        float_shares = info.get("floatShares", 0)
-        implied_lockup = 0
-        if shares_outstanding and float_shares and shares_outstanding > 0:
-            implied_lockup = ((shares_outstanding - float_shares) / shares_outstanding) * 100
+        # Valuation
+        ps_ratio = info.get("priceToSalesTrailing12Months")
 
-        # SMA from history (fetch 2y for accurate 200-SMA)
+        # Cash position (for runway calculation)
+        total_cash = info.get("totalCash")
+
+        # SMA + 2y high from history
         hist = t.history(period="2y")
+        close = hist["Close"].dropna() if not hist.empty else None
         sma_50 = None
         sma_200 = None
-        if len(hist) >= 50:
-            sma_50 = hist["Close"].rolling(50).mean().iloc[-1]
-        if len(hist) >= 200:
-            sma_200 = hist["Close"].rolling(200).mean().iloc[-1]
+        high_2y = None
+        history_years = None
+        if close is not None and len(close) > 0:
+            if len(close) >= 50:
+                sma_50 = close.rolling(50).mean().iloc[-1]
+            if len(close) >= 200:
+                sma_200 = close.rolling(200).mean().iloc[-1]
+            high_2y = float(close.max())
+            # Estimate years of history from trading days (~252/year)
+            history_years = len(close) / 252.0
 
         return {
             "price": price,
@@ -325,7 +435,10 @@ def fetch_stock_data(ticker):
             "rev_growth_pct": (rev_growth * 100) if rev_growth is not None else None,
             "eps": eps,
             "free_cash_flow": free_cash_flow,
-            "shares_outstanding": shares_outstanding,
+            "ps_ratio": ps_ratio,
+            "total_cash": total_cash,
+            "high_2y": high_2y,
+            "history_years": round(history_years, 1) if history_years else None,
             "sma_50": sma_50,
             "sma_200": sma_200,
             "error": None,
@@ -341,11 +454,14 @@ def fetch_stock_data(ticker):
 # Weights — adjust these to change ranking priorities
 # Positive factors sum to 1.0, penalties are subtracted after
 WEIGHTS = {
-    "upside":     0.30,
-    "growth":     0.25,
-    "conviction": 0.15,
-    "entry":      0.15,
-    "momentum":   0.15,
+    "upside":      0.15,
+    "growth":      0.20,
+    "valuation":   0.15,   # P/S ratio — lower = cheaper
+    "long_term":   0.10,   # price vs 2y high — structural health
+    "cash_runway": 0.10,   # years of cash left — survival risk
+    "conviction":  0.10,
+    "entry":       0.10,
+    "momentum":    0.10,
     # Risk adjustments (applied as penalties/bonuses to final score)
     "profitability_bonus": 5,    # +5 if profitable, -5 if not, -8 if burning cash
     "fragility_penalty": 10,     # max -10 for binary thesis
@@ -364,10 +480,17 @@ def compute_composite(data, meta):
 
     price = data["price"]
 
-    # --- Positive factors (0-100 each, weighted to sum ~80 max) ---
+    # --- Positive factors (0-100 each, weighted to sum to 100) ---
     s_upside = score_analyst_upside(price, data["target"])
     s_growth = score_revenue_quality(
         data["rev_growth_pct"], data.get("total_revenue", 0)
+    )
+    s_valuation = score_valuation(data.get("ps_ratio"))
+    s_long_term = score_long_term_health(
+        price, data.get("high_2y"), data.get("history_years")
+    )
+    s_cash = score_cash_runway(
+        data.get("total_cash"), data.get("free_cash_flow"), data.get("eps")
     )
     s_conviction = score_analyst_conviction(
         data["recommendation"], data["num_analysts"]
@@ -378,6 +501,9 @@ def compute_composite(data, meta):
     base_score = (
         s_upside * WEIGHTS["upside"]
         + s_growth * WEIGHTS["growth"]
+        + s_valuation * WEIGHTS["valuation"]
+        + s_long_term * WEIGHTS["long_term"]
+        + s_cash * WEIGHTS["cash_runway"]
         + s_conviction * WEIGHTS["conviction"]
         + s_entry * WEIGHTS["entry"]
         + s_momentum * WEIGHTS["momentum"]
@@ -399,6 +525,9 @@ def compute_composite(data, meta):
     breakdown = {
         "upside": round(s_upside, 1),
         "growth": round(s_growth, 1),
+        "valuation": round(s_valuation, 1),
+        "long_term": round(s_long_term, 1),
+        "cash_runway": round(s_cash, 1),
         "conviction": round(s_conviction, 1),
         "entry": round(s_entry, 1),
         "momentum": round(s_momentum, 1),
@@ -439,6 +568,9 @@ def build_ranking():
                 "target": 0,
                 "upside_pct": 0,
                 "rev_growth_pct": None,
+                "ps_ratio": None,
+                "cash_runway_years": None,
+                "pct_of_2y_high": None,
                 "recommendation": "—",
                 "num_analysts": 0,
                 "market_cap_b": 0,
@@ -456,6 +588,18 @@ def build_ranking():
         if data["price"] and data["target"]:
             upside_pct = ((data["target"] - data["price"]) / data["price"]) * 100
 
+        # Compute derived display fields
+        ps = data.get("ps_ratio")
+        cash = data.get("total_cash")
+        fcf = data.get("free_cash_flow")
+        h2y = data.get("high_2y")
+        cash_runway_y = None
+        if cash and fcf and fcf < 0:
+            cash_runway_y = round(cash / abs(fcf), 1)
+        elif data.get("eps") and data["eps"] > 0:
+            cash_runway_y = 99.0  # profitable, no burn
+        pct_2y = round((data["price"] / h2y) * 100, 0) if h2y and h2y > 0 else None
+
         results.append({
             "ticker": ticker,
             "name": meta["name"],
@@ -468,6 +612,9 @@ def build_ranking():
             "target": round(data["target"], 2) if data["target"] else 0,
             "upside_pct": round(upside_pct, 1),
             "rev_growth_pct": round(data["rev_growth_pct"], 1) if data["rev_growth_pct"] is not None else None,
+            "ps_ratio": round(ps, 1) if ps else None,
+            "cash_runway_years": cash_runway_y,
+            "pct_of_2y_high": pct_2y,
             "eps": data.get("eps"),
             "recommendation": data["recommendation"],
             "num_analysts": data["num_analysts"],
