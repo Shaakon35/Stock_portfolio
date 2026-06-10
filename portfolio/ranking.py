@@ -451,18 +451,45 @@ def fetch_stock_data(ticker):
 # COMPOSITE SCORE
 # =========================================================================
 
-# Weights — adjust these to change ranking priorities
-# Positive factors sum to 1.0, penalties are subtracted after
-WEIGHTS = {
-    "upside":      0.15,
-    "growth":      0.20,
-    "valuation":   0.15,   # P/S ratio — lower = cheaper
-    "long_term":   0.10,   # price vs 2y high — structural health
-    "cash_runway": 0.10,   # years of cash left — survival risk
-    "conviction":  0.10,
-    "entry":       0.10,
-    "momentum":    0.10,
-    # Risk adjustments (applied as penalties/bonuses to final score)
+# Strategy-adjusted weights — each strategy emphasizes different factors.
+# hold_forever: valuation + structural health (you're holding for years)
+# cycle: growth + momentum + entry (ride the wave, exit at peak)
+# catalyst: upside + conviction + momentum + cash runway (binary bet)
+STRATEGY_WEIGHTS = {
+    "hold_forever": {
+        "growth":      0.20,
+        "upside":      0.10,
+        "valuation":   0.20,
+        "long_term":   0.15,
+        "cash_runway": 0.15,
+        "conviction":  0.10,
+        "entry":       0.05,
+        "momentum":    0.05,
+    },
+    "cycle": {
+        "growth":      0.25,
+        "upside":      0.15,
+        "valuation":   0.15,
+        "long_term":   0.10,
+        "cash_runway": 0.05,
+        "conviction":  0.10,
+        "entry":       0.10,
+        "momentum":    0.10,
+    },
+    "catalyst": {
+        "growth":      0.10,
+        "upside":      0.25,
+        "valuation":   0.05,
+        "long_term":   0.05,
+        "cash_runway": 0.15,
+        "conviction":  0.15,
+        "entry":       0.10,
+        "momentum":    0.15,
+    },
+}
+
+# Risk adjustments (same for all strategies)
+RISK_ADJUSTMENTS = {
     "profitability_bonus": 5,    # +5 if profitable, -5 if not, -8 if burning cash
     "fragility_penalty": 10,     # max -10 for binary thesis
     "downside_penalty": 12,      # max -12 for goes-to-zero risk
@@ -470,6 +497,11 @@ WEIGHTS = {
 
 def compute_composite(data, meta):
     """Compute composite score (0-100) from fetched data + manual risk tags.
+
+    Weights are strategy-adjusted:
+    - hold_forever: valuation + LT health + cash runway heavy
+    - cycle: growth + momentum + entry heavy
+    - catalyst: upside + conviction + momentum + cash runway heavy
 
     Score = weighted_positive_factors + profitability_bonus
             - fragility_penalty - downside_penalty
@@ -479,6 +511,8 @@ def compute_composite(data, meta):
         return 0, {}
 
     price = data["price"]
+    strategy = meta.get("strategy", "hold_forever")
+    w = STRATEGY_WEIGHTS.get(strategy, STRATEGY_WEIGHTS["hold_forever"])
 
     # --- Positive factors (0-100 each, weighted to sum to 100) ---
     s_upside = score_analyst_upside(price, data["target"])
@@ -499,17 +533,17 @@ def compute_composite(data, meta):
     s_momentum = score_momentum(price, data["sma_50"], data["sma_200"])
 
     base_score = (
-        s_upside * WEIGHTS["upside"]
-        + s_growth * WEIGHTS["growth"]
-        + s_valuation * WEIGHTS["valuation"]
-        + s_long_term * WEIGHTS["long_term"]
-        + s_cash * WEIGHTS["cash_runway"]
-        + s_conviction * WEIGHTS["conviction"]
-        + s_entry * WEIGHTS["entry"]
-        + s_momentum * WEIGHTS["momentum"]
+        s_upside * w["upside"]
+        + s_growth * w["growth"]
+        + s_valuation * w["valuation"]
+        + s_long_term * w["long_term"]
+        + s_cash * w["cash_runway"]
+        + s_conviction * w["conviction"]
+        + s_entry * w["entry"]
+        + s_momentum * w["momentum"]
     )
 
-    # --- Risk adjustments (penalties/bonuses) ---
+    # --- Risk adjustments (penalties/bonuses, same for all strategies) ---
     p_fragility = penalty_fragility(meta.get("fragility", "none"))
     p_downside = penalty_downside(meta.get("downside_if_fail", "low"))
     b_profit = bonus_profitability(
