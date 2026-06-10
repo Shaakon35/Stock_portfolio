@@ -289,6 +289,97 @@ BACKTEST_EXTRA = {
 
 
 # =========================================================================
+# HISTORICAL ANALYST DATA — reconstructed from upgrades_downgrades
+# =========================================================================
+
+# Map the many analyst grade labels to buy/hold/sell buckets
+_GRADE_MAP = {
+    # Buy-equivalent
+    "Buy": "buy", "Outperform": "buy", "Overweight": "buy",
+    "Positive": "buy", "Market Outperform": "buy",
+    "Strong Buy": "buy", "Top Pick": "buy", "Sector Outperform": "buy",
+    # Hold-equivalent
+    "Hold": "hold", "Neutral": "hold", "Equal-Weight": "hold",
+    "Market Perform": "hold", "In-Line": "hold",
+    "Sector Perform": "hold", "Sector Weight": "hold",
+    "Peer Perform": "hold", "Mixed": "hold", "Fair Value": "hold",
+    # Sell-equivalent
+    "Sell": "sell", "Underperform": "sell", "Underweight": "sell",
+    "Reduce": "sell", "Strong Sell": "sell",
+}
+
+
+def _reconstruct_analyst_data(ticker_obj, lookback_date, price_then):
+    """Reconstruct analyst target price and consensus from upgrades_downgrades.
+
+    Uses the ~20 most recent analyst actions before lookback_date to compute:
+    - Median price target (as analysts saw it then)
+    - Consensus recommendation (buy/hold/sell ratio)
+    - Number of analysts with coverage
+
+    Returns (target_price, recommendation_key, num_analysts) or (None, "none", 0).
+    """
+    try:
+        ud = ticker_obj.upgrades_downgrades
+        if ud is None or len(ud) == 0:
+            return None, "none", 0
+
+        import pandas as pd
+        cutoff = pd.Timestamp(lookback_date)
+        if ud.index.tz:
+            cutoff = cutoff.tz_localize(ud.index.tz)
+
+        before = ud[ud.index <= cutoff]
+        if len(before) == 0:
+            return None, "none", 0
+
+        # Use the most recent 20 analyst actions (typical coverage window)
+        recent = before.head(20)
+
+        # --- Price target: median of non-zero targets ---
+        targets = recent["currentPriceTarget"].dropna()
+        targets = targets[targets > 0]
+        target_price = float(targets.median()) if len(targets) >= 3 else None
+
+        # --- Consensus: map grades to buy/hold/sell, take majority ---
+        grades = recent["ToGrade"].dropna()
+        buy_count = 0
+        hold_count = 0
+        sell_count = 0
+        for g in grades:
+            bucket = _GRADE_MAP.get(g, "hold")  # unknown → hold
+            if bucket == "buy":
+                buy_count += 1
+            elif bucket == "sell":
+                sell_count += 1
+            else:
+                hold_count += 1
+
+        total = buy_count + hold_count + sell_count
+        if total == 0:
+            return target_price, "none", 0
+
+        # Determine consensus from ratio
+        buy_pct = buy_count / total
+        sell_pct = sell_count / total
+        if buy_pct >= 0.7:
+            rec = "strongBuy"
+        elif buy_pct >= 0.5:
+            rec = "buy"
+        elif sell_pct >= 0.5:
+            rec = "sell"
+        elif sell_pct >= 0.3:
+            rec = "underperform"
+        else:
+            rec = "hold"
+
+        return target_price, rec, total
+
+    except Exception:
+        return None, "none", 0
+
+
+# =========================================================================
 # HISTORICAL DATA FETCHING
 # =========================================================================
 
@@ -488,15 +579,14 @@ def fetch_historical_data(ticker, lookback_date):
             if total_cash is None:
                 total_cash = info.get("totalCash")
 
-        # --- Analyst data ---
-        # Yahoo Finance only provides CURRENT analyst targets/recommendations.
-        # Using them for any historical lookback is look-ahead bias: a stock
-        # that went from $50 to $200 now has a ~$220 target, which creates a
-        # fake 340% "upside" signal when applied to the old $50 price.
-        # Always neutralize for backtests.
-        target = None       # → upside scores neutral (50)
-        rec = "none"        # → conviction scores neutral
-        num_analysts = 0
+        # --- Analyst data (reconstructed from historical upgrades/downgrades) ---
+        # Yahoo's info.targetMeanPrice is today's target — using it on old
+        # prices is look-ahead bias. Instead, reconstruct from the dated
+        # upgrades_downgrades table which has per-analyst price targets and
+        # grades going back years.
+        target, rec, num_analysts = _reconstruct_analyst_data(
+            t, lookback_date, price_then
+        )
 
         return {
             "price": price_then,
