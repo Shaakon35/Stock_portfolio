@@ -89,12 +89,13 @@ SKIP_TICKERS = {"XNDU", "INFQ", "HQ", "XAIX.DE", "SMHV.SW", "QDVE.DE"}
 # =========================================================================
 
 def score_analyst_upside(price, target_price):
-    """Score based on analyst target upside. 0% = 0, 100%+ = 100."""
+    """Score based on analyst target upside. 0% = 0, 50%+ = 100."""
     if not target_price or not price or price <= 0:
         return 0
     upside_pct = ((target_price - price) / price) * 100
-    # Negative upside = 0, cap at 300% = 100
-    return max(0, min(100, upside_pct * (100 / 300)))
+    # Negative upside = 0, cap at 50% = 100
+    # Most stocks have 10-40% analyst upside; 50%+ is exceptional
+    return max(0, min(100, upside_pct * (100 / 50)))
 
 
 def score_revenue_quality(rev_growth_pct, total_revenue):
@@ -123,8 +124,9 @@ def score_revenue_quality(rev_growth_pct, total_revenue):
     else:
         scale = math.log10(rev_millions)  # 0-4 range
 
-    # Normalize: growth capped at 300%, scale capped at 4
-    growth_norm = min(100, rev_growth_pct * (100 / 300))
+    # Normalize: growth capped at 50%, scale capped at 3 (=$1B)
+    # Most good stocks grow 10-40% YoY; 50%+ is exceptional
+    growth_norm = min(100, rev_growth_pct * (100 / 50))
     scale_norm = min(1.0, scale / 3.0)  # $1B+ = full credit
 
     # Blend: 60% raw growth + 40% scale-adjusted
