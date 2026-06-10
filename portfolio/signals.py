@@ -189,7 +189,7 @@ ASSET_META = {
     "IONQ": {
         "name": "IonQ",
         "basket": "Quantum",
-        "strategy": "catalyst",
+        "strategy": "cycle",
         "sell_target": 85.0,
         "sell_date": "2027-2028",
         "catalyst": "Sell on quantum revenue inflection or hype cycle peak",
@@ -228,7 +228,7 @@ ASSET_META = {
     "RKLB": {
         "name": "Rocket Lab",
         "basket": "SpecGrowth",
-        "strategy": "catalyst",
+        "strategy": "cycle",
         "sell_target": 150.0,
         "sell_date": "2027-2028",
         "catalyst": "Sell on Neutron first launch hype peak",

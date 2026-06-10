@@ -26,8 +26,8 @@ RANKING_UNIVERSE = {
     "OKLO":  {"name": "Oklo",                "basket": "Nuclear",     "strategy": "catalyst",     "what": "Advanced fission microreactor — Sam Altman backed",
               "fragility": "binary",    "downside_if_fail": "severe"},     # NRC license pending
     # --- QUANTUM ---
-    "IONQ":  {"name": "IonQ",                "basket": "Quantum",     "strategy": "catalyst",     "what": "Trapped-ion quantum computing — revenue leader",
-              "fragility": "binary",    "downside_if_fail": "severe"},     # quantum advantage proof
+    "IONQ":  {"name": "IonQ",                "basket": "Quantum",     "strategy": "cycle",        "what": "Trapped-ion quantum computing — revenue leader",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # profitable, growing — ride the quantum wave
     "QNT":   {"name": "Quantinuum",          "basket": "Quantum",     "strategy": "catalyst",     "what": "Trapped-ion quantum (Honeywell) — IPO Jun 2026",
               "fragility": "binary",    "downside_if_fail": "moderate"},   # Honeywell backing = floor
     "QBTS":  {"name": "D-Wave Quantum",      "basket": "Quantum",     "strategy": "catalyst",     "what": "Quantum annealing + gate-model dual platform",
@@ -49,8 +49,8 @@ RANKING_UNIVERSE = {
     "FIX":   {"name": "Comfort Systems USA", "basket": "Industrial",  "strategy": "hold_forever", "what": "Data center HVAC and electrical contracting",
               "fragility": "none",      "downside_if_fail": "low"},        # diversified contracts
     # --- SPECGROWTH ---
-    "RKLB":  {"name": "Rocket Lab",          "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Rockets + space systems — Neutron launch pending",
-              "fragility": "binary",    "downside_if_fail": "moderate"},   # Neutron launch, but Electron works
+    "RKLB":  {"name": "Rocket Lab",          "basket": "SpecGrowth",  "strategy": "cycle",        "what": "Rockets + space systems — Neutron launch pending",
+              "fragility": "binary",    "downside_if_fail": "moderate"},   # Electron is proven revenue, Neutron is upside
     "LSCC":  {"name": "Lattice Semi",        "basket": "SpecGrowth",  "strategy": "cycle",        "what": "Low-power FPGAs for edge AI and automotive",
               "fragility": "macro",     "downside_if_fail": "moderate"},   # semi cycle
     "CRDO":  {"name": "Credo Technology",    "basket": "SpecGrowth",  "strategy": "cycle",        "what": "AI data center connectivity (optical + electrical)",
