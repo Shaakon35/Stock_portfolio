@@ -618,30 +618,39 @@ Generated HTML reports use tabbed navigation with sector-grouped charts. Each se
 
 The ranking engine (`portfolio/ranking.py`) scores all portfolio and candidate stocks using a composite weighted score. Higher score = better risk/reward.
 
-### Scoring Factors
+### Positive Scoring Factors (weighted, sum to 0.80)
 
 | Factor | Weight | Source | Logic |
 | :--- | :--- | :--- | :--- |
-| **Analyst Upside** | 30% | `yfinance` `.info["targetMeanPrice"]` | `(target - price) / price * 100`. Capped at 300%. Higher upside = higher score. |
-| **Revenue Growth** | 25% | `yfinance` quarterly revenue comparison | YoY revenue growth %. Pre-revenue companies get 0. Capped at 500%. |
-| **Analyst Conviction** | 15% | `yfinance` `.info["recommendationKey"]` + count | Strong Buy = 100, Buy = 75, Hold = 50, Sell = 25. Weighted by number of analysts (more analysts = more reliable). |
-| **Risk-Adjusted Entry** | 15% | `yfinance` 52-week high/low | `(high - price) / (high - low) * 100`. Near 52w low = 100 (good entry). Near 52w high = 0 (buying the top). |
-| **Momentum** | 15% | `yfinance` 50-SMA vs 200-SMA | Price > both SMAs and 50 > 200 = 100 (uptrend). Price < both = 0 (downtrend). Mixed = 50. |
+| **Analyst Upside** | 25% | `yfinance` `.info["targetMeanPrice"]` | `(target - price) / price * 100`. Capped at 300%. |
+| **Revenue Quality** | 20% | `yfinance` revenue + growth | YoY growth weighted by `log10(revenue)`. Penalizes growth from tiny base (e.g., +3000% from $300K scores less than +50% from $500M). |
+| **Analyst Conviction** | 15% | `yfinance` `.info["recommendationKey"]` + count | Strong Buy = 100, Buy = 75, Hold = 40, Sell = 10. Multiplied by coverage depth (20+ analysts = 1.1x, <5 = 0.6x). |
+| **Entry Position** | 10% | `yfinance` 52-week high/low | `(high - price) / (high - low) * 100`. Near 52w low = 100. Near 52w high = 0. |
+| **Momentum** | 10% | `yfinance` 50-SMA vs 200-SMA | Golden cross + price above both = 100. Death cross = 10. |
+
+### Risk Adjustments (penalties/bonuses applied after)
+
+| Factor | Range | Source | Logic |
+| :--- | :--- | :--- | :--- |
+| **Profitability** | -8 to +5 | Auto: `yfinance` EPS + FCF | EPS > 0 = +5. EPS < 0 = -5. Burning cash with <2y runway = -8. |
+| **Thesis Fragility** | -10 to 0 | Manual tag per stock | `none` = 0 (monopoly). `political`/`macro` = -5 (policy/commodity). `binary` = -10 (single pass/fail event). |
+| **Downside Risk** | -12 to 0 | Manual tag per stock | `low` = 0 (-15% max). `moderate` = -5 (-30-50%). `severe` = -8 (-70%+). `zero` = -12 (goes to $0). |
 
 ### Score Calculation
 
 ```
-composite = (upside_score * 0.30) + (growth_score * 0.25) + (conviction_score * 0.15) + (entry_score * 0.15) + (momentum_score * 0.15)
+base = (upside * 0.25) + (growth * 0.20) + (conviction * 0.15) + (entry * 0.10) + (momentum * 0.10)
+composite = base + profitability_bonus + fragility_penalty + downside_penalty
+composite = clamp(composite, 0, 100)
 ```
-
-Each factor is normalized to 0-100 before weighting. Final composite is 0-100.
 
 ### Ranking Rules
 
-- Stocks with composite > 70 = **Strong candidate** (green)
-- Stocks with composite 50-70 = **Moderate** (yellow)
-- Stocks with composite < 50 = **Weak / fully priced** (red)
-- Pre-revenue stocks get revenue_growth = 0 but can still rank high on upside + conviction
+- Stocks with composite > 60 = **Strong candidate** (green)
+- Stocks with composite 40-60 = **Moderate** (yellow)
+- Stocks with composite < 40 = **Weak / fully priced** (red)
+- Binary catalyst stocks (VKTX, ACHR) are penalized up to -22 points for fragility + downside risk
+- Monopoly/hold_forever stocks (BWXT, CRWD) get +5 profitability bonus and 0 penalties
 - ETFs are excluded from ranking (DCA only)
 
 ### Reproducibility

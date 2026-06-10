@@ -10,41 +10,74 @@ from datetime import datetime
 
 RANKING_UNIVERSE = {
     # --- NUCLEAR ---
-    "CCJ":   {"name": "Cameco",              "basket": "Nuclear",     "strategy": "hold_forever", "what": "Uranium mining — largest Western producer"},
-    "GEV":   {"name": "GE Vernova",          "basket": "Nuclear",     "strategy": "hold_forever", "what": "Grid electrification, gas/wind turbines"},
-    "SRUUF": {"name": "Sprott Uranium Trust", "basket": "Nuclear",    "strategy": "cycle",        "what": "Physical uranium trust — tracks U3O8 price"},
-    "LEU":   {"name": "Centrus Energy",      "basket": "Nuclear",     "strategy": "cycle",        "what": "Uranium enrichment, HALEU fuel for SMRs"},
-    "SMR":   {"name": "NuScale Power",       "basket": "Nuclear",     "strategy": "catalyst",     "what": "Small modular reactor — only NRC-approved SMR design"},
-    "OKLO":  {"name": "Oklo",                "basket": "Nuclear",     "strategy": "catalyst",     "what": "Advanced fission microreactor — Sam Altman backed"},
+    # fragility: "none" = diversified/monopoly, "political" = gov/policy dependent,
+    #            "macro" = commodity/rate dependent, "binary" = single event pass/fail
+    # downside_if_fail: "low" = -15% max, "moderate" = -30-50%, "severe" = -70%+, "zero" = goes to $0
+    "CCJ":   {"name": "Cameco",              "basket": "Nuclear",     "strategy": "hold_forever", "what": "Uranium mining — largest Western producer",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # uranium price dependent
+    "GEV":   {"name": "GE Vernova",          "basket": "Nuclear",     "strategy": "hold_forever", "what": "Grid electrification, gas/wind turbines",
+              "fragility": "none",      "downside_if_fail": "low"},        # diversified energy giant
+    "SRUUF": {"name": "Sprott Uranium Trust", "basket": "Nuclear",    "strategy": "cycle",        "what": "Physical uranium trust — tracks U3O8 price",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # pure commodity play
+    "LEU":   {"name": "Centrus Energy",      "basket": "Nuclear",     "strategy": "cycle",        "what": "Uranium enrichment, HALEU fuel for SMRs",
+              "fragility": "political", "downside_if_fail": "moderate"},   # DOE contracts, policy
+    "SMR":   {"name": "NuScale Power",       "basket": "Nuclear",     "strategy": "catalyst",     "what": "Small modular reactor — only NRC-approved SMR design",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # needs deployment order
+    "OKLO":  {"name": "Oklo",                "basket": "Nuclear",     "strategy": "catalyst",     "what": "Advanced fission microreactor — Sam Altman backed",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # NRC license pending
     # --- QUANTUM ---
-    "IONQ":  {"name": "IonQ",                "basket": "Quantum",     "strategy": "catalyst",     "what": "Trapped-ion quantum computing — revenue leader"},
-    "QNT":   {"name": "Quantinuum",          "basket": "Quantum",     "strategy": "catalyst",     "what": "Trapped-ion quantum (Honeywell) — IPO Jun 2026"},
-    "QBTS":  {"name": "D-Wave Quantum",      "basket": "Quantum",     "strategy": "catalyst",     "what": "Quantum annealing + gate-model dual platform"},
-    "RGTI":  {"name": "Rigetti Computing",   "basket": "Quantum",     "strategy": "catalyst",     "what": "Superconducting quantum — modular chiplet architecture"},
+    "IONQ":  {"name": "IonQ",                "basket": "Quantum",     "strategy": "catalyst",     "what": "Trapped-ion quantum computing — revenue leader",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # quantum advantage proof
+    "QNT":   {"name": "Quantinuum",          "basket": "Quantum",     "strategy": "catalyst",     "what": "Trapped-ion quantum (Honeywell) — IPO Jun 2026",
+              "fragility": "binary",    "downside_if_fail": "moderate"},   # Honeywell backing = floor
+    "QBTS":  {"name": "D-Wave Quantum",      "basket": "Quantum",     "strategy": "catalyst",     "what": "Quantum annealing + gate-model dual platform",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # quantum advantage proof
+    "RGTI":  {"name": "Rigetti Computing",   "basket": "Quantum",     "strategy": "catalyst",     "what": "Superconducting quantum — modular chiplet architecture",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # quantum advantage proof
     # --- CYBER ---
-    "CRWD":  {"name": "CrowdStrike",         "basket": "Cyber",       "strategy": "hold_forever", "what": "Endpoint cybersecurity platform — #1 market share"},
-    "PANW":  {"name": "Palo Alto Networks",  "basket": "Cyber",       "strategy": "hold_forever", "what": "Enterprise network security — AI-driven"},
+    "CRWD":  {"name": "CrowdStrike",         "basket": "Cyber",       "strategy": "hold_forever", "what": "Endpoint cybersecurity platform — #1 market share",
+              "fragility": "none",      "downside_if_fail": "low"},        # thousands of customers
+    "PANW":  {"name": "Palo Alto Networks",  "basket": "Cyber",       "strategy": "hold_forever", "what": "Enterprise network security — AI-driven",
+              "fragility": "none",      "downside_if_fail": "low"},        # enterprise duopoly
     # --- INDUSTRIAL ---
-    "BWXT":  {"name": "BWX Technologies",    "basket": "Industrial",  "strategy": "hold_forever", "what": "Navy nuclear reactors — sole-source monopoly"},
-    "POWL":  {"name": "Powell Industries",   "basket": "Industrial",  "strategy": "cycle",        "what": "Electrical switchgear for data centers"},
-    "VRT":   {"name": "Vertiv Holdings",     "basket": "Industrial",  "strategy": "cycle",        "what": "Data center cooling and power infrastructure"},
-    "FIX":   {"name": "Comfort Systems USA", "basket": "Industrial",  "strategy": "hold_forever", "what": "Data center HVAC and electrical contracting"},
+    "BWXT":  {"name": "BWX Technologies",    "basket": "Industrial",  "strategy": "hold_forever", "what": "Navy nuclear reactors — sole-source monopoly",
+              "fragility": "none",      "downside_if_fail": "low"},        # 60-year navy contracts
+    "POWL":  {"name": "Powell Industries",   "basket": "Industrial",  "strategy": "cycle",        "what": "Electrical switchgear for data centers",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # capex cycle dependent
+    "VRT":   {"name": "Vertiv Holdings",     "basket": "Industrial",  "strategy": "cycle",        "what": "Data center cooling and power infrastructure",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # capex cycle dependent
+    "FIX":   {"name": "Comfort Systems USA", "basket": "Industrial",  "strategy": "hold_forever", "what": "Data center HVAC and electrical contracting",
+              "fragility": "none",      "downside_if_fail": "low"},        # diversified contracts
     # --- SPECGROWTH ---
-    "RKLB":  {"name": "Rocket Lab",          "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Rockets + space systems — Neutron launch pending"},
-    "LSCC":  {"name": "Lattice Semi",        "basket": "SpecGrowth",  "strategy": "cycle",        "what": "Low-power FPGAs for edge AI and automotive"},
-    "CRDO":  {"name": "Credo Technology",    "basket": "SpecGrowth",  "strategy": "cycle",        "what": "AI data center connectivity (optical + electrical)"},
-    "VKTX":  {"name": "Viking Therapeutics", "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "GLP-1 obesity/NASH drug — Phase III"},
+    "RKLB":  {"name": "Rocket Lab",          "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Rockets + space systems — Neutron launch pending",
+              "fragility": "binary",    "downside_if_fail": "moderate"},   # Neutron launch, but Electron works
+    "LSCC":  {"name": "Lattice Semi",        "basket": "SpecGrowth",  "strategy": "cycle",        "what": "Low-power FPGAs for edge AI and automotive",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # semi cycle
+    "CRDO":  {"name": "Credo Technology",    "basket": "SpecGrowth",  "strategy": "cycle",        "what": "AI data center connectivity (optical + electrical)",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # AI capex cycle
+    "VKTX":  {"name": "Viking Therapeutics", "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "GLP-1 obesity/NASH drug — Phase III",
+              "fragility": "binary",    "downside_if_fail": "zero"},       # FDA approval or bust
     # --- NEW CANDIDATES ---
-    "KTOS":  {"name": "Kratos Defense",      "basket": "Industrial",  "strategy": "cycle",        "what": "Autonomous military drones, hypersonic systems"},
-    "SERV":  {"name": "Serve Robotics",      "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Autonomous sidewalk delivery robots — Nvidia backed"},
-    "ENVX":  {"name": "Enovix",              "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Silicon anode batteries — 2x energy density"},
-    "APLD":  {"name": "Applied Digital",     "basket": "Industrial",  "strategy": "cycle",        "what": "AI GPU data center infrastructure"},
-    "TMDX":  {"name": "TransMedics",         "basket": "MedTech",     "strategy": "hold_forever", "what": "Organ transplant logistics — monopoly OCS system"},
-    "IREN":  {"name": "IREN Limited",        "basket": "Industrial",  "strategy": "cycle",        "what": "AI cloud compute + Bitcoin mining infrastructure"},
-    "AXON":  {"name": "Axon Enterprise",     "basket": "Defense",     "strategy": "hold_forever", "what": "Taser + body cams + AI evidence management"},
-    "CIFR":  {"name": "Cipher Digital",      "basket": "Industrial",  "strategy": "cycle",        "what": "Bitcoin mining pivoting to AI data centers"},
-    "LUNR":  {"name": "Intuitive Machines",  "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Lunar landers — NASA commercial lunar partner"},
-    "ACHR":  {"name": "Archer Aviation",     "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "eVTOL air taxi — FAA certification pending"},
+    "KTOS":  {"name": "Kratos Defense",      "basket": "Industrial",  "strategy": "cycle",        "what": "Autonomous military drones, hypersonic systems",
+              "fragility": "political", "downside_if_fail": "moderate"},   # defense budget dependent
+    "SERV":  {"name": "Serve Robotics",      "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Autonomous sidewalk delivery robots — Nvidia backed",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # regulatory + scale proof
+    "ENVX":  {"name": "Enovix",              "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Silicon anode batteries — 2x energy density",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # mass production proof
+    "APLD":  {"name": "Applied Digital",     "basket": "Industrial",  "strategy": "cycle",        "what": "AI GPU data center infrastructure",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # AI capex cycle
+    "TMDX":  {"name": "TransMedics",         "basket": "MedTech",     "strategy": "hold_forever", "what": "Organ transplant logistics — monopoly OCS system",
+              "fragility": "none",      "downside_if_fail": "low"},        # FDA-approved monopoly
+    "IREN":  {"name": "IREN Limited",        "basket": "Industrial",  "strategy": "cycle",        "what": "AI cloud compute + Bitcoin mining infrastructure",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # BTC price + AI capex
+    "AXON":  {"name": "Axon Enterprise",     "basket": "Defense",     "strategy": "hold_forever", "what": "Taser + body cams + AI evidence management",
+              "fragility": "none",      "downside_if_fail": "low"},        # monopoly, gov customers
+    "CIFR":  {"name": "Cipher Digital",      "basket": "Industrial",  "strategy": "cycle",        "what": "Bitcoin mining pivoting to AI data centers",
+              "fragility": "macro",     "downside_if_fail": "moderate"},   # BTC price dependent
+    "LUNR":  {"name": "Intuitive Machines",  "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "Lunar landers — NASA commercial lunar partner",
+              "fragility": "binary",    "downside_if_fail": "severe"},     # mission success dependent
+    "ACHR":  {"name": "Archer Aviation",     "basket": "SpecGrowth",  "strategy": "catalyst",     "what": "eVTOL air taxi — FAA certification pending",
+              "fragility": "binary",    "downside_if_fail": "zero"},       # FAA cert or bust, pre-revenue
 }
 
 # Tickers to skip (private, no data, ETFs)
@@ -64,15 +97,38 @@ def score_analyst_upside(price, target_price):
     return max(0, min(100, upside_pct * (100 / 300)))
 
 
-def score_revenue_growth(current_rev, prior_rev):
-    """Score based on YoY revenue growth. 0% = 0, 100%+ = 50, 500%+ = 100."""
-    if not current_rev or not prior_rev or prior_rev <= 0:
+def score_revenue_quality(rev_growth_pct, total_revenue):
+    """Score revenue quality: growth weighted by revenue scale.
+
+    Raw growth from a tiny base is misleading (+3000% from $300K is less
+    meaningful than +50% from $500M). We use log(revenue) as a multiplier
+    so larger-base growth scores higher.
+
+    Scale factor: log10(revenue_in_millions)
+      $1M   → 0.0    (no credit)
+      $10M  → 1.0
+      $100M → 2.0
+      $1B   → 3.0
+      $10B  → 4.0
+    """
+    if not rev_growth_pct or rev_growth_pct <= 0:
         return 0
-    growth_pct = ((current_rev - prior_rev) / prior_rev) * 100
-    if growth_pct <= 0:
+    if not total_revenue or total_revenue <= 0:
         return 0
-    # Cap at 500% = 100
-    return min(100, growth_pct * (100 / 500))
+
+    import math
+    rev_millions = total_revenue / 1e6
+    if rev_millions < 1:
+        scale = 0
+    else:
+        scale = math.log10(rev_millions)  # 0-4 range
+
+    # Normalize: growth capped at 300%, scale capped at 4
+    growth_norm = min(100, rev_growth_pct * (100 / 300))
+    scale_norm = min(1.0, scale / 3.0)  # $1B+ = full credit
+
+    # Blend: 60% raw growth + 40% scale-adjusted
+    return growth_norm * (0.6 + 0.4 * scale_norm)
 
 
 def score_analyst_conviction(recommendation, num_analysts):
@@ -125,6 +181,66 @@ def score_momentum(price, sma_50, sma_200):
 
 
 # =========================================================================
+# RISK PENALTY FUNCTIONS — reduce score for fragile/risky stocks
+# =========================================================================
+
+def penalty_fragility(fragility):
+    """Penalty based on thesis fragility (manual tag).
+    none = 0, political/macro = -5, binary = -10."""
+    penalties = {
+        "none": 0,
+        "political": -5,
+        "macro": -5,
+        "binary": -10,
+    }
+    return penalties.get(fragility, 0)
+
+
+def penalty_downside(downside_if_fail):
+    """Penalty based on downside if thesis fails (manual tag).
+    low = 0, moderate = -5, severe = -8, zero = -12."""
+    penalties = {
+        "low": 0,
+        "moderate": -5,
+        "severe": -8,
+        "zero": -12,
+    }
+    return penalties.get(downside_if_fail, 0)
+
+
+def bonus_profitability(eps, free_cash_flow, market_cap):
+    """Bonus/penalty based on profitability and cash position.
+    Profitable = +5, breakeven = 0, burning cash = -5.
+    Auto-fetched from Yahoo Finance (Option B)."""
+    if eps and eps > 0:
+        return 5  # profitable
+    if free_cash_flow and market_cap:
+        # Cash burn rate: if FCF is negative, how many years of runway?
+        if free_cash_flow < 0:
+            burn_years = abs(market_cap / free_cash_flow) if free_cash_flow != 0 else 99
+            if burn_years < 2:
+                return -8  # less than 2 years runway = danger
+            elif burn_years < 5:
+                return -3  # tight but manageable
+    if eps and eps < 0:
+        return -5  # unprofitable
+    return 0  # unknown / breakeven
+
+
+def penalty_dilution(shares_growth_pct):
+    """Penalty for share dilution. >10% YoY dilution = -5, >20% = -8."""
+    if not shares_growth_pct:
+        return 0
+    if shares_growth_pct > 20:
+        return -8
+    elif shares_growth_pct > 10:
+        return -5
+    elif shares_growth_pct > 5:
+        return -2
+    return 0
+
+
+# =========================================================================
 # DATA FETCHING
 # =========================================================================
 
@@ -143,11 +259,24 @@ def fetch_stock_data(ticker):
         market_cap = info.get("marketCap", 0)
 
         # Revenue growth from quarterly data
-        current_rev = info.get("totalRevenue", 0)
+        total_revenue = info.get("totalRevenue", 0)
         rev_growth = info.get("revenueGrowth")  # YoY as decimal (0.25 = 25%)
 
-        # SMA from history
-        hist = t.history(period="1y")
+        # Profitability data (auto-fetched for Option B)
+        eps = info.get("trailingEps")
+        free_cash_flow = info.get("freeCashflow")
+
+        # Dilution: compare current shares to prior year
+        shares_outstanding = info.get("sharesOutstanding", 0)
+        # yfinance doesn't give historical shares easily, so we check
+        # floatShares vs sharesOutstanding as a proxy for recent dilution
+        float_shares = info.get("floatShares", 0)
+        implied_lockup = 0
+        if shares_outstanding and float_shares and shares_outstanding > 0:
+            implied_lockup = ((shares_outstanding - float_shares) / shares_outstanding) * 100
+
+        # SMA from history (fetch 2y for accurate 200-SMA)
+        hist = t.history(period="2y")
         sma_50 = None
         sma_200 = None
         if len(hist) >= 50:
@@ -163,7 +292,11 @@ def fetch_stock_data(ticker):
             "high_52w": high_52w,
             "low_52w": low_52w,
             "market_cap": market_cap,
+            "total_revenue": total_revenue,
             "rev_growth_pct": (rev_growth * 100) if rev_growth else 0,
+            "eps": eps,
+            "free_cash_flow": free_cash_flow,
+            "shares_outstanding": shares_outstanding,
             "sma_50": sma_50,
             "sma_200": sma_200,
             "error": None,
@@ -177,31 +310,43 @@ def fetch_stock_data(ticker):
 # =========================================================================
 
 # Weights — adjust these to change ranking priorities
+# Positive factors sum to 1.0, penalties are subtracted after
 WEIGHTS = {
-    "upside":     0.30,
-    "growth":     0.25,
+    "upside":     0.25,   # was 0.30
+    "growth":     0.20,   # was 0.25 (now revenue quality)
     "conviction": 0.15,
-    "entry":      0.15,
-    "momentum":   0.15,
+    "entry":      0.10,   # was 0.15
+    "momentum":   0.10,   # was 0.15
+    # Risk adjustments (applied as penalties/bonuses to final score)
+    "profitability_bonus": 5,    # +5 if profitable, -5 if not, -8 if burning cash
+    "fragility_penalty": 10,     # max -10 for binary thesis
+    "downside_penalty": 12,      # max -12 for goes-to-zero risk
 }
 
-def compute_composite(data):
-    """Compute composite score (0-100) from fetched data."""
+def compute_composite(data, meta):
+    """Compute composite score (0-100) from fetched data + manual risk tags.
+
+    Score = weighted_positive_factors + profitability_bonus
+            - fragility_penalty - downside_penalty
+    Clamped to 0-100.
+    """
     if data.get("error"):
         return 0, {}
 
     price = data["price"]
+
+    # --- Positive factors (0-100 each, weighted to sum ~80 max) ---
     s_upside = score_analyst_upside(price, data["target"])
-    s_growth = score_revenue_growth(
-        100 + data["rev_growth_pct"], 100  # normalize growth % to ratio
-    ) if data["rev_growth_pct"] > 0 else 0
+    s_growth = score_revenue_quality(
+        data["rev_growth_pct"], data.get("total_revenue", 0)
+    )
     s_conviction = score_analyst_conviction(
         data["recommendation"], data["num_analysts"]
     )
     s_entry = score_entry_position(price, data["high_52w"], data["low_52w"])
     s_momentum = score_momentum(price, data["sma_50"], data["sma_200"])
 
-    composite = (
+    base_score = (
         s_upside * WEIGHTS["upside"]
         + s_growth * WEIGHTS["growth"]
         + s_conviction * WEIGHTS["conviction"]
@@ -209,12 +354,28 @@ def compute_composite(data):
         + s_momentum * WEIGHTS["momentum"]
     )
 
+    # --- Risk adjustments (penalties/bonuses) ---
+    p_fragility = penalty_fragility(meta.get("fragility", "none"))
+    p_downside = penalty_downside(meta.get("downside_if_fail", "low"))
+    b_profit = bonus_profitability(
+        data.get("eps"), data.get("free_cash_flow"), data.get("market_cap")
+    )
+
+    # Final score
+    composite = base_score + b_profit + p_fragility + p_downside
+
+    # Clamp to 0-100
+    composite = max(0, min(100, composite))
+
     breakdown = {
         "upside": round(s_upside, 1),
         "growth": round(s_growth, 1),
         "conviction": round(s_conviction, 1),
         "entry": round(s_entry, 1),
         "momentum": round(s_momentum, 1),
+        "profitability": b_profit,
+        "fragility": p_fragility,
+        "downside": p_downside,
     }
 
     return round(composite, 1), breakdown
@@ -261,7 +422,7 @@ def build_ranking():
             })
             continue
 
-        composite, breakdown = compute_composite(data)
+        composite, breakdown = compute_composite(data, meta)
 
         upside_pct = 0
         if data["price"] and data["target"]:
@@ -273,10 +434,13 @@ def build_ranking():
             "basket": meta["basket"],
             "strategy": meta["strategy"],
             "what": meta["what"],
+            "fragility": meta.get("fragility", "none"),
+            "downside_if_fail": meta.get("downside_if_fail", "low"),
             "price": round(data["price"], 2),
             "target": round(data["target"], 2) if data["target"] else 0,
             "upside_pct": round(upside_pct, 1),
             "rev_growth_pct": round(data["rev_growth_pct"], 1),
+            "eps": data.get("eps"),
             "recommendation": data["recommendation"],
             "num_analysts": data["num_analysts"],
             "market_cap_b": round(data["market_cap"] / 1e9, 1) if data["market_cap"] else 0,
