@@ -614,6 +614,46 @@ Generated HTML reports use tabbed navigation with sector-grouped charts. Each se
 
 ---
 
+## Stock Ranking Methodology
+
+The ranking engine (`portfolio/ranking.py`) scores all portfolio and candidate stocks using a composite weighted score. Higher score = better risk/reward.
+
+### Scoring Factors
+
+| Factor | Weight | Source | Logic |
+| :--- | :--- | :--- | :--- |
+| **Analyst Upside** | 30% | `yfinance` `.info["targetMeanPrice"]` | `(target - price) / price * 100`. Capped at 300%. Higher upside = higher score. |
+| **Revenue Growth** | 25% | `yfinance` quarterly revenue comparison | YoY revenue growth %. Pre-revenue companies get 0. Capped at 500%. |
+| **Analyst Conviction** | 15% | `yfinance` `.info["recommendationKey"]` + count | Strong Buy = 100, Buy = 75, Hold = 50, Sell = 25. Weighted by number of analysts (more analysts = more reliable). |
+| **Risk-Adjusted Entry** | 15% | `yfinance` 52-week high/low | `(high - price) / (high - low) * 100`. Near 52w low = 100 (good entry). Near 52w high = 0 (buying the top). |
+| **Momentum** | 15% | `yfinance` 50-SMA vs 200-SMA | Price > both SMAs and 50 > 200 = 100 (uptrend). Price < both = 0 (downtrend). Mixed = 50. |
+
+### Score Calculation
+
+```
+composite = (upside_score * 0.30) + (growth_score * 0.25) + (conviction_score * 0.15) + (entry_score * 0.15) + (momentum_score * 0.15)
+```
+
+Each factor is normalized to 0-100 before weighting. Final composite is 0-100.
+
+### Ranking Rules
+
+- Stocks with composite > 70 = **Strong candidate** (green)
+- Stocks with composite 50-70 = **Moderate** (yellow)
+- Stocks with composite < 50 = **Weak / fully priced** (red)
+- Pre-revenue stocks get revenue_growth = 0 but can still rank high on upside + conviction
+- ETFs are excluded from ranking (DCA only)
+
+### Reproducibility
+
+The ranking is fully automated via `ranking.py` + `ranking.ipynb`. To update:
+1. Open `ranking.ipynb` in Colab
+2. Run all cells — it fetches live data from Yahoo Finance
+3. The table auto-sorts by composite score
+4. New candidates can be added to `RANKING_UNIVERSE` dict in `ranking.py`
+
+---
+
 ## Disclaimer
 
 This framework is for personal portfolio tracking and analysis only. It is **not financial advice**. Data is sourced from public APIs and may be delayed or inaccurate. Always do your own due diligence. Past performance does not guarantee future results.
