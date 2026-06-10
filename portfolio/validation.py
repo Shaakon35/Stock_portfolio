@@ -295,12 +295,15 @@ BACKTEST_EXTRA = {
 def fetch_historical_data(ticker, lookback_date):
     """Fetch stock data as it would have appeared on lookback_date.
 
-    Reconstructs historical fundamentals from quarterly financials:
-    - Revenue, EPS, FCF, cash: from quarterly statements available at lookback_date
+    Reconstructs historical fundamentals:
+    - Revenue growth + acceleration: from annual income statements (quarterly
+      if 8+ quarters available, else annual FY data going back 5 years)
+    - EPS, FCF, cash: from quarterly financials available at lookback_date
     - Market cap: price_then × current shares (approximation)
-    - SMAs, 52w range, 2y high: from historical price data
-    - Analyst targets/consensus: only used for lookbacks ≤18 months;
-      older periods get neutral values to avoid fake upside signals
+    - SMAs, 52w range: from historical price data
+    - 2y high + history_years: from 4-year price window (so LT health works)
+    - Analyst targets/consensus: ALWAYS neutralized — Yahoo only has current
+      targets, using them on old prices is look-ahead bias
 
     Args:
         ticker: stock ticker
@@ -342,8 +345,8 @@ def fetch_historical_data(ticker, lookback_date):
         close_now = hist_now["Close"].dropna()
         price_now = float(close_now.iloc[-1]) if not close_now.empty else None
 
-        # --- Historical SMAs (need 2y of data ending at lookback_date) ---
-        hist_start = lookback_date - timedelta(days=800)
+        # --- Historical SMAs (need 4+ years so history_years >= 3 for LT health) ---
+        hist_start = lookback_date - timedelta(days=1500)
         hist_2y = t.history(start=hist_start, end=lookback_date + timedelta(days=1))
         hist_close = hist_2y["Close"].dropna() if not hist_2y.empty else None
 
@@ -364,15 +367,17 @@ def fetch_historical_data(ticker, lookback_date):
         high_52w = float(hist_52w.max()) if hist_52w is not None and len(hist_52w) > 0 else None
         low_52w = float(hist_52w.min()) if hist_52w is not None and len(hist_52w) > 0 else None
 
-        # --- Revenue growth from quarterly financials (reconstruct TTM) ---
+        # --- Revenue growth from financials ---
+        # Try quarterly first (TTM), fall back to annual statements.
+        # yfinance only returns ~5 quarters, so for lookbacks > a few months
+        # quarterly data is usually insufficient. Annual data goes back 5 years.
         rev_growth = None
         prior_rev_growth = None
         total_revenue = None
         try:
+            # --- Attempt 1: quarterly TTM (needs 8 quarters) ---
             qf = t.quarterly_income_stmt
-            if qf is not None and "Total Revenue" in qf.index and len(qf.columns) >= 5:
-                # Find quarters that were available at lookback_date
-                # Quarterly reports are typically available ~45 days after quarter end
+            if qf is not None and "Total Revenue" in qf.index:
                 avail_cols = [c for c in qf.columns if c <= lookback_date + timedelta(days=45)]
                 if len(avail_cols) >= 8:
                     recent_4 = sum(qf.loc["Total Revenue", avail_cols[:4]])
@@ -380,12 +385,33 @@ def fetch_historical_data(ticker, lookback_date):
                     if prior_4 and prior_4 > 0 and recent_4 and recent_4 > 0:
                         rev_growth = ((recent_4 - prior_4) / prior_4) * 100
                         total_revenue = recent_4
-                # Prior-year growth for acceleration (quarters 4-7 vs 8-11)
                 if len(avail_cols) >= 12:
                     prev_4 = sum(qf.loc["Total Revenue", avail_cols[4:8]])
                     prev_prior_4 = sum(qf.loc["Total Revenue", avail_cols[8:12]])
                     if prev_prior_4 and prev_prior_4 > 0 and prev_4 and prev_4 > 0:
                         prior_rev_growth = ((prev_4 - prev_prior_4) / prev_prior_4) * 100
+
+            # --- Attempt 2: annual statements (needs 2-3 fiscal years) ---
+            if rev_growth is None:
+                af = t.income_stmt
+                if af is not None and "Total Revenue" in af.index:
+                    # Annual reports available ~90 days after fiscal year end
+                    avail_annual = [c for c in af.columns
+                                    if c <= lookback_date + timedelta(days=90)]
+                    if len(avail_annual) >= 2:
+                        r_recent = af.loc["Total Revenue", avail_annual[0]]
+                        r_prior = af.loc["Total Revenue", avail_annual[1]]
+                        if (r_prior and r_prior > 0 and r_recent and r_recent > 0
+                                and not np.isnan(r_recent) and not np.isnan(r_prior)):
+                            rev_growth = ((r_recent - r_prior) / r_prior) * 100
+                            total_revenue = float(r_recent)
+                    # Acceleration: prior year vs year before that
+                    if len(avail_annual) >= 3 and prior_rev_growth is None:
+                        r_mid = af.loc["Total Revenue", avail_annual[1]]
+                        r_old = af.loc["Total Revenue", avail_annual[2]]
+                        if (r_old and r_old > 0 and r_mid and r_mid > 0
+                                and not np.isnan(r_mid) and not np.isnan(r_old)):
+                            prior_rev_growth = ((r_mid - r_old) / r_old) * 100
         except Exception:
             pass
 
@@ -463,16 +489,14 @@ def fetch_historical_data(ticker, lookback_date):
                 total_cash = info.get("totalCash")
 
         # --- Analyst data ---
-        # Current analyst targets are only a reasonable proxy for recent periods.
-        # For older lookbacks, use neutral values to avoid fake upside signals.
-        if is_recent:
-            target = info.get("targetMeanPrice")
-            rec = info.get("recommendationKey", "none")
-            num_analysts = info.get("numberOfAnalystOpinions", 0)
-        else:
-            target = None       # → upside scores neutral (50)
-            rec = "none"        # → conviction scores neutral
-            num_analysts = 0
+        # Yahoo Finance only provides CURRENT analyst targets/recommendations.
+        # Using them for any historical lookback is look-ahead bias: a stock
+        # that went from $50 to $200 now has a ~$220 target, which creates a
+        # fake 340% "upside" signal when applied to the old $50 price.
+        # Always neutralize for backtests.
+        target = None       # → upside scores neutral (50)
+        rec = "none"        # → conviction scores neutral
+        num_analysts = 0
 
         return {
             "price": price_then,
