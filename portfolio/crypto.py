@@ -34,7 +34,6 @@ def run_crypto_engine():
     USD_TO_CHF = get_live_fx_rate("USD", "CHF")
 
     crypto_prices_usd = {}
-    print("\n🌐 Syncing Crypto Chain Prices...")
 
     # 2. Fetch Prices in USD
     for ticker in CRYPTO_TARGET_WEIGHTS.keys():

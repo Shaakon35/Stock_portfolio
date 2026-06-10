@@ -16,7 +16,7 @@ from portfolio.helpers import is_in_uptrend, get_price
 
 def run_audit():
     """Fetch prices, compute drift, and print the portfolio audit."""
-    print("🔄 Fetching market data...")
+    
 
     category_labels = ["NUCLEAR_SATELLITE", "QUANTUM_SATELLITE", "CYBER_SATELLITE",
                        "INDUSTRIAL_SATELLITE", "SPECGROWTH_SATELLITE"]

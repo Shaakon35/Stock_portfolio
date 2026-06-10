@@ -111,11 +111,8 @@ ETF_LOOK_THROUGH = {
 def verify_allocations():
     """Assert that all allocation matrices sum correctly."""
     total_target = sum(TARGET_WEIGHTS.values())
-    print(f"Total Portfolio Weight: {total_target * 100}%")
-
     assert abs(sum(NUCLEAR_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Nuclear basket doesn't sum to 100%"
     assert abs(sum(QUANTUM_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Quantum basket doesn't sum to 100%"
     assert abs(sum(CYBER_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Cyber basket doesn't sum to 100%"
     assert abs(sum(INDUSTRIAL_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Industrial basket doesn't sum to 100%"
     assert abs(sum(SPECGROWTH_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Spec Growth basket doesn't sum to 100%"
-    print("All sub-baskets verified.")
