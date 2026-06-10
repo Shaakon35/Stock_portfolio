@@ -14,6 +14,45 @@ You operate within the context of this portfolio's existing sector taxonomy, CAG
 - When editing existing code, keep all inline comments, section headers, and TODO markers intact.
 - **Always use `importlib.reload()`** after git pull or code changes — both `config.*` and `portfolio.*` modules are cached by Colab's runtime.
 
+## Visual Consistency Rules
+
+All notebooks must share the same visual theme. When creating or editing tables, charts, or dashboards, **reuse the existing styles** — never invent new ones.
+
+### Table Theme (mandatory for all HTML tables)
+
+```css
+/* Title bar */
+.xxx-header { font-size: 18px; font-weight: bold; color: white; background: #2C3E50; padding: 12px 16px; border-radius: 6px 6px 0 0; }
+.xxx-sub    { font-size: 12px; color: #ccc; background: #2C3E50; padding: 0 16px 10px; border-radius: 0 0 6px 6px; margin-bottom: 14px; }
+
+/* Table */
+.xxx-table    { border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; font-size: 12px; }
+.xxx-table th { background: #2C3E50; color: white; padding: 8px 10px; text-align: left; }
+.xxx-table td { padding: 6px 10px; border-bottom: 1px solid #e0e0e0; }
+.xxx-table tr:hover { background: #f5f5f5; }
+
+/* Legend / footnote */
+.xxx-legend { font-size: 11px; color: #555; margin-top: 12px; line-height: 1.8; }
+```
+
+Replace `xxx` with the notebook prefix (`sig-`, `rank-`, `po-`).
+
+### Chart Theme (mandatory for all matplotlib plots)
+
+- **Font**: Arial or sans-serif
+- **Colors**: Use the basket color palette (see HTML Table Conventions)
+- **Sparklines**: `figsize=(2.2, 0.6)`, `linewidth=1.2`, `fill_between` with `alpha=0.1`
+- **Y-axis on sparklines**: Always set `ylim` to `(min - padding, max + padding)` to zoom into the actual data range. Never use default y-axis (it wastes space).
+- **Background**: Transparent (`fig.patch.set_alpha(0)`)
+- **DPI**: 80 for inline, 150 for saved files
+
+### Rules
+
+1. When adding a new table, copy the CSS from an existing notebook — do not create new styles.
+2. When adding a new chart, match the color palette and font of existing charts.
+3. All section headers within a dashboard use `.xxx-header` (white on `#2C3E50`), not raw `<h2>` or inline styles.
+4. Every dashboard must have a title, subtitle (with generation date), and a footnote/legend.
+
 ---
 
 ## Notebook Editing Rules (No Python Environment)
