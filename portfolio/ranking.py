@@ -89,9 +89,12 @@ SKIP_TICKERS = {"XNDU", "INFQ", "HQ", "XAIX.DE", "SMHV.SW", "QDVE.DE"}
 # =========================================================================
 
 def score_analyst_upside(price, target_price):
-    """Score based on analyst target upside. 0% = 0, 50%+ = 100."""
-    if not target_price or not price or price <= 0:
-        return 0
+    """Score based on analyst target upside. 0% = 0, 50%+ = 100.
+    Returns 50 (neutral) when no analyst target exists."""
+    if not price or price <= 0:
+        return 50
+    if not target_price:
+        return 50
     upside_pct = ((target_price - price) / price) * 100
     # Negative upside = 0, cap at 50% = 100
     # Most stocks have 10-40% analyst upside; 50%+ is exceptional
@@ -105,6 +108,9 @@ def score_revenue_quality(rev_growth_pct, total_revenue):
     meaningful than +50% from $500M). We use log(revenue) as a multiplier
     so larger-base growth scores higher.
 
+    Returns 50 (neutral) when data is missing — avoids penalizing
+    pre-revenue companies that simply have no data.
+
     Scale factor: log10(revenue_in_millions)
       $1M   → 0.0    (no credit)
       $10M  → 1.0
@@ -112,10 +118,16 @@ def score_revenue_quality(rev_growth_pct, total_revenue):
       $1B   → 3.0
       $10B  → 4.0
     """
-    if not rev_growth_pct or rev_growth_pct <= 0:
-        return 0
+    # No data → neutral score (don't penalize missing data)
+    if rev_growth_pct is None:
+        return 50
     if not total_revenue or total_revenue <= 0:
-        return 0
+        return 50
+
+    # Confirmed negative growth → score 0-30 based on severity
+    if rev_growth_pct <= 0:
+        # -50% or worse = 0, 0% = 30
+        return max(0, 30 + rev_growth_pct * (30 / 50))
 
     import math
     rev_millions = total_revenue / 1e6
@@ -295,7 +307,7 @@ def fetch_stock_data(ticker):
             "low_52w": low_52w,
             "market_cap": market_cap,
             "total_revenue": total_revenue,
-            "rev_growth_pct": (rev_growth * 100) if rev_growth else 0,
+            "rev_growth_pct": (rev_growth * 100) if rev_growth is not None else None,
             "eps": eps,
             "free_cash_flow": free_cash_flow,
             "shares_outstanding": shares_outstanding,
@@ -411,7 +423,7 @@ def build_ranking():
                 "price": 0,
                 "target": 0,
                 "upside_pct": 0,
-                "rev_growth_pct": 0,
+                "rev_growth_pct": None,
                 "recommendation": "—",
                 "num_analysts": 0,
                 "market_cap_b": 0,
@@ -440,7 +452,7 @@ def build_ranking():
             "price": round(data["price"], 2),
             "target": round(data["target"], 2) if data["target"] else 0,
             "upside_pct": round(upside_pct, 1),
-            "rev_growth_pct": round(data["rev_growth_pct"], 1),
+            "rev_growth_pct": round(data["rev_growth_pct"], 1) if data["rev_growth_pct"] is not None else None,
             "eps": data.get("eps"),
             "recommendation": data["recommendation"],
             "num_analysts": data["num_analysts"],
