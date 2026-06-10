@@ -260,7 +260,9 @@ def compute_signals(ticker, strategy="hold_forever", sell_target=None):
         if data.empty or len(data) < 20:
             return None
 
-        close = data['Close']
+        close = data['Close'].dropna()
+        if close.empty:
+            return None
         price = float(close.iloc[-1])
 
         sma_50 = float(close.rolling(50).mean().iloc[-1]) if len(close) >= 50 else price
