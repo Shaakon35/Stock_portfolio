@@ -574,6 +574,52 @@ def compute_composite(data, meta):
 
 
 # =========================================================================
+# STRATEGY VALIDATION
+# =========================================================================
+
+def validate_strategy(ticker, meta, data):
+    """Check if a stock's strategy tag matches its fundamentals.
+    Prints warnings when data contradicts the assigned strategy."""
+    strategy = meta.get("strategy", "hold_forever")
+    eps = data.get("eps")
+    rev_growth = data.get("rev_growth_pct")
+    num_analysts = data.get("num_analysts", 0)
+    ps_ratio = data.get("ps_ratio")
+    fcf = data.get("free_cash_flow")
+    total_cash = data.get("total_cash")
+
+    warnings = []
+
+    if strategy == "hold_forever":
+        # hold_forever should be profitable with a real business
+        if eps is not None and eps < 0:
+            warnings.append("tagged hold_forever but EPS < 0 (unprofitable)")
+        if rev_growth is not None and rev_growth < -20:
+            warnings.append("tagged hold_forever but revenue shrinking >20%")
+        if num_analysts < 3:
+            warnings.append("tagged hold_forever but <3 analysts cover it")
+
+    elif strategy == "catalyst":
+        # catalyst should be a binary bet — flag if it looks like a real business
+        if eps is not None and eps > 0 and num_analysts >= 10:
+            warnings.append("tagged catalyst but profitable with 10+ analysts — consider cycle?")
+        if rev_growth is not None and rev_growth > 50 and eps is not None and eps > 0:
+            warnings.append("tagged catalyst but growing 50%+ and profitable — consider cycle?")
+
+    elif strategy == "cycle":
+        # cycle should have measurable revenue — flag if pre-revenue
+        if (rev_growth is None or rev_growth == 0) and (eps is None or eps < 0):
+            warnings.append("tagged cycle but pre-revenue and unprofitable — consider catalyst?")
+        if fcf is not None and total_cash is not None and fcf < 0:
+            runway = total_cash / abs(fcf) if fcf != 0 else 99
+            if runway < 1.5:
+                warnings.append(f"tagged cycle but only {runway:.1f}y cash runway — consider catalyst?")
+
+    for w in warnings:
+        print(f"  ⚠️ {ticker}: {w}")
+
+
+# =========================================================================
 # MAIN: BUILD RANKING TABLE
 # =========================================================================
 
@@ -616,6 +662,7 @@ def build_ranking():
             })
             continue
 
+        validate_strategy(ticker, meta, data)
         composite, breakdown = compute_composite(data, meta)
 
         upside_pct = 0
