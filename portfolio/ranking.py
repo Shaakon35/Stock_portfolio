@@ -300,6 +300,32 @@ def score_cash_runway(total_cash, free_cash_flow, eps):
         return 0
 
 
+def score_revenue_acceleration(current_growth, prior_growth):
+    """Score based on whether revenue growth is accelerating or decelerating.
+
+    Compares current YoY growth rate vs prior year's growth rate.
+    Accelerating growth (e.g. 20% → 50%) is a leading indicator of
+    inflection points that analysts haven't priced in yet.
+
+    acceleration = current_growth - prior_growth
+      +30pp or more → 100 (strong acceleration)
+      +10pp         → 70
+      0pp           → 50 (stable growth)
+      -10pp         → 30
+      -30pp or less → 0 (severe deceleration)
+
+    Returns 50 (neutral) when data is missing.
+    """
+    if current_growth is None or prior_growth is None:
+        return 50
+
+    accel = current_growth - prior_growth  # in percentage points
+
+    # Clamp to -30..+30 range, map to 0..100
+    score = 50 + (accel / 30) * 50
+    return max(0, min(100, score))
+
+
 # =========================================================================
 # RISK PENALTY FUNCTIONS — reduce score for fragile/risky stocks
 # =========================================================================
@@ -378,24 +404,32 @@ def fetch_stock_data(ticker):
         low_52w = info.get("fiftyTwoWeekLow")
         market_cap = info.get("marketCap", 0)
 
-        # Revenue growth — try info first, fallback to quarterly financials
+        # Revenue growth + acceleration from quarterly financials
         total_revenue = info.get("totalRevenue", 0)
         rev_growth = info.get("revenueGrowth")  # YoY as decimal (0.25 = 25%)
+        prior_rev_growth = None  # for acceleration calculation
 
-        # Fallback: compute YoY from quarterly income statement
-        if rev_growth is None:
-            try:
-                qf = t.quarterly_income_stmt
-                if qf is not None and "Total Revenue" in qf.index and len(qf.columns) >= 5:
-                    # Sum last 4 quarters (TTM) vs prior 4 quarters
+        try:
+            qf = t.quarterly_income_stmt
+            if qf is not None and "Total Revenue" in qf.index:
+                cols = len(qf.columns)
+                if cols >= 5:
                     recent_4 = qf.loc["Total Revenue"].iloc[:4].sum()
                     prior_4 = qf.loc["Total Revenue"].iloc[4:8].sum()
                     if prior_4 and prior_4 > 0 and recent_4 and recent_4 > 0:
-                        rev_growth = (recent_4 - prior_4) / prior_4
-                        if not total_revenue:
-                            total_revenue = recent_4
-            except Exception:
-                pass
+                        computed_growth = (recent_4 - prior_4) / prior_4
+                        if rev_growth is None:
+                            rev_growth = computed_growth
+                            if not total_revenue:
+                                total_revenue = recent_4
+                if cols >= 9:
+                    # Prior year growth: quarters 4-7 vs 8-11
+                    prior_4 = qf.loc["Total Revenue"].iloc[4:8].sum()
+                    older_4 = qf.loc["Total Revenue"].iloc[8:12].sum()
+                    if older_4 and older_4 > 0 and prior_4 and prior_4 > 0:
+                        prior_rev_growth = ((prior_4 - older_4) / older_4) * 100
+        except Exception:
+            pass
 
         # Profitability data
         eps = info.get("trailingEps")
@@ -433,6 +467,7 @@ def fetch_stock_data(ticker):
             "market_cap": market_cap,
             "total_revenue": total_revenue,
             "rev_growth_pct": (rev_growth * 100) if rev_growth is not None else None,
+            "prior_rev_growth_pct": prior_rev_growth,
             "eps": eps,
             "free_cash_flow": free_cash_flow,
             "ps_ratio": ps_ratio,
@@ -457,34 +492,37 @@ def fetch_stock_data(ticker):
 # catalyst: upside + conviction + momentum + cash runway (binary bet)
 STRATEGY_WEIGHTS = {
     "hold_forever": {
-        "growth":      0.20,
-        "upside":      0.10,
-        "valuation":   0.20,
-        "long_term":   0.15,
-        "cash_runway": 0.15,
-        "conviction":  0.10,
-        "entry":       0.05,
-        "momentum":    0.05,
+        "growth":       0.20,
+        "upside":       0.05,
+        "accel":        0.10,   # revenue acceleration — catches inflection points
+        "valuation":    0.20,
+        "long_term":    0.15,
+        "cash_runway":  0.10,
+        "conviction":   0.10,
+        "entry":        0.05,
+        "momentum":     0.05,
     },
     "cycle": {
-        "growth":      0.25,
-        "upside":      0.15,
-        "valuation":   0.15,
-        "long_term":   0.10,
-        "cash_runway": 0.05,
-        "conviction":  0.10,
-        "entry":       0.10,
-        "momentum":    0.10,
+        "growth":       0.20,
+        "upside":       0.10,
+        "accel":        0.15,   # acceleration matters most for cycle — ride the wave
+        "valuation":    0.15,
+        "long_term":    0.10,
+        "cash_runway":  0.05,
+        "conviction":   0.05,
+        "entry":        0.10,
+        "momentum":     0.10,
     },
     "catalyst": {
-        "growth":      0.10,
-        "upside":      0.25,
-        "valuation":   0.05,
-        "long_term":   0.05,
-        "cash_runway": 0.15,
-        "conviction":  0.15,
-        "entry":       0.10,
-        "momentum":    0.15,
+        "growth":       0.10,
+        "upside":       0.20,
+        "accel":        0.05,   # less relevant for binary bets
+        "valuation":    0.05,
+        "long_term":    0.05,
+        "cash_runway":  0.15,
+        "conviction":   0.15,
+        "entry":        0.10,
+        "momentum":     0.15,
     },
 }
 
@@ -519,6 +557,9 @@ def compute_composite(data, meta):
     s_growth = score_revenue_quality(
         data["rev_growth_pct"], data.get("total_revenue", 0)
     )
+    s_accel = score_revenue_acceleration(
+        data.get("rev_growth_pct"), data.get("prior_rev_growth_pct")
+    )
     s_valuation = score_valuation(data.get("ps_ratio"))
     s_long_term = score_long_term_health(
         price, data.get("high_2y"), data.get("history_years")
@@ -535,6 +576,7 @@ def compute_composite(data, meta):
     base_score = (
         s_upside * w["upside"]
         + s_growth * w["growth"]
+        + s_accel * w["accel"]
         + s_valuation * w["valuation"]
         + s_long_term * w["long_term"]
         + s_cash * w["cash_runway"]
@@ -559,6 +601,7 @@ def compute_composite(data, meta):
     breakdown = {
         "upside": round(s_upside, 1),
         "growth": round(s_growth, 1),
+        "accel": round(s_accel, 1),
         "valuation": round(s_valuation, 1),
         "long_term": round(s_long_term, 1),
         "cash_runway": round(s_cash, 1),
@@ -648,9 +691,11 @@ def build_ranking():
                 "target": 0,
                 "upside_pct": 0,
                 "rev_growth_pct": None,
+                "prior_rev_growth_pct": None,
                 "ps_ratio": None,
                 "cash_runway_years": None,
                 "pct_of_2y_high": None,
+                "rev_accel": None,
                 "recommendation": "—",
                 "num_analysts": 0,
                 "market_cap_b": 0,
@@ -693,6 +738,7 @@ def build_ranking():
             "target": round(data["target"], 2) if data["target"] else 0,
             "upside_pct": round(upside_pct, 1),
             "rev_growth_pct": round(data["rev_growth_pct"], 1) if data["rev_growth_pct"] is not None else None,
+            "rev_accel": round(data["rev_growth_pct"] - data["prior_rev_growth_pct"], 1) if data["rev_growth_pct"] is not None and data["prior_rev_growth_pct"] is not None else None,
             "ps_ratio": round(ps, 1) if ps else None,
             "cash_runway_years": cash_runway_y,
             "pct_of_2y_high": pct_2y,

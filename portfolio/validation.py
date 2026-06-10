@@ -7,6 +7,7 @@ from portfolio.ranking import (
     score_analyst_upside, score_revenue_quality, score_analyst_conviction,
     score_entry_position, score_momentum, score_valuation,
     score_long_term_health, score_cash_runway,
+    score_revenue_acceleration,
     penalty_fragility, penalty_downside, bonus_profitability,
 )
 
@@ -196,6 +197,7 @@ def fetch_historical_data(ticker, lookback_date):
 
         # --- Revenue growth from quarterly financials (reconstruct TTM) ---
         rev_growth = None
+        prior_rev_growth = None
         total_revenue = None
         try:
             qf = t.quarterly_income_stmt
@@ -209,6 +211,12 @@ def fetch_historical_data(ticker, lookback_date):
                     if prior_4 and prior_4 > 0 and recent_4 and recent_4 > 0:
                         rev_growth = ((recent_4 - prior_4) / prior_4) * 100
                         total_revenue = recent_4
+                # Prior-year growth for acceleration (quarters 4-7 vs 8-11)
+                if len(avail_cols) >= 12:
+                    prev_4 = sum(qf.loc["Total Revenue", avail_cols[4:8]])
+                    prev_prior_4 = sum(qf.loc["Total Revenue", avail_cols[8:12]])
+                    if prev_prior_4 and prev_prior_4 > 0 and prev_4 and prev_4 > 0:
+                        prior_rev_growth = ((prev_4 - prev_prior_4) / prev_prior_4) * 100
         except Exception:
             pass
 
@@ -252,6 +260,7 @@ def fetch_historical_data(ticker, lookback_date):
             "market_cap": market_cap,
             "total_revenue": total_revenue,
             "rev_growth_pct": rev_growth,
+            "prior_rev_growth_pct": prior_rev_growth,
             "eps": eps,
             "free_cash_flow": free_cash_flow,
             "ps_ratio": ps_ratio,
@@ -284,6 +293,9 @@ def compute_backtest_score(data, meta):
     s_growth = score_revenue_quality(
         data["rev_growth_pct"], data.get("total_revenue", 0)
     )
+    s_accel = score_revenue_acceleration(
+        data.get("rev_growth_pct"), data.get("prior_rev_growth_pct")
+    )
     s_valuation = score_valuation(data.get("ps_ratio"))
     s_long_term = score_long_term_health(
         price, data.get("high_2y"), data.get("history_years")
@@ -300,6 +312,7 @@ def compute_backtest_score(data, meta):
     base_score = (
         s_upside * w["upside"]
         + s_growth * w["growth"]
+        + s_accel * w["accel"]
         + s_valuation * w["valuation"]
         + s_long_term * w["long_term"]
         + s_cash * w["cash_runway"]
@@ -320,6 +333,7 @@ def compute_backtest_score(data, meta):
     breakdown = {
         "upside": round(s_upside, 1),
         "growth": round(s_growth, 1),
+        "accel": round(s_accel, 1),
         "valuation": round(s_valuation, 1),
         "long_term": round(s_long_term, 1),
         "cash_runway": round(s_cash, 1),
