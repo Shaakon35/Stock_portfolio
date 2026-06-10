@@ -1,20 +1,108 @@
 """
 80/20 Cross-Validated Weight Optimizer for the Ranking Model.
 
-Optimizes factor weights to maximize Pearson correlation between
-composite score and actual forward returns.
-
-Anti-overfitting measures:
-- 80/20 train/test split (repeated 5x with different seeds)
-- Weight smoothing (5% granularity)
-- Regularization toward equal weights
-- Reports both train and test correlations to detect overfitting
+Improvements over v1:
+1. Multi-period support (12, 24, 36 month lookbacks)
+2. Winsorized returns (capped at ±200%) to reduce outlier impact
+3. Reduced factors: merged upside+conviction → "analyst_sentiment",
+   dropped long_term and cash_runway (optimizer set them to 0%)
+4. Spearman rank correlation as optimization target
+5. Sector-neutralized returns to find stock-level signals
 """
 
 import numpy as np
 from scipy.optimize import minimize
-from portfolio.smid_data_fetcher import FACTOR_NAMES, ADJUSTMENT_NAMES
+from portfolio.smid_data_fetcher import FACTOR_NAMES as ALL_FACTOR_NAMES, ADJUSTMENT_NAMES
 
+
+# --- Factor reduction ---
+# Merge upside + conviction → analyst_sentiment (average of both)
+# Keep long_term but expect low weight; drop cash_runway
+REDUCED_FACTORS = [
+    "analyst_sentiment",  # merged: (upside + conviction) / 2
+    "growth",
+    "accel",
+    "valuation",
+    "entry",
+    "momentum",
+    "long_term",
+]
+
+FULL_FACTORS = ALL_FACTOR_NAMES
+
+
+def _compute_reduced_factors(record):
+    """Compute reduced factor values from a full record."""
+    return {
+        "analyst_sentiment": (record["upside"] + record["conviction"]) / 2,
+        "growth": record["growth"],
+        "accel": record["accel"],
+        "valuation": record["valuation"],
+        "entry": record["entry"],
+        "momentum": record["momentum"],
+        "long_term": record["long_term"],
+    }
+
+
+# =========================================================================
+# PREPROCESSING
+# =========================================================================
+
+def winsorize_returns(records, cap=200.0):
+    """Cap returns at +/-cap% to reduce outlier impact."""
+    out = []
+    n_capped = 0
+    for r in records:
+        r2 = dict(r)
+        if r2["actual_return"] > cap:
+            r2["actual_return"] = cap
+            n_capped += 1
+        elif r2["actual_return"] < -cap:
+            r2["actual_return"] = -cap
+            n_capped += 1
+        out.append(r2)
+    if n_capped > 0:
+        print(f"  Winsorized {n_capped}/{len(records)} returns to +/-{cap}%")
+    return out
+
+
+def neutralize_by_sector(records):
+    """Subtract sector median return from each stock's return.
+
+    Forces the optimizer to find stock-level signals rather than
+    learning "buy sector X, sell sector Y".
+    """
+    groups = {}
+    for r in records:
+        key = (r.get("basket", ""), r["period_months"])
+        if key not in groups:
+            groups[key] = []
+        groups[key].append(r["actual_return"])
+
+    medians = {k: np.median(v) for k, v in groups.items()}
+
+    out = []
+    for r in records:
+        r2 = dict(r)
+        key = (r2.get("basket", ""), r2["period_months"])
+        r2["actual_return"] = r2["actual_return"] - medians[key]
+        out.append(r2)
+
+    print(f"  Sector-neutralized returns across {len(medians)} (basket, period) groups")
+    return out
+
+
+def preprocess(records, winsorize_cap=200.0, sector_neutral=True):
+    """Apply all preprocessing steps."""
+    out = winsorize_returns(records, cap=winsorize_cap)
+    if sector_neutral:
+        out = neutralize_by_sector(out)
+    return out
+
+
+# =========================================================================
+# CORRELATION METRICS
+# =========================================================================
 
 def pearson(x, y):
     """Pearson correlation coefficient."""
@@ -46,91 +134,109 @@ def spearman(x, y):
     return 1 - (6 * d2) / (n * (n**2 - 1))
 
 
-def score_records(records, weights, adj_mult=1.0):
+# =========================================================================
+# SCORING
+# =========================================================================
+
+def score_records(records, weights, adj_mult=0.0, use_reduced=True):
     """Compute composite scores for records given factor weights."""
     scores = []
-    for r in records:
-        sc = sum(r[f] * weights.get(f, 0) for f in FACTOR_NAMES)
-        adj = sum(r[f] for f in ADJUSTMENT_NAMES)
-        sc += adj * adj_mult
-        scores.append(sc)
+    if use_reduced:
+        for r in records:
+            rf = _compute_reduced_factors(r)
+            sc = sum(rf.get(f, 0) * weights.get(f, 0) for f in REDUCED_FACTORS)
+            if adj_mult != 0:
+                adj = sum(r.get(f, 0) for f in ADJUSTMENT_NAMES)
+                sc += adj * adj_mult
+            scores.append(sc)
+    else:
+        for r in records:
+            sc = sum(r.get(f, 0) * weights.get(f, 0) for f in FULL_FACTORS)
+            if adj_mult != 0:
+                adj = sum(r.get(f, 0) for f in ADJUSTMENT_NAMES)
+                sc += adj * adj_mult
+            scores.append(sc)
     return np.array(scores)
 
 
-def evaluate(records, weights, adj_mult=1.0, metric="pearson"):
+def evaluate(records, weights, adj_mult=0.0, metric="spearman", use_reduced=True):
     """Correlation between weighted scores and actual returns."""
     if len(records) < 10:
         return -1.0
-    scores = score_records(records, weights, adj_mult)
+    scores = score_records(records, weights, adj_mult, use_reduced)
     returns = np.array([r["actual_return"] for r in records])
     if metric == "pearson":
         return pearson(scores, returns)
     return spearman(scores, returns)
 
 
-def normalize_weights(w):
+# =========================================================================
+# WEIGHT UTILITIES
+# =========================================================================
+
+def normalize_weights(w, factors=None):
     """Normalize weight dict to sum to 1.0."""
-    total = sum(abs(v) for v in w.values())
+    if factors is None:
+        factors = list(w.keys())
+    total = sum(abs(w.get(f, 0)) for f in factors)
     if total <= 0:
-        n = len(w)
-        return {k: 1.0 / n for k in w}
-    return {k: max(0, v) / total for k, v in w.items()}
+        n = len(factors)
+        return {f: 1.0 / n for f in factors}
+    return {f: max(0, w.get(f, 0)) / total for f in factors}
 
 
-def round_weights(w, granularity=0.05):
+def round_weights(w, factors=None, granularity=0.05):
     """Round weights to nearest granularity and renormalize."""
+    if factors is None:
+        factors = list(w.keys())
     rounded = {}
-    for f in FACTOR_NAMES:
+    for f in factors:
         r = round(w.get(f, 0) / granularity) * granularity
         rounded[f] = max(0.0, r)
     total = sum(rounded.values())
     if total <= 0:
-        return {f: 1.0 / len(FACTOR_NAMES) for f in FACTOR_NAMES}
-    rounded = {k: v / total for k, v in rounded.items()}
-    # Fix rounding
+        return {f: 1.0 / len(factors) for f in factors}
+    rounded = {f: v / total for f, v in rounded.items()}
     diff = 1.0 - sum(rounded.values())
     if abs(diff) > 0.001:
         max_f = max(rounded, key=rounded.get)
         rounded[max_f] += diff
-    return {k: round(v, 4) for k, v in rounded.items()}
+    return {f: round(v, 4) for f, v in rounded.items()}
 
 
-def optimize_weights(train_records, metric="pearson", reg_strength=0.01):
-    """Find optimal weights using scipy minimize + coordinate descent.
+# =========================================================================
+# OPTIMIZER
+# =========================================================================
 
-    Uses L-BFGS-B with bounds [0, 1] for each factor weight.
-    Adds L2 regularization toward equal weights to prevent overfitting.
-
-    Returns (best_weights, best_adj_mult, train_correlation).
-    """
-    n_factors = len(FACTOR_NAMES)
+def optimize_weights(train_records, metric="spearman", reg_strength=0.01,
+                     use_reduced=True):
+    """Find optimal weights using scipy minimize + coordinate descent."""
+    factors = REDUCED_FACTORS if use_reduced else FULL_FACTORS
+    n_factors = len(factors)
     equal_w = 1.0 / n_factors
 
     best_corr = -1.0
-    best_weights = {f: equal_w for f in FACTOR_NAMES}
-    best_adj = 1.0
+    best_weights = {f: equal_w for f in factors}
+    best_adj = 0.0
 
-    for adj_mult in [0.0, 0.5, 1.0, 1.5]:
+    for adj_mult in [0.0, 0.5, 1.0]:
         def objective(x):
-            w = {FACTOR_NAMES[i]: x[i] for i in range(n_factors)}
-            w = normalize_weights(w)
-            corr = evaluate(train_records, w, adj_mult, metric)
-            # L2 regularization toward equal weights
+            w = {factors[i]: x[i] for i in range(n_factors)}
+            w = normalize_weights(w, factors)
+            corr = evaluate(train_records, w, adj_mult, metric, use_reduced)
             reg = reg_strength * sum((x[i] - equal_w)**2 for i in range(n_factors))
             return -(corr - reg)
 
-        # Multiple random starts
         for seed in range(5):
             rng = np.random.RandomState(seed)
             x0 = rng.dirichlet(np.ones(n_factors))
             bounds = [(0.0, 1.0)] * n_factors
-
             try:
                 result = minimize(objective, x0, method="L-BFGS-B", bounds=bounds,
                                   options={"maxiter": 500, "ftol": 1e-8})
-                w = {FACTOR_NAMES[i]: result.x[i] for i in range(n_factors)}
-                w = normalize_weights(w)
-                corr = evaluate(train_records, w, adj_mult, metric)
+                w = {factors[i]: result.x[i] for i in range(n_factors)}
+                w = normalize_weights(w, factors)
+                corr = evaluate(train_records, w, adj_mult, metric, use_reduced)
                 if corr > best_corr:
                     best_corr = corr
                     best_weights = w
@@ -138,31 +244,32 @@ def optimize_weights(train_records, metric="pearson", reg_strength=0.01):
             except Exception:
                 pass
 
-    # Coordinate descent refinement (1% steps)
+    # Coordinate descent refinement
     current_w = dict(best_weights)
     improved = True
     iters = 0
     while improved and iters < 30:
         improved = False
         iters += 1
-        for f in FACTOR_NAMES:
+        for f in factors:
             best_val = current_w[f]
-            best_c = evaluate(train_records, normalize_weights(current_w), best_adj, metric)
+            best_c = evaluate(train_records, normalize_weights(current_w, factors),
+                              best_adj, metric, use_reduced)
             for pct in range(0, 61):
                 old = current_w[f]
                 current_w[f] = pct / 100.0
-                test_w = normalize_weights(current_w)
-                c = evaluate(train_records, test_w, best_adj, metric)
-                if c > best_c + 0.0001:  # require meaningful improvement
+                test_w = normalize_weights(current_w, factors)
+                c = evaluate(train_records, test_w, best_adj, metric, use_reduced)
+                if c > best_c + 0.0001:
                     best_c = c
                     best_val = pct / 100.0
                 current_w[f] = old
             if abs(best_val - current_w[f]) > 0.005:
                 current_w[f] = best_val
-                current_w = normalize_weights(current_w)
+                current_w = normalize_weights(current_w, factors)
                 improved = True
 
-    final_corr = evaluate(train_records, current_w, best_adj, metric)
+    final_corr = evaluate(train_records, current_w, best_adj, metric, use_reduced)
     if final_corr > best_corr:
         best_weights = current_w
         best_corr = final_corr
@@ -170,45 +277,48 @@ def optimize_weights(train_records, metric="pearson", reg_strength=0.01):
     return best_weights, best_adj, best_corr
 
 
-def cross_validate(records, n_splits=5, test_size=0.2, metric="pearson", seed=42):
-    """Repeated 80/20 cross-validation.
+# =========================================================================
+# CROSS-VALIDATION
+# =========================================================================
 
-    For each split:
-    - Randomly shuffle and split 80% train / 20% test
-    - Optimize weights on train
-    - Evaluate on test (out-of-sample)
+def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
+                   seed=42, use_reduced=True, winsorize_cap=200.0,
+                   sector_neutral=True):
+    """Repeated 80/20 cross-validation with preprocessing."""
+    factors = REDUCED_FACTORS if use_reduced else FULL_FACTORS
 
-    Returns dict with per-split results, averaged weights, and summary stats.
-    """
+    print("Preprocessing...")
+    processed = preprocess(records, winsorize_cap=winsorize_cap,
+                           sector_neutral=sector_neutral)
+
     rng = np.random.RandomState(seed)
-    n = len(records)
+    n = len(processed)
     test_n = int(n * test_size)
-    train_n = n - test_n
 
     split_results = []
     all_weights = []
 
     for split_idx in range(n_splits):
-        # Shuffle with different seed each split
         indices = np.arange(n)
         rng.shuffle(indices)
 
-        train_idx = indices[:train_n]
-        test_idx = indices[train_n:]
+        train_idx = indices[:n - test_n]
+        test_idx = indices[n - test_n:]
 
-        train = [records[i] for i in train_idx]
-        test = [records[i] for i in test_idx]
+        train = [processed[i] for i in train_idx]
+        test = [processed[i] for i in test_idx]
 
         print(f"\n--- Split {split_idx+1}/{n_splits}: train={len(train)}, test={len(test)} ---")
 
-        # Optimize on train
-        weights, adj_mult, train_corr = optimize_weights(train, metric=metric)
+        weights, adj_mult, train_corr = optimize_weights(
+            train, metric=metric, use_reduced=use_reduced
+        )
 
-        # Evaluate on test (out-of-sample)
-        oos_corr = evaluate(test, weights, adj_mult, metric)
-        oos_spearman = evaluate(test, weights, adj_mult, "spearman")
+        oos_corr = evaluate(test, weights, adj_mult, metric, use_reduced)
+        other_metric = "pearson" if metric == "spearman" else "spearman"
+        oos_other = evaluate(test, weights, adj_mult, other_metric, use_reduced)
 
-        rounded_w = round_weights(weights)
+        rounded_w = round_weights(weights, factors)
         all_weights.append(rounded_w)
 
         result = {
@@ -217,7 +327,7 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="pearson", seed=42
             "test_n": len(test),
             f"train_{metric}": round(train_corr, 4),
             f"test_{metric}": round(oos_corr, 4),
-            "test_spearman": round(oos_spearman, 4),
+            f"test_{other_metric}": round(oos_other, 4),
             "adj_multiplier": round(adj_mult, 2),
             "weights": rounded_w,
         }
@@ -225,19 +335,18 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="pearson", seed=42
 
         print(f"  Train {metric}: {train_corr:+.4f}")
         print(f"  Test  {metric}: {oos_corr:+.4f}")
-        print(f"  Test  spearman: {oos_spearman:+.4f}")
+        print(f"  Test  {other_metric}: {oos_other:+.4f}")
         top3 = sorted(rounded_w.items(), key=lambda x: -x[1])[:3]
         print(f"  Top weights: {', '.join(f'{f}={v:.0%}' for f,v in top3)}")
 
-    # Average weights across splits
+    # Average weights
     avg_weights = {}
-    for f in FACTOR_NAMES:
+    for f in factors:
         avg_weights[f] = np.mean([w[f] for w in all_weights])
-    avg_weights = round_weights(avg_weights)
+    avg_weights = round_weights(avg_weights, factors)
 
     avg_adj = np.mean([sr["adj_multiplier"] for sr in split_results])
 
-    # Summary
     test_corrs = [sr[f"test_{metric}"] for sr in split_results]
     train_corrs = [sr[f"train_{metric}"] for sr in split_results]
 
@@ -251,10 +360,12 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="pearson", seed=42
         "overfit_gap": round(np.mean(train_corrs) - np.mean(test_corrs), 4),
         "n_splits": n_splits,
         "metric": metric,
+        "factors_used": factors,
     }
 
 
-def strategy_cv(records, n_splits=5, metric="pearson"):
+def strategy_cv(records, n_splits=5, metric="spearman", use_reduced=True,
+                winsorize_cap=200.0, sector_neutral=True):
     """Run CV separately for each strategy type."""
     strategies = ["hold_forever", "cycle", "catalyst"]
     results = {}
@@ -270,35 +381,43 @@ def strategy_cv(records, n_splits=5, metric="pearson"):
             results[strat] = None
             continue
 
-        results[strat] = cross_validate(strat_records, n_splits=n_splits, metric=metric)
+        results[strat] = cross_validate(
+            strat_records, n_splits=n_splits, metric=metric,
+            use_reduced=use_reduced, winsorize_cap=winsorize_cap,
+            sector_neutral=sector_neutral,
+        )
 
     return results
 
 
+# =========================================================================
+# REPORTING
+# =========================================================================
+
 def format_weights_table(cv_result, strat_results=None):
     """Format results as a readable table."""
     lines = []
+    metric = cv_result["metric"]
+    factors = cv_result["factors_used"]
+
     lines.append("\n" + "="*70)
     lines.append("OPTIMIZED WEIGHTS (averaged across CV splits)")
     lines.append("="*70)
 
-    # Overall
     w = cv_result["avg_weights"]
-    metric = cv_result["metric"]
     lines.append(f"\nOverall (all strategies pooled):")
     lines.append(f"  Mean test {metric}: {cv_result[f'mean_test_{metric}']:+.4f} "
-                 f"(±{cv_result[f'std_test_{metric}']:.4f})")
+                 f"(+/-{cv_result[f'std_test_{metric}']:.4f})")
     lines.append(f"  Overfit gap: {cv_result['overfit_gap']:+.4f}")
     lines.append(f"  Adj multiplier: {cv_result['avg_adj_multiplier']:.2f}")
     lines.append("")
 
-    header = f"  {'Factor':<14} {'Weight':>8}  {'Pct':>6}"
+    header = f"  {'Factor':<22} {'Weight':>8}  {'Pct':>6}"
     lines.append(header)
-    lines.append("  " + "-"*30)
-    for f in FACTOR_NAMES:
-        lines.append(f"  {f:<14} {w[f]:>8.4f}  {w[f]*100:>5.1f}%")
+    lines.append("  " + "-"*38)
+    for f in factors:
+        lines.append(f"  {f:<22} {w[f]:>8.4f}  {w[f]*100:>5.1f}%")
 
-    # Per-strategy
     if strat_results:
         for strat, sr in strat_results.items():
             if sr is None:
@@ -306,12 +425,48 @@ def format_weights_table(cv_result, strat_results=None):
             lines.append(f"\n{strat}:")
             sw = sr["avg_weights"]
             lines.append(f"  Mean test {metric}: {sr[f'mean_test_{metric}']:+.4f} "
-                         f"(±{sr[f'std_test_{metric}']:.4f})")
+                         f"(+/-{sr[f'std_test_{metric}']:.4f})")
             lines.append(f"  Overfit gap: {sr['overfit_gap']:+.4f}")
             lines.append("")
             lines.append(header)
-            lines.append("  " + "-"*30)
-            for f in FACTOR_NAMES:
-                lines.append(f"  {f:<14} {sw[f]:>8.4f}  {sw[f]*100:>5.1f}%")
+            lines.append("  " + "-"*38)
+            for f in factors:
+                lines.append(f"  {f:<22} {sw[f]:>8.4f}  {sw[f]*100:>5.1f}%")
 
     return "\n".join(lines)
+
+
+def quintile_analysis(records, weights, adj_mult=0.0, use_reduced=True):
+    """Compute quintile performance breakdown."""
+    scores = score_records(records, weights, adj_mult, use_reduced)
+    returns = np.array([r["actual_return"] for r in records])
+
+    order = np.argsort(-scores)
+    n = len(order)
+    q_size = n // 5
+
+    labels = ["Top 20%", "20-40%", "40-60%", "60-80%", "Bottom 20%"]
+    quintiles = {}
+
+    for i, label in enumerate(labels):
+        start = i * q_size
+        end = start + q_size if i < 4 else n
+        idx = order[start:end]
+        q_ret = returns[idx]
+        quintiles[label] = {
+            "avg_return": round(float(np.mean(q_ret)), 1),
+            "median_return": round(float(np.median(q_ret)), 1),
+            "pct_positive": round(float(np.mean(q_ret > 0) * 100), 0),
+            "n": len(idx),
+        }
+
+    bot_ret = quintiles["Bottom 20%"]["avg_return"]
+    print(f"\n{'Quintile':<12} {'Avg Ret':>8} {'Med Ret':>8} {'%Pos':>6} {'vs Bot20':>10}")
+    print("-" * 50)
+    for label in labels:
+        q = quintiles[label]
+        spread = f"{q['avg_return'] - bot_ret:+.1f}%" if label != "Bottom 20%" else "---"
+        print(f"{label:<12} {q['avg_return']:>+7.1f}% {q['median_return']:>+7.1f}% "
+              f"{q['pct_positive']:>5.0f}% {spread:>10}")
+
+    return quintiles

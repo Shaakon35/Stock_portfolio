@@ -93,51 +93,20 @@ def compute_factor_scores(data, meta):
     return scores, adjustments
 
 
-def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size=50):
-    """Fetch data for all ~700 tickers at the given lookback.
-
-    Args:
-        lookback_months: months to look back from today (12 = mid-2025)
-        csv_path: output CSV path
-        force_refresh: if True, refetch even if CSV exists
-        batch_size: pause every N tickers to avoid rate limits
-
-    Returns:
-        list of record dicts
-    """
-    csv_path = csv_path or DEFAULT_CSV
-
-    universe = get_full_universe()
+def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
+    """Fetch data for one lookback period. Returns (new_records, errors)."""
     lookback_date = datetime.now() - timedelta(days=lookback_months * 30)
-
-    # Resume support: load existing CSV and skip already-fetched tickers
     records = []
-    already_fetched = set()
-    if os.path.exists(csv_path):
-        existing = load_csv(csv_path)
-        if existing:
-            records = existing
-            already_fetched = {r["ticker"] for r in existing}
-            if not force_refresh and len(already_fetched) >= len(universe) * 0.9:
-                print(f"CSV has {len(records)} records (>90% of universe), using cached data.")
-                print(f"Pass force_refresh=True to refetch everything.")
-                return records
-            elif not force_refresh:
-                print(f"Resuming: {len(already_fetched)} already fetched, "
-                      f"{len(universe) - len(already_fetched)} remaining")
-
-    if force_refresh:
-        records = []
-        already_fetched = set()
-
-    print(f"Fetching {len(universe)} tickers, lookback={lookback_date.strftime('%Y-%m-%d')}")
-    print(f"Output: {csv_path}")
-
     errors = []
     total = len(universe)
 
+    print(f"\n{'='*60}")
+    print(f"PERIOD: {lookback_months} months (lookback={lookback_date.strftime('%Y-%m-%d')})")
+    print(f"{'='*60}")
+
     for i, (ticker, meta) in enumerate(universe.items()):
-        if ticker in already_fetched:
+        key = (ticker, lookback_months)
+        if key in existing_keys:
             continue
         print(f"  [{i+1}/{total}] {ticker}...", end="", flush=True)
 
@@ -183,28 +152,68 @@ def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size
         })
         print(f" ${price_then:.0f}→${price_now:.0f} ret={actual_return:+.1f}%")
 
-        # Rate limit: pause every batch_size tickers
         if (i + 1) % batch_size == 0:
             print(f"  ... pausing 2s (rate limit) ...")
             time.sleep(2)
 
-        # Save intermediate results every 100 tickers
-        if (i + 1) % 100 == 0:
-            save_csv(records, csv_path)
-            print(f"  ... saved {len(records)} records so far ...")
+    print(f"  -> {len(records)} valid / {len(errors)} errors")
+    return records, errors
 
-    # Final save
-    save_csv(records, csv_path)
 
-    print(f"\nDone: {len(records)} valid / {len(errors)} errors / {total} total")
-    print(f"Saved to: {csv_path}")
+def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size=50,
+              periods=None):
+    """Fetch data for all ~700 tickers across one or more lookback periods.
 
-    if errors:
-        print(f"\nFirst 10 errors:")
-        for t, e in errors[:10]:
-            print(f"  {t}: {e}")
+    Args:
+        lookback_months: single period (used if periods is None)
+        csv_path: output CSV path
+        force_refresh: if True, refetch everything
+        batch_size: pause every N tickers to avoid rate limits
+        periods: list of lookback months, e.g. [12, 24, 36]
 
-    return records
+    Returns:
+        list of record dicts (all periods combined)
+    """
+    csv_path = csv_path or DEFAULT_CSV
+    if periods is None:
+        periods = [lookback_months]
+
+    universe = get_full_universe()
+
+    # Resume support: load existing CSV, track (ticker, period) pairs
+    all_records = []
+    existing_keys = set()
+    if not force_refresh and os.path.exists(csv_path):
+        existing = load_csv(csv_path)
+        if existing:
+            all_records = existing
+            existing_keys = {(r["ticker"], r["period_months"]) for r in existing}
+            # Check which periods are complete
+            for pm in periods:
+                n = sum(1 for k in existing_keys if k[1] == pm)
+                print(f"  Period {pm}mo: {n} records cached")
+
+    if force_refresh:
+        all_records = []
+        existing_keys = set()
+
+    # Fetch each period
+    for pm in periods:
+        new_records, errors = _fetch_period(universe, pm, existing_keys, batch_size)
+        all_records.extend(new_records)
+        # Save after each period
+        save_csv(all_records, csv_path)
+        print(f"  Saved {len(all_records)} total records to {csv_path}")
+
+    # Summary
+    period_counts = {}
+    for r in all_records:
+        pm = r["period_months"]
+        period_counts[pm] = period_counts.get(pm, 0) + 1
+    print(f"\nTotal: {len(all_records)} records")
+    print(f"Per period: {period_counts}")
+
+    return all_records
 
 
 def save_csv(records, path=None):
