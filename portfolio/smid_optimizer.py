@@ -470,3 +470,58 @@ def quintile_analysis(records, weights, adj_mult=0.0, use_reduced=True):
               f"{q['pct_positive']:>5.0f}% {spread:>10}")
 
     return quintiles
+
+
+def bucket_analysis(records, weights, adj_mult=0.0, use_reduced=True, n_buckets=20):
+    """Rank-bucket performance breakdown with arbitrary granularity.
+
+    ``n_buckets=20`` gives 5% buckets, ``n_buckets=5`` reproduces quintiles.
+    Buckets are ordered best-score first. Each bucket's average return is
+    compared against the bottom bucket ("vs Bot"), so a positive spread means
+    the model's higher-ranked names beat its lowest-ranked names.
+    """
+    scores = score_records(records, weights, adj_mult, use_reduced)
+    returns = np.array([r["actual_return"] for r in records])
+
+    order = np.argsort(-scores)
+    n = len(order)
+    if n < n_buckets:
+        print(f"  (only {n} records; need >= {n_buckets} for {n_buckets} buckets)")
+        return {}
+
+    # Even split with remainder distributed to the first buckets.
+    base, rem = divmod(n, n_buckets)
+    edges = []
+    pos = 0
+    for i in range(n_buckets):
+        size = base + (1 if i < rem else 0)
+        edges.append((pos, pos + size))
+        pos += size
+
+    step = 100.0 / n_buckets
+    buckets = {}
+    for i, (start, end) in enumerate(edges):
+        idx = order[start:end]
+        b_ret = returns[idx]
+        top_pct = round(i * step)
+        bot_pct = round((i + 1) * step)
+        label = f"{top_pct}-{bot_pct}%"
+        buckets[label] = {
+            "avg_return": round(float(np.mean(b_ret)), 1),
+            "median_return": round(float(np.median(b_ret)), 1),
+            "pct_positive": round(float(np.mean(b_ret > 0) * 100), 0),
+            "n": len(idx),
+        }
+
+    labels = list(buckets.keys())
+    bot_label = labels[-1]
+    bot_ret = buckets[bot_label]["avg_return"]
+    print(f"\n{'Bucket':<10} {'n':>4} {'Avg Ret':>9} {'Med Ret':>9} {'%Pos':>6} {'vs Bot':>9}")
+    print("-" * 52)
+    for label in labels:
+        b = buckets[label]
+        spread = f"{b['avg_return'] - bot_ret:+.1f}%" if label != bot_label else "---"
+        print(f"{label:<10} {b['n']:>4} {b['avg_return']:>+8.1f}% "
+              f"{b['median_return']:>+8.1f}% {b['pct_positive']:>5.0f}% {spread:>9}")
+
+    return buckets

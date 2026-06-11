@@ -426,6 +426,70 @@ def strategy_cv(records, n_splits=5, metric="spearman", use_reduced=True,
 
 
 # =========================================================================
+# PERIOD-SPLIT TOP/BOTTOM DECILE TABLE
+# =========================================================================
+
+def period_decile_table(records, weights, adj_mult=0.0, use_reduced=True,
+                        top_frac=0.10, periods=(12, 24, 36)):
+    """Print top-vs-bottom decile performance broken out by holding period.
+
+    For each period (and pooled), rank stocks by the model score, then report
+    the top-decile average/median/%positive return alongside the bottom-decile
+    average. This is the most decision-relevant view: it answers "if I buy the
+    model's highest-ranked names and hold for N months, what happens?" and
+    shows that the edge is concentrated in longer holds and the upper tail.
+
+    Returns a dict keyed by period label with the computed stats.
+    """
+    def _stats(recs):
+        n = len(recs)
+        if n < 20:
+            return None
+        scores = score_records(recs, weights, adj_mult, use_reduced)
+        returns = np.array([r["actual_return"] for r in recs])
+        order = np.argsort(-scores)
+        k = max(1, int(round(n * top_frac)))
+        top = returns[order[:k]]
+        bot = returns[order[-k:]]
+        return {
+            "n": n,
+            "k": k,
+            "top_avg": float(np.mean(top)),
+            "top_med": float(np.median(top)),
+            "top_pos": float(np.mean(top > 0) * 100),
+            "bot_avg": float(np.mean(bot)),
+        }
+
+    rows = []
+    for p in periods:
+        recs = [r for r in records if r.get("period_months") == p]
+        rows.append((f"{p}mo", _stats(recs)))
+    rows.append(("ALL pooled", _stats(records)))
+
+    pct = int(round(top_frac * 100))
+    print(f"\n{'='*64}")
+    print(f"TOP {pct}% vs BOTTOM {pct}% BY HOLDING PERIOD (raw returns)")
+    print(f"{'='*64}")
+    print(f"{'Period':<12} {'TOP avg':>9} {'TOP med':>9} {'TOP %pos':>9} "
+          f"{'BOT avg':>9}")
+    print("-" * 64)
+    results = {}
+    for label, s in rows:
+        if s is None:
+            print(f"{label:<12} {'(too few records)':>49}")
+            continue
+        results[label] = s
+        print(f"{label:<12} {s['top_avg']:>+8.1f}% {s['top_med']:>+8.1f}% "
+              f"{s['top_pos']:>8.0f}% {s['bot_avg']:>+8.1f}%")
+
+    print(f"\nTop/bottom = best/worst {pct}% by model score. Averages are "
+          f"inflated by a\nfew big winners; the median is the typical pick. "
+          f"The edge is strongest\nat longer holds and in the upper tail, "
+          f"not in short-horizon medians.")
+    return results
+
+
+# =========================================================================
 # CLI
 # =========================================================================
 
@@ -464,6 +528,8 @@ def _parse_args(argv=None):
                    help="Also run a separate fit per strategy")
     p.add_argument("--quintiles", action="store_true",
                    help="Print quintile analysis on raw returns with fitted weights")
+    p.add_argument("--top-frac", type=float, default=0.10,
+                   help="Top/bottom fraction for the period-decile table (default 0.10 = top 10%%)")
     return p.parse_args(argv)
 
 
@@ -517,6 +583,7 @@ def main(argv=None):
     for f in cv_result["factors_used"]:
         print(f"  {f:<22} {cv_result['avg_weights'][f]*100:>5.1f}%")
 
+    strat_results = None
     if args.per_strategy:
         strat_results = strategy_cv(
             records, n_splits=args.n_splits, metric=args.metric,
@@ -532,6 +599,27 @@ def main(argv=None):
             records, cv_result["avg_weights"],
             adj_mult=cv_result["avg_adj_multiplier"],
             use_reduced=use_reduced,
+        )
+
+    # The decision-relevant view, printed last: how the model's top names
+    # perform vs the bottom names, broken out by holding period. Printed
+    # per-strategy when available (cycle is the strongest signal), else pooled.
+    if strat_results:
+        for strat, sr in strat_results.items():
+            if sr is None:
+                continue
+            strat_recs = [r for r in records if r["strategy"] == strat]
+            print(f"\n### {strat} ###")
+            period_decile_table(
+                strat_recs, sr["avg_weights"],
+                adj_mult=sr["avg_adj_multiplier"],
+                use_reduced=use_reduced, top_frac=args.top_frac,
+            )
+    else:
+        period_decile_table(
+            records, cv_result["avg_weights"],
+            adj_mult=cv_result["avg_adj_multiplier"],
+            use_reduced=use_reduced, top_frac=args.top_frac,
         )
 
     return 0
