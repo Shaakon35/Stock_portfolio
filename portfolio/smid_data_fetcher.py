@@ -24,6 +24,7 @@ from portfolio.ranking import (
 )
 from portfolio.validation import fetch_historical_data
 from portfolio.smid_universe import get_full_universe
+from portfolio.helpers import DELISTED_OVERRIDES
 
 
 FACTOR_NAMES = [
@@ -107,32 +108,23 @@ def compute_factor_scores(data, meta):
 # Stocks that were delisted/bankrupt and Yahoo has purged their data.
 # Approximate prices at various lookback dates, sourced from historical records.
 # Format: ticker -> {lookback_months: approximate_price_then}
+# NOTE: Acquisitions and confirmed bankruptcies now live in
+# DELISTED_OVERRIDES (portfolio/helpers.py), which is checked FIRST in the
+# fetch loop. Acquired tickers get their REAL buyout return there instead of
+# the -100% this dict hardcodes. The entries below are the remaining
+# "near-dead"/delisted names not yet curated into the overrides. Several of
+# these (FATE, STEM, EDIT, SKLZ, SPIR, PSNY) actually still TRADE, so the
+# -100% here overstates the loss — review and migrate to DELISTED_OVERRIDES.
 KNOWN_DEAD = {
-    "NKLA":  {12: 1.50, 24: 0.80, 36: 1.20},   # Nikola, delisted 2025
-    "GOEV":  {12: 1.80, 24: 1.50, 36: 3.50},    # Canoo, bankrupt 2025
     "WOLF":  {12: 8.00, 24: 18.00, 36: 30.00},   # Wolfspeed, bankrupt 2025
-    "CFLT":  {12: 25.00, 24: 28.00, 36: 30.00},  # Confluent, acquired/delisted
-    "SGEN":  {12: 0, 24: 0, 36: 175.00},          # Seagen, acquired by Pfizer 2023
-    "ALTR":  {12: 0, 24: 0, 36: 50.00},           # Altair, acquired 2024
-    "MAXR":  {12: 0, 24: 0, 36: 52.00},           # Maxar, acquired 2023
-    "AJRD":  {12: 0, 24: 0, 36: 58.00},           # Aerojet, acquired 2023
-    "CLDR":  {12: 0, 24: 0, 36: 16.00},           # Cloudera, taken private
-    "ZNGA":  {12: 0, 24: 0, 36: 9.00},            # Zynga, acquired by Take-Two
-    "AVLR":  {12: 0, 24: 0, 36: 90.00},           # Avalara, acquired
-    "COUP":  {12: 0, 24: 0, 36: 80.00},           # Coupa, acquired by Thoma Bravo
-    "SUMO":  {12: 0, 24: 0, 36: 12.00},           # Sumo Logic, acquired
-    "SMAR":  {12: 0, 24: 48.00, 36: 40.00},       # Smartsheet, acquired 2024
-    "JAMF":  {12: 0, 24: 18.00, 36: 17.00},       # JAMF, acquired 2025
-    "SILK":  {12: 0, 24: 0, 36: 45.00},           # Silk Road Medical, acquired
-    "GNOG":  {12: 0, 24: 0, 36: 10.00},           # Golden Nugget Online, merged
     "PLBY":  {12: 0.50, 24: 2.00, 36: 3.00},      # Playboy, delisted
-    "FATE":  {12: 2.00, 24: 3.00, 36: 5.00},      # Fate Therapeutics, near-dead
-    "STEM":  {12: 0.30, 24: 0.80, 36: 3.00},      # Stem Inc, near-dead
-    "EDIT":  {12: 1.50, 24: 3.00, 36: 8.00},      # Editas Medicine, near-dead
-    "SKLZ":  {12: 3.00, 24: 6.00, 36: 8.00},      # Skillz, near-dead
+    "FATE":  {12: 2.00, 24: 3.00, 36: 5.00},      # Fate Therapeutics, near-dead (still trades)
+    "STEM":  {12: 0.30, 24: 0.80, 36: 3.00},      # Stem Inc, near-dead (still trades)
+    "EDIT":  {12: 1.50, 24: 3.00, 36: 8.00},      # Editas Medicine, near-dead (still trades)
+    "SKLZ":  {12: 3.00, 24: 6.00, 36: 8.00},      # Skillz, near-dead (still trades)
     "MNTS":  {12: 0, 24: 0, 36: 5.00},            # Momentus, delisted
-    "SPIR":  {12: 5.00, 24: 8.00, 36: 1.50},      # Spire Global
-    "PSNY":  {12: 0, 24: 1.00, 36: 3.00},         # Polestar, near-dead
+    "SPIR":  {12: 5.00, 24: 8.00, 36: 1.50},      # Spire Global (still trades)
+    "PSNY":  {12: 0, 24: 1.00, 36: 3.00},         # Polestar, near-dead (still trades)
 }
 # price=0 means the stock didn't exist at that lookback (already acquired/merged)
 
@@ -150,6 +142,30 @@ def _make_dead_record(ticker, meta, lookback_months, price_then=1.0):
         **{f: 50.0 for f in FACTOR_NAMES},  # neutral scores
         **{"profitability": 0, "fragility": -10, "downside": -10},
         "status": STATUS_OK,
+    }
+
+
+def _make_acquired_record(ticker, meta, lookback_months, price_then, payout, note=""):
+    """Create a record for an acquired stock using its REAL buyout return.
+
+    Shareholders received cash/stock in the buyout, so the return is
+    (payout - price_then) / price_then, NOT -100%. Mislabeling these as
+    total losses poisons the training data (a profitable exit looks like a
+    wipeout), so we compute the actual outcome here.
+    """
+    actual_return = (payout - price_then) / price_then * 100.0
+    return {
+        "ticker": ticker,
+        "strategy": meta["strategy"],
+        "basket": meta.get("basket", ""),
+        "period_months": lookback_months,
+        "price_then": round(price_then, 2),
+        "price_now": round(payout, 2),
+        "actual_return": round(actual_return, 2),
+        **{f: 50.0 for f in FACTOR_NAMES},  # neutral scores (data scrubbed)
+        **{"profitability": 0, "fragility": -10, "downside": -10},
+        "status": STATUS_OK,
+        "note": (note or "")[:120],
     }
 
 
@@ -217,7 +233,40 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
             continue
         print(f"  [{i+1}/{total}] {ticker}...", end="", flush=True)
 
-        # Check known-dead list first
+        # Delisted overrides take priority: acquisitions get their REAL
+        # buyout return (not -100%); bankruptcies get -100%.
+        if ticker in DELISTED_OVERRIDES:
+            od_status, od_note, od_payout = DELISTED_OVERRIDES[ticker]
+            price_then = _try_get_historical_price(ticker, lookback_date)
+
+            if od_status == "acquired":
+                if price_then and price_then > 0:
+                    rec = _make_acquired_record(
+                        ticker, meta, lookback_months, price_then,
+                        od_payout, od_note)
+                    records.append(rec)
+                    dead_count += 1
+                    print(f" ACQUIRED (was ${price_then:.0f} -> "
+                          f"${od_payout:.2f}) ret={rec['actual_return']:+.0f}%")
+                else:
+                    # No price at this lookback => didn't trade yet / already
+                    # acquired by then. Skip (cache so re-runs don't retry).
+                    records.append(_make_not_found_record(
+                        ticker, meta, lookback_months,
+                        "acquired; no price at this lookback"))
+                    not_found_count += 1
+                    print(f" skip: acquired, no price at this lookback")
+                continue
+
+            # bankrupt -> genuine total loss
+            bk_price = price_then if (price_then and price_then > 0) else 1.0
+            records.append(_make_dead_record(
+                ticker, meta, lookback_months, bk_price))
+            dead_count += 1
+            print(f" BANKRUPT (was ${bk_price:.0f}) ret=-100%")
+            continue
+
+        # Legacy known-dead list (kept for tickers not in the curated overrides)
         if ticker in KNOWN_DEAD:
             known_price = KNOWN_DEAD[ticker].get(lookback_months, 0)
             if known_price and known_price > 0:
