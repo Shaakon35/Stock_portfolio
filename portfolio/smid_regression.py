@@ -384,15 +384,22 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
 
 def strategy_cv(records, n_splits=5, metric="spearman", use_reduced=True,
                 winsorize=True, winsorize_cap=200.0, sector_neutral=True,
-                use_adjustments=False, min_test_size=15, min_observations=100):
+                use_adjustments=False, min_test_size=15, min_observations=100,
+                strategies=None):
     """Run regression CV separately for each strategy type.
 
     A strategy is skipped unless it has at least ``min_observations`` rows.
     Per-strategy results below ~100 observations are dominated by noise (a
     20% test fold has too few points for a stable rank correlation), so they
     are reported as insufficient data rather than misleading +/-1.0 values.
+
+    ``strategies`` restricts which strategies are run (default: those present
+    in the records).
     """
-    strategies = ["hold_forever", "cycle", "catalyst"]
+    if strategies is None:
+        seen = {r["strategy"] for r in records}
+        strategies = [s for s in ["hold_forever", "cycle", "catalyst"]
+                      if s in seen]
     results = {}
 
     for strat in strategies:
