@@ -2030,3 +2030,45 @@ KBAL,cycle,Industrial,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 OLO,catalyst,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,no price data around 2023-06-27
 INFA,cycle,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,no price data around 2023-06-27
 NATI,cycle,Industrial,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,no price data around 2023-06-27
+CFLT,cycle,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+ALTR,hold_forever,Industrial,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+JAMF,cycle,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SMAR,cycle,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SGEN,catalyst,MedTech,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+AJRD,cycle,Defense,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+MAXR,cycle,Defense,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+GNOG,catalyst,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SILK,catalyst,MedTech,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SUMO,catalyst,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+CLDR,catalyst,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+COUP,cycle,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+ZNGA,cycle,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+AVLR,cycle,SpecGrowth,12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+CFLT,cycle,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+ALTR,hold_forever,Industrial,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+JAMF,cycle,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SMAR,cycle,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SGEN,catalyst,MedTech,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+AJRD,cycle,Defense,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+MAXR,cycle,Defense,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+GNOG,catalyst,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SILK,catalyst,MedTech,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SUMO,catalyst,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+CLDR,catalyst,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+COUP,cycle,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+ZNGA,cycle,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+AVLR,cycle,SpecGrowth,24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+CFLT,cycle,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+ALTR,hold_forever,Industrial,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+JAMF,cycle,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SMAR,cycle,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SGEN,catalyst,MedTech,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+AJRD,cycle,Defense,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+MAXR,cycle,Defense,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+GNOG,catalyst,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SILK,catalyst,MedTech,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+SUMO,catalyst,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+CLDR,catalyst,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+COUP,cycle,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+ZNGA,cycle,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
+AVLR,cycle,SpecGrowth,36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,not_found,acquired; no price at this lookback
