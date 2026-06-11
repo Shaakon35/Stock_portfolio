@@ -72,9 +72,14 @@ def neutralize_by_sector(records):
     Forces the optimizer to find stock-level signals rather than
     learning "buy sector X, sell sector Y".
     """
+    # Group by basket + cohort. Standard records use "period_months"; rolling
+    # window records use "window" instead, so accept either.
+    def _cohort(r):
+        return r.get("period_months", r.get("window", ""))
+
     groups = {}
     for r in records:
-        key = (r.get("basket", ""), r["period_months"])
+        key = (r.get("basket", ""), _cohort(r))
         if key not in groups:
             groups[key] = []
         groups[key].append(r["actual_return"])
@@ -84,11 +89,11 @@ def neutralize_by_sector(records):
     out = []
     for r in records:
         r2 = dict(r)
-        key = (r2.get("basket", ""), r2["period_months"])
+        key = (r2.get("basket", ""), _cohort(r2))
         r2["actual_return"] = r2["actual_return"] - medians[key]
         out.append(r2)
 
-    print(f"  Sector-neutralized returns across {len(medians)} (basket, period) groups")
+    print(f"  Sector-neutralized returns across {len(medians)} (basket, cohort) groups")
     return out
 
 

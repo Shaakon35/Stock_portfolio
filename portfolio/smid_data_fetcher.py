@@ -443,6 +443,260 @@ def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size
     return usable
 
 
+# =========================================================================
+# ROLLING WINDOW FETCH (same-horizon, multiple base dates)
+# =========================================================================
+#
+# The standard fetch above measures 3 *different* horizons (12/24/36mo) from a
+# single base date (~today minus N months). That blends horizons and is
+# anchored to one market regime.
+#
+# The window fetch below instead measures the SAME horizon (e.g. 3 years) from
+# SEVERAL base dates: 2020->2023, 2021->2024, 2022->2025, 2023->2026. Each
+# window is a clean, comparable cohort, which lets you see whether the model's
+# edge survives across different years/regimes — not just one bull run.
+#
+# Output goes to a SEPARATE CSV (default output/cycle_windows.csv) so it never
+# disturbs the existing smid_optimization_data.csv.
+
+_WINDOW_CSV = os.path.join(_REPO_ROOT, "output", "cycle_windows.csv")
+
+WINDOW_COLUMNS = (
+    ["ticker", "strategy", "basket", "window", "base_date", "end_date",
+     "hold_years", "price_then", "price_now", "actual_return"]
+    + FACTOR_NAMES
+    + ADJUSTMENT_NAMES
+    + ["status", "note"]
+)
+
+
+def _window_label(base_year, hold_years):
+    return f"{base_year}->{base_year + hold_years}"
+
+
+def _make_window_not_found(ticker, meta, window, base_date, end_date,
+                           hold_years, note=""):
+    return {
+        "ticker": ticker, "strategy": meta["strategy"],
+        "basket": meta.get("basket", ""), "window": window,
+        "base_date": base_date, "end_date": end_date, "hold_years": hold_years,
+        "price_then": 0.0, "price_now": 0.0, "actual_return": 0.0,
+        **{f: 0.0 for f in FACTOR_NAMES},
+        **{a: 0.0 for a in ADJUSTMENT_NAMES},
+        "status": STATUS_NOT_FOUND, "note": (note or "")[:120],
+    }
+
+
+def _fetch_one_window(universe, base_year, hold_years, existing_keys,
+                      batch_size=50, month=6, day=15):
+    """Fetch one same-horizon window: factors as-of base_date, return to end_date.
+
+    Unlike _fetch_period (which always measures return to *today*), this
+    measures the return to a FIXED end date (base + hold_years), so every
+    window is the same length and directly comparable.
+    """
+    base_date = datetime(base_year, month, day)
+    end_date = datetime(base_year + hold_years, month, day)
+    window = _window_label(base_year, hold_years)
+    base_s = base_date.strftime("%Y-%m-%d")
+    end_s = end_date.strftime("%Y-%m-%d")
+
+    records, errors = [], []
+    ok_count = nf_count = 0
+    total = len(universe)
+
+    print(f"\n{'='*60}")
+    print(f"WINDOW {window} (base={base_s} -> end={end_s}, {hold_years}y hold)")
+    print(f"{'='*60}")
+
+    for i, (ticker, meta) in enumerate(universe.items()):
+        key = (ticker, window)
+        if key in existing_keys:
+            continue
+        print(f"  [{i+1}/{total}] {ticker}...", end="", flush=True)
+
+        # Factors + price as-of the base date.
+        try:
+            data = fetch_historical_data(ticker, base_date)
+        except Exception as e:
+            records.append(_make_window_not_found(
+                ticker, meta, window, base_s, end_s, hold_years, str(e)))
+            nf_count += 1
+            print(f" ERROR: {e}")
+            errors.append((ticker, str(e)))
+            continue
+
+        if data.get("error"):
+            records.append(_make_window_not_found(
+                ticker, meta, window, base_s, end_s, hold_years,
+                str(data["error"])))
+            nf_count += 1
+            print(f" skip: {data['error']}")
+            continue
+
+        price_then = data.get("price")
+        if not price_then or price_then <= 0:
+            records.append(_make_window_not_found(
+                ticker, meta, window, base_s, end_s, hold_years,
+                "no base price"))
+            nf_count += 1
+            print(" skip: no base price")
+            continue
+
+        # Price at the FIXED end date (this is the key difference vs _fetch_period).
+        price_now = _try_get_historical_price(ticker, end_date)
+        if not price_now or price_now <= 0:
+            # Had a base price but nothing at end date => delisted within window.
+            # Treat as a total loss so survivorship bias doesn't inflate results.
+            records.append({
+                "ticker": ticker, "strategy": meta["strategy"],
+                "basket": meta.get("basket", ""), "window": window,
+                "base_date": base_s, "end_date": end_s, "hold_years": hold_years,
+                "price_then": round(price_then, 2), "price_now": 0.0,
+                "actual_return": -100.0,
+                **{f: 50.0 for f in FACTOR_NAMES},
+                **{"profitability": 0, "fragility": -10, "downside": -10},
+                "status": STATUS_OK, "note": "delisted within window",
+            })
+            ok_count += 1
+            print(f" DEAD (was ${price_then:.0f}, gone by {end_s}) ret=-100%")
+            continue
+
+        result = compute_factor_scores(data, meta)
+        if result is None:
+            records.append(_make_window_not_found(
+                ticker, meta, window, base_s, end_s, hold_years,
+                "scoring failed"))
+            nf_count += 1
+            print(" skip: scoring failed")
+            continue
+
+        scores, adjustments = result
+        actual_return = ((price_now - price_then) / price_then) * 100
+
+        records.append({
+            "ticker": ticker, "strategy": meta["strategy"],
+            "basket": meta.get("basket", ""), "window": window,
+            "base_date": base_s, "end_date": end_s, "hold_years": hold_years,
+            "price_then": round(price_then, 2), "price_now": round(price_now, 2),
+            "actual_return": round(actual_return, 2),
+            **{f: round(scores[f], 1) for f in FACTOR_NAMES},
+            **{a: adjustments[a] for a in ADJUSTMENT_NAMES},
+            "status": STATUS_OK, "note": "",
+        })
+        ok_count += 1
+        print(f" ${price_then:.0f}->${price_now:.0f} ret={actual_return:+.1f}%")
+
+        if (i + 1) % batch_size == 0:
+            print("  ... pausing 2s (rate limit) ...")
+            time.sleep(2)
+
+    print(f"  -> {ok_count} valid / {nf_count} not-found / {len(errors)} errors")
+    return records, errors
+
+
+def fetch_windows(base_years=(2020, 2021, 2022, 2023), hold_years=3,
+                  strategies=("cycle",), csv_path=None, force_refresh=False,
+                  batch_size=50, max_tickers=None, month=6, day=15):
+    """Fetch same-horizon rolling windows for the given strategies.
+
+    For each base year, computes factor scores as-of base date and the realized
+    return over ``hold_years``, e.g. 2020->2023, 2021->2024, ...
+
+    Resume-safe: re-running skips (ticker, window) pairs already in the CSV.
+
+    Args:
+        base_years: iterable of starting years.
+        hold_years: holding horizon in years (the same for every window).
+        strategies: which strategies to include (default cycle only).
+        csv_path: output CSV (default output/cycle_windows.csv).
+        force_refresh: refetch everything.
+        max_tickers: cap universe size (quick test runs).
+
+    Returns:
+        list of usable (status="ok") window records.
+    """
+    csv_path = csv_path or _WINDOW_CSV
+
+    universe = get_full_universe()
+    universe = {t: m for t, m in universe.items()
+                if m["strategy"] in strategies}
+    if max_tickers:
+        tickers = list(universe.keys())[:max_tickers]
+        universe = {t: universe[t] for t in tickers}
+        print(f"*** TEST MODE: limited to {len(universe)} tickers ***")
+    print(f"Universe: {len(universe)} tickers (strategies={list(strategies)})")
+
+    all_records = []
+    existing_keys = set()
+    if not force_refresh and os.path.exists(csv_path):
+        existing = load_window_csv(csv_path, include_not_found=True)
+        if existing:
+            all_records = existing
+            existing_keys = {(r["ticker"], r["window"]) for r in existing}
+            for by in base_years:
+                w = _window_label(by, hold_years)
+                n_ok = sum(1 for r in existing if r["window"] == w
+                           and r.get("status", STATUS_OK) == STATUS_OK)
+                if n_ok:
+                    print(f"  Window {w}: {n_ok} records cached")
+
+    for by in base_years:
+        new_records, _ = _fetch_one_window(
+            universe, by, hold_years, existing_keys, batch_size, month, day)
+        all_records.extend(new_records)
+        save_window_csv(all_records, csv_path)
+        print(f"  Saved {len(all_records)} total records to {csv_path}")
+
+    usable = [r for r in all_records
+              if r.get("status", STATUS_OK) == STATUS_OK]
+    counts = {}
+    for r in usable:
+        counts[r["window"]] = counts.get(r["window"], 0) + 1
+    print(f"\nTotal usable: {len(usable)}")
+    print(f"Per window: {counts}")
+    return usable
+
+
+def save_window_csv(records, path=None):
+    """Save window records to CSV (window schema)."""
+    path = path or _WINDOW_CSV
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=WINDOW_COLUMNS,
+                                extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(records)
+
+
+def load_window_csv(path=None, include_not_found=False):
+    """Load window records from CSV. Returns status="ok" rows by default."""
+    path = path or _WINDOW_CSV
+    if not os.path.exists(path):
+        return None
+
+    with open(path, "r") as f:
+        reader = csv.DictReader(f)
+        records = []
+        for row in reader:
+            status = row.get("status") or STATUS_OK
+            row["status"] = status
+            row["note"] = row.get("note") or ""
+            row["hold_years"] = int(float(row.get("hold_years", 0) or 0))
+            row["price_then"] = float(row["price_then"])
+            row["price_now"] = float(row["price_now"])
+            row["actual_return"] = float(row["actual_return"])
+            for fn in FACTOR_NAMES:
+                row[fn] = float(row[fn])
+            for an in ADJUSTMENT_NAMES:
+                row[an] = float(row[an])
+            if status == STATUS_NOT_FOUND and not include_not_found:
+                continue
+            records.append(row)
+    print(f"Loaded {len(records)} window records from {path}")
+    return records
+
+
 def save_csv(records, path=None):
     """Save records to CSV."""
     path = path or DEFAULT_CSV
