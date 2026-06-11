@@ -142,12 +142,25 @@ def evaluate(records, weights, adj_mult=0.0, metric="spearman", use_reduced=True
 def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
                    seed=42, use_reduced=True, winsorize=True,
                    winsorize_cap=200.0, sector_neutral=True,
-                   use_adjustments=False):
+                   use_adjustments=False, min_test_size=15):
     """Repeated 80/20 cross-validation using OLS fits.
 
     Set ``winsorize=False`` to fit on raw returns (no +/-cap clipping).
+
+    ``min_test_size`` guards against tiny test folds: with very few test
+    points the rank correlation snaps to +/-1 and is meaningless. If the
+    held-out fold would be smaller than this, the whole run is treated as
+    insufficient data and ``None`` is returned (callers handle None).
     """
     factors = REDUCED_FACTORS if use_reduced else FULL_FACTORS
+
+    n = len(records)
+    test_n = int(n * test_size)
+    if test_n < min_test_size:
+        print(f"  Insufficient data: test fold would be {test_n} "
+              f"(< min_test_size={min_test_size}). Skipping — results would "
+              f"be statistical noise. Fetch more tickers.")
+        return None
 
     print("Preprocessing...")
     cap = winsorize_cap if winsorize else float("inf")
@@ -238,8 +251,14 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
 
 def strategy_cv(records, n_splits=5, metric="spearman", use_reduced=True,
                 winsorize=True, winsorize_cap=200.0, sector_neutral=True,
-                use_adjustments=False):
-    """Run regression CV separately for each strategy type."""
+                use_adjustments=False, min_test_size=15, min_observations=100):
+    """Run regression CV separately for each strategy type.
+
+    A strategy is skipped unless it has at least ``min_observations`` rows.
+    Per-strategy results below ~100 observations are dominated by noise (a
+    20% test fold has too few points for a stable rank correlation), so they
+    are reported as insufficient data rather than misleading +/-1.0 values.
+    """
     strategies = ["hold_forever", "cycle", "catalyst"]
     results = {}
 
@@ -249,8 +268,10 @@ def strategy_cv(records, n_splits=5, metric="spearman", use_reduced=True,
         print(f"STRATEGY: {strat} ({len(strat_records)} observations)")
         print(f"{'='*60}")
 
-        if len(strat_records) < 30:
-            print("  Too few observations, skipping")
+        if len(strat_records) < min_observations:
+            print(f"  Insufficient data ({len(strat_records)} < "
+                  f"{min_observations}), skipping — too few for a stable "
+                  f"out-of-sample estimate.")
             results[strat] = None
             continue
 
@@ -258,7 +279,7 @@ def strategy_cv(records, n_splits=5, metric="spearman", use_reduced=True,
             strat_records, n_splits=n_splits, metric=metric,
             use_reduced=use_reduced, winsorize=winsorize,
             winsorize_cap=winsorize_cap, sector_neutral=sector_neutral,
-            use_adjustments=use_adjustments,
+            use_adjustments=use_adjustments, min_test_size=min_test_size,
         )
 
     return results
@@ -336,6 +357,11 @@ def main(argv=None):
         winsorize_cap=args.winsorize_cap, sector_neutral=args.sector_neutral,
         use_adjustments=args.with_adjustments,
     )
+
+    if cv_result is None:
+        print("\nNot enough data for a valid cross-validation. "
+              "Fetch more tickers (set MAX_TICKERS=None / --max-tickers).")
+        return 1
 
     metric = cv_result["metric"]
     print(f"\n{'='*60}")
