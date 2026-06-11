@@ -93,11 +93,84 @@ def compute_factor_scores(data, meta):
     return scores, adjustments
 
 
+# Stocks that were delisted/bankrupt and Yahoo has purged their data.
+# Approximate prices at various lookback dates, sourced from historical records.
+# Format: ticker -> {lookback_months: approximate_price_then}
+KNOWN_DEAD = {
+    "NKLA":  {12: 1.50, 24: 0.80, 36: 1.20},   # Nikola, delisted 2025
+    "GOEV":  {12: 1.80, 24: 1.50, 36: 3.50},    # Canoo, bankrupt 2025
+    "WOLF":  {12: 8.00, 24: 18.00, 36: 30.00},   # Wolfspeed, bankrupt 2025
+    "CFLT":  {12: 25.00, 24: 28.00, 36: 30.00},  # Confluent, acquired/delisted
+    "SGEN":  {12: 0, 24: 0, 36: 175.00},          # Seagen, acquired by Pfizer 2023
+    "ALTR":  {12: 0, 24: 0, 36: 50.00},           # Altair, acquired 2024
+    "MAXR":  {12: 0, 24: 0, 36: 52.00},           # Maxar, acquired 2023
+    "AJRD":  {12: 0, 24: 0, 36: 58.00},           # Aerojet, acquired 2023
+    "CLDR":  {12: 0, 24: 0, 36: 16.00},           # Cloudera, taken private
+    "ZNGA":  {12: 0, 24: 0, 36: 9.00},            # Zynga, acquired by Take-Two
+    "AVLR":  {12: 0, 24: 0, 36: 90.00},           # Avalara, acquired
+    "COUP":  {12: 0, 24: 0, 36: 80.00},           # Coupa, acquired by Thoma Bravo
+    "SUMO":  {12: 0, 24: 0, 36: 12.00},           # Sumo Logic, acquired
+    "SMAR":  {12: 0, 24: 48.00, 36: 40.00},       # Smartsheet, acquired 2024
+    "JAMF":  {12: 0, 24: 18.00, 36: 17.00},       # JAMF, acquired 2025
+    "SILK":  {12: 0, 24: 0, 36: 45.00},           # Silk Road Medical, acquired
+    "GNOG":  {12: 0, 24: 0, 36: 10.00},           # Golden Nugget Online, merged
+    "PLBY":  {12: 0.50, 24: 2.00, 36: 3.00},      # Playboy, delisted
+    "FATE":  {12: 2.00, 24: 3.00, 36: 5.00},      # Fate Therapeutics, near-dead
+    "STEM":  {12: 0.30, 24: 0.80, 36: 3.00},      # Stem Inc, near-dead
+    "EDIT":  {12: 1.50, 24: 3.00, 36: 8.00},      # Editas Medicine, near-dead
+    "SKLZ":  {12: 3.00, 24: 6.00, 36: 8.00},      # Skillz, near-dead
+    "MNTS":  {12: 0, 24: 0, 36: 5.00},            # Momentus, delisted
+    "SPIR":  {12: 5.00, 24: 8.00, 36: 1.50},      # Spire Global
+    "PSNY":  {12: 0, 24: 1.00, 36: 3.00},         # Polestar, near-dead
+}
+# price=0 means the stock didn't exist at that lookback (already acquired/merged)
+
+
+def _make_dead_record(ticker, meta, lookback_months, price_then=1.0):
+    """Create a record for a delisted/dead stock with -100% return and neutral scores."""
+    return {
+        "ticker": ticker,
+        "strategy": meta["strategy"],
+        "basket": meta.get("basket", ""),
+        "period_months": lookback_months,
+        "price_then": round(price_then, 2),
+        "price_now": 0.0,
+        "actual_return": -100.0,
+        **{f: 50.0 for f in FACTOR_NAMES},  # neutral scores
+        **{"profitability": 0, "fragility": -10, "downside": -10},
+    }
+
+
+def _try_get_historical_price(ticker, lookback_date):
+    """Try to get the stock's price at lookback_date from price history.
+
+    Returns price or None. Works even for delisted stocks if Yahoo
+    still has their historical data.
+    """
+    import yfinance as yf
+    try:
+        t = yf.Ticker(ticker)
+        start = lookback_date - timedelta(days=10)
+        end = lookback_date + timedelta(days=10)
+        hist = t.history(start=start, end=end)
+        if hist is not None and len(hist) > 0:
+            return float(hist["Close"].iloc[-1])
+    except Exception:
+        pass
+    return None
+
+
 def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
-    """Fetch data for one lookback period. Returns (new_records, errors)."""
+    """Fetch data for one lookback period. Returns (new_records, errors).
+
+    Survivorship bias fix: stocks that existed at lookback_date but are
+    now delisted/dead are included with -100% return and neutral factor
+    scores. This prevents the model from ignoring the worst outcomes.
+    """
     lookback_date = datetime.now() - timedelta(days=lookback_months * 30)
     records = []
     errors = []
+    dead_count = 0
     total = len(universe)
 
     print(f"\n{'='*60}")
@@ -110,16 +183,43 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
             continue
         print(f"  [{i+1}/{total}] {ticker}...", end="", flush=True)
 
+        # Check known-dead list first
+        if ticker in KNOWN_DEAD:
+            known_price = KNOWN_DEAD[ticker].get(lookback_months, 0)
+            if known_price and known_price > 0:
+                records.append(_make_dead_record(ticker, meta, lookback_months, known_price))
+                dead_count += 1
+                print(f" DEAD/KNOWN (was ${known_price:.0f}) ret=-100%")
+                continue
+            elif known_price == 0:
+                # Stock didn't exist at this lookback (already acquired)
+                print(f" skip: not yet listed/already acquired at this lookback")
+                continue
+
         try:
             data = fetch_historical_data(ticker, lookback_date)
         except Exception as e:
-            print(f" ERROR: {e}")
-            errors.append((ticker, str(e)))
+            # Stock might be delisted — check if it had a price at lookback
+            hist_price = _try_get_historical_price(ticker, lookback_date)
+            if hist_price and hist_price > 0:
+                records.append(_make_dead_record(ticker, meta, lookback_months, hist_price))
+                dead_count += 1
+                print(f" DEAD (was ${hist_price:.0f}, now delisted) ret=-100%")
+            else:
+                print(f" ERROR: {e}")
+                errors.append((ticker, str(e)))
             continue
 
         if data.get("error"):
-            print(f" skip: {data['error']}")
-            errors.append((ticker, data["error"]))
+            # Check if "no price data" means delisted vs never existed
+            hist_price = _try_get_historical_price(ticker, lookback_date)
+            if hist_price and hist_price > 0:
+                records.append(_make_dead_record(ticker, meta, lookback_months, hist_price))
+                dead_count += 1
+                print(f" DEAD (was ${hist_price:.0f}, now gone) ret=-100%")
+            else:
+                print(f" skip: {data['error']}")
+                errors.append((ticker, data["error"]))
             continue
 
         result = compute_factor_scores(data, meta)
@@ -132,9 +232,16 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
 
         price_then = data["price"]
         price_now = data.get("price_now")
-        if not price_then or not price_now or price_then <= 0:
-            print(" skip: no price data")
-            errors.append((ticker, "no price data"))
+        if not price_then or price_then <= 0:
+            print(" skip: no historical price")
+            errors.append((ticker, "no historical price"))
+            continue
+
+        if not price_now:
+            # Had a price then but no current price → likely delisted
+            records.append(_make_dead_record(ticker, meta, lookback_months, price_then))
+            dead_count += 1
+            print(f" DEAD (was ${price_then:.0f}, no current price) ret=-100%")
             continue
 
         actual_return = ((price_now - price_then) / price_then) * 100
@@ -156,7 +263,7 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
             print(f"  ... pausing 2s (rate limit) ...")
             time.sleep(2)
 
-    print(f"  -> {len(records)} valid / {len(errors)} errors")
+    print(f"  -> {len(records)} valid ({dead_count} dead/delisted) / {len(errors)} errors")
     return records, errors
 
 
