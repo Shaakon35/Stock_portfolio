@@ -268,8 +268,8 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
 
 
 def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size=50,
-              periods=None):
-    """Fetch data for all ~700 tickers across one or more lookback periods.
+              periods=None, max_tickers=None):
+    """Fetch data for tickers across one or more lookback periods.
 
     Args:
         lookback_months: single period (used if periods is None)
@@ -277,6 +277,7 @@ def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size
         force_refresh: if True, refetch everything
         batch_size: pause every N tickers to avoid rate limits
         periods: list of lookback months, e.g. [12, 24, 36]
+        max_tickers: limit to first N tickers (for quick test runs)
 
     Returns:
         list of record dicts (all periods combined)
@@ -286,6 +287,11 @@ def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size
         periods = [lookback_months]
 
     universe = get_full_universe()
+    if max_tickers:
+        # Take a diverse sample: pick evenly across strategies
+        tickers = list(universe.keys())[:max_tickers]
+        universe = {t: universe[t] for t in tickers}
+        print(f"*** TEST MODE: limited to {len(universe)} tickers ***")
 
     # Resume support: load existing CSV, track (ticker, period) pairs
     all_records = []
