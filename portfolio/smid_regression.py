@@ -121,7 +121,23 @@ def fit_regression(records, use_reduced=True, use_adjustments=False):
         "adj_multiplier": round(adj_mult, 4),
         "r_squared": round(r_squared, 4),
         "columns": columns,
+        # Full beta (incl. adjustments + trailing intercept) for exact
+        # out-of-sample prediction via predict_returns().
+        "beta": beta.tolist(),
+        "use_reduced": use_reduced,
+        "use_adjustments": use_adjustments,
     }
+
+
+def predict_returns(records, fit):
+    """Predict returns for records using a fitted model (raw OLS prediction).
+
+    Uses the full beta (factors + adjustments + intercept), so the output is
+    in actual return-% units — suitable for RMSE/MAE against actual returns.
+    """
+    X, _, _ = _build_matrix(records, fit["use_reduced"], fit["use_adjustments"])
+    beta = np.asarray(fit["beta"], dtype=float)
+    return X @ beta
 
 
 def evaluate(records, weights, adj_mult=0.0, metric="spearman", use_reduced=True):
@@ -133,6 +149,99 @@ def evaluate(records, weights, adj_mult=0.0, metric="spearman", use_reduced=True
     if metric == "pearson":
         return pearson(scores, returns)
     return spearman(scores, returns)
+
+
+# =========================================================================
+# REGRESSION ERROR METRICS (RMSE / MAE)
+# =========================================================================
+
+def rmse(y_true, y_pred):
+    """Root mean squared error (in return-% units)."""
+    y_true = np.asarray(y_true, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    return float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
+
+
+def mae(y_true, y_pred):
+    """Mean absolute error (in return-% units)."""
+    y_true = np.asarray(y_true, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    return float(np.mean(np.abs(y_true - y_pred)))
+
+
+# =========================================================================
+# ROC / AUC (treats ranking as a binary classifier)
+# =========================================================================
+
+def roc_curve(scores, labels):
+    """Compute ROC curve points (fpr, tpr) for binary labels.
+
+    ``scores``: higher = more likely positive (the model's ranking).
+    ``labels``: 1 for positive class, 0 for negative.
+    Returns (fpr, tpr) arrays including the (0,0) and (1,1) endpoints.
+    Pure numpy, no sklearn.
+    """
+    scores = np.asarray(scores, dtype=float)
+    labels = np.asarray(labels, dtype=int)
+
+    order = np.argsort(-scores)  # descending score
+    labels = labels[order]
+
+    P = int(labels.sum())
+    N = int(len(labels) - P)
+    if P == 0 or N == 0:
+        # Degenerate: only one class present
+        return np.array([0.0, 1.0]), np.array([0.0, 1.0])
+
+    tps = np.cumsum(labels)
+    fps = np.cumsum(1 - labels)
+
+    tpr = np.concatenate([[0.0], tps / P])
+    fpr = np.concatenate([[0.0], fps / N])
+    return fpr, tpr
+
+
+def auc_score(scores, labels):
+    """Area under the ROC curve.
+
+    Equivalent to P(score(positive) > score(negative)) — the probability
+    that a randomly chosen winner outranks a randomly chosen loser.
+    Computed via the rank-based (Mann-Whitney U) formula, which handles
+    ties correctly. Returns 0.5 for no skill, 1.0 for perfect ranking.
+    """
+    scores = np.asarray(scores, dtype=float)
+    labels = np.asarray(labels, dtype=int)
+
+    P = int(labels.sum())
+    N = int(len(labels) - P)
+    if P == 0 or N == 0:
+        return float("nan")
+
+    # Average ranks (1..n), ties share the mean rank
+    order = np.argsort(scores)
+    ranks = np.empty(len(scores), dtype=float)
+    ranks[order] = np.arange(1, len(scores) + 1)
+    # Resolve ties to average rank
+    _, inv, counts = np.unique(scores, return_inverse=True, return_counts=True)
+    sums = np.zeros(len(counts))
+    np.add.at(sums, inv, ranks)
+    avg = sums / counts
+    ranks = avg[inv]
+
+    sum_pos = ranks[labels == 1].sum()
+    auc = (sum_pos - P * (P + 1) / 2.0) / (P * N)
+    return float(auc)
+
+
+def binarize_returns(records, threshold=0.0):
+    """Label each record 1 if its (preprocessed) return > threshold else 0.
+
+    With sector-neutralized returns, threshold=0 means "beat the sector
+    median" — i.e. a relative winner. This is the natural binary target
+    for ROC/AUC on a stock-ranking model.
+    """
+    return np.array([1 if r["actual_return"] > threshold else 0
+                     for r in records], dtype=int)
 
 
 # =========================================================================
@@ -199,6 +308,17 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
         other_metric = "pearson" if metric == "spearman" else "spearman"
         oos_other = evaluate(test, weights, adj_mult, other_metric, use_reduced)
 
+        # RMSE / MAE on actual return-% (raw OLS prediction)
+        y_test = np.array([r["actual_return"] for r in test])
+        y_pred = predict_returns(test, fit)
+        test_rmse = rmse(y_test, y_pred)
+        test_mae = mae(y_test, y_pred)
+
+        # AUC: can the score rank winners (return > 0) above losers?
+        labels = binarize_returns(test, threshold=0.0)
+        test_scores = score_records(test, weights, adj_mult, use_reduced)
+        test_auc = auc_score(test_scores, labels)
+
         rounded_w = round_weights(weights, factors)
         all_weights.append(rounded_w)
 
@@ -210,6 +330,9 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
             f"train_{metric}": round(train_corr, 4),
             f"test_{metric}": round(oos_corr, 4),
             f"test_{other_metric}": round(oos_other, 4),
+            "test_rmse": round(test_rmse, 2),
+            "test_mae": round(test_mae, 2),
+            "test_auc": round(test_auc, 4) if test_auc == test_auc else None,
             "adj_multiplier": round(adj_mult, 4),
             "weights": rounded_w,
         }
@@ -219,6 +342,8 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
         print(f"  Train {metric}: {train_corr:+.4f}")
         print(f"  Test  {metric}: {oos_corr:+.4f}")
         print(f"  Test  {other_metric}: {oos_other:+.4f}")
+        print(f"  Test  RMSE:  {test_rmse:.1f}%   MAE: {test_mae:.1f}%   "
+              f"AUC: {test_auc:.4f}")
         top3 = sorted(rounded_w.items(), key=lambda x: -x[1])[:3]
         print(f"  Top weights: {', '.join(f'{f}={v:.0%}' for f,v in top3)}")
 
@@ -231,6 +356,9 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
     test_corrs = [sr[f"test_{metric}"] for sr in split_results]
     train_corrs = [sr[f"train_{metric}"] for sr in split_results]
     r2s = [sr["train_r_squared"] for sr in split_results]
+    rmses = [sr["test_rmse"] for sr in split_results]
+    maes = [sr["test_mae"] for sr in split_results]
+    aucs = [sr["test_auc"] for sr in split_results if sr["test_auc"] is not None]
 
     return {
         "split_results": split_results,
@@ -240,6 +368,11 @@ def cross_validate(records, n_splits=5, test_size=0.2, metric="spearman",
         f"std_test_{metric}": round(float(np.std(test_corrs)), 4),
         f"mean_train_{metric}": round(float(np.mean(train_corrs)), 4),
         "mean_train_r_squared": round(float(np.mean(r2s)), 4),
+        "mean_test_rmse": round(float(np.mean(rmses)), 2),
+        "std_test_rmse": round(float(np.std(rmses)), 2),
+        "mean_test_mae": round(float(np.mean(maes)), 2),
+        "mean_test_auc": round(float(np.mean(aucs)), 4) if aucs else None,
+        "std_test_auc": round(float(np.std(aucs)), 4) if aucs else None,
         "overfit_gap": round(float(np.mean(train_corrs) - np.mean(test_corrs)), 4),
         "n_splits": n_splits,
         "metric": metric,
