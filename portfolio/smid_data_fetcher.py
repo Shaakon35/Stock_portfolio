@@ -39,7 +39,11 @@ CSV_COLUMNS = (
     + ADJUSTMENT_NAMES
 )
 
-DEFAULT_CSV = os.path.join(os.path.dirname(__file__), "..", "output", "smid_optimization_data.csv")
+# Resolve to absolute path so it works regardless of working directory
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+DEFAULT_CSV = os.path.join(_REPO_ROOT, "output", "smid_optimization_data.csv")
+# Ensure output directory exists
+os.makedirs(os.path.join(_REPO_ROOT, "output"), exist_ok=True)
 
 
 def _num(val, default=None):
