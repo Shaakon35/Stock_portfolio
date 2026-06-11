@@ -33,10 +33,17 @@ FACTOR_NAMES = [
 
 ADJUSTMENT_NAMES = ["profitability", "fragility", "downside"]
 
+# Row status: "ok" = real data point used in analysis,
+# "not_found" = lookup failed/delisted-without-history; kept only so re-runs
+# skip the ticker instead of re-querying yfinance every time.
+STATUS_OK = "ok"
+STATUS_NOT_FOUND = "not_found"
+
 CSV_COLUMNS = (
     ["ticker", "strategy", "basket", "period_months", "price_then", "price_now", "actual_return"]
     + FACTOR_NAMES
     + ADJUSTMENT_NAMES
+    + ["status", "note"]
 )
 
 # Resolve to absolute path so it works regardless of working directory
@@ -142,6 +149,28 @@ def _make_dead_record(ticker, meta, lookback_months, price_then=1.0):
         "actual_return": -100.0,
         **{f: 50.0 for f in FACTOR_NAMES},  # neutral scores
         **{"profitability": 0, "fragility": -10, "downside": -10},
+        "status": STATUS_OK,
+    }
+
+
+def _make_not_found_record(ticker, meta, lookback_months, note=""):
+    """Create a placeholder for a ticker whose data couldn't be fetched.
+
+    Marked status="not_found" so resume logic skips it on re-runs instead of
+    re-querying yfinance. Excluded from analysis by load_csv() default.
+    """
+    return {
+        "ticker": ticker,
+        "strategy": meta["strategy"],
+        "basket": meta.get("basket", ""),
+        "period_months": lookback_months,
+        "price_then": 0.0,
+        "price_now": 0.0,
+        "actual_return": 0.0,
+        **{f: 0.0 for f in FACTOR_NAMES},
+        **{a: 0.0 for a in ADJUSTMENT_NAMES},
+        "status": STATUS_NOT_FOUND,
+        "note": (note or "")[:120],
     }
 
 
@@ -175,6 +204,7 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
     records = []
     errors = []
     dead_count = 0
+    not_found_count = 0
     total = len(universe)
 
     print(f"\n{'='*60}")
@@ -197,6 +227,10 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
                 continue
             elif known_price == 0:
                 # Stock didn't exist at this lookback (already acquired)
+                records.append(_make_not_found_record(
+                    ticker, meta, lookback_months,
+                    "not yet listed/already acquired"))
+                not_found_count += 1
                 print(f" skip: not yet listed/already acquired at this lookback")
                 continue
 
@@ -210,6 +244,9 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
                 dead_count += 1
                 print(f" DEAD (was ${hist_price:.0f}, now delisted) ret=-100%")
             else:
+                records.append(_make_not_found_record(
+                    ticker, meta, lookback_months, str(e)))
+                not_found_count += 1
                 print(f" ERROR: {e}")
                 errors.append((ticker, str(e)))
             continue
@@ -222,12 +259,18 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
                 dead_count += 1
                 print(f" DEAD (was ${hist_price:.0f}, now gone) ret=-100%")
             else:
+                records.append(_make_not_found_record(
+                    ticker, meta, lookback_months, str(data["error"])))
+                not_found_count += 1
                 print(f" skip: {data['error']}")
                 errors.append((ticker, data["error"]))
             continue
 
         result = compute_factor_scores(data, meta)
         if result is None:
+            records.append(_make_not_found_record(
+                ticker, meta, lookback_months, "scoring failed"))
+            not_found_count += 1
             print(" skip: scoring failed")
             errors.append((ticker, "scoring failed"))
             continue
@@ -237,6 +280,9 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
         price_then = data["price"]
         price_now = data.get("price_now")
         if not price_then or price_then <= 0:
+            records.append(_make_not_found_record(
+                ticker, meta, lookback_months, "no historical price"))
+            not_found_count += 1
             print(" skip: no historical price")
             errors.append((ticker, "no historical price"))
             continue
@@ -267,7 +313,9 @@ def _fetch_period(universe, lookback_months, existing_keys, batch_size=50):
             print(f"  ... pausing 2s (rate limit) ...")
             time.sleep(2)
 
-    print(f"  -> {len(records)} valid ({dead_count} dead/delisted) / {len(errors)} errors")
+    n_ok = sum(1 for r in records if r.get("status", STATUS_OK) == STATUS_OK)
+    print(f"  -> {n_ok} valid ({dead_count} dead/delisted) / "
+          f"{not_found_count} not-found (cached as skip) / {len(errors)} errors")
     return records, errors
 
 
@@ -297,18 +345,25 @@ def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size
         universe = {t: universe[t] for t in tickers}
         print(f"*** TEST MODE: limited to {len(universe)} tickers ***")
 
-    # Resume support: load existing CSV, track (ticker, period) pairs
+    # Resume support: load existing CSV (including not_found placeholders so
+    # we skip previously-failed tickers), track (ticker, period) pairs.
     all_records = []
     existing_keys = set()
     if not force_refresh and os.path.exists(csv_path):
-        existing = load_csv(csv_path)
+        existing = load_csv(csv_path, include_not_found=True)
         if existing:
             all_records = existing
             existing_keys = {(r["ticker"], r["period_months"]) for r in existing}
-            # Check which periods are complete
+            # Check which periods are complete (ok rows vs cached skips)
             for pm in periods:
-                n = sum(1 for k in existing_keys if k[1] == pm)
-                print(f"  Period {pm}mo: {n} records cached")
+                n_ok = sum(1 for r in existing
+                           if r["period_months"] == pm
+                           and r.get("status", STATUS_OK) == STATUS_OK)
+                n_skip = sum(1 for r in existing
+                             if r["period_months"] == pm
+                             and r.get("status") == STATUS_NOT_FOUND)
+                print(f"  Period {pm}mo: {n_ok} records cached"
+                      f"{f' (+{n_skip} not-found skipped)' if n_skip else ''}")
 
     if force_refresh:
         all_records = []
@@ -322,15 +377,21 @@ def fetch_all(lookback_months=12, csv_path=None, force_refresh=False, batch_size
         save_csv(all_records, csv_path)
         print(f"  Saved {len(all_records)} total records to {csv_path}")
 
-    # Summary
+    # Split usable rows from not_found placeholders. The CSV keeps both
+    # (so re-runs skip failed tickers); analysis only sees usable rows.
+    usable = [r for r in all_records
+              if r.get("status", STATUS_OK) == STATUS_OK]
+    n_skipped = len(all_records) - len(usable)
+
     period_counts = {}
-    for r in all_records:
+    for r in usable:
         pm = r["period_months"]
         period_counts[pm] = period_counts.get(pm, 0) + 1
-    print(f"\nTotal: {len(all_records)} records")
+    print(f"\nTotal: {len(usable)} usable records"
+          f"{f' ({n_skipped} not-found cached in CSV)' if n_skipped else ''}")
     print(f"Per period: {period_counts}")
 
-    return all_records
+    return usable
 
 
 def save_csv(records, path=None):
@@ -343,8 +404,16 @@ def save_csv(records, path=None):
         writer.writerows(records)
 
 
-def load_csv(path=None):
-    """Load records from CSV."""
+def load_csv(path=None, include_not_found=False):
+    """Load records from CSV.
+
+    By default returns only usable (status="ok") rows for analysis.
+    Set include_not_found=True to also get the "not_found" placeholders
+    (used internally by resume logic to know which tickers to skip).
+
+    Backward compatible: rows from CSVs written before the status column
+    are treated as status="ok".
+    """
     path = path or DEFAULT_CSV
     if not os.path.exists(path):
         return None
@@ -352,7 +421,11 @@ def load_csv(path=None):
     with open(path, "r") as f:
         reader = csv.DictReader(f)
         records = []
+        n_not_found = 0
         for row in reader:
+            status = row.get("status") or STATUS_OK
+            row["status"] = status
+            row["note"] = row.get("note") or ""
             row["period_months"] = int(row["period_months"])
             row["price_then"] = float(row["price_then"])
             row["price_now"] = float(row["price_now"])
@@ -361,9 +434,14 @@ def load_csv(path=None):
                 row[fn] = float(row[fn])
             for an in ADJUSTMENT_NAMES:
                 row[an] = float(row[an])
+            if status == STATUS_NOT_FOUND:
+                n_not_found += 1
+                if not include_not_found:
+                    continue
             records.append(row)
 
-    print(f"Loaded {len(records)} records from {path}")
+    suffix = f" (+{n_not_found} not-found skipped)" if n_not_found and not include_not_found else ""
+    print(f"Loaded {len(records)} records from {path}{suffix}")
     return records
 
 
