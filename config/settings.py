@@ -5,7 +5,7 @@ import os
 # =========================================================================
 OUTPUT_PATH = "/content/drive/MyDrive/Stocks/output/"
 HTML_FILE = os.path.join(OUTPUT_PATH, "Stock_report.html")
-HTML = True
+HTML = False
 
 CACHE_FILE = "yfinance_market_cache.pkl"
 CACHE_EXPIRATION_HOURS = 1
