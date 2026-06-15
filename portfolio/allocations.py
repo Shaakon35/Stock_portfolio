@@ -134,3 +134,61 @@ def verify_allocations():
     assert abs(sum(INDUSTRIAL_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Industrial basket doesn't sum to 100%"
     assert abs(sum(SPECGROWTH_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Spec Growth basket doesn't sum to 100%"
     assert abs(sum(OTHER_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Other basket doesn't sum to 100%"  # NEW
+
+
+# =========================================================================
+# WATCHLIST — discussed but NOT held (no target weight, 0% of book)
+# =========================================================================
+# Names reviewed during portfolio analysis but deliberately left out, with the
+# reason they were excluded. Kept here for reference so the rationale isn't lost.
+#
+# Schema per entry:
+#   "strategy"  — hold_forever | cycle | catalyst | lottery_ticket
+#                 (lottery_ticket = catalyst with ->$0 / -70%+ binary downside)
+#   "area"      — sector/basket the name would map to if ever added
+#   "note"      — why it's on the bench (not in the portfolio)
+#
+# NOTE: This is documentation only. These tickers have NO target weight and are
+# excluded from verify_allocations(). Move an entry into a basket above to buy.
+
+WATCHLIST_EXCLUDED = {
+    "KTOS": {
+        "strategy": "cycle",
+        "area":     "Industrial / Defense",
+        "note":     "Autonomous military drones. SKIP — already held indirectly "
+                    "inside XAIX.DE (~3.8%); buying direct stacks the same bet.",
+    },
+    "IREN": {
+        "strategy": "cycle",
+        "area":     "Industrial (AI compute + Bitcoin mining)",
+        "note":     "SMALL/SKIP — crypto-correlated beta is new uncorrelated risk, "
+                    "not diversification. Profitable but lower quality than VRT/POWL.",
+    },
+    "CIFR": {
+        "strategy": "cycle",
+        "area":     "Industrial (Bitcoin mining pivoting to AI)",
+        "note":     "SKIP — unprofitable (-$2.32 EPS), crypto-dependent, weaker than "
+                    "every industrial incumbent already held.",
+    },
+    "LUNR": {
+        "strategy": "lottery_ticket",
+        "area":     "SpecGrowth / Space",
+        "note":     "Lunar landers. SKIP — RKLB owns the space slot and dominates it: "
+                    "LUNR is lower-quality AND higher-risk (-70%+ vs RKLB -30-50%).",
+    },
+    "SERV": {
+        "strategy": "lottery_ticket",
+        "area":     "SpecGrowth / Robotics",
+        "note":     "Sidewalk delivery robots. SKIP/TINY — $600M micro-cap, -$2.05 EPS. "
+                    "'Nvidia-backed' = small passive stake, not a deal. Hype-driven; "
+                    "sell into RSI>70 spikes if ever bought. ~1% max.",
+    },
+    "ACHR": {
+        "strategy": "lottery_ticket",
+        "area":     "SpecGrowth / Transportation (eVTOL)",
+        "note":     "eVTOL air taxi. SKIP/TINY — worst risk on the list (->$0). "
+                    "Triple-gated: FAA cert + manufacturing + demand. Event = FAA Type "
+                    "Certification (~2026-2028, likely slips); sell 50% into cert hype. "
+                    "~1% max.",
+    },
+}
