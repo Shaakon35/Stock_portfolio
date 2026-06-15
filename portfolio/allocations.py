@@ -6,14 +6,15 @@ MONTHLY_DEPOSIT = 1000.0  # Monthly fresh cash allocation in Euros
 DEGIRO_FEE = 3.00         # Flat transaction fee
 
 TARGET_WEIGHTS = {
-    "XAIX.DE":           0.25,  # 25% Core AI & Big Data Index
-    "SMHV.SW":               0.25,  # 25% Core Semiconductors (NVIDIA, ASML, TSMC)
+    "XAIX.DE":           0.21,  # CHANGED: was 0.25 — trimmed 4% to fund OTHER_SATELLITE
+    "SMHV.SW":               0.21,  # CHANGED: was 0.25 — trimmed 4% to fund OTHER_SATELLITE
     "QDVE.DE":            0.10,  # 10% S&P 500 Info Tech (Apple, MSFT, AVGO)
     "NUCLEAR_SATELLITE": 0.12,  # 12% Single Stock Nuclear Picking
     "QUANTUM_SATELLITE": 0.08,  # 8% Single Stock Quantum Speculative Rockets
     "CYBER_SATELLITE":   0.05,  # 5% Single Stock Cybersecurity Satellite
     "INDUSTRIAL_SATELLITE": 0.10,  # 10% Industrials & Defense (data center infra, nuclear defense)
     "SPECGROWTH_SATELLITE": 0.05,  # 5% Speculative Growth (high-growth semis, AI infra, aerospace)
+    "OTHER_SATELLITE":   0.08,  # NEW: 8% Cross-sector diversifiers (MedTech, Defense, Battery S-curve)
 }
 
 # =========================================================================
@@ -21,12 +22,13 @@ TARGET_WEIGHTS = {
 # =========================================================================
 
 NUCLEAR_BASKET_TARGETS = {
-    "CCJ":   0.40,  # 40% of Nuclear Slice
-    "GEV":   0.24,  # 24% of Nuclear Slice
+    "CCJ":   0.36,  # CHANGED: was 0.40 — trimmed 4% to make room for APLD
+    "GEV":   0.22,  # CHANGED: was 0.24 — trimmed 2% to make room for APLD
     "SRUUF": 0.16,  # 16% of Nuclear Slice
     "LEU":   0.12,  # 12% of Nuclear Slice
     "SMR":   0.04,  # 4% of Nuclear Slice
     "OKLO":  0.04,  # 4% of Nuclear Slice
+    "APLD":  0.06,  # NEW: 6% — AI GPU data-center infra; nuclear-demand proxy (NOTE: not a pure nuclear name)
 }
 
 QUANTUM_BASKET_TARGETS = {
@@ -59,6 +61,16 @@ SPECGROWTH_BASKET_TARGETS = {
     "VKTX":  0.20,  # 20% of Spec Growth Slice — Viking Therapeutics, GLP-1 obesity Phase III
 }
 
+# NEW: Cross-sector diversifiers outside the existing sector taxonomy.
+# Per SKILL.md "Sector Exploration Philosophy" — scan broadly for asymmetric
+# setups beyond semis/AI/nuclear/quantum/cyber. These three open new sectors
+# (MedTech, Defense, Battery) that are uncorrelated to the current clusters.
+OTHER_BASKET_TARGETS = {
+    "TMDX":  0.45,  # 45% — TransMedics, organ-transplant OCS monopoly [HC] — hold_forever, profitable S-curve
+    "AXON":  0.45,  # 45% — Taser + Evidence.com SaaS moat [DEF] — hold_forever, recurring-revenue compounder
+    "ENVX":  0.10,  # 10% — Enovix silicon-anode battery [BATTERY] — catalyst, binary S-curve, sized tiny
+}
+
 # Aggressive Profit-Taking Triggers (1.25x original for "Let Winners Run")
 SELL_TRIGGER_CEILING = {
     "NUCLEAR_SATELLITE":     0.15,
@@ -66,6 +78,7 @@ SELL_TRIGGER_CEILING = {
     "CYBER_SATELLITE":       0.0625,
     "INDUSTRIAL_SATELLITE":  0.125,
     "SPECGROWTH_SATELLITE":  0.0625,
+    "OTHER_SATELLITE":       0.10,    # NEW: 1.25 × 0.08 — let cross-sector diversifiers run
     "SMHV.SW":                   0.3125,
     "QDVE.DE":                0.125,
 }
@@ -83,6 +96,10 @@ my_current_shares = {
     "BWXT": 0, "POWL": 0, "VRT": 0, "FIX": 0,
     # Speculative Growth — new positions (not yet purchased)
     "RKLB": 0, "LSCC": 0, "CRDO": 0, "VKTX": 0,
+    # NEW: Other / cross-sector diversifiers (not yet purchased)
+    "TMDX": 0, "AXON": 0, "ENVX": 0,
+    # NEW: APLD added to nuclear basket (not yet purchased)
+    "APLD": 0,
 }
 
 # =========================================================================
@@ -116,3 +133,4 @@ def verify_allocations():
     assert abs(sum(CYBER_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Cyber basket doesn't sum to 100%"
     assert abs(sum(INDUSTRIAL_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Industrial basket doesn't sum to 100%"
     assert abs(sum(SPECGROWTH_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Spec Growth basket doesn't sum to 100%"
+    assert abs(sum(OTHER_BASKET_TARGETS.values()) - 1.0) < 1e-9, "Other basket doesn't sum to 100%"  # NEW
