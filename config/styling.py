@@ -13,6 +13,7 @@ theme_styles = {
     "[NUC] Centrus Energy Corp.":            {"color": "#CD7F32", "linestyle": ":"},
     "[NUC] NuScale Power":                   {"color": "#FF8C00", "linestyle": "-"},
     "[NUC] Oklo Inc.":                       {"color": "#E31B23", "linestyle": "--"},
+    "[NUC] Applied Digital Corporation":     {"color": "#A0522D", "linestyle": "-."},  # NEW
 
     # --- [QTM] QUANTUM STOCK PICKING ---
     "[QTM] IonQ, Inc.":                      {"color": "#800080", "linestyle": "-"},
@@ -61,6 +62,24 @@ theme_styles = {
     "[ENG] Chevron Corporation":             {"color": "#8B4513", "linestyle": "-"},
     "[ENG] Bloom Energy Corporation":        {"color": "#00FF00", "linestyle": "--"},
     "[HC] Roche Holding AG (CHF) (100%)":    {"color": "#006400", "linestyle": "-."},
+    "[CORE] Roche Holding AG (CHF) (100%)":  {"color": "#006400", "linestyle": "-."},  # NEW: matches asset tag (was rendering black)
+
+    # --- [IND] INDUSTRIALS & DEFENSE (NEW: backfilled — previously rendered black) ---
+    "[IND] BWX Technologies, Inc.":          {"color": "#3F51B5", "linestyle": "-"},
+    "[IND] Powell Industries, Inc.":         {"color": "#5C6BC0", "linestyle": "--"},
+    "[IND] Vertiv Holdings Co":              {"color": "#1A237E", "linestyle": "-."},
+    "[IND] Comfort Systems USA, Inc.":       {"color": "#7986CB", "linestyle": ":"},
+
+    # --- [SPEC] SPECULATIVE GROWTH (NEW: backfilled — previously rendered black) ---
+    "[SPEC] Rocket Lab USA, Inc.":           {"color": "#00ACC1", "linestyle": "-"},
+    "[SPEC] Lattice Semiconductor Corp.":    {"color": "#00838F", "linestyle": "--"},
+    "[SPEC] Credo Technology Group":         {"color": "#26C6DA", "linestyle": "-."},
+    "[SPEC] Viking Therapeutics, Inc.":      {"color": "#006064", "linestyle": ":"},
+
+    # --- [OTHER] CROSS-SECTOR DIVERSIFIERS (NEW) ---
+    "[OTHER] TransMedics Group, Inc.":       {"color": "#2E7D32", "linestyle": "-"},   # MedTech — green
+    "[OTHER] Axon Enterprise, Inc.":         {"color": "#455A64", "linestyle": "--"},  # Defense — slate
+    "[OTHER] Enovix Corporation":            {"color": "#F9A825", "linestyle": "-."},  # Battery — amber
 }
 
 # =========================================================================
@@ -77,6 +96,9 @@ HTML_TAG_COLORS = {
     "[NUC]":   "#FFF8DC",
     "[QTM]":   "#F8F8FF",
     "[CYBER]": "#FFEBEE",
+    "[IND]":   "#E8EAF6",  # NEW: Industrials & Defense row background
+    "[SPEC]":  "#E0F7FA",  # NEW: Speculative Growth row background
+    "[OTHER]": "#F1F8E9",  # NEW: Cross-sector diversifiers row background
 }
 
 

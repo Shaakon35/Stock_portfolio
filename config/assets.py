@@ -67,6 +67,7 @@ single_stocks = {
     "[NUC] Centrus Energy Corp.": "LEU",
     "[NUC] NuScale Power": "SMR",
     "[NUC] Oklo Inc.": "OKLO",
+    "[NUC] Applied Digital Corporation": "APLD",  # NEW: AI GPU data-center infra (nuclear-demand proxy)
 
     # --- [QTM] PURE-PLAY QUANTUM COMPUTING BASKET ---
     "[QTM] IonQ, Inc.": "IONQ",
@@ -93,6 +94,11 @@ single_stocks = {
     "[SPEC] Lattice Semiconductor Corp.": "LSCC",
     "[SPEC] Credo Technology Group": "CRDO",
     "[SPEC] Viking Therapeutics, Inc.": "VKTX",
+
+    # --- [OTHER] CROSS-SECTOR DIVERSIFIERS (MedTech, Defense, Battery) ---
+    "[OTHER] TransMedics Group, Inc.": "TMDX",   # NEW: organ-transplant OCS monopoly (MedTech)
+    "[OTHER] Axon Enterprise, Inc.": "AXON",     # NEW: Taser + Evidence.com SaaS moat (Defense)
+    "[OTHER] Enovix Corporation": "ENVX",        # NEW: silicon-anode battery S-curve (Battery)
 }
 
 # =========================================================================

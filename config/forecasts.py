@@ -77,6 +77,7 @@ stock_forecast_models = {
     "[NUC] Centrus Energy Corp.":            {"min_rate": 12.0, "max_rate": 25.0, "risk": "High (Geopol)",      "cyclic": "No",  "loss_risk": "High"},
     "[NUC] NuScale Power":                   {"min_rate": -10.0,"max_rate": 35.0, "risk": "Extreme (Burn)",     "cyclic": "No",  "loss_risk": "Extreme"},
     "[NUC] Oklo Inc.":                       {"min_rate": -15.0,"max_rate": 40.0, "risk": "Extreme (Burn)",     "cyclic": "No",  "loss_risk": "Extreme"},
+    "[NUC] Applied Digital Corporation":     {"min_rate": -20.0,"max_rate": 40.0, "risk": "High (Capex Burn)",  "cyclic": "Yes", "loss_risk": "High"},  # NEW: AI GPU DC infra, unprofitable high-beta
 
     # --- QTM ---
     "[QTM] IonQ, Inc.":                      {"min_rate": -20.0, "max_rate": 45.0, "risk": "Extreme", "cyclic": "No", "loss_risk": "Extreme"},
@@ -103,4 +104,9 @@ stock_forecast_models = {
     "[SPEC] Lattice Semiconductor Corp.":    {"min_rate": 8.0,  "max_rate": 22.0, "risk": "Med-High (Edge AI)","cyclic": "Yes", "loss_risk": "Medium"},
     "[SPEC] Credo Technology Group":         {"min_rate": 15.0, "max_rate": 35.0, "risk": "High (Growth)",     "cyclic": "Yes", "loss_risk": "Medium"},
     "[SPEC] Viking Therapeutics, Inc.":       {"min_rate": -30.0, "max_rate": 50.0, "risk": "High (Binary)",    "cyclic": "No",  "loss_risk": "High"},
+
+    # --- OTHER (Cross-sector diversifiers: MedTech, Defense, Battery) ---
+    "[OTHER] TransMedics Group, Inc.":       {"min_rate": 14.0,  "max_rate": 30.0, "risk": "Med-High (S-Curve)","cyclic": "No",  "loss_risk": "Medium"},   # NEW: profitable transplant monopoly, S-curve adoption
+    "[OTHER] Axon Enterprise, Inc.":         {"min_rate": 12.0,  "max_rate": 25.0, "risk": "Low-Med (SaaS Moat)","cyclic": "No", "loss_risk": "Low-Med"},  # NEW: Taser + Evidence.com recurring revenue
+    "[OTHER] Enovix Corporation":            {"min_rate": -35.0, "max_rate": 55.0, "risk": "Extreme (Binary)",  "cyclic": "No",  "loss_risk": "Extreme"},  # NEW: silicon-anode battery, binary S-curve
 }
