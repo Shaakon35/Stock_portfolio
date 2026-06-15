@@ -108,17 +108,17 @@ my_current_shares = {
 
 ETF_LOOK_THROUGH = {
     # CHANGED: refreshed top-10 holdings from Yahoo Finance (QDVE.DE/SMHV.SW/XAIX.DE)
-    "SMHV.SW": {  # VanEck Semiconductor — top 10 = 79.79%
+    "SMHV.SW": {  # VanEck Semiconductor — top 10 = 79.79%  # last refreshed: 2026-06-15
         "MU": 0.1433, "AMD": 0.1222, "AVGO": 0.0833, "INTC": 0.0802, "TSM": 0.0751,
         "ASML": 0.0740, "NVDA": 0.0723, "LRCX": 0.0563, "AMAT": 0.0513, "TXN": 0.0399,
         "OTHER_SEMI": 0.2021,
     },
-    "QDVE.DE": {  # iShares S&P 500 Info Tech (Acc) — top 10 = 74.66%
+    "QDVE.DE": {  # iShares S&P 500 Info Tech (Acc) — top 10 = 74.66%  # last refreshed: 2026-06-15
         "NVDA": 0.2040, "AAPL": 0.1668, "MSFT": 0.1367, "AVGO": 0.0866, "MU": 0.0447,
         "AMD": 0.0344, "INTC": 0.0220, "CSCO": 0.0195, "LRCX": 0.0163, "ORCL": 0.0156,
         "OTHER_TECH": 0.2534,
     },
-    "XAIX.DE": {  # Xtrackers AI & Big Data (Acc) — top 10 = 53.07%
+    "XAIX.DE": {  # Xtrackers AI & Big Data (Acc) — top 10 = 53.07%  # last refreshed: 2026-06-15
         "MU": 0.0905, "005930.KS": 0.0833, "000660.KS": 0.0770, "INTC": 0.0492, "CSCO": 0.0413,
         "GOOGL": 0.0400, "AMZN": 0.0386, "AAPL": 0.0378, "NVDA": 0.0373, "ORCL": 0.0356,
         "OTHER_AI": 0.4694,  # remainder padded +0.0001 so weights sum to exactly 1.0
