@@ -73,22 +73,24 @@ W4_CLOUD_TARGETS = {
 }
 
 # --- WAVE 5: AI SOFTWARE / APPS (18%) ---
+# CHANGED: removed SNOW and NOW — flat/negative 5Y, weak risk-adjusted odds
+# (SNOW unprofitable bubble-hangover; NOW actively crashing -56% off 2025 high).
+# Remaining proven platform compounders renormalized to sum to 1.0.
 W5_SOFTWARE_TARGETS = {
-    "PLTR":  0.2222,  # AI ops / defense platform
-    "CRWD":  0.2222,  # AI cybersecurity
-    "SNOW":  0.1667,  # AI data cloud
-    "PANW":  0.1667,  # Security platform
-    "DDOG":  0.1111,  # AI observability
-    "NOW":   0.1111,  # ServiceNow — enterprise AI workflow
+    "PLTR":  0.3077,  # AI ops / defense platform
+    "CRWD":  0.3077,  # AI cybersecurity
+    "PANW":  0.2308,  # Security platform
+    "DDOG":  0.1538,  # AI observability
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (8%) ---
+# CHANGED: removed ENVX — -47% 5Y, -81% off ATH, ~50% odds toward $0/dilution.
+# Remaining names renormalized to sum to 1.0.
 W6_SPEC_TARGETS = {
-    "AXON":  0.3125,  # Defense/policing AI (profitable anchor)
-    "TMDX":  0.25,    # MedTech non-AI diversifier
-    "IONQ":  0.1875,  # Quantum — revenue leader only
-    "RKLB":  0.1875,  # Space / autonomy
-    "ENVX":  0.0625,  # Battery S-curve (binary, sized tiny)
+    "AXON":  0.3333,  # Defense/policing AI (profitable anchor)
+    "TMDX":  0.2667,  # MedTech non-AI diversifier
+    "IONQ":  0.2000,  # Quantum — revenue leader only
+    "RKLB":  0.2000,  # Space / autonomy
 }
 
 # =========================================================================
