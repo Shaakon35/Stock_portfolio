@@ -107,20 +107,21 @@ my_current_shares = {
 # =========================================================================
 
 ETF_LOOK_THROUGH = {
-    "SMHV.SW": {
-        "TSM": 0.1009, "ASML": 0.1008, "NVDA": 0.0992, "AVGO": 0.0959, "MU": 0.0829,
-        "AMD": 0.0801, "AMAT": 0.0647, "LRCX": 0.0629, "INTC": 0.0513, "TXN": 0.0422,
-        "OTHER_SEMI": 0.2191,
+    # CHANGED: refreshed top-10 holdings from Yahoo Finance (QDVE.DE/SMHV.SW/XAIX.DE)
+    "SMHV.SW": {  # VanEck Semiconductor — top 10 = 79.79%
+        "MU": 0.1433, "AMD": 0.1222, "AVGO": 0.0833, "INTC": 0.0802, "TSM": 0.0751,
+        "ASML": 0.0740, "NVDA": 0.0723, "LRCX": 0.0563, "AMAT": 0.0513, "TXN": 0.0399,
+        "OTHER_SEMI": 0.2021,
     },
-    "QDVE.DE": {
-        "NVDA": 0.2301, "AAPL": 0.1853, "MSFT": 0.1536, "AVGO": 0.0820, "MU": 0.0212,
-        "PLTR": 0.0187, "AMD": 0.0185, "CSCO": 0.0171, "AMAT": 0.0152, "LRCX": 0.0149,
-        "OTHER_TECH": 0.2434,
+    "QDVE.DE": {  # iShares S&P 500 Info Tech (Acc) — top 10 = 74.66%
+        "NVDA": 0.2040, "AAPL": 0.1668, "MSFT": 0.1367, "AVGO": 0.0866, "MU": 0.0447,
+        "AMD": 0.0344, "INTC": 0.0220, "CSCO": 0.0195, "LRCX": 0.0163, "ORCL": 0.0156,
+        "OTHER_TECH": 0.2534,
     },
-    "XAIX.DE": {
-        "TSLA": 0.0934, "TER": 0.0730, "AMD": 0.0669, "PLTR": 0.0552, "TSM": 0.0412,
-        "KTOS": 0.0380, "META": 0.0370, "SHOP": 0.0367, "GOOGL": 0.0353, "RBLX": 0.0304,
-        "OTHER_AI": 0.4929,
+    "XAIX.DE": {  # Xtrackers AI & Big Data (Acc) — top 10 = 53.07%
+        "MU": 0.0905, "005930.KS": 0.0833, "000660.KS": 0.0770, "INTC": 0.0492, "CSCO": 0.0413,
+        "GOOGL": 0.0400, "AMZN": 0.0386, "AAPL": 0.0378, "NVDA": 0.0373, "ORCL": 0.0356,
+        "OTHER_AI": 0.4694,  # remainder padded +0.0001 so weights sum to exactly 1.0
     },
 }
 
@@ -155,8 +156,10 @@ WATCHLIST_EXCLUDED = {
     "KTOS": {
         "strategy": "cycle",
         "area":     "Industrial / Defense",
-        "note":     "Autonomous military drones. SKIP — already held indirectly "
-                    "inside XAIX.DE (~3.8%); buying direct stacks the same bet.",
+        "note":     "Autonomous military drones. CHANGED: KTOS dropped out of XAIX.DE "
+                    "top holdings (latest look-through), so the prior 'already held "
+                    "indirectly' overlap no longer applies. Now a clean candidate — "
+                    "consider for INDUSTRIAL if adding defense exposure.",
     },
     "IREN": {
         "strategy": "cycle",
