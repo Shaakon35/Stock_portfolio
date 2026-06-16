@@ -36,12 +36,18 @@ TARGET_WEIGHTS = {
 # =========================================================================
 
 # --- WAVE 1: SILICON / COMPUTE (18%) ---
+# CHANGED: ETF sized up to a real diversified anchor (40% of sleeve) so it earns
+# its place — SMHV brings memory (MU ~14%), AMD (~12%), and fab equipment
+# (LRCX/AMAT ~11%) that the single-stock picks miss entirely. Direct singles
+# trimmed to avoid double-paying on names already inside the ETF (esp. TSM).
+# Six names renormalized to sum to 1.0.
 W1_SILICON_TARGETS = {
-    "SMHV.SW": 0.2778,  # Broad semiconductor ETF — one-line diversified silicon core
-    "NVDA":    0.2222,  # GPU king
-    "AVGO":    0.1667,  # Custom AI silicon / networking ASICs
-    "ASML":    0.1667,  # EUV lithography monopoly
-    "TSM":     0.1666,  # Foundry monopoly
+    "SMHV.SW": 0.40,  # Diversified semi core — adds memory (MU), AMD, fab equipment
+    "NVDA":    0.18,  # GPU king — top conviction single
+    "AVGO":    0.14,  # Custom AI silicon / networking ASICs
+    "ASML":    0.12,  # EUV lithography monopoly
+    "MRVL":    0.10,  # Custom AI ASICs / optical DSPs
+    "TSM":     0.06,  # Foundry monopoly (also held inside the ETF)
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -73,14 +79,19 @@ W4_CLOUD_TARGETS = {
 }
 
 # --- WAVE 5: AI SOFTWARE / APPS (18%) ---
-# CHANGED: removed SNOW and NOW — flat/negative 5Y, weak risk-adjusted odds
-# (SNOW unprofitable bubble-hangover; NOW actively crashing -56% off 2025 high).
-# Remaining proven platform compounders renormalized to sum to 1.0.
+# CHANGED: re-added SNOW and NOW. Both fell on multiple-compression, not broken
+# businesses — SNOW (16.6x sales, +$1.7B FCF, Cortex AI) is a worked-off bubble
+# hangover; NOW (fwd P/E ~21, +13% GAAP, +$5.1B FCF, Now Assist) is a profitable
+# compounder repriced in 2025. Both are AI-native and mean-reversion candidates.
+# Six names renormalized to sum to 1.0; weighting reflects valuation risk —
+# PANW/CRWD/NOW profitable anchors, PLTR capped (62x sales), DDOG cyclical.
 W5_SOFTWARE_TARGETS = {
-    "PLTR":  0.3077,  # AI ops / defense platform
-    "CRWD":  0.3077,  # AI cybersecurity
-    "PANW":  0.2308,  # Security platform
-    "DDOG":  0.1538,  # AI observability
+    "PANW":  0.20,  # Security platform — biggest, cheapest, steadiest (top pick)
+    "CRWD":  0.18,  # AI cybersecurity — highest-quality platform
+    "NOW":   0.18,  # Workflow AI (Now Assist) — profitable, cheap re-rating play
+    "PLTR":  0.16,  # AI ops / defense platform — best growth, capped on valuation
+    "SNOW":  0.14,  # Data-cloud + Cortex AI — healed bubble hangover
+    "DDOG":  0.14,  # AI observability — purest AI-data, consumption-cyclical
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (8%) ---
