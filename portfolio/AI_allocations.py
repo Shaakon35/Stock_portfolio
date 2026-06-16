@@ -176,7 +176,9 @@ STRATEGY = {
     "DDOG":    "cycle",     # Consumption model — buy dips, trim momentum spikes
 
     # --- W6 SPECULATIVE ---
-    "AXON":    "cycle",     # Profitable but thin FCF (7% net) at 41x P/E — momentum-like
+    "AXON":    "dca",       # Public-safety monopoly — 59% gross margin, sticky SaaS;
+                            # thin net/FCF is reinvestment by choice, not weak economics.
+                            # Volatile but end-market doesn't cycle -> hold through dips.
     "TMDX":    "cycle",     # MedTech growth — momentum-sensitive
     "IONQ":    "catalyst",  # Quantum binary — size once, event-driven, no avg down
     "RKLB":    "catalyst",  # Space — size once, milestone-driven, no avg down
