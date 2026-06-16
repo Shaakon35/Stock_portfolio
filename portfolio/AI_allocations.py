@@ -105,23 +105,125 @@ W6_SPEC_TARGETS = {
 }
 
 # =========================================================================
+# STRATEGY CLASSIFICATION — how to OPERATE each holding
+# =========================================================================
+# Three operating modes. The key difference is what a price DROP means and
+# whether you are allowed to add more (average down) when it falls.
+#
+#   "dca"      — DCA / hold forever. Profitable, survivable businesses.
+#                A drop is a DISCOUNT, not a warning.
+#                BUY : every month on autopilot, regardless of price.
+#                SELL: never (only to rebalance). Averaging down is SAFE.
+#
+#   "cycle"    — Buy-low / sell-high. Real, profitable businesses riding a
+#                multi-year AI-capex wave that will eventually crest.
+#                A drop is a DISCOUNT on a healthy cyclical.
+#                BUY : on dips, accumulate (averaging down is OK).
+#                SELL: gradually, near the CYCLE PEAK (~2027-2029) — when
+#                      growth decelerates / valuation gets stretched / the
+#                      capex wave rolls over. Take profits; do not "hold
+#                      forever". Several here have already run 400-2600%.
+#
+#   "catalyst" — Binary event bet. Pre-revenue / unproven; can go to ZERO.
+#                A drop may be the market correctly pricing in FAILURE.
+#                BUY : ONCE, a small fixed size. DO NOT AVERAGE DOWN — adding
+#                      to a falling catalyst name is throwing money into a hole.
+#                SELL: at the specific EVENT (approval, signed contract,
+#                      milestone), win or lose. Then walk away.
+#
+# Rule of thumb on a 40% drop:
+#   dca/cycle -> buy more (discount on a real business).
+#   catalyst  -> do nothing (the thesis may be breaking).
+# =========================================================================
+
+STRATEGY = {
+    # --- W1 SILICON ---
+    "SMHV.SW": "dca",       # Diversified ETF — buy monthly, never sell
+    "NVDA":    "dca",       # Profitable mega-cap compounder
+    "AVGO":    "dca",       # Profitable, dividend, ~$27B FCF
+    "MRVL":    "dca",       # Profitable ASIC play, reasonable multiple
+    "ASML":    "dca",       # EUV monopoly — secular grower; each cycle troughs higher
+    "TSM":     "dca",       # Foundry monopoly — secular grower, sane valuation (~20x)
+
+    # --- W2 POWER ---
+    "GEV":     "dca",       # Grid supercycle — hold forever
+    "CCJ":     "dca",       # Uranium structural deficit — hold forever
+    "CEG":     "cycle",     # Nuclear utility — power-price sensitive
+    "VST":     "cycle",     # Power merchant — sell at peak
+    "POWL":    "cycle",     # +2657% — late-cycle switchgear, has a price target
+    "OKLO":    "catalyst",  # Pre-revenue SMR — sell on NRC approval, never avg down
+
+    # --- W3 DC-INFRA (mostly rides the capex cycle) ---
+    "VRT":     "cycle",     # Cooling — sell when DC capex peaks ~2028-29
+    "ANET":    "dca",       # Networking monopoly — 38% margin, $4.4B FCF, software moat
+    "CRDO":    "cycle",     # +2127% hypergrowth — sell when growth <30%
+    "COHR":    "cycle",     # Optical — already ran, cyclical
+    "FIX":     "cycle",     # +2206% — late-cycle DC construction, sell at peak
+
+    # --- W4 CLOUD (purest DCA wave) ---
+    "MSFT":    "dca",       # Hold forever compounder
+    "GOOGL":   "dca",       # Hold forever compounder
+    "AMZN":    "dca",       # Hold forever
+    "META":    "dca",       # Hold forever
+    "ORCL":    "dca",       # Cloud-capacity compounder
+
+    # --- W5 SOFTWARE ---
+    "PANW":    "dca",       # Profitable platform — hold forever
+    "CRWD":    "dca",       # Profitable platform, ~$1.9B FCF — hold forever
+    "NOW":     "dca",       # Profitable (+13% GAAP, $5.1B FCF) — hold forever
+    "SNOW":    "dca",       # FCF-positive, healed bubble hangover
+    "PLTR":    "cycle",     # Best business but 62x sales — trim/add, not blind DCA
+    "DDOG":    "cycle",     # Consumption model — buy dips, trim momentum spikes
+
+    # --- W6 SPECULATIVE ---
+    "AXON":    "cycle",     # Profitable but thin FCF (7% net) at 41x P/E — momentum-like
+    "TMDX":    "cycle",     # MedTech growth — momentum-sensitive
+    "IONQ":    "catalyst",  # Quantum binary — size once, event-driven, no avg down
+    "RKLB":    "catalyst",  # Space — size once, milestone-driven, no avg down
+}
+
+# =========================================================================
 # VALIDATION
 # =========================================================================
 
+ALL_BASKETS = [
+    ("W1_SILICON", W1_SILICON_TARGETS),
+    ("W2_POWER", W2_POWER_TARGETS),
+    ("W3_DCINFRA", W3_DCINFRA_TARGETS),
+    ("W4_CLOUD", W4_CLOUD_TARGETS),
+    ("W5_SOFTWARE", W5_SOFTWARE_TARGETS),
+    ("W6_SPEC", W6_SPEC_TARGETS),
+]
+
+
 def verify_allocations():
-    """Assert wave weights total 100% and each basket sums to 1.0."""
+    """Assert wave weights total 100%, each basket sums to 1.0, and every
+    holding has a valid strategy classification."""
     assert abs(sum(TARGET_WEIGHTS.values()) - 1.0) < 1e-9, "Wave weights don't sum to 100%"
-    for name, basket in [
-        ("W1_SILICON", W1_SILICON_TARGETS),
-        ("W2_POWER", W2_POWER_TARGETS),
-        ("W3_DCINFRA", W3_DCINFRA_TARGETS),
-        ("W4_CLOUD", W4_CLOUD_TARGETS),
-        ("W5_SOFTWARE", W5_SOFTWARE_TARGETS),
-        ("W6_SPEC", W6_SPEC_TARGETS),
-    ]:
+    valid_modes = {"dca", "cycle", "catalyst"}
+    all_tickers = set()
+    for name, basket in ALL_BASKETS:
         assert abs(sum(basket.values()) - 1.0) < 1e-9, f"{name} basket doesn't sum to 100%"
+        all_tickers.update(basket.keys())
+
+    # Every holding must be classified, and STRATEGY must not carry stragglers.
+    missing = all_tickers - set(STRATEGY)
+    assert not missing, f"Holdings missing a STRATEGY: {sorted(missing)}"
+    extra = set(STRATEGY) - all_tickers
+    assert not extra, f"STRATEGY has tickers not in any basket: {sorted(extra)}"
+    bad = {t: m for t, m in STRATEGY.items() if m not in valid_modes}
+    assert not bad, f"Invalid strategy modes: {bad}"
+
+
+def tickers_by_strategy(mode):
+    """Return the list of tickers operated under a given mode
+    ('dca' | 'cycle' | 'catalyst')."""
+    return sorted(t for t, m in STRATEGY.items() if m == mode)
 
 
 if __name__ == "__main__":
     verify_allocations()
     print("verify_allocations(): PASS")
+    for mode in ("dca", "cycle", "catalyst"):
+        names = tickers_by_strategy(mode)
+        print(f"  {mode:9s} ({len(names):2d}): {', '.join(names)}")
