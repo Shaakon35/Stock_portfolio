@@ -223,9 +223,188 @@ def tickers_by_strategy(mode):
     return sorted(t for t, m in STRATEGY.items() if m == mode)
 
 
+# =========================================================================
+# WATCHLIST — NOT HELD. Names to check from time to time.
+# =========================================================================
+# These are candidates / monitors, deliberately OUTSIDE the wave baskets so
+# they do not affect any weight. Each carries a tentative strategy tag using
+# the same vocabulary as STRATEGY, plus one extra:
+#
+#   "lottery" — speculative micro-bet with binary/blow-up risk. Like
+#               "catalyst" but with NO clean single event to sell into —
+#               pure asymmetric punt. Size tiny or skip; never average down.
+#
+# Most are already captured indirectly via the SMHV.SW ETF in W1 — the tag
+# notes that so you don't double-pay. "verify_allocations" intentionally
+# ignores this dict; it's a notebook for the eye, not part of the portfolio.
+# =========================================================================
+
+WATCHLIST = {
+    # --- Memory / storage (HBM + NAND/HDD) — the deepest-cyclical corner ---
+    "MU": {  # also held inside SMHV.SW (~14%)
+        "strategy": "cycle",
+        "area":     "Memory / HBM",
+        "note":     "Best single 'gap' name: HBM is critical to every AI GPU. "
+                    "41% net, fwd P/E ~9 — but DRAM is violently cyclical. Already "
+                    "covered via SMHV.SW; only add direct as a CYCLE bet bought on "
+                    "down-cycles, never near the top.",
+    },
+    "SNDK": {
+        "strategy": "cycle",
+        "area":     "Memory / NAND (SanDisk)",
+        "note":     "SKIP/late — +251% rev is the NAND cycle at its PEAK, trading "
+                    "near 52w high. Deep-cyclical commodity. Buying here = buying the "
+                    "top. Covered indirectly anyway.",
+    },
+    "WDC": {
+        "strategy": "cycle",
+        "area":     "Storage / HDD (Western Digital)",
+        "note":     "SKIP — +46% rev / 55% net flatters a cycle top. Commodity HDD/"
+                    "NAND, near 52w high. Classic late-cycle trap.",
+    },
+    "STX": {
+        "strategy": "cycle",
+        "area":     "Storage / HDD (Seagate)",
+        "note":     "SKIP — same as WDC: deep-cyclical HDD at cycle peak near highs.",
+    },
+
+    # --- Compute / IP / connectivity ---
+    "ARM": {
+        "strategy": "cycle",
+        "area":     "Chip IP / architecture",
+        "note":     "Only name that fills a UNIQUE gap (royalty IP, ~95% gross). Elite "
+                    "moat BUT 129x fwd P/E / 86x sales — pricier than PLTR. Dip-only, "
+                    "tiny size; NEVER DCA at this multiple. Treat as CYCLE/conviction.",
+    },
+    "AMD": {  # also held inside SMHV.SW (~12%)
+        "strategy": "cycle",
+        "area":     "GPU / CPU (NVDA challenger)",
+        "note":     "Only credible #2 GPU. Real ($7.2B FCF) but 22x sales and you "
+                    "already have NVDA + ETF. Add only on a real share-gain catalyst.",
+    },
+    "QCOM": {
+        "strategy": "cycle",
+        "area":     "Mobile / edge-AI chips",
+        "note":     "SKIP — cheap (20x P/E, $9.6B FCF) but rev -4%: Apple designing it "
+                    "out. 'Cheap for a reason' value trap, not a growth thesis.",
+    },
+    "ADI": {
+        "strategy": "dca",
+        "area":     "Analog / industrial chips",
+        "note":     "Highest-QUALITY new name (37% rev, 26% net, $3.9B FCF, 28x). "
+                    "Would be DCA-grade — but only loosely AI-thesis (industrial). "
+                    "Consider only if widening beyond pure AI-infra.",
+    },
+
+    # --- Fab equipment ('picks of the picks') — all inside SMHV.SW ---
+    "KLAC": {
+        "strategy": "dca",
+        "area":     "Fab inspection equipment",
+        "note":     "High quality (36% net, $2.9B FCF). DCA-grade oligopoly, but "
+                    "already held via SMHV.SW (equipment ~11% of ETF). Redundant direct.",
+    },
+    "LRCX": {
+        "strategy": "dca",
+        "area":     "Fab etch/deposition equipment",
+        "note":     "Quality (31% net, $4.4B FCF). Same as KLAC — already inside the "
+                    "ETF; only add direct for concentrated equipment conviction.",
+    },
+    "AMAT": {
+        "strategy": "dca",
+        "area":     "Fab equipment (broadest)",
+        "note":     "Quality (29% net). Inside SMHV.SW already. Redundant direct.",
+    },
+
+    # --- Legacy / off-thesis large caps ---
+    "AAPL": {
+        "strategy": "dca",
+        "area":     "Consumer hardware / services",
+        "note":     "DCA-grade ($101B FCF!) but it's a CONSUMER play, not AI-infra. "
+                    "Belongs in a core portfolio, not this AI book. Off-thesis.",
+    },
+    "CSCO": {
+        "strategy": "dca",
+        "area":     "Legacy networking",
+        "note":     "SKIP — you already hold ANET (faster, higher-margin competitor). "
+                    "Redundant and slower-growth.",
+    },
+    "TXN": {
+        "strategy": "cycle",
+        "area":     "Analog / industrial chips",
+        "note":     "SKIP — analog/industrial, barely an AI play. Inside ETF anyway.",
+    },
+    "INTC": {
+        "strategy": "lottery",
+        "area":     "Legacy CPU / foundry turnaround",
+        "note":     "AVOID/lottery — UNPROFITABLE (-6% net, -$8.3B FCF, 76x P/E, 7% "
+                    "rev). Foundry turnaround is a binary gamble, not an investment.",
+    },
+
+    # --- Korea memory (HBM leaders) — access friction ---
+    "005930.KS": {
+        "strategy": "cycle",
+        "area":     "Memory / diversified (Samsung)",
+        "note":     "HBM + broad semi at 6x P/E — cheap. But Korea-listed (FX/access "
+                    "friction on EU brokers). Better captured via a broad ex-US semi "
+                    "ETF than bought direct.",
+    },
+    "000660.KS": {
+        "strategy": "cycle",
+        "area":     "Memory / HBM leader (SK hynix)",
+        "note":     "Purest HBM leader (+198% rev, 57% net, 6x P/E) — but it's the "
+                    "memory cycle peaking. Korea-listed access friction. Watch, "
+                    "don't chase at the top.",
+    },
+
+    # --- Non-semi: consumer / China ---
+    "1810.HK": {
+        "strategy": "cycle",
+        "area":     "Consumer electronics / EV (Xiaomi)",
+        "note":     "OFF-THESIS — cheap (14x P/E) but rev -11% (shrinking). It's a "
+                    "China consumer/EV turnaround bet, not AI value-chain. + China "
+                    "geopolitical risk, HK/OTC access. Keep in a SEPARATE sleeve if at all.",
+    },
+
+    # --- Defense / crypto-adjacent industrials ---
+    "KTOS": {
+        "strategy": "cycle",
+        "area":     "Industrial / Defense",
+        "note":     "Autonomous military drones. CHANGED: KTOS dropped out of XAIX.DE "
+                    "top holdings (latest look-through), so the prior 'already held "
+                    "indirectly' overlap no longer applies. Now a clean candidate — "
+                    "consider for INDUSTRIAL if adding defense exposure. NB thin FCF "
+                    "(2% net) -> momentum-like, treat as CYCLE.",
+    },
+    "IREN": {
+        "strategy": "lottery",
+        "area":     "Industrial (AI compute + Bitcoin mining)",
+        "note":     "SMALL/SKIP — crypto-correlated beta is new uncorrelated risk, "
+                    "not diversification. Negative FCF (-$2.3B). Lottery, not cycle.",
+    },
+    "CIFR": {
+        "strategy": "lottery",
+        "area":     "Industrial (Bitcoin mining pivoting to AI)",
+        "note":     "SKIP — rev -29%, negative FCF (-$2.9B), crypto-dependent, weaker "
+                    "than every industrial incumbent already held. Pure lottery.",
+    },
+}
+
+
+def watchlist_by_strategy(mode):
+    """Return watchlist tickers tentatively tagged with a given mode
+    ('dca' | 'cycle' | 'catalyst' | 'lottery')."""
+    return sorted(t for t, d in WATCHLIST.items() if d["strategy"] == mode)
+
+
 if __name__ == "__main__":
     verify_allocations()
     print("verify_allocations(): PASS")
+    print("\nHELD — by strategy:")
     for mode in ("dca", "cycle", "catalyst"):
         names = tickers_by_strategy(mode)
         print(f"  {mode:9s} ({len(names):2d}): {', '.join(names)}")
+    print("\nWATCHLIST (not held) — by tentative strategy:")
+    for mode in ("dca", "cycle", "catalyst", "lottery"):
+        names = watchlist_by_strategy(mode)
+        if names:
+            print(f"  {mode:9s} ({len(names):2d}): {', '.join(names)}")
