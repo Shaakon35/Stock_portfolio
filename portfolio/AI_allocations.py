@@ -420,6 +420,113 @@ WATCHLIST = {
         "note":     "SKIP — rev -29%, negative FCF (-$2.9B), crypto-dependent, weaker "
                     "than every industrial incumbent already held. Pure lottery.",
     },
+
+    # --- From the SECTOR portfolio satellites — net-new AI-thesis checks ---
+    # Cross-referenced against held STRATEGY: names already in the wave book
+    # (CCJ, GEV, OKLO, IONQ, CRWD, PANW, POWL, VRT, FIX, RKLB, CRDO, TMDX,
+    # AXON) are deliberately omitted here to avoid double-listing.
+
+    # Silicon (W1) candidates — real chip companies
+    "LSCC": {
+        "strategy": "cycle",
+        "area":     "Silicon / low-power FPGAs (Lattice)",
+        "note":     "CLEANEST add of the batch — a real chip company, not a story "
+                    "stock. Low-power FPGAs for AI-edge. Cyclical: buy dips, trim "
+                    "into the next semi peak. Not in SMHV.SW top holdings.",
+    },
+
+    # Power / infra (datacenter electricity + hosting)
+    "APLD": {
+        "strategy": "cycle",
+        "area":     "AI datacenter hosting / HPC leases (Applied Digital)",
+        "note":     "Direct AI compute-buildout play (CoreWeave-style HPC leases). "
+                    "Volatile, capex-heavy — buy weakness, trim on hype. On-thesis "
+                    "for the power/infra leg.",
+    },
+    "BWXT": {
+        "strategy": "dca",
+        "area":     "Power / nuclear components (naval reactors + SMR parts)",
+        "note":     "The PROFITABLE nuclear name — naval reactors + SMR components, "
+                    "real earnings. Powers the AI-datacenter electricity thesis and "
+                    "is DCA-able, unlike the pre-revenue SMR crowd.",
+    },
+    "LEU": {
+        "strategy": "cycle",
+        "area":     "Nuclear fuel / HALEU enrichment (Centrus)",
+        "note":     "Only US HALEU enricher; real revenue. Fits 'AI needs power' via "
+                    "the fuel cycle. Cyclical commodity-linked — buy down-cycles, not "
+                    "at highs.",
+    },
+    "SMR": {
+        "strategy": "catalyst",
+        "area":     "Nuclear / small modular reactors (NuScale)",
+        "note":     "Pre-revenue. Binary on first commercial reactor. One-and-done "
+                    "catalyst bet — size tiny, NEVER average down.",
+    },
+    "SRUUF": {
+        "strategy": "cycle",
+        "area":     "Uranium commodity trust (Sprott Physical Uranium)",
+        "note":     "OFF-STRATEGY mechanically — a COMMODITY trust tracking U3O8 "
+                    "price, not an equity. Proxy for the nuclear-power thesis but "
+                    "behaves like the metal, not a company. Separate sleeve if at all.",
+    },
+
+    # Quantum pile-on — one catalyst ticket (IONQ) is already held
+    "RGTI": {
+        "strategy": "lottery",
+        "area":     "Quantum computing (Rigetti)",
+        "note":     "Pre-revenue quantum. You already hold IONQ as the quantum "
+                    "catalyst ticket; adding more just smears one lottery bet across "
+                    "many. If you want ONE more, this is the pick — size tiny.",
+    },
+    "QBTS": {
+        "strategy": "lottery",
+        "area":     "Quantum computing (D-Wave)",
+        "note":     "Pre-revenue quantum (annealing). Same logic as RGTI — redundant "
+                    "with IONQ. Lottery only.",
+    },
+    "QUBT": {
+        "strategy": "lottery",
+        "area":     "Quantum computing (Quantum Computing Inc.)",
+        "note":     "Micro-cap pre-revenue quantum. Pure lottery; max noise, no edge "
+                    "over the IONQ position. Skip unless punting.",
+    },
+    "QNT": {
+        "strategy": "lottery",
+        "area":     "Quantum computing",
+        "note":     "Speculative quantum name. Redundant with the IONQ quantum "
+                    "ticket. Lottery only — tiny or skip.",
+    },
+    "XNDU": {
+        "strategy": "lottery",
+        "area":     "Quantum computing (Xanadu)",
+        "note":     "Pre-revenue photonic quantum. Lottery; same smearing problem as "
+                    "the rest of the quantum pile. Skip unless punting.",
+    },
+    "INFQ": {
+        "strategy": "lottery",
+        "area":     "Quantum computing",
+        "note":     "Speculative quantum name. Redundant with IONQ. Lottery only.",
+    },
+    "HQ": {
+        "strategy": "lottery",
+        "area":     "Quantum computing",
+        "note":     "Speculative quantum name. Redundant with IONQ. Lottery only.",
+    },
+
+    # Off-thesis — tracked for completeness, NOT AI value-chain
+    "ENVX": {
+        "strategy": "lottery",
+        "area":     "Battery tech (Enovix)",
+        "note":     "OFF-THESIS — silicon-anode batteries, not the AI value chain. "
+                    "Pre-profit. Belongs in a separate energy/tech sleeve.",
+    },
+    "VKTX": {
+        "strategy": "lottery",
+        "area":     "Biotech / GLP-1 (Viking Therapeutics)",
+        "note":     "OFF-THESIS — GLP-1 obesity biotech, ZERO AI linkage. Pure sector "
+                    "drift; binary on trial data. Does not belong in this AI book.",
+    },
 }
 
 
