@@ -6,10 +6,11 @@
 # (W1 silicon -> W6 speculative), built to maximize growth across the full
 # AI stack rather than by the original sector taxonomy in allocations.py.
 #
-# Wave weights: W1 18 / W2 18 / W3 18 / W4 20 / W5 18 / W6 8 = 100%
-# NOTE: the requested 18/18/16/20/18/8 summed to 98%; the spare 2% was added
-#       to W3 (DC-Infra, high-growth/moderate-risk) to reach 100% without
-#       inflating the speculative sleeve.
+# Wave weights: W1 23 / W2 18 / W3 18 / W4 15 / W5 18 / W6 8 = 100%
+# CHANGED: W1 18 -> 23 and W4 20 -> 15 (net zero) after an exposure review —
+#       MSFT/GOOGL were overweight (~5% each) while semis MU/AMD (held via
+#       SMHV.SW inside W1) were too thin. Shifting 5% from cloud to silicon
+#       lifts the semi book without touching the other waves.
 #
 # To evaluate later, mirror the structure of allocations.py (theme colors,
 # forecasts, notebook wiring). Intentionally NOT done yet.
@@ -23,10 +24,10 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 # =========================================================================
 
 TARGET_WEIGHTS = {
-    "W1_SILICON":   0.18,  # Silicon / compute — picks-and-shovels (trimmed vs prior overweight)
+    "W1_SILICON":   0.23,  # CHANGED: 0.18 -> 0.23 — lift semis (esp. SMHV.SW: MU/AMD) per exposure review
     "W2_POWER":     0.18,  # Power & energy — youngest "boring" wave, best risk-adjusted
     "W3_DCINFRA":   0.18,  # Data-center infrastructure — cooling, networking, optical, construction
-    "W4_CLOUD":     0.20,  # Hyperscaler cloud — durable mega-cap compounders
+    "W4_CLOUD":     0.15,  # CHANGED: 0.20 -> 0.15 — trim MSFT/GOOGL overweight, fund W1
     "W5_SOFTWARE":  0.18,  # AI software / apps — earliest-innings monetization, highest growth
     "W6_SPEC":      0.08,  # Speculative / second-order — capped lottery + diversifiers
 }
