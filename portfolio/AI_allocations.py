@@ -365,6 +365,39 @@ WATCHLIST = {
                     "geopolitical risk, HK/OTC access. Keep in a SEPARATE sleeve if at all.",
     },
 
+    # --- EDA / chip-design software (a structural gap nothing else covers) ---
+    "CDNS": {
+        "strategy": "dca",
+        "area":     "Chip-design software (EDA)",
+        "note":     "DCA-grade. The tools every chip is designed with — software "
+                    "moat NOT in your book or the ETF. 86% gross, 21% net, $1.5B FCF. "
+                    "Cadence/Synopsys are the EDA duopoly; ~41x P/E so not cheap.",
+    },
+    "SNPS": {
+        "strategy": "dca",
+        "area":     "Chip-design software (EDA)",
+        "note":     "DCA-grade. Other half of the EDA duopoly. 83% gross, 42% rev, "
+                    "$3.5B FCF, ~26x fwd P/E. NB it absorbed ANSYS (ANSS) — the "
+                    "ANSS ticker is gone, exposure now lives here.",
+    },
+    "TER": {
+        "strategy": "cycle",
+        "area":     "Chip test equipment",
+        "note":     "Complements the LRCX/AMAT equipment angle. 87% rev is the test "
+                    "cycle recovering (cyclical), 23% net. Buy on down-cycles, not at "
+                    "the peak; not in the ETF top holdings.",
+    },
+
+    # --- AI-native cloud / GPU rental ---
+    "CRWV": {
+        "strategy": "catalyst",
+        "area":     "AI-native cloud / GPU rental (CoreWeave)",
+        "note":     "Pure-play AI compute rental — directly on-thesis but HIGH-BETA "
+                    "binary: 112% rev yet -26% net and -$8.6B FCF (massive debt-funded "
+                    "GPU capex). Sell/scale on execution catalysts; size tiny, never "
+                    "average down. Borderline lottery.",
+    },
+
     # --- Defense / crypto-adjacent industrials ---
     "KTOS": {
         "strategy": "cycle",
