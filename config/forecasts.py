@@ -116,56 +116,65 @@ stock_forecast_models = {
 # =========================================================================
 # Per-ticker CAGR ranges (min/max %) for the AI value-chain wave allocation
 # in portfolio/AI_allocations.py. Ticker-keyed (not display-name keyed) because
-# the wave baskets reference bare tickers (e.g. "NVDA", "GOOGL"). The 23 names
-# that also appear in stock_forecast_models reuse those exact ranges; the 11
-# wave-only names (ANET, CEG, COHR, DDOG, GOOGL, META, MU, NOW, SNOW, TSM, VST)
-# are estimated here in the same framework. SMHV.SW reuses its ETF CAGR.
-# Consumed by portfolio_overview.ipynb's Growth tab to roll waves up into
-# 1y / 5y total-return ranges (compounded).
+# the wave baskets reference bare tickers (e.g. "NVDA", "GOOGL").
+#
+# METHODOLOGY — these CAGRs are NOT independent guesses. They are BACK-SOLVED
+# from per-ticker 5-YEAR TOTAL-RETURN intervals (the disciplined, mean-
+# reversion-aware artifact). For each ticker:
+#       CAGR = (1 + total_5y/100) ** (1/5) - 1
+# so that portfolio_overview.ipynb's Growth tab — which compounds the CAGR
+# over 5y as (1+CAGR)**5 - 1 — reproduces the source 5Y interval EXACTLY.
+# The "5Y" comment on each line is the source-of-truth total return; the CAGR
+# is derived from it. This keeps the Growth tab and the 5Y reasoning table in
+# lockstep (one source of truth) instead of two tables that disagree.
+#
+# 29 tickers come straight from the 5Y reasoning table. The 5 wave-only names
+# without an entry there (MRVL, MU, AMD, NOW, SNOW) were assigned 5Y intervals
+# in the same disciplined style, then back-solved identically.
 WAVE_FORECASTS = {
     # --- W1 SILICON ---
-    "SMHV.SW": {"min_rate": 18.2, "max_rate": 18.2},  # ETF CAGR (single point)
-    "NVDA":    {"min_rate": 15.0, "max_rate": 30.0},
-    "AVGO":    {"min_rate": 12.0, "max_rate": 20.0},
-    "ASML":    {"min_rate": 12.0, "max_rate": 22.0},
-    "MRVL":    {"min_rate": 11.0, "max_rate": 24.0},
-    "TSM":     {"min_rate": 12.0, "max_rate": 22.0},  # NEW: foundry monopoly, secular grower
-    "MU":      {"min_rate": 5.0,  "max_rate": 25.0},  # NEW: memory/HBM, violently cyclical (wide band)
-    "AMD":     {"min_rate": 10.0, "max_rate": 22.0},
+    "SMHV.SW": {"min_rate": 9.9,  "max_rate": 17.1},  # 5Y +60/+120% — diversified semi ETF, lower variance
+    "NVDA":    {"min_rate": 9.9,  "max_rate": 20.1},  # 5Y +60/+150% — AI GPU demand, priced-in but dominant
+    "AVGO":    {"min_rate": 9.9,  "max_rate": 19.1},  # 5Y +60/+140% — custom AI silicon + software
+    "ASML":    {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — EUV monopoly, cyclical orders
+    "MRVL":    {"min_rate": 8.4,  "max_rate": 21.1},  # 5Y +50/+160% — custom ASIC/optical DSP (est.)
+    "TSM":     {"min_rate": 11.2, "max_rate": 21.1},  # 5Y +70/+160% — foundry monopoly, fair valuation
+    "MU":      {"min_rate": 3.7,  "max_rate": 22.0},  # 5Y +20/+170% — memory/HBM, violently cyclical (est.)
+    "AMD":     {"min_rate": 8.4,  "max_rate": 22.0},  # 5Y +50/+170% — #2 GPU, high beta (est.)
 
     # --- W2 POWER ---
-    "GEV":     {"min_rate": 10.0, "max_rate": 20.0},
-    "CEG":     {"min_rate": 8.0,  "max_rate": 18.0},  # NEW: nuclear utility, power-price sensitive
-    "CCJ":     {"min_rate": 8.0,  "max_rate": 18.0},
-    "POWL":    {"min_rate": 12.0, "max_rate": 24.0},
-    "OKLO":    {"min_rate": -15.0,"max_rate": 40.0},
-    "VST":     {"min_rate": 8.0,  "max_rate": 20.0},  # NEW: power merchant, data-center demand
+    "GEV":     {"min_rate": 12.5, "max_rate": 24.6},  # 5Y +80/+200% — grid/turbine supercycle
+    "CEG":     {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — nuclear utility powering DCs
+    "CCJ":     {"min_rate": 11.2, "max_rate": 22.9},  # 5Y +70/+180% — uranium supply deficit to 2035
+    "POWL":    {"min_rate": 5.4,  "max_rate": 14.9},  # 5Y +30/+100% — switchgear, already ran hard, late
+    "OKLO":    {"min_rate": -12.9,"max_rate": 32.0},  # 5Y -50/+300% — SMR catalyst, pre-revenue (binary)
+    "VST":     {"min_rate": 8.4,  "max_rate": 20.1},  # 5Y +50/+150% — power + DC energy demand
 
     # --- W3 DC-INFRA ---
-    "VRT":     {"min_rate": 14.0, "max_rate": 26.0},
-    "ANET":    {"min_rate": 12.0, "max_rate": 22.0},  # NEW: networking monopoly, software moat
-    "CRDO":    {"min_rate": 15.0, "max_rate": 35.0},
-    "FIX":     {"min_rate": 10.0, "max_rate": 20.0},
-    "COHR":    {"min_rate": 10.0, "max_rate": 25.0},  # NEW: optical components, cyclical
+    "VRT":     {"min_rate": 11.2, "max_rate": 22.9},  # 5Y +70/+180% — liquid cooling leader, capex wave
+    "ANET":    {"min_rate": 9.9,  "max_rate": 20.1},  # 5Y +60/+150% — DC networking, profitable
+    "CRDO":    {"min_rate": 9.9,  "max_rate": 24.6},  # 5Y +60/+200% — optical interconnect, hypergrowth
+    "FIX":     {"min_rate": 5.4,  "max_rate": 16.0},  # 5Y +30/+110% — DC construction, late-cycle
+    "COHR":    {"min_rate": 8.4,  "max_rate": 21.1},  # 5Y +50/+160% — optical components
 
     # --- W4 CLOUD ---
-    "MSFT":    {"min_rate": 10.0, "max_rate": 16.0},
-    "GOOGL":   {"min_rate": 8.0,  "max_rate": 15.0},  # NEW: matches GOOG (Alphabet)
-    "AMZN":    {"min_rate": 10.0, "max_rate": 18.0},
-    "META":    {"min_rate": 10.0, "max_rate": 20.0},  # NEW: open models + ad-AI
-    "ORCL":    {"min_rate": 8.0,  "max_rate": 15.0},
+    "MSFT":    {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — Azure+OpenAI, durable compounder
+    "GOOGL":   {"min_rate": 8.4,  "max_rate": 17.1},  # 5Y +50/+120% — Gemini+TPU+Cloud, cheap
+    "AMZN":    {"min_rate": 8.4,  "max_rate": 17.1},  # 5Y +50/+120% — AWS re-acceleration
+    "META":    {"min_rate": 7.0,  "max_rate": 16.0},  # 5Y +40/+110% — ad-AI + open models
+    "ORCL":    {"min_rate": 7.0,  "max_rate": 17.1},  # 5Y +40/+120% — cloud-capacity surprise winner
 
     # --- W5 SOFTWARE ---
-    "PANW":    {"min_rate": 10.0, "max_rate": 22.0},
-    "CRWD":    {"min_rate": 12.0, "max_rate": 26.0},
-    "NOW":     {"min_rate": 12.0, "max_rate": 22.0},  # NEW: workflow AI, profitable compounder
-    "PLTR":    {"min_rate": 14.0, "max_rate": 28.0},
-    "SNOW":    {"min_rate": 10.0, "max_rate": 25.0},  # NEW: data-cloud + Cortex AI
-    "DDOG":    {"min_rate": 12.0, "max_rate": 26.0},  # NEW: AI observability, consumption-cyclical
+    "PANW":    {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — security platform, profitable
+    "CRWD":    {"min_rate": 9.9,  "max_rate": 19.1},  # 5Y +60/+140% — cybersecurity platform, profitable
+    "NOW":     {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — workflow AI compounder (est.)
+    "PLTR":    {"min_rate": 7.0,  "max_rate": 20.1},  # 5Y +40/+150% — AI ops leader, very expensive
+    "SNOW":    {"min_rate": 7.0,  "max_rate": 20.1},  # 5Y +40/+150% — data-cloud + Cortex (est.)
+    "DDOG":    {"min_rate": 7.0,  "max_rate": 18.1},  # 5Y +40/+130% — AI observability, growth re-accel
 
     # --- W6 SPECULATIVE ---
-    "AXON":    {"min_rate": 12.0, "max_rate": 25.0},
-    "TMDX":    {"min_rate": 14.0, "max_rate": 30.0},
-    "IONQ":    {"min_rate": -20.0,"max_rate": 45.0},
-    "RKLB":    {"min_rate": 5.0,  "max_rate": 35.0},
+    "AXON":    {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — defense/policing AI SaaS moat
+    "TMDX":    {"min_rate": 8.4,  "max_rate": 22.9},  # 5Y +50/+180% — transplant monopoly, S-curve
+    "IONQ":    {"min_rate": -12.9,"max_rate": 38.0},  # 5Y -50/+400% — quantum leader, pre-profit (binary)
+    "RKLB":    {"min_rate": 7.0,  "max_rate": 32.0},  # 5Y +40/+300% — Neutron launch catalyst
 }
