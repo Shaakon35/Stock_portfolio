@@ -37,18 +37,21 @@ TARGET_WEIGHTS = {
 # =========================================================================
 
 # --- WAVE 1: SILICON / COMPUTE (18%) ---
-# CHANGED: ETF sized up to a real diversified anchor (40% of sleeve) so it earns
-# its place — SMHV brings memory (MU ~14%), AMD (~12%), and fab equipment
-# (LRCX/AMAT ~11%) that the single-stock picks miss entirely. Direct singles
-# trimmed to avoid double-paying on names already inside the ETF (esp. TSM).
-# Six names renormalized to sum to 1.0.
+# CHANGED: MU and AMD promoted from the ETF into explicit CYCLE picks (0.05 each)
+# to add high-beta semi torque without diluting the dca compounders — funded
+# mostly by trimming SMHV.SW (0.40 -> 0.34), where MU/AMD already sit as the
+# top two holdings. SMHV still anchors the sleeve, bringing fab equipment
+# (LRCX/AMAT) and broad memory the single picks miss. Eight names sum to 1.0.
+# NB: MU/AMD are CYCLE — trim near the ~2027-29 peak, not set-and-forget.
 W1_SILICON_TARGETS = {
-    "SMHV.SW": 0.40,  # Diversified semi core — adds memory (MU), AMD, fab equipment
+    "SMHV.SW": 0.34,  # CHANGED: 0.40 -> 0.34 — funded explicit MU/AMD cycle picks below
     "NVDA":    0.18,  # GPU king — top conviction single
-    "AVGO":    0.14,  # Custom AI silicon / networking ASICs
-    "ASML":    0.12,  # EUV lithography monopoly
-    "MRVL":    0.10,  # Custom AI ASICs / optical DSPs
-    "TSM":     0.06,  # Foundry monopoly (also held inside the ETF)
+    "AVGO":    0.13,  # CHANGED: 0.14 -> 0.13
+    "ASML":    0.11,  # CHANGED: 0.12 -> 0.11 — EUV lithography monopoly
+    "MRVL":    0.09,  # CHANGED: 0.10 -> 0.09 — Custom AI ASICs / optical DSPs
+    "TSM":     0.05,  # CHANGED: 0.06 -> 0.05 — foundry monopoly (also held inside the ETF)
+    "MU":      0.05,  # NEW: memory/HBM cycle bet — tightest link in the AI supply chain
+    "AMD":     0.05,  # NEW: #2 GPU cycle bet — high-beta semi torque
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -145,6 +148,8 @@ STRATEGY = {
     "MRVL":    "dca",       # Profitable ASIC play, reasonable multiple
     "ASML":    "dca",       # EUV monopoly — secular grower; each cycle troughs higher
     "TSM":     "dca",       # Foundry monopoly — secular grower, sane valuation (~20x)
+    "MU":      "cycle",     # Memory/HBM — violently cyclical; buy dips, trim at peak
+    "AMD":     "cycle",     # #2 GPU — high-beta; trim near cycle peak, don't blind-DCA
 
     # --- W2 POWER ---
     "GEV":     "dca",       # Grid supercycle — hold forever
@@ -242,14 +247,7 @@ def tickers_by_strategy(mode):
 
 WATCHLIST = {
     # --- Memory / storage (HBM + NAND/HDD) — the deepest-cyclical corner ---
-    "MU": {  # also held inside SMHV.SW (~14%)
-        "strategy": "cycle",
-        "area":     "Memory / HBM",
-        "note":     "Best single 'gap' name: HBM is critical to every AI GPU. "
-                    "41% net, fwd P/E ~9 — but DRAM is violently cyclical. Already "
-                    "covered via SMHV.SW; only add direct as a CYCLE bet bought on "
-                    "down-cycles, never near the top.",
-    },
+    # NB: MU promoted to a held W1 CYCLE pick (see W1_SILICON_TARGETS) — removed here.
     "SNDK": {
         "strategy": "cycle",
         "area":     "Memory / NAND (SanDisk)",
@@ -277,12 +275,7 @@ WATCHLIST = {
                     "moat BUT 129x fwd P/E / 86x sales — pricier than PLTR. Dip-only, "
                     "tiny size; NEVER DCA at this multiple. Treat as CYCLE/conviction.",
     },
-    "AMD": {  # also held inside SMHV.SW (~12%)
-        "strategy": "cycle",
-        "area":     "GPU / CPU (NVDA challenger)",
-        "note":     "Only credible #2 GPU. Real ($7.2B FCF) but 22x sales and you "
-                    "already have NVDA + ETF. Add only on a real share-gain catalyst.",
-    },
+    # NB: AMD promoted to a held W1 CYCLE pick (see W1_SILICON_TARGETS) — removed here.
     "QCOM": {
         "strategy": "cycle",
         "area":     "Mobile / edge-AI chips",
