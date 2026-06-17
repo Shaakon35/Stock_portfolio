@@ -527,6 +527,17 @@ WATCHLIST = {
         "note":     "OFF-THESIS — GLP-1 obesity biotech, ZERO AI linkage. Pure sector "
                     "drift; binary on trial data. Does not belong in this AI book.",
     },
+
+    # --- AI cluster integration (W1/W3 seam) ---
+    "PENG": {
+        "strategy": "cycle",
+        "area":     "AI cluster integration / advanced memory (Penguin Solutions)",
+        "note":     "ON-THESIS — ex-SGH; builds HPC/AI clusters + advanced memory "
+                    "integration, the 'who assembles the GPU clusters' layer the book "
+                    "is thin on (W1/W3 seam). PROFITABLE, not a story stock, but "
+                    "smaller/less-proven than held names and demand is cyclical — buy "
+                    "dips, trim at peak. Watchlist-first.",
+    },
 }
 
 
