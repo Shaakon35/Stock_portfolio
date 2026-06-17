@@ -522,6 +522,28 @@ WATCHLIST = {
                     "drift; binary on trial data. Does not belong in this AI book.",
     },
 
+    # --- Off-thesis space / robotics moonshots (RKLB already owns the space slot) ---
+    "LUNR": {
+        "strategy": "lottery",
+        "area":     "Space / lunar landers (Intuitive Machines)",
+        "note":     "OFF-THESIS — NASA commercial lunar landers. RKLB already owns the "
+                    "space slot and is higher-quality; LUNR is lower-quality AND higher-"
+                    "risk (-70%+ binary). Not AI value-chain. Lottery only.",
+    },
+    "SERV": {
+        "strategy": "lottery",
+        "area":     "Robotics / sidewalk delivery (Serve Robotics)",
+        "note":     "OFF-THESIS — sidewalk delivery robots, ~$600M micro-cap, deeply "
+                    "unprofitable (-$2.05 EPS). 'Nvidia-backed' = tiny passive stake, "
+                    "not a deal. Hype-driven binary. Lottery; size tiny or skip.",
+    },
+    "ACHR": {
+        "strategy": "lottery",
+        "area":     "eVTOL air taxi (Archer Aviation)",
+        "note":     "OFF-THESIS — eVTOL air taxi, ->$0 risk. Triple-gated: FAA cert + "
+                    "manufacturing + demand. Not AI value-chain. Pure lottery.",
+    },
+
     # --- AI cluster integration (W1/W3 seam) ---
     "PENG": {
         "strategy": "cycle",
