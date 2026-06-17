@@ -110,3 +110,62 @@ stock_forecast_models = {
     "[OTHER] Axon Enterprise, Inc.":         {"min_rate": 12.0,  "max_rate": 25.0, "risk": "Low-Med (SaaS Moat)","cyclic": "No", "loss_risk": "Low-Med"},  # NEW: Taser + Evidence.com recurring revenue
     "[OTHER] Enovix Corporation":            {"min_rate": -35.0, "max_rate": 55.0, "risk": "Extreme (Binary)",  "cyclic": "No",  "loss_risk": "Extreme"},  # NEW: silicon-anode battery, binary S-curve
 }
+
+# =========================================================================
+# AI WAVE FORECAST MODELS (ticker-keyed)
+# =========================================================================
+# Per-ticker CAGR ranges (min/max %) for the AI value-chain wave allocation
+# in portfolio/AI_allocations.py. Ticker-keyed (not display-name keyed) because
+# the wave baskets reference bare tickers (e.g. "NVDA", "GOOGL"). The 23 names
+# that also appear in stock_forecast_models reuse those exact ranges; the 11
+# wave-only names (ANET, CEG, COHR, DDOG, GOOGL, META, MU, NOW, SNOW, TSM, VST)
+# are estimated here in the same framework. SMHV.SW reuses its ETF CAGR.
+# Consumed by portfolio_overview.ipynb's Growth tab to roll waves up into
+# 1y / 5y total-return ranges (compounded).
+WAVE_FORECASTS = {
+    # --- W1 SILICON ---
+    "SMHV.SW": {"min_rate": 18.2, "max_rate": 18.2},  # ETF CAGR (single point)
+    "NVDA":    {"min_rate": 15.0, "max_rate": 30.0},
+    "AVGO":    {"min_rate": 12.0, "max_rate": 20.0},
+    "ASML":    {"min_rate": 12.0, "max_rate": 22.0},
+    "MRVL":    {"min_rate": 11.0, "max_rate": 24.0},
+    "TSM":     {"min_rate": 12.0, "max_rate": 22.0},  # NEW: foundry monopoly, secular grower
+    "MU":      {"min_rate": 5.0,  "max_rate": 25.0},  # NEW: memory/HBM, violently cyclical (wide band)
+    "AMD":     {"min_rate": 10.0, "max_rate": 22.0},
+
+    # --- W2 POWER ---
+    "GEV":     {"min_rate": 10.0, "max_rate": 20.0},
+    "CEG":     {"min_rate": 8.0,  "max_rate": 18.0},  # NEW: nuclear utility, power-price sensitive
+    "CCJ":     {"min_rate": 8.0,  "max_rate": 18.0},
+    "POWL":    {"min_rate": 12.0, "max_rate": 24.0},
+    "OKLO":    {"min_rate": -15.0,"max_rate": 40.0},
+    "VST":     {"min_rate": 8.0,  "max_rate": 20.0},  # NEW: power merchant, data-center demand
+
+    # --- W3 DC-INFRA ---
+    "VRT":     {"min_rate": 14.0, "max_rate": 26.0},
+    "ANET":    {"min_rate": 12.0, "max_rate": 22.0},  # NEW: networking monopoly, software moat
+    "CRDO":    {"min_rate": 15.0, "max_rate": 35.0},
+    "FIX":     {"min_rate": 10.0, "max_rate": 20.0},
+    "COHR":    {"min_rate": 10.0, "max_rate": 25.0},  # NEW: optical components, cyclical
+
+    # --- W4 CLOUD ---
+    "MSFT":    {"min_rate": 10.0, "max_rate": 16.0},
+    "GOOGL":   {"min_rate": 8.0,  "max_rate": 15.0},  # NEW: matches GOOG (Alphabet)
+    "AMZN":    {"min_rate": 10.0, "max_rate": 18.0},
+    "META":    {"min_rate": 10.0, "max_rate": 20.0},  # NEW: open models + ad-AI
+    "ORCL":    {"min_rate": 8.0,  "max_rate": 15.0},
+
+    # --- W5 SOFTWARE ---
+    "PANW":    {"min_rate": 10.0, "max_rate": 22.0},
+    "CRWD":    {"min_rate": 12.0, "max_rate": 26.0},
+    "NOW":     {"min_rate": 12.0, "max_rate": 22.0},  # NEW: workflow AI, profitable compounder
+    "PLTR":    {"min_rate": 14.0, "max_rate": 28.0},
+    "SNOW":    {"min_rate": 10.0, "max_rate": 25.0},  # NEW: data-cloud + Cortex AI
+    "DDOG":    {"min_rate": 12.0, "max_rate": 26.0},  # NEW: AI observability, consumption-cyclical
+
+    # --- W6 SPECULATIVE ---
+    "AXON":    {"min_rate": 12.0, "max_rate": 25.0},
+    "TMDX":    {"min_rate": 14.0, "max_rate": 30.0},
+    "IONQ":    {"min_rate": -20.0,"max_rate": 45.0},
+    "RKLB":    {"min_rate": 5.0,  "max_rate": 35.0},
+}
