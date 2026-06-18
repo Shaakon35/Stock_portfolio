@@ -36,32 +36,45 @@ TARGET_WEIGHTS = {
 # SUB-ALLOCATION BASKETS (each sums to 1.0 = 100% of its wave slice)
 # =========================================================================
 
-# --- WAVE 1: SILICON / COMPUTE (18%) ---
-# CHANGED: MU and AMD promoted from the ETF into explicit CYCLE picks (0.05 each)
-# to add high-beta semi torque without diluting the dca compounders — funded
-# mostly by trimming SMHV.SW (0.40 -> 0.34), where MU/AMD already sit as the
-# top two holdings. SMHV still anchors the sleeve, bringing fab equipment
-# (LRCX/AMAT) and broad memory the single picks miss. Eight names sum to 1.0.
-# NB: MU/AMD are CYCLE — trim near the ~2027-29 peak, not set-and-forget.
+# --- WAVE 1: SILICON / COMPUTE (23%) ---
+# MU and AMD are explicit CYCLE picks (0.05 each), adding high-beta semi torque
+# without diluting the dca compounders. BESI.AS (0.05) added as the advanced-
+# packaging pure-play — the next silicon bottleneck after compute/HBM. All three
+# funded by trimming the SMHV.SW ETF (0.40 -> 0.29), where the big-caps already
+# sit. SMHV still anchors the sleeve, bringing fab equipment (LRCX/AMAT) and
+# broad memory the single picks miss. Nine names sum to 1.0.
+# NB: MU/AMD/BESI.AS are CYCLE — trim near the ~2027-29 peak, not set-and-forget.
 W1_SILICON_TARGETS = {
-    "SMHV.SW": 0.34,  # CHANGED: 0.40 -> 0.34 — funded explicit MU/AMD cycle picks below
+    "SMHV.SW": 0.29,  # CHANGED: 0.34 -> 0.29 — trimmed to fund BESI.AS packaging pick
     "NVDA":    0.18,  # GPU king — top conviction single
     "AVGO":    0.13,  # CHANGED: 0.14 -> 0.13
     "ASML":    0.11,  # CHANGED: 0.12 -> 0.11 — EUV lithography monopoly
     "MRVL":    0.09,  # CHANGED: 0.10 -> 0.09 — Custom AI ASICs / optical DSPs
     "TSM":     0.05,  # CHANGED: 0.06 -> 0.05 — foundry monopoly (also held inside the ETF)
-    "MU":      0.05,  # NEW: memory/HBM cycle bet — tightest link in the AI supply chain
-    "AMD":     0.05,  # NEW: #2 GPU cycle bet — high-beta semi torque
+    "MU":      0.05,  # memory/HBM cycle bet — tightest link in the AI supply chain
+    "AMD":     0.05,  # #2 GPU cycle bet — high-beta semi torque
+    "BESI.AS": 0.05,  # NEW: advanced packaging (hybrid bonding for HBM4+/chiplets) —
+                      # the western CoWoS pure-play, highest-beta to the NEXT silicon
+                      # bottleneck. EUR-listed (Amsterdam). CYCLE — single-tech bet.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
+# CHANGED: rotated late-cycle GENERATION (POWL/VST already +400%, OKLO) into
+# early-cycle TRANSMISSION (ETN/PWR). This tracks the bottleneck migration —
+# "make electrons" (generation, now late) -> "move electrons" (transmission,
+# now early). GEV/CEG/CCJ trimmed slightly to make room. Eight names sum to 1.0.
+# NB: ETN is DCA (quality compounder); PWR is CYCLE (high-beta contractor).
 W2_POWER_TARGETS = {
-    "GEV":   0.25,    # Grid/gas turbines, HOLD FOREVER
-    "CEG":   0.2222,  # Constellation — nuclear utility powering data centers
-    "CCJ":   0.1944,  # Uranium leader, HOLD FOREVER
-    "POWL":  0.1111,  # Electrical switchgear
-    "OKLO":  0.1111,  # SMR catalyst (binary)
-    "VST":   0.1112,  # Vistra — power + data-center energy
+    "GEV":   0.23,    # CHANGED: 0.25 -> 0.23 — grid/gas turbines, HOLD FOREVER
+    "CEG":   0.20,    # CHANGED: 0.2222 -> 0.20 — nuclear utility powering data centers
+    "CCJ":   0.17,    # CHANGED: 0.1944 -> 0.17 — uranium leader, HOLD FOREVER
+    "ETN":   0.10,    # NEW: transmission / electrification — quality DCA compounder,
+                      # early-cycle entry into the NEXT power bottleneck (move electrons)
+    "OKLO":  0.09,    # CHANGED: 0.1111 -> 0.09 — SMR catalyst (binary)
+    "PWR":   0.07,    # NEW: builds transmission lines — high-beta contractor, multi-year
+                      # backlog visibility, early-cycle. CYCLE — trim near peak.
+    "POWL":  0.07,    # CHANGED: 0.1111 -> 0.07 — switchgear, LATE-cycle (already +400%)
+    "VST":   0.07,    # CHANGED: 0.1112 -> 0.07 — merchant power, LATE-cycle, trim
 }
 
 # --- WAVE 3: DC INFRASTRUCTURE (18%) ---
@@ -150,12 +163,15 @@ STRATEGY = {
     "TSM":     "dca",       # Foundry monopoly — secular grower, sane valuation (~20x)
     "MU":      "cycle",     # Memory/HBM — violently cyclical; buy dips, trim at peak
     "AMD":     "cycle",     # #2 GPU — high-beta; trim near cycle peak, don't blind-DCA
+    "BESI.AS": "cycle",     # Advanced packaging — single-tech bet (hybrid bonding); trim at peak
 
     # --- W2 POWER ---
     "GEV":     "dca",       # Grid supercycle — hold forever
     "CCJ":     "dca",       # Uranium structural deficit — hold forever
+    "ETN":     "dca",       # Transmission/electrification — quality compounder, hold forever
     "CEG":     "cycle",     # Nuclear utility — power-price sensitive
     "VST":     "cycle",     # Power merchant — sell at peak
+    "PWR":     "cycle",     # Transmission contractor — high-beta backlog play, trim at peak
     "POWL":    "cycle",     # +2657% — late-cycle switchgear, has a price target
     "OKLO":    "catalyst",  # Pre-revenue SMR — sell on NRC approval, never avg down
 

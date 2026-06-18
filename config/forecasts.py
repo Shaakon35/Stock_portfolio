@@ -141,11 +141,14 @@ WAVE_FORECASTS = {
     "TSM":     {"min_rate": 11.2, "max_rate": 21.1},  # 5Y +70/+160% — foundry monopoly, fair valuation
     "MU":      {"min_rate": 3.7,  "max_rate": 22.0},  # 5Y +20/+170% — memory/HBM, violently cyclical (est.)
     "AMD":     {"min_rate": 8.4,  "max_rate": 22.0},  # 5Y +50/+170% — #2 GPU, high beta (est.)
+    "BESI.AS": {"min_rate": 9.9,  "max_rate": 22.9},  # 5Y +60/+180% — advanced packaging pure-play, high-beta single-tech (est.)
 
     # --- W2 POWER ---
     "GEV":     {"min_rate": 12.5, "max_rate": 24.6},  # 5Y +80/+200% — grid/turbine supercycle
     "CEG":     {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — nuclear utility powering DCs
     "CCJ":     {"min_rate": 11.2, "max_rate": 22.9},  # 5Y +70/+180% — uranium supply deficit to 2035
+    "ETN":     {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — transmission/electrification, quality compounder (est.)
+    "PWR":     {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — transmission contractor, early-cycle backlog (est.)
     "POWL":    {"min_rate": 5.4,  "max_rate": 14.9},  # 5Y +30/+100% — switchgear, already ran hard, late
     "OKLO":    {"min_rate": -12.9,"max_rate": 32.0},  # 5Y -50/+300% — SMR catalyst, pre-revenue (binary)
     "VST":     {"min_rate": 8.4,  "max_rate": 20.1},  # 5Y +50/+150% — power + DC energy demand
