@@ -59,31 +59,46 @@ W1_SILICON_TARGETS = {
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
-# CHANGED: rotated late-cycle GENERATION (POWL/VST already +400%, OKLO) into
-# early-cycle TRANSMISSION (ETN/PWR). This tracks the bottleneck migration —
-# "make electrons" (generation, now late) -> "move electrons" (transmission,
-# now early). GEV/CEG/CCJ trimmed slightly to make room. Eight names sum to 1.0.
-# NB: ETN is DCA (quality compounder); PWR is CYCLE (high-beta contractor).
+# CHANGED: deepened the generation -> transmission rotation. Removed late-cycle
+# POWL & VST (both +400%, sell-at-peak names that give back post-peak) and
+# trimmed CEG. Funded early-cycle TRANSMISSION: bumped ETN/PWR and added HUBB
+# (transformers) + ABBN.SW (HVDC / EU grid). GEV kept at 0.23 despite being
+# "Late" — it's DCA (grid supercycle to 2035+), survives the cycle, rides the
+# next leg. This tracks the bottleneck migration: "make electrons" (generation,
+# now late) -> "move electrons" (transmission, now early). Eight names sum to 1.0.
+# NB: ETN/HUBB/ABBN.SW are DCA (quality compounders); PWR is CYCLE (high-beta).
+#
+# REMOVED (kept commented for easy re-add): late-cycle names trimmed out of the
+# rotation. To restore, uncomment here AND in STRATEGY below, then renormalize
+# the basket back to 1.0.
+#   "POWL":  0.07,   # switchgear — LATE-cycle, already +389% (CYCLE)
+#   "VST":   0.07,   # merchant power — LATE-cycle, already ran (CYCLE)
 W2_POWER_TARGETS = {
-    "GEV":   0.23,    # CHANGED: 0.25 -> 0.23 — grid/gas turbines, HOLD FOREVER
-    "CEG":   0.20,    # CHANGED: 0.2222 -> 0.20 — nuclear utility powering data centers
-    "CCJ":   0.17,    # CHANGED: 0.1944 -> 0.17 — uranium leader, HOLD FOREVER
-    "ETN":   0.10,    # NEW: transmission / electrification — quality DCA compounder,
-                      # early-cycle entry into the NEXT power bottleneck (move electrons)
-    "OKLO":  0.09,    # CHANGED: 0.1111 -> 0.09 — SMR catalyst (binary)
-    "PWR":   0.07,    # NEW: builds transmission lines — high-beta contractor, multi-year
-                      # backlog visibility, early-cycle. CYCLE — trim near peak.
-    "POWL":  0.07,    # CHANGED: 0.1111 -> 0.07 — switchgear, LATE-cycle (already +400%)
-    "VST":   0.07,    # CHANGED: 0.1112 -> 0.07 — merchant power, LATE-cycle, trim
+    "GEV":     0.23,  # grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
+    "CCJ":     0.17,  # uranium leader, HOLD FOREVER
+    "CEG":     0.12,  # CHANGED: 0.20 -> 0.12 — trimmed late-cycle nuclear utility
+    "ETN":     0.12,  # CHANGED: 0.10 -> 0.12 — transmission/electrification, DCA
+    "HUBB":    0.10,  # NEW: transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
+    "PWR":     0.09,  # CHANGED: 0.07 -> 0.09 — builds transmission lines, CYCLE
+    "OKLO":    0.09,  # SMR catalyst (binary)
+    "ABBN.SW": 0.08,  # NEW: HVDC / transformers (EU) — long-distance grid bottleneck,
+                      # adds CHF/EU diversification. DCA.
 }
 
 # --- WAVE 3: DC INFRASTRUCTURE (18%) ---
+# CHANGED: removed late-cycle FIX (DC construction, +291% — sell-at-peak) and
+# replaced it one-for-one with NVT (nVent — electrical enclosures + liquid
+# cooling), an early-cycle DCA name covering both power-management and cooling.
+#
+# REMOVED (kept commented for easy re-add). To restore, uncomment here AND in
+# STRATEGY below, then renormalize the basket back to 1.0.
+#   "FIX":   0.1667,  # DC construction / HVAC — LATE-cycle, already +291% (CYCLE)
 W3_DCINFRA_TARGETS = {
     "VRT":   0.2222,  # Liquid cooling leader
     "ANET":  0.2222,  # Arista — data-center networking
     "CRDO":  0.2222,  # Optical/copper interconnect
-    "FIX":   0.1667,  # DC construction / HVAC
     "COHR":  0.1667,  # Coherent — optical components / transceivers
+    "NVT":   0.1667,  # NEW: nVent — DC enclosures + liquid cooling, early-cycle, DCA
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (20%) ---
@@ -169,18 +184,23 @@ STRATEGY = {
     "GEV":     "dca",       # Grid supercycle — hold forever
     "CCJ":     "dca",       # Uranium structural deficit — hold forever
     "ETN":     "dca",       # Transmission/electrification — quality compounder, hold forever
+    "HUBB":    "dca",       # Transformers/grid gear — 2-4yr lead-times, quality, hold forever
+    "ABBN.SW": "dca",       # HVDC/transformers (EU) — long-distance grid, hold forever
     "CEG":     "cycle",     # Nuclear utility — power-price sensitive
-    "VST":     "cycle",     # Power merchant — sell at peak
     "PWR":     "cycle",     # Transmission contractor — high-beta backlog play, trim at peak
-    "POWL":    "cycle",     # +2657% — late-cycle switchgear, has a price target
     "OKLO":    "catalyst",  # Pre-revenue SMR — sell on NRC approval, never avg down
+    # REMOVED from baskets (kept commented for easy re-add — see W2_POWER_TARGETS):
+    #   "VST":     "cycle",     # Power merchant — sell at peak (late-cycle, removed)
+    #   "POWL":    "cycle",     # +2657% — late-cycle switchgear (removed)
 
     # --- W3 DC-INFRA (mostly rides the capex cycle) ---
     "VRT":     "cycle",     # Cooling — sell when DC capex peaks ~2028-29
     "ANET":    "dca",       # Networking monopoly — 38% margin, $4.4B FCF, software moat
     "CRDO":    "cycle",     # +2127% hypergrowth — sell when growth <30%
     "COHR":    "cycle",     # Optical — already ran, cyclical
-    "FIX":     "cycle",     # +2206% — late-cycle DC construction, sell at peak
+    "NVT":     "dca",       # nVent — DC enclosures + liquid cooling, early-cycle, hold forever
+    # REMOVED from basket (kept commented for easy re-add — see W3_DCINFRA_TARGETS):
+    #   "FIX":     "cycle",     # +2206% — late-cycle DC construction (removed)
 
     # --- W4 CLOUD (purest DCA wave) ---
     "MSFT":    "dca",       # Hold forever compounder

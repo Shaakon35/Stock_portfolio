@@ -148,16 +148,21 @@ WAVE_FORECASTS = {
     "CEG":     {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — nuclear utility powering DCs
     "CCJ":     {"min_rate": 11.2, "max_rate": 22.9},  # 5Y +70/+180% — uranium supply deficit to 2035
     "ETN":     {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — transmission/electrification, quality compounder (est.)
+    "HUBB":    {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — transformers/grid gear, 2-4yr lead-times, early (est.)
+    "ABBN.SW": {"min_rate": 8.4,  "max_rate": 17.1},  # 5Y +50/+120% — HVDC/transformers (EU), grid buildout (est.)
     "PWR":     {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — transmission contractor, early-cycle backlog (est.)
-    "POWL":    {"min_rate": 5.4,  "max_rate": 14.9},  # 5Y +30/+100% — switchgear, already ran hard, late
     "OKLO":    {"min_rate": -12.9,"max_rate": 32.0},  # 5Y -50/+300% — SMR catalyst, pre-revenue (binary)
-    "VST":     {"min_rate": 8.4,  "max_rate": 20.1},  # 5Y +50/+150% — power + DC energy demand
+    # REMOVED from baskets (kept for reference / easy re-add):
+    #   "POWL":    {"min_rate": 5.4,  "max_rate": 14.9},  # 5Y +30/+100% — switchgear, late-cycle
+    #   "VST":     {"min_rate": 8.4,  "max_rate": 20.1},  # 5Y +50/+150% — power merchant, late-cycle
 
     # --- W3 DC-INFRA ---
     "VRT":     {"min_rate": 11.2, "max_rate": 22.9},  # 5Y +70/+180% — liquid cooling leader, capex wave
     "ANET":    {"min_rate": 9.9,  "max_rate": 20.1},  # 5Y +60/+150% — DC networking, profitable
     "CRDO":    {"min_rate": 9.9,  "max_rate": 24.6},  # 5Y +60/+200% — optical interconnect, hypergrowth
-    "FIX":     {"min_rate": 5.4,  "max_rate": 16.0},  # 5Y +30/+110% — DC construction, late-cycle
+    "NVT":     {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — DC enclosures + liquid cooling, early-cycle (est.)
+    # REMOVED from basket (kept for reference / easy re-add):
+    #   "FIX":     {"min_rate": 5.4,  "max_rate": 16.0},  # 5Y +30/+110% — DC construction, late-cycle
     "COHR":    {"min_rate": 8.4,  "max_rate": 21.1},  # 5Y +50/+160% — optical components
 
     # --- W4 CLOUD ---
