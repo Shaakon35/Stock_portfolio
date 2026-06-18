@@ -42,20 +42,29 @@ TARGET_WEIGHTS = {
 # packaging pure-play — the next silicon bottleneck after compute/HBM. All three
 # funded by trimming the SMHV.SW ETF (0.40 -> 0.29), where the big-caps already
 # sit. SMHV still anchors the sleeve, bringing fab equipment (LRCX/AMAT) and
-# broad memory the single picks miss. Nine names sum to 1.0.
-# NB: MU/AMD/BESI.AS are CYCLE — trim near the ~2027-29 peak, not set-and-forget.
+# broad memory the single picks miss. Eleven names sum to 1.0.
+# NB: MU/AMD/BESI.AS + the two Korean memory names (SK Hynix, Samsung) are CYCLE —
+# trim near the ~2027-29 peak, not set-and-forget. The memory oligopoly (MU +
+# SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
+# and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
 W1_SILICON_TARGETS = {
-    "SMHV.SW": 0.29,  # CHANGED: 0.34 -> 0.29 — trimmed to fund BESI.AS packaging pick
-    "NVDA":    0.18,  # GPU king — top conviction single
-    "AVGO":    0.13,  # CHANGED: 0.14 -> 0.13
-    "ASML":    0.11,  # CHANGED: 0.12 -> 0.11 — EUV lithography monopoly
-    "MRVL":    0.09,  # CHANGED: 0.10 -> 0.09 — Custom AI ASICs / optical DSPs
-    "TSM":     0.05,  # CHANGED: 0.06 -> 0.05 — foundry monopoly (also held inside the ETF)
-    "MU":      0.05,  # memory/HBM cycle bet — tightest link in the AI supply chain
-    "AMD":     0.05,  # #2 GPU cycle bet — high-beta semi torque
-    "BESI.AS": 0.05,  # NEW: advanced packaging (hybrid bonding for HBM4+/chiplets) —
-                      # the western CoWoS pure-play, highest-beta to the NEXT silicon
-                      # bottleneck. EUR-listed (Amsterdam). CYCLE — single-tech bet.
+    "SMHV.SW":   0.20,  # CHANGED: 0.29 -> 0.20 — trimmed to fund the two Korean memory
+                        # names below. NB: SMHV tracks a US-LISTED semi index, so it
+                        # holds ZERO Samsung/SK Hynix — these are genuine new exposure,
+                        # not a duplicate. Memory-for-memory swap keeps the sleeve balanced.
+    "NVDA":      0.18,  # GPU king — top conviction single
+    "AVGO":      0.13,  # CHANGED: 0.14 -> 0.13
+    "ASML":      0.11,  # CHANGED: 0.12 -> 0.11 — EUV lithography monopoly
+    "MRVL":      0.09,  # CHANGED: 0.10 -> 0.09 — Custom AI ASICs / optical DSPs
+    "TSM":       0.05,  # CHANGED: 0.06 -> 0.05 — foundry monopoly (also held inside the ETF)
+    "MU":        0.05,  # memory/HBM cycle bet — tightest link in the AI supply chain
+    "AMD":       0.05,  # #2 GPU cycle bet — high-beta semi torque
+    "BESI.AS":   0.05,  # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
+                        # western CoWoS pure-play. EUR-listed (Amsterdam). CYCLE.
+    "000660.KS": 0.05,  # NEW: SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
+                        # HBM bet. KRX-listed (KRW), buy via Interactive Brokers. CYCLE / Mid.
+    "005930.KS": 0.04,  # NEW: Samsung Electronics — memory + foundry, more diluted
+                        # (conglomerate). KRX-listed (KRW). CYCLE / Mid. Sized below SK Hynix.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -176,9 +185,11 @@ STRATEGY = {
     "MRVL":    "dca",       # Profitable ASIC play, reasonable multiple
     "ASML":    "dca",       # EUV monopoly — secular grower; each cycle troughs higher
     "TSM":     "dca",       # Foundry monopoly — secular grower, sane valuation (~20x)
-    "MU":      "cycle",     # Memory/HBM — violently cyclical; buy dips, trim at peak
-    "AMD":     "cycle",     # #2 GPU — high-beta; trim near cycle peak, don't blind-DCA
-    "BESI.AS": "cycle",     # Advanced packaging — single-tech bet (hybrid bonding); trim at peak
+    "MU":        "cycle",   # Memory/HBM — violently cyclical; buy dips, trim at peak
+    "AMD":       "cycle",   # #2 GPU — high-beta; trim near cycle peak, don't blind-DCA
+    "BESI.AS":   "cycle",   # Advanced packaging — single-tech bet (hybrid bonding); trim at peak
+    "000660.KS": "cycle",   # SK Hynix — HBM leader; same memory cycle as MU, trim at peak
+    "005930.KS": "cycle",   # Samsung — memory+foundry; same memory cycle, trim at peak
 
     # --- W2 POWER ---
     "GEV":     "dca",       # Grid supercycle — hold forever
