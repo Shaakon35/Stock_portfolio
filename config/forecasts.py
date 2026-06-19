@@ -167,7 +167,7 @@ WAVE_FORECASTS = {
     # REMOVED from basket (kept for reference / easy re-add):
     #   "FIX":     {"min_rate": 5.4,  "max_rate": 16.0},  # 5Y +30/+110% — DC construction, late-cycle
     "COHR":    {"min_rate": 8.4,  "max_rate": 21.1},  # 5Y +50/+160% — optical components
-    "ALAB":    {"min_rate": 9.9,  "max_rate": 27.2},  # 5Y +60/+230% — AI connectivity pure-play, early-cycle hypergrowth (est.)
+    "ALAB":    {"min_rate": 9.9,  "max_rate": 27.2},  # 5Y +60/+230% — AI connectivity pure-play; mid-cycle (already +500%/2y) (est.)
     "APH":     {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — diversified interconnect compounder (est.)
 
     # --- W4 CLOUD ---

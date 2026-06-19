@@ -57,24 +57,24 @@ TARGET_WEIGHTS = {
 # SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
 # and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.16,  # CHANGED: 0.20 -> 0.16 — trimmed 0.04 to fund CDNS (below).
+    "SMHV.SW":   0.13,  # CHANGED: 0.20 -> 0.16 — trimmed 0.04 to fund CDNS (below).
                         # Earlier: 0.29 -> 0.20 to fund the two Korean memory names.
                         # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
                         # Samsung/SK Hynix — those are genuine new exposure, not a dup.
-    "NVDA":      0.18,  # GPU king — top conviction single
-    "AVGO":      0.13,  # CHANGED: 0.14 -> 0.13
+    "NVDA":      0.13,  # GPU king — top conviction single
+    "AVGO":      0.12,  # CHANGED: 0.14 -> 0.13
     "ASML":      0.11,  # CHANGED: 0.12 -> 0.11 — EUV lithography monopoly
     "MRVL":      0.09,  # CHANGED: 0.10 -> 0.09 — Custom AI ASICs / optical DSPs
-    "TSM":       0.05,  # CHANGED: 0.06 -> 0.05 — foundry monopoly (also held inside the ETF)
-    "MU":        0.05,  # memory/HBM cycle bet — tightest link in the AI supply chain
-    "AMD":       0.05,  # #2 GPU cycle bet — high-beta semi torque
-    "BESI.AS":   0.05,  # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
+    "TSM":       0.07,  # CHANGED: 0.06 -> 0.05 — foundry monopoly (also held inside the ETF)
+    "MU":        0.06,  # memory/HBM cycle bet — tightest link in the AI supply chain
+    "AMD":       0.06,  # #2 GPU cycle bet — high-beta semi torque
+    "BESI.AS":   0.06,  # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
                         # western CoWoS pure-play. EUR-listed (Amsterdam). CYCLE.
-    "000660.KS": 0.05,  # NEW: SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
+    "000660.KS": 0.06,  # NEW: SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
                         # HBM bet. KRX-listed (KRW), buy via Interactive Brokers. CYCLE / Mid.
-    "005930.KS": 0.04,  # NEW: Samsung Electronics — memory + foundry, more diluted
+    "005930.KS": 0.05,  # NEW: Samsung Electronics — memory + foundry, more diluted
                         # (conglomerate). KRX-listed (KRW). CYCLE / Mid. Sized below SK Hynix.
-    "CDNS":      0.04,  # NEW: Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-
+    "CDNS":      0.06,  # NEW: Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-
                         # DESIGN layer the sleeve was missing (had ASML litho, no EDA).
                         # Secular high-margin compounder. DCA / Mid. Funded by SMHV trim.
 }
@@ -95,14 +95,14 @@ W1_SILICON_TARGETS = {
 #   "POWL":  0.07,   # switchgear — LATE-cycle, already +389% (CYCLE)
 #   "VST":   0.07,   # merchant power — LATE-cycle, already ran (CYCLE)
 W2_POWER_TARGETS = {
-    "GEV":     0.23,  # grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
-    "CCJ":     0.17,  # uranium leader, HOLD FOREVER
+    "GEV":     0.18,  # grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
+    "CCJ":     0.16,  # uranium leader, HOLD FOREVER
     "CEG":     0.12,  # CHANGED: 0.20 -> 0.12 — trimmed late-cycle nuclear utility
-    "ETN":     0.12,  # CHANGED: 0.10 -> 0.12 — transmission/electrification, DCA
-    "HUBB":    0.10,  # NEW: transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
-    "PWR":     0.09,  # CHANGED: 0.07 -> 0.09 — builds transmission lines, CYCLE
-    "OKLO":    0.09,  # SMR catalyst (binary)
-    "ABBN.SW": 0.08,  # NEW: HVDC / transformers (EU) — long-distance grid bottleneck,
+    "ETN":     0.13,  # CHANGED: 0.10 -> 0.12 — transmission/electrification, DCA
+    "HUBB":    0.12,  # NEW: transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
+    "PWR":     0.10,  # CHANGED: 0.07 -> 0.09 — builds transmission lines, CYCLE
+    "OKLO":    0.08,  # SMR catalyst (binary)
+    "ABBN.SW": 0.11,  # NEW: HVDC / transformers (EU) — long-distance grid bottleneck,
                       # adds CHF/EU diversification. DCA.
 }
 
@@ -114,26 +114,29 @@ W2_POWER_TARGETS = {
 # REMOVED (kept commented for easy re-add). To restore, uncomment here AND in
 # STRATEGY below, then renormalize the basket back to 1.0.
 #   "FIX":   0.1667,  # DC construction / HVAC — LATE-cycle, already +291% (CYCLE)
+# Option B (de-concentrate): flattened toward equal weight to lower single-name
+# risk across the sleeve.
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.1646,  # CHANGED: 0.2222 -> 0.1646 — renormalized to fund ALAB + APH
-    "ANET":  0.1644,  # CHANGED: 0.2222 -> 0.1644
-    "CRDO":  0.1644,  # CHANGED: 0.2222 -> 0.1644 — optical/copper interconnect
-    "COHR":  0.1233,  # CHANGED: 0.1667 -> 0.1233 — Coherent optical components
-    "NVT":   0.1233,  # CHANGED: 0.1667 -> 0.1233 — nVent enclosures + cooling, DCA
-    "ALAB":  0.12,    # NEW: Astera Labs — AI connectivity pure-play (CXL/PCIe retimers).
-                      # Earliest-cycle, highest-beta name in the sleeve — multi-bagger
-                      # potential, sized small. CYCLE / Early — trim when growth <30%.
-    "APH":   0.14,    # NEW: Amphenol — diversified interconnect compounder. Quality
-                      # "sleep at night" anchor for the wave. DCA / Mid — hold forever.
+    "VRT":   0.15,  # Liquid cooling leader — CYCLE
+    "ANET":  0.15,  # Arista — DC networking monopoly, DCA
+    "CRDO":  0.15,  # optical/copper interconnect — CYCLE
+    "COHR":  0.14,  # Coherent optical components — CYCLE
+    "NVT":   0.13,  # nVent enclosures + cooling — DCA
+    "ALAB":  0.14,  # Astera Labs — AI connectivity pure-play (CXL/PCIe retimers),
+                    # highest-beta name in the sleeve. CYCLE / Mid — bottleneck is young
+                    # but the stock already ran +500%/2y, so remaining runway = Mid.
+                    # Trim when growth <30%.
+    "APH":   0.14,  # Amphenol — diversified interconnect compounder. Quality
+                    # "sleep at night" anchor for the wave. DCA / Mid — hold forever.
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (20%) ---
 W4_CLOUD_TARGETS = {
-    "MSFT":  0.25,  # Azure + OpenAI
-    "GOOGL": 0.25,  # Gemini + TPU + Cloud
+    "MSFT":  0.20,  # Azure + OpenAI
+    "GOOGL": 0.20,  # Gemini + TPU + Cloud
     "AMZN":  0.20,  # AWS
-    "META":  0.15,  # Open models + ad-AI
-    "ORCL":  0.15,  # Cloud-capacity winner
+    "META":  0.20,  # Open models + ad-AI
+    "ORCL":  0.20,  # Cloud-capacity winner
 }
 
 # --- WAVE 5: AI SOFTWARE / APPS (18%) ---
@@ -144,12 +147,12 @@ W4_CLOUD_TARGETS = {
 # Six names renormalized to sum to 1.0; weighting reflects valuation risk —
 # PANW/CRWD/NOW profitable anchors, PLTR capped (62x sales), DDOG cyclical.
 W5_SOFTWARE_TARGETS = {
-    "PANW":  0.20,  # Security platform — biggest, cheapest, steadiest (top pick)
-    "CRWD":  0.18,  # AI cybersecurity — highest-quality platform
-    "NOW":   0.18,  # Workflow AI (Now Assist) — profitable, cheap re-rating play
+    "PANW":  0.17,  # Security platform — biggest, cheapest, steadiest (top pick)
+    "CRWD":  0.17,  # AI cybersecurity — highest-quality platform
+    "NOW":   0.17,  # Workflow AI (Now Assist) — profitable, cheap re-rating play
     "PLTR":  0.16,  # AI ops / defense platform — best growth, capped on valuation
-    "SNOW":  0.14,  # Data-cloud + Cortex AI — healed bubble hangover
-    "DDOG":  0.14,  # AI observability — purest AI-data, consumption-cyclical
+    "SNOW":  0.16,  # Data-cloud + Cortex AI — healed bubble hangover
+    "DDOG":  0.17,  # AI observability — purest AI-data, consumption-cyclical
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (8%) ---
@@ -228,7 +231,7 @@ STRATEGY = {
     "CRDO":    "cycle",     # +2127% hypergrowth — sell when growth <30%
     "COHR":    "cycle",     # Optical — already ran, cyclical
     "NVT":     "dca",       # nVent — DC enclosures + liquid cooling, early-cycle, hold forever
-    "ALAB":    "cycle",     # Astera — AI connectivity pure-play, high-beta; trim when growth <30%
+    "ALAB":    "cycle",     # Astera — AI connectivity pure-play, high-beta; Mid-cycle (+500%/2y), trim when growth <30%
     "APH":     "dca",       # Amphenol — diversified interconnect compounder, hold forever
     # REMOVED from basket (kept commented for easy re-add — see W3_DCINFRA_TARGETS):
     #   "FIX":     "cycle",     # +2206% — late-cycle DC construction (removed)
