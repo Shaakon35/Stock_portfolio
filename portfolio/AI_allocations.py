@@ -6,11 +6,13 @@
 # (W1 silicon -> W6 speculative), built to maximize growth across the full
 # AI stack rather than by the original sector taxonomy in allocations.py.
 #
-# Wave weights: W1 23 / W2 18 / W3 18 / W4 15 / W5 18 / W6 8 = 100%
-# CHANGED: W1 18 -> 23 and W4 20 -> 15 (net zero) after an exposure review —
+# Wave weights: W1 30 / W2 22 / W3 26 / W4 8 / W5 14 / W6 0 = 100% (Option C aggressive)
+# CHANGED (Option C): concentrated into the AI-capex BOTTLENECK waves (W1/W3/W2)
+#       which carry the best forecast 5Y returns; cut W4 Cloud and W5 Software
+#       (lower upside) and zeroed W6 Spec. Prior mix was 23/18/18/15/18/8.
+# PRIOR: W1 18 -> 23 and W4 20 -> 15 (net zero) after an exposure review —
 #       MSFT/GOOGL were overweight (~5% each) while semis MU/AMD (held via
-#       SMHV.SW inside W1) were too thin. Shifting 5% from cloud to silicon
-#       lifts the semi book without touching the other waves.
+#       SMHV.SW inside W1) were too thin.
 #
 # To evaluate later, mirror the structure of allocations.py (theme colors,
 # forecasts, notebook wiring). Intentionally NOT done yet.
@@ -24,13 +26,20 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 # =========================================================================
 
 TARGET_WEIGHTS = {
-    "W1_SILICON":   0.23,  # CHANGED: 0.18 -> 0.23 — lift semis (esp. SMHV.SW: MU/AMD) per exposure review
-    "W2_POWER":     0.18,  # Power & energy — youngest "boring" wave, best risk-adjusted
-    "W3_DCINFRA":   0.18,  # Data-center infrastructure — cooling, networking, optical, construction
-    "W4_CLOUD":     0.15,  # CHANGED: 0.20 -> 0.15 — trim MSFT/GOOGL overweight, fund W1
-    "W5_SOFTWARE":  0.18,  # AI software / apps — earliest-innings monetization, highest growth
-    "W6_SPEC":      0.08,  # Speculative / second-order — capped lottery + diversifiers
+    "W1_SILICON":   0.30,  # CHANGED: 0.23 -> 0.30 (Option C aggressive) — highest forecast upside
+    "W2_POWER":     0.22,  # CHANGED: 0.18 -> 0.22 — bottleneck wave, strong risk-adjusted return
+    "W3_DCINFRA":   0.26,  # CHANGED: 0.18 -> 0.26 — HIGHEST 5Y floor + near-highest ceiling
+    "W4_CLOUD":     0.08,  # CHANGED: 0.15 -> 0.08 — lowest-upside wave, cut hard to fund bottlenecks
+    "W5_SOFTWARE":  0.14,  # CHANGED: 0.18 -> 0.14 — trimmed; lower upside than W1/W3 (multiple-compression risk)
+    "W6_SPEC":      0.00,  # CHANGED: 0.08 -> 0.00 — speculative/lottery wave zeroed out for now
 }
+# OPTION C (AGGRESSIVE) — concentrate into the AI-capex BOTTLENECK waves.
+# Rationale: per config/forecasts.py, W1/W3/W2 carry the best 5Y total-return
+# profiles (W3 +58/+164%, W1 +52/+146%, W2 +48/+168%), while W4 Cloud (+47/+116%)
+# and W5 Software (+47/+137%) lag. So aggression = MORE bottleneck, not more
+# software. W6 (spec/lottery) zeroed for now — its names can go to zero and the
+# floor is weak; re-add later by reweighting back from W1/W3/W2.
+# Mix: W1 30 / W2 22 / W3 26 / W4 8 / W5 14 / W6 0 = 100.
 
 # =========================================================================
 # SUB-ALLOCATION BASKETS (each sums to 1.0 = 100% of its wave slice)
