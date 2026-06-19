@@ -144,6 +144,7 @@ WAVE_FORECASTS = {
     "BESI.AS":   {"min_rate": 9.9,  "max_rate": 22.9},  # 5Y +60/+180% — advanced packaging pure-play, high-beta single-tech (est.)
     "000660.KS": {"min_rate": 4.6,  "max_rate": 22.9},  # 5Y +25/+180% — SK Hynix, HBM leader, same memory cycle as MU (est.)
     "005930.KS": {"min_rate": 3.7,  "max_rate": 17.1},  # 5Y +20/+120% — Samsung, diluted conglomerate, lower beta (est.)
+    "CDNS":      {"min_rate": 9.9,  "max_rate": 18.1},  # 5Y +60/+130% — EDA duopoly, secular high-margin compounder (est.)
 
     # --- W2 POWER ---
     "GEV":     {"min_rate": 12.5, "max_rate": 24.6},  # 5Y +80/+200% — grid/turbine supercycle
@@ -166,6 +167,8 @@ WAVE_FORECASTS = {
     # REMOVED from basket (kept for reference / easy re-add):
     #   "FIX":     {"min_rate": 5.4,  "max_rate": 16.0},  # 5Y +30/+110% — DC construction, late-cycle
     "COHR":    {"min_rate": 8.4,  "max_rate": 21.1},  # 5Y +50/+160% — optical components
+    "ALAB":    {"min_rate": 9.9,  "max_rate": 27.2},  # 5Y +60/+230% — AI connectivity pure-play, early-cycle hypergrowth (est.)
+    "APH":     {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — diversified interconnect compounder (est.)
 
     # --- W4 CLOUD ---
     "MSFT":    {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — Azure+OpenAI, durable compounder

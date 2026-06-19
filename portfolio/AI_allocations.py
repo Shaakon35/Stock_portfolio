@@ -48,10 +48,10 @@ TARGET_WEIGHTS = {
 # SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
 # and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.20,  # CHANGED: 0.29 -> 0.20 — trimmed to fund the two Korean memory
-                        # names below. NB: SMHV tracks a US-LISTED semi index, so it
-                        # holds ZERO Samsung/SK Hynix — these are genuine new exposure,
-                        # not a duplicate. Memory-for-memory swap keeps the sleeve balanced.
+    "SMHV.SW":   0.16,  # CHANGED: 0.20 -> 0.16 — trimmed 0.04 to fund CDNS (below).
+                        # Earlier: 0.29 -> 0.20 to fund the two Korean memory names.
+                        # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
+                        # Samsung/SK Hynix — those are genuine new exposure, not a dup.
     "NVDA":      0.18,  # GPU king — top conviction single
     "AVGO":      0.13,  # CHANGED: 0.14 -> 0.13
     "ASML":      0.11,  # CHANGED: 0.12 -> 0.11 — EUV lithography monopoly
@@ -65,6 +65,9 @@ W1_SILICON_TARGETS = {
                         # HBM bet. KRX-listed (KRW), buy via Interactive Brokers. CYCLE / Mid.
     "005930.KS": 0.04,  # NEW: Samsung Electronics — memory + foundry, more diluted
                         # (conglomerate). KRX-listed (KRW). CYCLE / Mid. Sized below SK Hynix.
+    "CDNS":      0.04,  # NEW: Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-
+                        # DESIGN layer the sleeve was missing (had ASML litho, no EDA).
+                        # Secular high-margin compounder. DCA / Mid. Funded by SMHV trim.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -103,11 +106,16 @@ W2_POWER_TARGETS = {
 # STRATEGY below, then renormalize the basket back to 1.0.
 #   "FIX":   0.1667,  # DC construction / HVAC — LATE-cycle, already +291% (CYCLE)
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.2222,  # Liquid cooling leader
-    "ANET":  0.2222,  # Arista — data-center networking
-    "CRDO":  0.2222,  # Optical/copper interconnect
-    "COHR":  0.1667,  # Coherent — optical components / transceivers
-    "NVT":   0.1667,  # NEW: nVent — DC enclosures + liquid cooling, early-cycle, DCA
+    "VRT":   0.1646,  # CHANGED: 0.2222 -> 0.1646 — renormalized to fund ALAB + APH
+    "ANET":  0.1644,  # CHANGED: 0.2222 -> 0.1644
+    "CRDO":  0.1644,  # CHANGED: 0.2222 -> 0.1644 — optical/copper interconnect
+    "COHR":  0.1233,  # CHANGED: 0.1667 -> 0.1233 — Coherent optical components
+    "NVT":   0.1233,  # CHANGED: 0.1667 -> 0.1233 — nVent enclosures + cooling, DCA
+    "ALAB":  0.12,    # NEW: Astera Labs — AI connectivity pure-play (CXL/PCIe retimers).
+                      # Earliest-cycle, highest-beta name in the sleeve — multi-bagger
+                      # potential, sized small. CYCLE / Early — trim when growth <30%.
+    "APH":   0.14,    # NEW: Amphenol — diversified interconnect compounder. Quality
+                      # "sleep at night" anchor for the wave. DCA / Mid — hold forever.
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (20%) ---
@@ -190,6 +198,7 @@ STRATEGY = {
     "BESI.AS":   "cycle",   # Advanced packaging — single-tech bet (hybrid bonding); trim at peak
     "000660.KS": "cycle",   # SK Hynix — HBM leader; same memory cycle as MU, trim at peak
     "005930.KS": "cycle",   # Samsung — memory+foundry; same memory cycle, trim at peak
+    "CDNS":      "dca",     # Cadence — EDA duopoly, secular high-margin compounder, hold forever
 
     # --- W2 POWER ---
     "GEV":     "dca",       # Grid supercycle — hold forever
@@ -210,6 +219,8 @@ STRATEGY = {
     "CRDO":    "cycle",     # +2127% hypergrowth — sell when growth <30%
     "COHR":    "cycle",     # Optical — already ran, cyclical
     "NVT":     "dca",       # nVent — DC enclosures + liquid cooling, early-cycle, hold forever
+    "ALAB":    "cycle",     # Astera — AI connectivity pure-play, high-beta; trim when growth <30%
+    "APH":     "dca",       # Amphenol — diversified interconnect compounder, hold forever
     # REMOVED from basket (kept commented for easy re-add — see W3_DCINFRA_TARGETS):
     #   "FIX":     "cycle",     # +2206% — late-cycle DC construction (removed)
 
