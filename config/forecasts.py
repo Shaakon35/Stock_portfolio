@@ -173,11 +173,15 @@ WAVE_FORECASTS = {
     "APH":     {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — diversified interconnect compounder (est.)
 
     # --- W4 CLOUD ---
-    "MSFT":    {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — Azure+OpenAI, durable compounder
-    "GOOGL":   {"min_rate": 8.4,  "max_rate": 17.1},  # 5Y +50/+120% — Gemini+TPU+Cloud, cheap
-    "AMZN":    {"min_rate": 8.4,  "max_rate": 17.1},  # 5Y +50/+120% — AWS re-acceleration
-    "META":    {"min_rate": 7.0,  "max_rate": 16.0},  # 5Y +40/+110% — ad-AI + open models
-    "ORCL":    {"min_rate": 7.0,  "max_rate": 17.1},  # 5Y +40/+120% — cloud-capacity surprise winner
+    # CHANGED 2026-06: trimmed the optimistic TOPS for law-of-large-numbers. These
+    # are the largest companies on earth; a +110/+120% top implies doubling again
+    # from multi-trillion bases (e.g. AMZN +120% -> ~$5.3T, adding >1 whole Nvidia).
+    # AMZN did only +50% over the LAST 5y. Bottoms unchanged; only the ceilings cut.
+    "MSFT":    {"min_rate": 8.4,  "max_rate": 13.1},  # 5Y +50/+85%  — Azure+OpenAI; ~$3.8T, +85% top = ~$8T (was +110%)
+    "GOOGL":   {"min_rate": 8.4,  "max_rate": 13.7},  # 5Y +50/+90%  — Gemini+TPU+Cloud; ~$2.4T (was +120%)
+    "AMZN":    {"min_rate": 8.4,  "max_rate": 13.7},  # 5Y +50/+90%  — AWS re-accel; ~$2.4T, +90% top = ~$4.6T (was +120%)
+    "META":    {"min_rate": 7.0,  "max_rate": 13.7},  # 5Y +40/+90%  — ad-AI + open models; ~$1.6T (was +110%)
+    "ORCL":    {"min_rate": 7.0,  "max_rate": 14.9},  # 5Y +40/+100% — cloud-capacity; ~$700B, smallest -> most room (was +120%)
 
     # --- W5 SOFTWARE ---
     "PANW":    {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — security platform, profitable
