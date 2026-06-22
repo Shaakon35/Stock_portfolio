@@ -313,6 +313,17 @@ def tickers_by_strategy(mode):
 # Most are already captured indirectly via the SMHV.SW ETF in W1 — the tag
 # notes that so you don't double-pay. "verify_allocations" intentionally
 # ignores this dict; it's a notebook for the eye, not part of the portfolio.
+#
+# DATA INVARIANTS (enforced by validate_watchlist() below; keeps the Category
+# table honest so it never oversells a risky name):
+#   1. DEBT-FUNDED / PRE-REVENUE / SHRINKING businesses must be pos="Binary"
+#      with a NEGATIVE cagr low end. They are not "cycle/Early" growth ramps —
+#      the upside is leveraged, the downside is loss of capital.
+#      (e.g. APLD, CRWV, SMR, INTC, 1810.HK.)
+#   2. pos="Binary" => cagr[0] < 0  (a binary outcome must show its downside).
+#   3. strategy="catalyst"/"lottery" => pos should be "Binary" (event/punt risk).
+#   4. A name's cagr band must not contradict its own note (e.g. a note saying
+#      "rev shrinking" cannot pair with an all-positive band).
 # =========================================================================
 
 WATCHLIST = {
@@ -450,12 +461,13 @@ WATCHLIST = {
         "note":     "SKIP — analog/industrial, barely an AI play. Inside ETF anyway.",
     },
     "INTC": {
-        "pos":      "Late",
+        "pos":      "Binary",
         "cagr":     (-15, 18),
         "strategy": "lottery",
         "area":     "Legacy CPU / foundry turnaround",
         "note":     "AVOID/lottery — UNPROFITABLE (-6% net, -$8.3B FCF, 76x P/E, 7% "
-                    "rev). Foundry turnaround is a binary gamble, not an investment.",
+                    "rev). Foundry turnaround is a BINARY gamble, not an investment "
+                    "(tagged Binary, not Late, to reflect the all-or-nothing outcome).",
     },
 
     # --- Korea memory (HBM leaders) — access friction ---
@@ -480,13 +492,14 @@ WATCHLIST = {
 
     # --- Non-semi: consumer / China ---
     "1810.HK": {
-        "pos":      "Mid",
-        "cagr":     (4, 16),
+        "pos":      "Binary",
+        "cagr":     (-8, 16),
         "strategy": "cycle",
         "area":     "Consumer electronics / EV (Xiaomi)",
-        "note":     "OFF-THESIS — cheap (14x P/E) but rev -11% (shrinking). It's a "
-                    "China consumer/EV turnaround bet, not AI value-chain. + China "
-                    "geopolitical risk, HK/OTC access. Keep in a SEPARATE sleeve if at all.",
+        "note":     "OFF-THESIS — cheap (14x P/E) but rev -11% (SHRINKING), so the "
+                    "band low end is negative (turnaround may fail). China consumer/EV "
+                    "turnaround bet, not AI value-chain. + China geopolitical risk, "
+                    "HK/OTC access. Keep in a SEPARATE sleeve if at all.",
     },
 
     # --- EDA / chip-design software (a structural gap nothing else covers) ---
@@ -577,13 +590,15 @@ WATCHLIST = {
 
     # Power / infra (datacenter electricity + hosting)
     "APLD": {
-        "pos":      "Early",
-        "cagr":     (8, 30),
-        "strategy": "cycle",
+        "pos":      "Binary",
+        "cagr":     (-12, 32),
+        "strategy": "catalyst",
         "area":     "AI datacenter hosting / HPC leases (Applied Digital)",
-        "note":     "Direct AI compute-buildout play (CoreWeave-style HPC leases). "
-                    "Volatile, capex-heavy — buy weakness, trim on hype. On-thesis "
-                    "for the power/infra leg.",
+        "note":     "SAME risk profile as CRWV — capex-heavy, DEBT-FUNDED GPU "
+                    "leasing. The fat upside is leveraged, not free: it depends on "
+                    "AI capex staying hot + continued refinancing + key contracts "
+                    "holding. Binary, not cycle — buy tiny like a catalyst, NEVER "
+                    "average down. Wide band includes a real negative low end.",
     },
     "BWXT": {
         "pos":      "Early",
@@ -612,13 +627,15 @@ WATCHLIST = {
                     "catalyst bet — size tiny, NEVER average down.",
     },
     "SRUUF": {
-        "pos":      "Mid",
-        "cagr":     (5, 15),
+        "pos":      "Binary",
+        "cagr":     (-5, 18),
         "strategy": "cycle",
         "area":     "Uranium commodity trust (Sprott Physical Uranium)",
         "note":     "OFF-STRATEGY mechanically — a COMMODITY trust tracking U3O8 "
-                    "price, not an equity. Proxy for the nuclear-power thesis but "
-                    "behaves like the metal, not a company. Separate sleeve if at all.",
+                    "price, not an equity, so the CAGR band is a COMMODITY price "
+                    "scenario (symmetric, real negative low end), not an earnings "
+                    "forecast. Proxy for the nuclear thesis but behaves like the "
+                    "metal. Separate sleeve if at all.",
     },
 
     # Quantum pile-on — one catalyst ticket (IONQ) is already held
@@ -757,6 +774,29 @@ WATCHLIST = {
                     "is the better cooling pure-play.",
     },
 }
+
+
+def validate_watchlist():
+    """Enforce the WATCHLIST data invariants (see header). Returns a list of
+    violation strings; empty list means clean. Machine-checkable subset:
+      (2) pos=='Binary'  => cagr low end < 0
+      (3) strategy in {catalyst, lottery} => pos == 'Binary'
+    Invariants (1) and (4) are judgement calls, documented for the maintainer.
+    """
+    problems = []
+    for t, d in WATCHLIST.items():
+        pos = d.get("pos")
+        cagr = d.get("cagr")
+        strat = d.get("strategy")
+        if pos == "Binary" and cagr is not None and cagr[0] >= 0:
+            problems.append(
+                f"{t}: pos=Binary but cagr low end {cagr[0]}>=0 "
+                f"(a binary must show its downside)")
+        if strat in ("catalyst", "lottery") and pos not in (None, "Binary"):
+            problems.append(
+                f"{t}: strategy={strat} but pos={pos} (event/punt risk "
+                f"should be Binary)")
+    return problems
 
 
 def watchlist_by_strategy(mode):
