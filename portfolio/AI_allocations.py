@@ -50,8 +50,14 @@ TARGET_WEIGHTS = {
 # without diluting the dca compounders. BESI.AS (0.05) added as the advanced-
 # packaging pure-play — the next silicon bottleneck after compute/HBM. All three
 # funded by trimming the SMHV.SW ETF (0.40 -> 0.29), where the big-caps already
-# sit. SMHV still anchors the sleeve, bringing fab equipment (LRCX/AMAT) and
-# broad memory the single picks miss. Eleven names sum to 1.0.
+# sit. SMHV still anchors the sleeve, bringing fab equipment (LRCX 5.6% / AMAT
+# 5.1%) and analog (TXN) the single picks miss.
+# NB (look-through, refreshed 2026-06-15): SMHV's TOP TWO holdings are MU 14.3%
+# and AMD 12.2% — the SAME names we hold as explicit singles (0.06 each). So the
+# MU/AMD bets are DOUBLED UP via the ETF, not diversified by it. Plus INTC 8.0%
+# (#4) is held indirectly here even though it's a Binary skip on the watchlist.
+# Kept deliberately: the small singles are intentional cycle torque on top of the
+# ETF's passive weight; just don't size them as if SMHV gave zero MU/AMD.
 # NB: MU/AMD/BESI.AS + the two Korean memory names (SK Hynix, Samsung) are CYCLE —
 # trim near the ~2027-29 peak, not set-and-forget. The memory oligopoly (MU +
 # SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
