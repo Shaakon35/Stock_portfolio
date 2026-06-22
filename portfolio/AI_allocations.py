@@ -380,6 +380,8 @@ WATCHLIST = {
     },
     "ONTO": {
         "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (9.9, 21.1),
         "area":     "Metrology / inspection (process control)",
         "note":     "Process-control/metrology — fills the back-end inspection gap "
                     "(complements BESI packaging). +180%/2y, ~52% rev. Mid-cycle, "
@@ -388,6 +390,8 @@ WATCHLIST = {
     },
     "SMHN.DE": {
         "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (9.9, 24.6),
         "area":     "Advanced-packaging / bonding equipment",
         "note":     "SUSS MicroTec — advanced-packaging/bonding pure-play, SAME HBM4/"
                     "CoWoS bottleneck as BESI.AS. +380%/2y, ~60% rev. Early/mid-cycle. "
@@ -395,6 +399,8 @@ WATCHLIST = {
     },
     "MTSI": {
         "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8.4, 18.1),
         "area":     "RF/analog + optical semis (MACOM)",
         "note":     "Blend of defense RF + datacenter optical — less pure AI-bottleneck "
                     "than ONTO/SMHN. Decent but least differentiated of the equipment "
@@ -538,6 +544,8 @@ WATCHLIST = {
     },
     "LEU": {
         "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (8.4, 22.9),
         "area":     "Nuclear fuel / HALEU enrichment (Centrus)",
         "note":     "Only US HALEU enricher; real revenue. Fits 'AI needs power' via "
                     "the fuel cycle. Cyclical commodity-linked — buy down-cycles, not "
@@ -645,6 +653,26 @@ WATCHLIST = {
                     "is thin on (W1/W3 seam). PROFITABLE, not a story stock, but "
                     "smaller/less-proven than held names and demand is cyclical — buy "
                     "dips, trim at peak. Watchlist-first.",
+    },
+
+    # --- Transmission / cooling — considered for rotation, NOT added ---
+    "SIE.DE": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (8.4, 16.0),
+        "area":     "Grid / transmission (EU, Siemens)",
+        "note":     "SKIPPED — diluted conglomerate: grid is one segment of a giant "
+                    "industrial, so low beta to the actual bottleneck. HUBB/ABBN.SW "
+                    "(now held) are cleaner transmission pure-plays at the same forecast.",
+    },
+    "PNR": {
+        "strategy": "dca",
+        "pos":      "Early",
+        "cagr":     (7.0, 14.9),
+        "area":     "Water / thermal (Pentair)",
+        "note":     "SKIPPED — Early and not-run, but weak AI thesis: broad water "
+                    "company, datacenter cooling is a small revenue slice. VRT (held) "
+                    "is the better cooling pure-play.",
     },
 }
 
