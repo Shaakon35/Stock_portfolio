@@ -319,6 +319,8 @@ WATCHLIST = {
     # --- Memory / storage (HBM + NAND/HDD) — the deepest-cyclical corner ---
     # NB: MU promoted to a held W1 CYCLE pick (see W1_SILICON_TARGETS) — removed here.
     "SNDK": {
+        "pos":      "Late",
+        "cagr":     (2, 15),
         "strategy": "cycle",
         "area":     "Memory / NAND (SanDisk)",
         "note":     "SKIP/late — +251% rev is the NAND cycle at its PEAK, trading "
@@ -326,12 +328,16 @@ WATCHLIST = {
                     "top. Covered indirectly anyway.",
     },
     "WDC": {
+        "pos":      "Late",
+        "cagr":     (2, 14),
         "strategy": "cycle",
         "area":     "Storage / HDD (Western Digital)",
         "note":     "SKIP — +46% rev / 55% net flatters a cycle top. Commodity HDD/"
                     "NAND, near 52w high. Classic late-cycle trap.",
     },
     "STX": {
+        "pos":      "Late",
+        "cagr":     (2, 14),
         "strategy": "cycle",
         "area":     "Storage / HDD (Seagate)",
         "note":     "SKIP — same as WDC: deep-cyclical HDD at cycle peak near highs.",
@@ -339,6 +345,8 @@ WATCHLIST = {
 
     # --- Compute / IP / connectivity ---
     "ARM": {
+        "pos":      "Mid",
+        "cagr":     (10, 24),
         "strategy": "cycle",
         "area":     "Chip IP / architecture",
         "note":     "Only name that fills a UNIQUE gap (royalty IP, ~95% gross). Elite "
@@ -347,12 +355,16 @@ WATCHLIST = {
     },
     # NB: AMD promoted to a held W1 CYCLE pick (see W1_SILICON_TARGETS) — removed here.
     "QCOM": {
+        "pos":      "Late",
+        "cagr":     (3, 10),
         "strategy": "cycle",
         "area":     "Mobile / edge-AI chips",
         "note":     "SKIP — cheap (20x P/E, $9.6B FCF) but rev -4%: Apple designing it "
                     "out. 'Cheap for a reason' value trap, not a growth thesis.",
     },
     "ADI": {
+        "pos":      "Mid",
+        "cagr":     (8, 15),
         "strategy": "dca",
         "area":     "Analog / industrial chips",
         "note":     "Highest-QUALITY new name (37% rev, 26% net, $3.9B FCF, 28x). "
@@ -362,18 +374,24 @@ WATCHLIST = {
 
     # --- Fab equipment ('picks of the picks') — all inside SMHV.SW ---
     "KLAC": {
+        "pos":      "Mid",
+        "cagr":     (9, 17),
         "strategy": "dca",
         "area":     "Fab inspection equipment",
         "note":     "High quality (36% net, $2.9B FCF). DCA-grade oligopoly, but "
                     "already held via SMHV.SW (equipment ~11% of ETF). Redundant direct.",
     },
     "LRCX": {
+        "pos":      "Mid",
+        "cagr":     (9, 17),
         "strategy": "dca",
         "area":     "Fab etch/deposition equipment",
         "note":     "Quality (31% net, $4.4B FCF). Same as KLAC — already inside the "
                     "ETF; only add direct for concentrated equipment conviction.",
     },
     "AMAT": {
+        "pos":      "Mid",
+        "cagr":     (8, 16),
         "strategy": "dca",
         "area":     "Fab equipment (broadest)",
         "note":     "Quality (29% net). Inside SMHV.SW already. Redundant direct.",
@@ -409,23 +427,31 @@ WATCHLIST = {
 
     # --- Legacy / off-thesis large caps ---
     "AAPL": {
+        "pos":      "Mid",
+        "cagr":     (6, 11),
         "strategy": "dca",
         "area":     "Consumer hardware / services",
         "note":     "DCA-grade ($101B FCF!) but it's a CONSUMER play, not AI-infra. "
                     "Belongs in a core portfolio, not this AI book. Off-thesis.",
     },
     "CSCO": {
+        "pos":      "Late",
+        "cagr":     (4, 9),
         "strategy": "dca",
         "area":     "Legacy networking",
         "note":     "SKIP — you already hold ANET (faster, higher-margin competitor). "
                     "Redundant and slower-growth.",
     },
     "TXN": {
+        "pos":      "Mid",
+        "cagr":     (6, 13),
         "strategy": "cycle",
         "area":     "Analog / industrial chips",
         "note":     "SKIP — analog/industrial, barely an AI play. Inside ETF anyway.",
     },
     "INTC": {
+        "pos":      "Late",
+        "cagr":     (-15, 18),
         "strategy": "lottery",
         "area":     "Legacy CPU / foundry turnaround",
         "note":     "AVOID/lottery — UNPROFITABLE (-6% net, -$8.3B FCF, 76x P/E, 7% "
@@ -434,6 +460,8 @@ WATCHLIST = {
 
     # --- Korea memory (HBM leaders) — access friction ---
     "005930.KS": {
+        "pos":      "Mid",
+        "cagr":     (3.7, 17.1),
         "strategy": "cycle",
         "area":     "Memory / diversified (Samsung)",
         "note":     "HBM + broad semi at 6x P/E — cheap. But Korea-listed (FX/access "
@@ -441,6 +469,8 @@ WATCHLIST = {
                     "ETF than bought direct.",
     },
     "000660.KS": {
+        "pos":      "Mid",
+        "cagr":     (4.6, 22.9),
         "strategy": "cycle",
         "area":     "Memory / HBM leader (SK hynix)",
         "note":     "Purest HBM leader (+198% rev, 57% net, 6x P/E) — but it's the "
@@ -450,6 +480,8 @@ WATCHLIST = {
 
     # --- Non-semi: consumer / China ---
     "1810.HK": {
+        "pos":      "Mid",
+        "cagr":     (4, 16),
         "strategy": "cycle",
         "area":     "Consumer electronics / EV (Xiaomi)",
         "note":     "OFF-THESIS — cheap (14x P/E) but rev -11% (shrinking). It's a "
@@ -459,6 +491,8 @@ WATCHLIST = {
 
     # --- EDA / chip-design software (a structural gap nothing else covers) ---
     "CDNS": {
+        "pos":      "Mid",
+        "cagr":     (9.9, 18.1),
         "strategy": "dca",
         "area":     "Chip-design software (EDA)",
         "note":     "DCA-grade. The tools every chip is designed with — software "
@@ -466,6 +500,8 @@ WATCHLIST = {
                     "Cadence/Synopsys are the EDA duopoly; ~41x P/E so not cheap.",
     },
     "SNPS": {
+        "pos":      "Mid",
+        "cagr":     (9.9, 18.1),
         "strategy": "dca",
         "area":     "Chip-design software (EDA)",
         "note":     "DCA-grade. Other half of the EDA duopoly. 83% gross, 42% rev, "
@@ -473,6 +509,8 @@ WATCHLIST = {
                     "ANSS ticker is gone, exposure now lives here.",
     },
     "TER": {
+        "pos":      "Mid",
+        "cagr":     (7, 16),
         "strategy": "cycle",
         "area":     "Chip test equipment",
         "note":     "Complements the LRCX/AMAT equipment angle. 87% rev is the test "
@@ -482,6 +520,8 @@ WATCHLIST = {
 
     # --- AI-native cloud / GPU rental ---
     "CRWV": {
+        "pos":      "Binary",
+        "cagr":     (-10, 32),
         "strategy": "catalyst",
         "area":     "AI-native cloud / GPU rental (CoreWeave)",
         "note":     "Pure-play AI compute rental — directly on-thesis but HIGH-BETA "
@@ -492,6 +532,8 @@ WATCHLIST = {
 
     # --- Defense / crypto-adjacent industrials ---
     "KTOS": {
+        "pos":      "Mid",
+        "cagr":     (8, 18),
         "strategy": "cycle",
         "area":     "Industrial / Defense",
         "note":     "Autonomous military drones. CHANGED: KTOS dropped out of XAIX.DE "
@@ -501,12 +543,16 @@ WATCHLIST = {
                     "(2% net) -> momentum-like, treat as CYCLE.",
     },
     "IREN": {
+        "pos":      "Binary",
+        "cagr":     (-25, 40),
         "strategy": "lottery",
         "area":     "Industrial (AI compute + Bitcoin mining)",
         "note":     "SMALL/SKIP — crypto-correlated beta is new uncorrelated risk, "
                     "not diversification. Negative FCF (-$2.3B). Lottery, not cycle.",
     },
     "CIFR": {
+        "pos":      "Binary",
+        "cagr":     (-25, 38),
         "strategy": "lottery",
         "area":     "Industrial (Bitcoin mining pivoting to AI)",
         "note":     "SKIP — rev -29%, negative FCF (-$2.9B), crypto-dependent, weaker "
@@ -520,6 +566,8 @@ WATCHLIST = {
 
     # Silicon (W1) candidates — real chip companies
     "LSCC": {
+        "pos":      "Mid",
+        "cagr":     (8, 18),
         "strategy": "cycle",
         "area":     "Silicon / low-power FPGAs (Lattice)",
         "note":     "CLEANEST add of the batch — a real chip company, not a story "
@@ -529,6 +577,8 @@ WATCHLIST = {
 
     # Power / infra (datacenter electricity + hosting)
     "APLD": {
+        "pos":      "Early",
+        "cagr":     (8, 30),
         "strategy": "cycle",
         "area":     "AI datacenter hosting / HPC leases (Applied Digital)",
         "note":     "Direct AI compute-buildout play (CoreWeave-style HPC leases). "
@@ -536,6 +586,8 @@ WATCHLIST = {
                     "for the power/infra leg.",
     },
     "BWXT": {
+        "pos":      "Early",
+        "cagr":     (8, 15),
         "strategy": "dca",
         "area":     "Power / nuclear components (naval reactors + SMR parts)",
         "note":     "The PROFITABLE nuclear name — naval reactors + SMR components, "
@@ -552,12 +604,16 @@ WATCHLIST = {
                     "at highs.",
     },
     "SMR": {
+        "pos":      "Binary",
+        "cagr":     (-13, 32),
         "strategy": "catalyst",
         "area":     "Nuclear / small modular reactors (NuScale)",
         "note":     "Pre-revenue. Binary on first commercial reactor. One-and-done "
                     "catalyst bet — size tiny, NEVER average down.",
     },
     "SRUUF": {
+        "pos":      "Mid",
+        "cagr":     (5, 15),
         "strategy": "cycle",
         "area":     "Uranium commodity trust (Sprott Physical Uranium)",
         "note":     "OFF-STRATEGY mechanically — a COMMODITY trust tracking U3O8 "
@@ -567,6 +623,8 @@ WATCHLIST = {
 
     # Quantum pile-on — one catalyst ticket (IONQ) is already held
     "RGTI": {
+        "pos":      "Binary",
+        "cagr":     (-25, 45),
         "strategy": "lottery",
         "area":     "Quantum computing (Rigetti)",
         "note":     "Pre-revenue quantum. You already hold IONQ as the quantum "
@@ -574,35 +632,47 @@ WATCHLIST = {
                     "many. If you want ONE more, this is the pick — size tiny.",
     },
     "QBTS": {
+        "pos":      "Binary",
+        "cagr":     (-25, 45),
         "strategy": "lottery",
         "area":     "Quantum computing (D-Wave)",
         "note":     "Pre-revenue quantum (annealing). Same logic as RGTI — redundant "
                     "with IONQ. Lottery only.",
     },
     "QUBT": {
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
         "strategy": "lottery",
         "area":     "Quantum computing (Quantum Computing Inc.)",
         "note":     "Micro-cap pre-revenue quantum. Pure lottery; max noise, no edge "
                     "over the IONQ position. Skip unless punting.",
     },
     "QNT": {
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
         "strategy": "lottery",
         "area":     "Quantum computing",
         "note":     "Speculative quantum name. Redundant with the IONQ quantum "
                     "ticket. Lottery only — tiny or skip.",
     },
     "XNDU": {
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
         "strategy": "lottery",
         "area":     "Quantum computing (Xanadu)",
         "note":     "Pre-revenue photonic quantum. Lottery; same smearing problem as "
                     "the rest of the quantum pile. Skip unless punting.",
     },
     "INFQ": {
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
         "strategy": "lottery",
         "area":     "Quantum computing",
         "note":     "Speculative quantum name. Redundant with IONQ. Lottery only.",
     },
     "HQ": {
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
         "strategy": "lottery",
         "area":     "Quantum computing",
         "note":     "Speculative quantum name. Redundant with IONQ. Lottery only.",
@@ -610,12 +680,16 @@ WATCHLIST = {
 
     # Off-thesis — tracked for completeness, NOT AI value-chain
     "ENVX": {
+        "pos":      "Binary",
+        "cagr":     (-20, 35),
         "strategy": "lottery",
         "area":     "Battery tech (Enovix)",
         "note":     "OFF-THESIS — silicon-anode batteries, not the AI value chain. "
                     "Pre-profit. Belongs in a separate energy/tech sleeve.",
     },
     "VKTX": {
+        "pos":      "Binary",
+        "cagr":     (-25, 40),
         "strategy": "lottery",
         "area":     "Biotech / GLP-1 (Viking Therapeutics)",
         "note":     "OFF-THESIS — GLP-1 obesity biotech, ZERO AI linkage. Pure sector "
@@ -624,6 +698,8 @@ WATCHLIST = {
 
     # --- Off-thesis space / robotics moonshots (RKLB already owns the space slot) ---
     "LUNR": {
+        "pos":      "Binary",
+        "cagr":     (-25, 38),
         "strategy": "lottery",
         "area":     "Space / lunar landers (Intuitive Machines)",
         "note":     "OFF-THESIS — NASA commercial lunar landers. RKLB already owns the "
@@ -631,6 +707,8 @@ WATCHLIST = {
                     "risk (-70%+ binary). Not AI value-chain. Lottery only.",
     },
     "SERV": {
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
         "strategy": "lottery",
         "area":     "Robotics / sidewalk delivery (Serve Robotics)",
         "note":     "OFF-THESIS — sidewalk delivery robots, ~$600M micro-cap, deeply "
@@ -638,6 +716,8 @@ WATCHLIST = {
                     "not a deal. Hype-driven binary. Lottery; size tiny or skip.",
     },
     "ACHR": {
+        "pos":      "Binary",
+        "cagr":     (-25, 40),
         "strategy": "lottery",
         "area":     "eVTOL air taxi (Archer Aviation)",
         "note":     "OFF-THESIS — eVTOL air taxi, ->$0 risk. Triple-gated: FAA cert + "
@@ -646,6 +726,8 @@ WATCHLIST = {
 
     # --- AI cluster integration (W1/W3 seam) ---
     "PENG": {
+        "pos":      "Mid",
+        "cagr":     (8, 18),
         "strategy": "cycle",
         "area":     "AI cluster integration / advanced memory (Penguin Solutions)",
         "note":     "ON-THESIS — ex-SGH; builds HPC/AI clusters + advanced memory "
