@@ -68,8 +68,8 @@ TARGET_WEIGHTS = {
 # SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
 # and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.789, # CHANGED: 0.07 -> 0.789 — now the 90k CHF windfall (899 shares),
-                        # a FIXED 37.5% of the 240k book (= 0.789 of the 47.5% W1 wave).
+    "SMHV.SW":   0.79,  # CHANGED: 0.07 -> 0.79 — now the 90k CHF windfall (899 shares),
+                        # a FIXED 37.5% of the 240k book (= 0.79 of the 47.5% W1 wave).
                         # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
                         # Samsung/SK Hynix — those are genuine new exposure, not a dup.
     # --- ZEROED 2026-06: all six are SMHV's TOP holdings, so the ETF already
@@ -80,20 +80,22 @@ W1_SILICON_TARGETS = {
     "TSM":       0.00,  # CHANGED: 0.07 -> 0.00 — SMHV #5 (7.5%); covered by ETF
     "MU":        0.00,  # CHANGED: 0.06 -> 0.00 — SMHV #1 (14.3%); covered by ETF
     "AMD":       0.00,  # CHANGED: 0.06 -> 0.00 — SMHV #2 (12.2%); covered by ETF
-    # --- SURVIVING SINGLES: names SMHV does NOT meaningfully hold. Share the
-    #     remaining ~0.211 of W1 (= 10% of book), preserving prior relative sizes. ---
-    "MRVL":      0.050, # CHANGED: 0.09 -> 0.050 — Custom AI ASICs / optical DSPs; thin in SMHV
-    "BESI.AS":   0.033, # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
+    # --- SURVIVING SINGLES: names SMHV does NOT meaningfully hold. FLATTENED to
+    #     EQUAL WEIGHT (0.03 each = ~1.43% of book) — once SMHV covers the
+    #     mega-caps none of these is a core thesis, so no merit-ranking is implied.
+    #     Together they hold the remaining 0.21 of W1 (= ~10% of book). ---
+    "MRVL":      0.03,  # Custom AI ASICs / optical DSPs — thin in SMHV. DCA.
+    "BESI.AS":   0.03,  # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
                         # western CoWoS pure-play. EUR-listed (Amsterdam). CYCLE.
-    "000660.KS": 0.033, # SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
+    "000660.KS": 0.03,  # SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
                         # HBM bet. KRX-listed (KRW), buy via Interactive Brokers. CYCLE / Mid.
-    "005930.KS": 0.028, # Samsung Electronics — memory + foundry, more diluted
-                        # (conglomerate). KRX-listed (KRW). CYCLE / Mid. Sized below SK Hynix.
-    "CDNS":      0.033, # Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
+    "005930.KS": 0.03,  # Samsung Electronics — memory + foundry, more diluted
+                        # (conglomerate). KRX-listed (KRW). CYCLE / Mid.
+    "CDNS":      0.03,  # Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
                         # layer; not in SMHV. Secular high-margin compounder. DCA / Mid.
-    "ONTO":      0.017, # Onto Innovation — metrology / process-control inspection. Fills the
+    "ONTO":      0.03,  # Onto Innovation — metrology / process-control inspection. Fills the
                         # back-end INSPECTION gap; NOT inside SMHV. High-beta WFE, Mid. CYCLE.
-    "SMHN.DE":   0.017, # SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
+    "SMHN.DE":   0.03,  # SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
                         # CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). CYCLE / Early.
 }
 
