@@ -378,6 +378,28 @@ WATCHLIST = {
         "area":     "Fab equipment (broadest)",
         "note":     "Quality (29% net). Inside SMHV.SW already. Redundant direct.",
     },
+    "ONTO": {
+        "strategy": "cycle",
+        "area":     "Metrology / inspection (process control)",
+        "note":     "Process-control/metrology — fills the back-end inspection gap "
+                    "(complements BESI packaging). +180%/2y, ~52% rev. Mid-cycle, "
+                    "high-beta WFE. NOT inside SMHV.SW (US small-mid). Genuine new "
+                    "exposure; size small, dip-buy.",
+    },
+    "SMHN.DE": {
+        "strategy": "cycle",
+        "area":     "Advanced-packaging / bonding equipment",
+        "note":     "SUSS MicroTec — advanced-packaging/bonding pure-play, SAME HBM4/"
+                    "CoWoS bottleneck as BESI.AS. +380%/2y, ~60% rev. Early/mid-cycle. "
+                    "Frankfurt-listed (EUR). Cleanest packaging-equipment add.",
+    },
+    "MTSI": {
+        "strategy": "cycle",
+        "area":     "RF/analog + optical semis (MACOM)",
+        "note":     "Blend of defense RF + datacenter optical — less pure AI-bottleneck "
+                    "than ONTO/SMHN. Decent but least differentiated of the equipment "
+                    "candidates. Lower priority; consider only if widening the sleeve.",
+    },
 
     # --- Legacy / off-thesis large caps ---
     "AAPL": {
