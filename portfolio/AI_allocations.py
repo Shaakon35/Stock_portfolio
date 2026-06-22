@@ -57,8 +57,8 @@ TARGET_WEIGHTS = {
 # SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
 # and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.13,  # CHANGED: 0.20 -> 0.16 — trimmed 0.04 to fund CDNS (below).
-                        # Earlier: 0.29 -> 0.20 to fund the two Korean memory names.
+    "SMHV.SW":   0.07,  # CHANGED: 0.13 -> 0.07 — trimmed 0.06 to fund ONTO + SMHN.DE (below).
+                        # Earlier: 0.20 -> 0.13 to fund CDNS; 0.29 -> 0.20 for the Korean memory names.
                         # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
                         # Samsung/SK Hynix — those are genuine new exposure, not a dup.
     "NVDA":      0.13,  # GPU king — top conviction single
@@ -77,6 +77,14 @@ W1_SILICON_TARGETS = {
     "CDNS":      0.06,  # NEW: Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-
                         # DESIGN layer the sleeve was missing (had ASML litho, no EDA).
                         # Secular high-margin compounder. DCA / Mid. Funded by SMHV trim.
+    "ONTO":      0.03,  # NEW: Onto Innovation — metrology / process-control inspection.
+                        # Fills the back-end INSPECTION gap (complements BESI packaging);
+                        # NOT inside SMHV.SW (US small-mid). High-beta WFE, Mid-cycle
+                        # (+180%/2y). CYCLE — small satellite, dip-buy. Funded by SMHV trim.
+    "SMHN.DE":   0.03,  # NEW: SUSS MicroTec — advanced-packaging/bonding equipment, SAME
+                        # HBM4/CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). Sized
+                        # EQUAL to ONTO and small precisely BECAUSE it overlaps BESI — don't
+                        # double-concentrate packaging. CYCLE / Early. Funded by SMHV trim.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -211,6 +219,8 @@ STRATEGY = {
     "000660.KS": "cycle",   # SK Hynix — HBM leader; same memory cycle as MU, trim at peak
     "005930.KS": "cycle",   # Samsung — memory+foundry; same memory cycle, trim at peak
     "CDNS":      "dca",     # Cadence — EDA duopoly, secular high-margin compounder, hold forever
+    "ONTO":      "cycle",   # Onto — metrology/inspection, high-beta WFE; Mid-cycle, buy dips, trim at peak
+    "SMHN.DE":   "cycle",   # SUSS MicroTec — packaging/bonding equipment, high-beta; trim near peak
 
     # --- W2 POWER ---
     "GEV":     "dca",       # Grid supercycle — hold forever
@@ -407,33 +417,16 @@ WATCHLIST = {
         "area":     "Fab equipment (broadest)",
         "note":     "Quality (29% net). Inside SMHV.SW already. Redundant direct.",
     },
-    "ONTO": {
-        "strategy": "cycle",
-        "pos":      "Mid",
-        "cagr":     (9.9, 21.1),
-        "area":     "Metrology / inspection (process control)",
-        "note":     "Process-control/metrology — fills the back-end inspection gap "
-                    "(complements BESI packaging). +180%/2y, ~52% rev. Mid-cycle, "
-                    "high-beta WFE. NOT inside SMHV.SW (US small-mid). Genuine new "
-                    "exposure; size small, dip-buy.",
-    },
-    "SMHN.DE": {
-        "strategy": "cycle",
-        "pos":      "Early",
-        "cagr":     (9.9, 24.6),
-        "area":     "Advanced-packaging / bonding equipment",
-        "note":     "SUSS MicroTec — advanced-packaging/bonding pure-play, SAME HBM4/"
-                    "CoWoS bottleneck as BESI.AS. +380%/2y, ~60% rev. Early/mid-cycle. "
-                    "Frankfurt-listed (EUR). Cleanest packaging-equipment add.",
-    },
+    # NB: ONTO promoted to a held W1 CYCLE pick (see W1_SILICON_TARGETS) — removed here.
+    # NB: SMHN.DE promoted to a held W1 CYCLE pick (see W1_SILICON_TARGETS) — removed here.
     "MTSI": {
         "strategy": "cycle",
         "pos":      "Mid",
         "cagr":     (8.4, 18.1),
         "area":     "RF/analog + optical semis (MACOM)",
         "note":     "Blend of defense RF + datacenter optical — less pure AI-bottleneck "
-                    "than ONTO/SMHN. Decent but least differentiated of the equipment "
-                    "candidates. Lower priority; consider only if widening the sleeve.",
+                    "than ONTO/SMHN (now held). Decent but least differentiated of the "
+                    "equipment candidates. Lower priority; consider only if widening the sleeve.",
     },
 
     # --- Legacy / off-thesis large caps ---

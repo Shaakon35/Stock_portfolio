@@ -145,6 +145,8 @@ WAVE_FORECASTS = {
     "000660.KS": {"min_rate": 4.6,  "max_rate": 22.9},  # 5Y +25/+180% — SK Hynix, HBM leader, same memory cycle as MU (est.)
     "005930.KS": {"min_rate": 3.7,  "max_rate": 17.1},  # 5Y +20/+120% — Samsung, diluted conglomerate, lower beta (est.)
     "CDNS":      {"min_rate": 9.9,  "max_rate": 18.1},  # 5Y +60/+130% — EDA duopoly, secular high-margin compounder (est.)
+    "ONTO":      {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — metrology/inspection, high-beta WFE, mid-cycle (est.)
+    "SMHN.DE":   {"min_rate": 9.9,  "max_rate": 24.6},  # 5Y +60/+200% — adv-packaging/bonding equip, same HBM bottleneck as BESI, early-cycle (est.)
 
     # --- W2 POWER ---
     "GEV":     {"min_rate": 12.5, "max_rate": 24.6},  # 5Y +80/+200% — grid/turbine supercycle
