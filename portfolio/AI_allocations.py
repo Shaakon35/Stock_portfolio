@@ -26,20 +26,25 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 # =========================================================================
 
 TARGET_WEIGHTS = {
-    "W1_SILICON":   0.30,  # CHANGED: 0.23 -> 0.30 (Option C aggressive) — highest forecast upside
-    "W2_POWER":     0.22,  # CHANGED: 0.18 -> 0.22 — bottleneck wave, strong risk-adjusted return
-    "W3_DCINFRA":   0.26,  # CHANGED: 0.18 -> 0.26 — HIGHEST 5Y floor + near-highest ceiling
-    "W4_CLOUD":     0.08,  # CHANGED: 0.15 -> 0.08 — lowest-upside wave, cut hard to fund bottlenecks
-    "W5_SOFTWARE":  0.14,  # CHANGED: 0.18 -> 0.14 — trimmed; lower upside than W1/W3 (multiple-compression risk)
-    "W6_SPEC":      0.00,  # CHANGED: 0.08 -> 0.00 — speculative/lottery wave zeroed out for now
+    "W1_SILICON":   0.475, # CHANGED: 0.30 -> 0.475 — absorbs the 90k SMHV windfall (37.5%
+                           #          of book) PLUS the 10% surviving-singles slice.
+    "W2_POWER":     0.19,  # CHANGED: 0.22 -> 0.19 — Option B tilt: keep power overweight
+    "W3_DCINFRA":   0.21,  # CHANGED: 0.26 -> 0.21 — Option B tilt: keep DC-infra overweight
+    "W4_CLOUD":     0.05,  # CHANGED: 0.08 -> 0.05 — trimmed (SMHV gives no cloud anyway)
+    "W5_SOFTWARE":  0.075, # CHANGED: 0.14 -> 0.075 — trimmed; lowest-upside non-core wave
+    "W6_SPEC":      0.00,  # speculative wave stays zeroed (CRCL parked here as a 0%-target windfall)
 }
-# OPTION C (AGGRESSIVE) — concentrate into the AI-capex BOTTLENECK waves.
-# Rationale: per config/forecasts.py, W1/W3/W2 carry the best 5Y total-return
-# profiles (W3 +58/+164%, W1 +52/+146%, W2 +48/+168%), while W4 Cloud (+47/+116%)
-# and W5 Software (+47/+137%) lag. So aggression = MORE bottleneck, not more
-# software. W6 (spec/lottery) zeroed for now — its names can go to zero and the
-# floor is weak; re-add later by reweighting back from W1/W3/W2.
-# Mix: W1 30 / W2 22 / W3 26 / W4 8 / W5 14 / W6 0 = 100.
+# OPTION B (BOTTLENECK TILT) + SMHV WINDFALL — restructured 2026-06.
+# Context: a 90k CHF SMHV.SW position (899 shares) is now a FIXED 37.5% of the
+# 240k book. SMHV's top holdings (MU/AMD/AVGO/INTC/TSM/ASML/NVDA) already give
+# full mega-cap silicon exposure, so the six overlapping singles (NVDA, AVGO,
+# ASML, TSM, MU, AMD) are ZEROED — kept in the basket at 0.0 for easy re-add but
+# no fresh money. The remaining ~62.5% is tilted (Option B) toward the waves SMHV
+# does NOT cover — POWER (W2) and DC-INFRA (W3) — and away from Cloud/Software.
+# SMHV lives INSIDE W1 (~79% of the W1 basket); the 7 surviving singles (MRVL,
+# BESI.AS, SK Hynix, Samsung, CDNS, ONTO, SMHN.DE) make up the rest of W1.
+# Book-level mix: SMHV 37.5 / W1-singles 10 / W2 19 / W3 21 / W4 5 / W5 7.5 / W6 0.
+# Wave-level mix: W1 47.5 / W2 19 / W3 21 / W4 5 / W5 7.5 / W6 0 = 100.
 
 # =========================================================================
 # SUB-ALLOCATION BASKETS (each sums to 1.0 = 100% of its wave slice)
@@ -63,34 +68,33 @@ TARGET_WEIGHTS = {
 # SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
 # and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.07,  # CHANGED: 0.13 -> 0.07 — trimmed 0.06 to fund ONTO + SMHN.DE (below).
-                        # Earlier: 0.20 -> 0.13 to fund CDNS; 0.29 -> 0.20 for the Korean memory names.
+    "SMHV.SW":   0.789, # CHANGED: 0.07 -> 0.789 — now the 90k CHF windfall (899 shares),
+                        # a FIXED 37.5% of the 240k book (= 0.789 of the 47.5% W1 wave).
                         # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
                         # Samsung/SK Hynix — those are genuine new exposure, not a dup.
-    "NVDA":      0.13,  # GPU king — top conviction single
-    "AVGO":      0.12,  # CHANGED: 0.14 -> 0.13
-    "ASML":      0.11,  # CHANGED: 0.12 -> 0.11 — EUV lithography monopoly
-    "MRVL":      0.09,  # CHANGED: 0.10 -> 0.09 — Custom AI ASICs / optical DSPs
-    "TSM":       0.07,  # CHANGED: 0.06 -> 0.05 — foundry monopoly (also held inside the ETF)
-    "MU":        0.06,  # memory/HBM cycle bet — tightest link in the AI supply chain
-    "AMD":       0.06,  # #2 GPU cycle bet — high-beta semi torque
-    "BESI.AS":   0.06,  # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
+    # --- ZEROED 2026-06: all six are SMHV's TOP holdings, so the ETF already
+    #     gives full exposure. Kept at 0.0 for easy re-add (no fresh money). ---
+    "NVDA":      0.00,  # CHANGED: 0.13 -> 0.00 — SMHV #7 (7.2%); covered by ETF
+    "AVGO":      0.00,  # CHANGED: 0.12 -> 0.00 — SMHV #3 (8.3%); covered by ETF
+    "ASML":      0.00,  # CHANGED: 0.11 -> 0.00 — SMHV #6 (7.4%); covered by ETF
+    "TSM":       0.00,  # CHANGED: 0.07 -> 0.00 — SMHV #5 (7.5%); covered by ETF
+    "MU":        0.00,  # CHANGED: 0.06 -> 0.00 — SMHV #1 (14.3%); covered by ETF
+    "AMD":       0.00,  # CHANGED: 0.06 -> 0.00 — SMHV #2 (12.2%); covered by ETF
+    # --- SURVIVING SINGLES: names SMHV does NOT meaningfully hold. Share the
+    #     remaining ~0.211 of W1 (= 10% of book), preserving prior relative sizes. ---
+    "MRVL":      0.050, # CHANGED: 0.09 -> 0.050 — Custom AI ASICs / optical DSPs; thin in SMHV
+    "BESI.AS":   0.033, # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
                         # western CoWoS pure-play. EUR-listed (Amsterdam). CYCLE.
-    "000660.KS": 0.06,  # NEW: SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
+    "000660.KS": 0.033, # SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
                         # HBM bet. KRX-listed (KRW), buy via Interactive Brokers. CYCLE / Mid.
-    "005930.KS": 0.05,  # NEW: Samsung Electronics — memory + foundry, more diluted
+    "005930.KS": 0.028, # Samsung Electronics — memory + foundry, more diluted
                         # (conglomerate). KRX-listed (KRW). CYCLE / Mid. Sized below SK Hynix.
-    "CDNS":      0.06,  # NEW: Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-
-                        # DESIGN layer the sleeve was missing (had ASML litho, no EDA).
-                        # Secular high-margin compounder. DCA / Mid. Funded by SMHV trim.
-    "ONTO":      0.03,  # NEW: Onto Innovation — metrology / process-control inspection.
-                        # Fills the back-end INSPECTION gap (complements BESI packaging);
-                        # NOT inside SMHV.SW (US small-mid). High-beta WFE, Mid-cycle
-                        # (+180%/2y). CYCLE — small satellite, dip-buy. Funded by SMHV trim.
-    "SMHN.DE":   0.03,  # NEW: SUSS MicroTec — advanced-packaging/bonding equipment, SAME
-                        # HBM4/CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). Sized
-                        # EQUAL to ONTO and small precisely BECAUSE it overlaps BESI — don't
-                        # double-concentrate packaging. CYCLE / Early. Funded by SMHV trim.
+    "CDNS":      0.033, # Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
+                        # layer; not in SMHV. Secular high-margin compounder. DCA / Mid.
+    "ONTO":      0.017, # Onto Innovation — metrology / process-control inspection. Fills the
+                        # back-end INSPECTION gap; NOT inside SMHV. High-beta WFE, Mid. CYCLE.
+    "SMHN.DE":   0.017, # SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
+                        # CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). CYCLE / Early.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -177,6 +181,9 @@ W6_SPEC_TARGETS = {
     "TMDX":  0.2667,  # MedTech non-AI diversifier
     "IONQ":  0.2000,  # Quantum — revenue leader only
     "RKLB":  0.2000,  # Space / autonomy
+    "CRCL":  0.0000,  # NEW: Circle (USDC stablecoin issuer) — held windfall (147 shares),
+                      # TARGET 0% (W6 wave is 0% anyway). Parked here to track/manage down,
+                      # NOT to add to. Stablecoin-rails fintech, high-beta — treat as catalyst.
 }
 
 # =========================================================================
@@ -274,6 +281,7 @@ STRATEGY = {
     "TMDX":    "cycle",     # MedTech growth — momentum-sensitive
     "IONQ":    "catalyst",  # Quantum binary — size once, event-driven, no avg down
     "RKLB":    "catalyst",  # Space — size once, milestone-driven, no avg down
+    "CRCL":    "catalyst",  # Circle — held windfall, target 0%; manage down, never avg in
 }
 
 # =========================================================================

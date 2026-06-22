@@ -192,4 +192,5 @@ WAVE_FORECASTS = {
     "TMDX":    {"min_rate": 8.4,  "max_rate": 22.9},  # 5Y +50/+180% — transplant monopoly, S-curve
     "IONQ":    {"min_rate": -12.9,"max_rate": 38.0},  # 5Y -50/+400% — quantum leader, pre-profit (binary)
     "RKLB":    {"min_rate": 7.0,  "max_rate": 32.0},  # 5Y +40/+300% — Neutron launch catalyst
+    "CRCL":    {"min_rate": -20.0,"max_rate": 35.0},  # 5Y -67/+350% — Circle/USDC stablecoin rails; held windfall, target 0% (binary)
 }
