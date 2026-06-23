@@ -29,14 +29,16 @@ TARGET_WEIGHTS = {
     "W1_SILICON":   0.4991,# CHANGED: 0.475 -> 0.4991 — grown so the 4 top-10 W1 singles
                            #          (CAMT/ONTO/BESI/SIMO) each clear 2% of book while
                            #          SMHV stays fixed at exactly 37.5%.
-    "W2_POWER":     0.175, # CHANGED: 0.165 -> 0.175 — +1% from the zeroed W4 wave
-    "W3_DCINFRA":   0.1889,# CHANGED: 0.1689 -> 0.1889 — +2% from the zeroed W4 (Option-B tilt)
-    "W4_CLOUD":     0.000, # CHANGED: 0.04 -> 0.00 — WAVE ZEROED. Mega-cap cloud is capped by
-                           #          law-of-large-numbers AND already held passively elsewhere;
-                           #          the 4% redistributed to W2/W3/W5. Names kept at 0% book.
-    "W5_SOFTWARE":  0.107, # CHANGED: 0.097 -> 0.107 — +1% from the zeroed W4 wave
-    "W6_SPEC":      0.030, # CHANGED: 0.00 -> 0.03 — RE-OPENED so TMDX (top-10) clears 2%.
-                           #          TMDX dominates the wave; other spec names tiny; CRCL 0%.
+    "W2_POWER":     0.175, # +1% from the zeroed W4 wave
+    "W3_DCINFRA":   0.2093,# CHANGED: 0.1889 -> 0.2093 — absorbs SNOW (cross-wave -> CRDO)
+                           #          on the growth-maximization pass.
+    "W4_CLOUD":     0.000, # WAVE ZEROED. Mega-cap cloud is capped by law-of-large-numbers
+                           #          AND held passively elsewhere. Names kept at 0% book.
+    "W5_SOFTWARE":  0.0566,# CHANGED: 0.107 -> 0.0566 — SNOW moved to CRDO (W3) and weight
+                           #          shifted to W6; remaining 4 names (PANW/CRWD/NOW/DDOG).
+    "W6_SPEC":      0.060, # CHANGED: 0.03 -> 0.06 — GROWN so the highest-upside names IONQ
+                           #          (+175% mid) and RKLB (+171%) get real ~1.5% slots, plus
+                           #          TMDX 2.5% (uncorrelated decorrelator). Funded from W5.
 }
 # OPTION B (BOTTLENECK TILT) + SMHV WINDFALL — restructured 2026-06.
 # Context: a 90k CHF SMHV.SW position (899 shares) is now a FIXED 37.5% of the
@@ -142,17 +144,22 @@ W2_POWER_TARGETS = {
 # Option B (de-concentrate): flattened toward equal weight to lower single-name
 # risk across the sleeve.
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.1744,# Liquid cooling leader — CYCLE
-    "ANET":  0.1744,# Arista — DC networking monopoly, DCA
-    "CRDO":  0.1744,# optical/copper interconnect — CYCLE (top-10, ~2.95% book)
-    "COHR":  0.1628,# Coherent optical components — CYCLE
-    "FN":    0.1512,# Fabrinet — optical contract mfr, de-risked, record revenue (top-10,
+    "VRT":   0.1574,# Liquid cooling leader — CYCLE
+    "ANET":  0.1574,# Arista — DC networking monopoly, DCA
+    "CRDO":  0.3062,# CHANGED: 0.1744 -> 0.3062 — growth-max pass concentrates the SNOW
+                    # exit (cross-wave) AND the COHR trim into CRDO, the sleeve's
+                    # highest-mid name (+472M net income, +206% rev, +60/+200 forecast).
+                    # Now ~6.4% book — the largest non-SMHV position. CYCLE (top-10).
+    "COHR":  0.0956,# CHANGED: 0.1628 -> 0.0956 — TRIMMED to ~2.0% book (kept some
+                    # optical-materials exposure; lowest-mid name in the sleeve). CYCLE.
+    "FN":    0.1365,# Fabrinet — optical contract mfr, de-risked, record revenue (top-10,
                     # ~2.55% book). More torque than "steady" enclosures. CYCLE / Mid.
-    "ALAB":  0.1628,# Astera Labs — AI connectivity pure-play (CXL/PCIe retimers),
+    "ALAB":  0.1469,# Astera Labs — AI connectivity pure-play (CXL/PCIe retimers),
                     # highest-beta name in the sleeve. CYCLE / Mid — bottleneck is young
                     # but the stock already ran +500%/2y, so remaining runway = Mid.
                     # CHANGED 2026-06: S (SentinelOne) MOVED OUT to W5 (it's a software/cyber
-                    # name); the 6 remaining infra names renormalized to sum to 1.0.
+                    # name). Growth-max pass: SNOW + COHR trim folded into CRDO; 6 names
+                    # renormalized to sum to 1.0.
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (20%) ---
@@ -164,37 +171,38 @@ W4_CLOUD_TARGETS = {
     "ORCL":  0.20,  # Cloud-capacity winner
 }
 
-# --- WAVE 5: AI SOFTWARE / APPS (18%) ---
-# CHANGED: re-added SNOW and NOW. Both fell on multiple-compression, not broken
-# businesses — SNOW (16.6x sales, +$1.7B FCF, Cortex AI) is a worked-off bubble
-# hangover; NOW (fwd P/E ~21, +13% GAAP, +$5.1B FCF, Now Assist) is a profitable
-# compounder repriced in 2025. Both are AI-native and mean-reversion candidates.
-# Six names renormalized to sum to 1.0; weighting reflects valuation risk —
-# PANW/CRWD/NOW profitable anchors, PLTR capped (62x sales), DDOG cyclical.
+# --- WAVE 5: AI SOFTWARE / APPS (5.66%) ---
+# CHANGED (growth-max pass): SNOW MOVED OUT to CRDO (W3) — it was the weakest
+# software name (slowest forecast, multiple-compression hangover) and CRDO is the
+# sleeve's proven hyper-grower. The wave was also trimmed to fund W6 growth.
+# Four profitable anchors remain (PANW/CRWD/NOW/DDOG); PLTR & S kept at 0%.
 W5_SOFTWARE_TARGETS = {
-    "S":     0.0000,# CHANGED: 0.187 -> 0.00 — CUT. Only GAAP-UNPROFITABLE top-10 name
-                    # (net income -$319M TTM, never had a profitable year); FCF-positive
-                    # but turnaround unproven. Cut in favor of proven-profitable cyber
-                    # (CRWD/PANW). Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.2024,# Security platform — biggest, cheapest, steadiest
-    "CRWD":  0.2025,# AI cybersecurity — highest-quality platform
-    "NOW":   0.2025,# Workflow AI (Now Assist) — profitable, cheap re-rating play
-    "PLTR":  0.0000,# CHANGED: 0.127 -> 0.00 — TRIMMED: below 200d / death cross (tech sell
-                    # signal overrides thesis, pt 8). Kept at 0% for easy re-add.
-    "SNOW":  0.1904,# Data-cloud + Cortex AI — healed bubble hangover
-    "DDOG":  0.2022,# AI observability — purest AI-data, consumption-cyclical
+    "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
+                    # never had a profitable year); FCF-positive but turnaround unproven.
+                    # Kept at 0% for easy re-add if the GAAP turn completes.
+    "PANW":  0.2500,# Security platform — biggest, cheapest, steadiest
+    "CRWD":  0.2501,# AI cybersecurity — highest-quality platform
+    "NOW":   0.2501,# Workflow AI (Now Assist) — profitable, cheap re-rating play
+    "PLTR":  0.0000,# TRIMMED: below 200d / death cross (tech sell signal, pt 8).
+                    # Kept at 0% for easy re-add.
+    "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
+                    # Healed bubble hangover but slowest forecast of the survivors.
+    "DDOG":  0.2498,# AI observability — purest AI-data, consumption-cyclical
 }
 
-# --- WAVE 6: SPECULATIVE / SECOND-ORDER (8%) ---
-# CHANGED: removed ENVX — -47% 5Y, -81% off ATH, ~50% odds toward $0/dilution.
-# Remaining names renormalized to sum to 1.0.
+# --- WAVE 6: SPECULATIVE / SECOND-ORDER (6%) ---
+# CHANGED (growth-max pass): wave grown 3% -> 6% (funded from W5) so the two
+# highest-upside names get real slots: IONQ (+175% mid) and RKLB (+171%) sized
+# to ~1.5% book each, alongside TMDX 2.5% (profitable, uncorrelated decorrelator).
+# These are the portfolio's convex tail — small absolute size, large payoff skew.
 W6_SPEC_TARGETS = {
-    "TMDX":  0.6667,  # CHANGED: 0.2667 -> 0.6667 — TMDX is a TOP-10 name; W6 re-opened to
-                      # 3% so TMDX clears the 2%-of-book floor (0.6667 x 3% = 2.0% book).
+    "TMDX":  0.4167,  # CHANGED: 0.6667 -> 0.4167 — TOP-10 name; 0.4167 x 6% = 2.5% book.
                       # MedTech organ-transport, profitable, off-radar, non-AI diversifier.
-    "AXON":  0.1333,  # Defense/policing AI (profitable anchor) — small spec slice
-    "IONQ":  0.1000,  # Quantum — revenue leader only
-    "RKLB":  0.1000,  # Space / autonomy
+    "AXON":  0.0833,  # Defense/policing AI (profitable anchor) — small spec slice (0.5%)
+    "IONQ":  0.2500,  # CHANGED: 0.10 -> 0.25 — Quantum revenue leader; sized to 1.5% book
+                      # for its +175% mid (highest forecast in the book). Lottery/convex.
+    "RKLB":  0.2500,  # CHANGED: 0.10 -> 0.25 — Space/autonomy; sized to 1.5% book for its
+                      # +171% mid. Lottery/convex tail alongside IONQ.
     "CRCL":  0.0000,  # Circle (USDC) — held windfall (147 shares), TARGET 0%. Parked to
                       # track/manage down, NOT to add to. Catalyst.
 }
