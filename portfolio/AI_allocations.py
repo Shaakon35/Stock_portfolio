@@ -29,10 +29,12 @@ TARGET_WEIGHTS = {
     "W1_SILICON":   0.4991,# CHANGED: 0.475 -> 0.4991 — grown so the 4 top-10 W1 singles
                            #          (CAMT/ONTO/BESI/SIMO) each clear 2% of book while
                            #          SMHV stays fixed at exactly 37.5%.
-    "W2_POWER":     0.165, # CHANGED: 0.19 -> 0.165 — trimmed to fund the W1 growth
-    "W3_DCINFRA":   0.1689,# CHANGED: 0.21 -> 0.1689 — trimmed to fund W1; also S left for W5
-    "W4_CLOUD":     0.040, # CHANGED: 0.05 -> 0.04 — trimmed (SMHV gives no cloud anyway)
-    "W5_SOFTWARE":  0.097, # CHANGED: 0.075 -> 0.097 — grown to absorb S (moved from W3) at 2%
+    "W2_POWER":     0.175, # CHANGED: 0.165 -> 0.175 — +1% from the zeroed W4 wave
+    "W3_DCINFRA":   0.1889,# CHANGED: 0.1689 -> 0.1889 — +2% from the zeroed W4 (Option-B tilt)
+    "W4_CLOUD":     0.000, # CHANGED: 0.04 -> 0.00 — WAVE ZEROED. Mega-cap cloud is capped by
+                           #          law-of-large-numbers AND already held passively elsewhere;
+                           #          the 4% redistributed to W2/W3/W5. Names kept at 0% book.
+    "W5_SOFTWARE":  0.107, # CHANGED: 0.097 -> 0.107 — +1% from the zeroed W4 wave
     "W6_SPEC":      0.030, # CHANGED: 0.00 -> 0.03 — RE-OPENED so TMDX (top-10) clears 2%.
                            #          TMDX dominates the wave; other spec names tiny; CRCL 0%.
 }
@@ -117,14 +119,15 @@ W1_SILICON_TARGETS = {
 #   "POWL":  0.07,   # switchgear — LATE-cycle, already +389% (CYCLE)
 #   "VST":   0.07,   # merchant power — LATE-cycle, already ran (CYCLE)
 W2_POWER_TARGETS = {
-    "GEV":     0.18,  # grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
-    "CCJ":     0.16,  # uranium leader, HOLD FOREVER
-    "CEG":     0.12,  # CHANGED: 0.20 -> 0.12 — trimmed late-cycle nuclear utility
-    "ETN":     0.13,  # CHANGED: 0.10 -> 0.12 — transmission/electrification, DCA
-    "HUBB":    0.12,  # NEW: transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
-    "PWR":     0.10,  # CHANGED: 0.07 -> 0.09 — builds transmission lines, CYCLE
-    "OKLO":    0.08,  # SMR catalyst (binary)
-    "ABBN.SW": 0.11,  # NEW: HVDC / transformers (EU) — long-distance grid bottleneck,
+    "GEV":     0.2046,# grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
+    "CCJ":     0.1818,# uranium leader, HOLD FOREVER
+    "CEG":     0.0000,# CHANGED: 0.12 -> 0.00 — TRIMMED: below 200d / death cross (tech sell
+                      # signal overrides thesis, pt 8). Kept at 0% for easy re-add.
+    "ETN":     0.1477,# transmission/electrification, DCA
+    "HUBB":    0.1364,# transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
+    "PWR":     0.1136,# builds transmission lines, CYCLE
+    "OKLO":    0.0909,# SMR catalyst (binary)
+    "ABBN.SW": 0.1250,# HVDC / transformers (EU) — long-distance grid bottleneck,
                       # adds CHF/EU diversification. DCA.
 }
 
@@ -169,15 +172,15 @@ W4_CLOUD_TARGETS = {
 # Six names renormalized to sum to 1.0; weighting reflects valuation risk —
 # PANW/CRWD/NOW profitable anchors, PLTR capped (62x sales), DDOG cyclical.
 W5_SOFTWARE_TARGETS = {
-    "S":     0.2062,# MOVED from W3: SentinelOne — AI-native cyber, just turned profitable,
-                    # cheap, small (best 8-pt profile). TOP-10, sized to ~2.0% of book.
-                    # CYCLE / Early. Now in its correct (software) wave.
-    "PANW":  0.135, # Security platform — biggest, cheapest, steadiest
-    "CRWD":  0.135, # AI cybersecurity — highest-quality platform
-    "NOW":   0.135, # Workflow AI (Now Assist) — profitable, cheap re-rating play
-    "PLTR":  0.127, # AI ops / defense platform — best growth, capped on valuation
-    "SNOW":  0.127, # Data-cloud + Cortex AI — healed bubble hangover
-    "DDOG":  0.1348,# AI observability — purest AI-data, consumption-cyclical
+    "S":     0.1870,# SentinelOne — AI-native cyber, just turned profitable, cheap, small
+                    # (best 8-pt profile). TOP-10, sized to ~2.0% of book. CYCLE / Early.
+    "PANW":  0.1646,# Security platform — biggest, cheapest, steadiest
+    "CRWD":  0.1646,# AI cybersecurity — highest-quality platform
+    "NOW":   0.1646,# Workflow AI (Now Assist) — profitable, cheap re-rating play
+    "PLTR":  0.0000,# CHANGED: 0.127 -> 0.00 — TRIMMED: below 200d / death cross (tech sell
+                    # signal overrides thesis, pt 8). Kept at 0% for easy re-add.
+    "SNOW":  0.1548,# Data-cloud + Cortex AI — healed bubble hangover
+    "DDOG":  0.1644,# AI observability — purest AI-data, consumption-cyclical
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (8%) ---
