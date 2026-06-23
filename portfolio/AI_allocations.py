@@ -26,13 +26,15 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 # =========================================================================
 
 TARGET_WEIGHTS = {
-    "W1_SILICON":   0.475, # CHANGED: 0.30 -> 0.475 — absorbs the 90k SMHV windfall (37.5%
-                           #          of book) PLUS the 10% surviving-singles slice.
-    "W2_POWER":     0.19,  # CHANGED: 0.22 -> 0.19 — Option B tilt: keep power overweight
-    "W3_DCINFRA":   0.21,  # CHANGED: 0.26 -> 0.21 — Option B tilt: keep DC-infra overweight
-    "W4_CLOUD":     0.05,  # CHANGED: 0.08 -> 0.05 — trimmed (SMHV gives no cloud anyway)
-    "W5_SOFTWARE":  0.075, # CHANGED: 0.14 -> 0.075 — trimmed; lowest-upside non-core wave
-    "W6_SPEC":      0.00,  # speculative wave stays zeroed (CRCL parked here as a 0%-target windfall)
+    "W1_SILICON":   0.4991,# CHANGED: 0.475 -> 0.4991 — grown so the 4 top-10 W1 singles
+                           #          (CAMT/ONTO/BESI/SIMO) each clear 2% of book while
+                           #          SMHV stays fixed at exactly 37.5%.
+    "W2_POWER":     0.165, # CHANGED: 0.19 -> 0.165 — trimmed to fund the W1 growth
+    "W3_DCINFRA":   0.1689,# CHANGED: 0.21 -> 0.1689 — trimmed to fund W1; also S left for W5
+    "W4_CLOUD":     0.040, # CHANGED: 0.05 -> 0.04 — trimmed (SMHV gives no cloud anyway)
+    "W5_SOFTWARE":  0.097, # CHANGED: 0.075 -> 0.097 — grown to absorb S (moved from W3) at 2%
+    "W6_SPEC":      0.030, # CHANGED: 0.00 -> 0.03 — RE-OPENED so TMDX (top-10) clears 2%.
+                           #          TMDX dominates the wave; other spec names tiny; CRCL 0%.
 }
 # OPTION B (BOTTLENECK TILT) + SMHV WINDFALL — restructured 2026-06.
 # Context: a 90k CHF SMHV.SW position (899 shares) is now a FIXED 37.5% of the
@@ -68,37 +70,35 @@ TARGET_WEIGHTS = {
 # SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
 # and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.79,  # CHANGED: 0.07 -> 0.79 — now the 90k CHF windfall (899 shares),
-                        # a FIXED 37.5% of the 240k book (= 0.79 of the 47.5% W1 wave).
+    "SMHV.SW":   0.7511,# CHANGED: 0.79 -> 0.7511 — the 90k CHF windfall (899 shares) held
+                        # FIXED at exactly 37.5% of book (= 0.7511 of the 49.91% W1 wave).
                         # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
                         # Samsung/SK Hynix — those are genuine new exposure, not a dup.
     # --- ZEROED 2026-06: all six are SMHV's TOP holdings, so the ETF already
     #     gives full exposure. Kept at 0.0 for easy re-add (no fresh money). ---
-    "NVDA":      0.00,  # CHANGED: 0.13 -> 0.00 — SMHV #7 (7.2%); covered by ETF
-    "AVGO":      0.00,  # CHANGED: 0.12 -> 0.00 — SMHV #3 (8.3%); covered by ETF
-    "ASML":      0.00,  # CHANGED: 0.11 -> 0.00 — SMHV #6 (7.4%); covered by ETF
-    "TSM":       0.00,  # CHANGED: 0.07 -> 0.00 — SMHV #5 (7.5%); covered by ETF
-    "MU":        0.00,  # CHANGED: 0.06 -> 0.00 — SMHV #1 (14.3%); covered by ETF
-    "AMD":       0.00,  # CHANGED: 0.06 -> 0.00 — SMHV #2 (12.2%); covered by ETF
-    # --- SURVIVING SINGLES: names SMHV does NOT meaningfully hold. FLATTENED to
-    #     EQUAL WEIGHT (0.03 each = ~1.43% of book) — once SMHV covers the
-    #     mega-caps none of these is a core thesis, so no merit-ranking is implied.
-    #     Together they hold the remaining 0.21 of W1 (= ~10% of book). ---
-    "MRVL":      0.03,  # Custom AI ASICs / optical DSPs — thin in SMHV. DCA.
-    "BESI.AS":   0.03,  # advanced packaging (hybrid bonding for HBM4+/chiplets) — the
-                        # western CoWoS pure-play. EUR-listed (Amsterdam). CYCLE.
-    "000660.KS": 0.03,  # SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
-                        # HBM bet. KRX-listed (KRW), buy via Interactive Brokers. CYCLE / Mid.
-    "CAMT":      0.03,  # SWAP (was Samsung 005930.KS): Camtek — HBM inspection / AOI.
-                        # Focused, profitable, accelerating bottleneck vs a diluted
-                        # conglomerate. NOT in SMHV. CYCLE / Mid. (SK Hynix still held
-                        # for the clean Korean-memory bet; Samsung -> watchlist.)
-    "CDNS":      0.03,  # Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
-                        # layer; not in SMHV. Secular high-margin compounder. DCA / Mid.
-    "ONTO":      0.03,  # Onto Innovation — metrology / process-control inspection. Fills the
-                        # back-end INSPECTION gap; NOT inside SMHV. High-beta WFE, Mid. CYCLE.
-    "SMHN.DE":   0.03,  # SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
-                        # CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). CYCLE / Early.
+    "NVDA":      0.00,  # SMHV #7 (7.2%); covered by ETF
+    "AVGO":      0.00,  # SMHV #3 (8.3%); covered by ETF
+    "ASML":      0.00,  # SMHV #6 (7.4%); covered by ETF
+    "TSM":       0.00,  # SMHV #5 (7.5%); covered by ETF
+    "MU":        0.00,  # SMHV #1 (14.3%); covered by ETF
+    "AMD":       0.00,  # SMHV #2 (12.2%); covered by ETF
+    # --- SURVIVING SINGLES. The four TOP-10 names (CAMT/ONTO/BESI/SIMO) are sized
+    #     to clear the 2%-of-book floor (0.0401 each = 2.0% book); the remaining
+    #     three (SK Hynix/CDNS/SMHN) sit just below at ~1.47% book. ---
+    "CAMT":      0.0401,# TOP-10: Camtek — HBM inspection/AOI bottleneck. 2.0% of book.
+                        # (was Samsung 005930.KS; profitable accelerating pure-play.)
+    "ONTO":      0.0401,# TOP-10: Onto Innovation — metrology/process-control inspection.
+                        # NOT inside SMHV. High-beta WFE, Mid. 2.0% of book.
+    "BESI.AS":   0.0401,# TOP-10: advanced packaging (hybrid bonding for HBM4+/chiplets) —
+                        # western CoWoS pure-play. EUR-listed. CYCLE. 2.0% of book.
+    "SIMO":      0.0401,# TOP-10: Silicon Motion — NAND/SSD controllers. Fills the missing
+                        # memory sub-segment. Profitable, ~39x. CYCLE / Mid. 2.0% of book.
+    "000660.KS": 0.0295,# SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest HBM
+                        # bet. KRX-listed (KRW), buy via IBKR. CYCLE / Mid. ~1.47% book.
+    "CDNS":      0.0295,# Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
+                        # layer; not in SMHV. Secular high-margin compounder. ~1.47% book.
+    "SMHN.DE":   0.0295,# SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
+                        # CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). ~1.47% book.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -139,21 +139,17 @@ W2_POWER_TARGETS = {
 # Option B (de-concentrate): flattened toward equal weight to lower single-name
 # risk across the sleeve.
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.15,  # Liquid cooling leader — CYCLE
-    "ANET":  0.15,  # Arista — DC networking monopoly, DCA
-    "CRDO":  0.15,  # optical/copper interconnect — CYCLE
-    "COHR":  0.14,  # Coherent optical components — CYCLE
-    "FN":    0.13,  # SWAP (was NVT): Fabrinet — optical contract mfr, de-risked, record
-                    # revenue. More torque than "steady" enclosures in the same DC/optical
-                    # lane. Profitable. CYCLE / Mid.
-    "ALAB":  0.14,  # Astera Labs — AI connectivity pure-play (CXL/PCIe retimers),
+    "VRT":   0.1744,# Liquid cooling leader — CYCLE
+    "ANET":  0.1744,# Arista — DC networking monopoly, DCA
+    "CRDO":  0.1744,# optical/copper interconnect — CYCLE (top-10, ~2.95% book)
+    "COHR":  0.1628,# Coherent optical components — CYCLE
+    "FN":    0.1512,# Fabrinet — optical contract mfr, de-risked, record revenue (top-10,
+                    # ~2.55% book). More torque than "steady" enclosures. CYCLE / Mid.
+    "ALAB":  0.1628,# Astera Labs — AI connectivity pure-play (CXL/PCIe retimers),
                     # highest-beta name in the sleeve. CYCLE / Mid — bottleneck is young
                     # but the stock already ran +500%/2y, so remaining runway = Mid.
-                    # Trim when growth <30%.
-    "S":     0.14,  # SWAP (was APH): SentinelOne — AI-native cyber, just turned profitable,
-                    # cheap, small (best 8-pt profile). NB: thematically a SOFTWARE (W5) name,
-                    # placed in W3 as an in-slot swap to keep weights constant per request.
-                    # CYCLE / Early.
+                    # CHANGED 2026-06: S (SentinelOne) MOVED OUT to W5 (it's a software/cyber
+                    # name); the 6 remaining infra names renormalized to sum to 1.0.
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (20%) ---
@@ -173,25 +169,29 @@ W4_CLOUD_TARGETS = {
 # Six names renormalized to sum to 1.0; weighting reflects valuation risk —
 # PANW/CRWD/NOW profitable anchors, PLTR capped (62x sales), DDOG cyclical.
 W5_SOFTWARE_TARGETS = {
-    "PANW":  0.17,  # Security platform — biggest, cheapest, steadiest (top pick)
-    "CRWD":  0.17,  # AI cybersecurity — highest-quality platform
-    "NOW":   0.17,  # Workflow AI (Now Assist) — profitable, cheap re-rating play
-    "PLTR":  0.16,  # AI ops / defense platform — best growth, capped on valuation
-    "SNOW":  0.16,  # Data-cloud + Cortex AI — healed bubble hangover
-    "DDOG":  0.17,  # AI observability — purest AI-data, consumption-cyclical
+    "S":     0.2062,# MOVED from W3: SentinelOne — AI-native cyber, just turned profitable,
+                    # cheap, small (best 8-pt profile). TOP-10, sized to ~2.0% of book.
+                    # CYCLE / Early. Now in its correct (software) wave.
+    "PANW":  0.135, # Security platform — biggest, cheapest, steadiest
+    "CRWD":  0.135, # AI cybersecurity — highest-quality platform
+    "NOW":   0.135, # Workflow AI (Now Assist) — profitable, cheap re-rating play
+    "PLTR":  0.127, # AI ops / defense platform — best growth, capped on valuation
+    "SNOW":  0.127, # Data-cloud + Cortex AI — healed bubble hangover
+    "DDOG":  0.1348,# AI observability — purest AI-data, consumption-cyclical
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (8%) ---
 # CHANGED: removed ENVX — -47% 5Y, -81% off ATH, ~50% odds toward $0/dilution.
 # Remaining names renormalized to sum to 1.0.
 W6_SPEC_TARGETS = {
-    "AXON":  0.3333,  # Defense/policing AI (profitable anchor)
-    "TMDX":  0.2667,  # MedTech non-AI diversifier
-    "IONQ":  0.2000,  # Quantum — revenue leader only
-    "RKLB":  0.2000,  # Space / autonomy
-    "CRCL":  0.0000,  # NEW: Circle (USDC stablecoin issuer) — held windfall (147 shares),
-                      # TARGET 0% (W6 wave is 0% anyway). Parked here to track/manage down,
-                      # NOT to add to. Stablecoin-rails fintech, high-beta — treat as catalyst.
+    "TMDX":  0.6667,  # CHANGED: 0.2667 -> 0.6667 — TMDX is a TOP-10 name; W6 re-opened to
+                      # 3% so TMDX clears the 2%-of-book floor (0.6667 x 3% = 2.0% book).
+                      # MedTech organ-transport, profitable, off-radar, non-AI diversifier.
+    "AXON":  0.1333,  # Defense/policing AI (profitable anchor) — small spec slice
+    "IONQ":  0.1000,  # Quantum — revenue leader only
+    "RKLB":  0.1000,  # Space / autonomy
+    "CRCL":  0.0000,  # Circle (USDC) — held windfall (147 shares), TARGET 0%. Parked to
+                      # track/manage down, NOT to add to. Catalyst.
 }
 
 # =========================================================================
@@ -231,7 +231,7 @@ STRATEGY = {
     "SMHV.SW": "dca",       # Diversified ETF — buy monthly, never sell
     "NVDA":    "dca",       # Profitable mega-cap compounder
     "AVGO":    "dca",       # Profitable, dividend, ~$27B FCF
-    "MRVL":    "dca",       # Profitable ASIC play, reasonable multiple
+    "SIMO":    "cycle",     # Silicon Motion — NAND/SSD controllers; memory-cycle, trim at peak
     "ASML":    "dca",       # EUV monopoly — secular grower; each cycle troughs higher
     "TSM":     "dca",       # Foundry monopoly — secular grower, sane valuation (~20x)
     "MU":        "cycle",   # Memory/HBM — violently cyclical; buy dips, trim at peak

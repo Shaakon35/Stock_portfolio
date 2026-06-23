@@ -137,7 +137,7 @@ WAVE_FORECASTS = {
     "NVDA":    {"min_rate": 9.9,  "max_rate": 20.1},  # 5Y +60/+150% — AI GPU demand, priced-in but dominant
     "AVGO":    {"min_rate": 9.9,  "max_rate": 19.1},  # 5Y +60/+140% — custom AI silicon + software
     "ASML":    {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — EUV monopoly, cyclical orders
-    "MRVL":    {"min_rate": 8.4,  "max_rate": 21.1},  # 5Y +50/+160% — custom ASIC/optical DSP (est.)
+    "SIMO":    {"min_rate": 7.0,  "max_rate": 18.1},  # 5Y +40/+130% — NAND/SSD controllers, memory-cycle, reasonable ~39x (est.)
     "TSM":     {"min_rate": 11.2, "max_rate": 21.1},  # 5Y +70/+160% — foundry monopoly, fair valuation
     "MU":        {"min_rate": 3.7,  "max_rate": 22.0},  # 5Y +20/+170% — memory/HBM, violently cyclical (est.)
     "AMD":       {"min_rate": 8.4,  "max_rate": 22.0},  # 5Y +50/+170% — #2 GPU, high beta (est.)
