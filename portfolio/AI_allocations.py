@@ -172,15 +172,17 @@ W4_CLOUD_TARGETS = {
 # Six names renormalized to sum to 1.0; weighting reflects valuation risk —
 # PANW/CRWD/NOW profitable anchors, PLTR capped (62x sales), DDOG cyclical.
 W5_SOFTWARE_TARGETS = {
-    "S":     0.1870,# SentinelOne — AI-native cyber, just turned profitable, cheap, small
-                    # (best 8-pt profile). TOP-10, sized to ~2.0% of book. CYCLE / Early.
-    "PANW":  0.1646,# Security platform — biggest, cheapest, steadiest
-    "CRWD":  0.1646,# AI cybersecurity — highest-quality platform
-    "NOW":   0.1646,# Workflow AI (Now Assist) — profitable, cheap re-rating play
+    "S":     0.0000,# CHANGED: 0.187 -> 0.00 — CUT. Only GAAP-UNPROFITABLE top-10 name
+                    # (net income -$319M TTM, never had a profitable year); FCF-positive
+                    # but turnaround unproven. Cut in favor of proven-profitable cyber
+                    # (CRWD/PANW). Kept at 0% for easy re-add if the GAAP turn completes.
+    "PANW":  0.2024,# Security platform — biggest, cheapest, steadiest
+    "CRWD":  0.2025,# AI cybersecurity — highest-quality platform
+    "NOW":   0.2025,# Workflow AI (Now Assist) — profitable, cheap re-rating play
     "PLTR":  0.0000,# CHANGED: 0.127 -> 0.00 — TRIMMED: below 200d / death cross (tech sell
                     # signal overrides thesis, pt 8). Kept at 0% for easy re-add.
-    "SNOW":  0.1548,# Data-cloud + Cortex AI — healed bubble hangover
-    "DDOG":  0.1644,# AI observability — purest AI-data, consumption-cyclical
+    "SNOW":  0.1904,# Data-cloud + Cortex AI — healed bubble hangover
+    "DDOG":  0.2022,# AI observability — purest AI-data, consumption-cyclical
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (8%) ---
