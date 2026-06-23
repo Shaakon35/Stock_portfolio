@@ -89,8 +89,10 @@ W1_SILICON_TARGETS = {
                         # western CoWoS pure-play. EUR-listed (Amsterdam). CYCLE.
     "000660.KS": 0.03,  # SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest
                         # HBM bet. KRX-listed (KRW), buy via Interactive Brokers. CYCLE / Mid.
-    "005930.KS": 0.03,  # Samsung Electronics — memory + foundry, more diluted
-                        # (conglomerate). KRX-listed (KRW). CYCLE / Mid.
+    "CAMT":      0.03,  # SWAP (was Samsung 005930.KS): Camtek — HBM inspection / AOI.
+                        # Focused, profitable, accelerating bottleneck vs a diluted
+                        # conglomerate. NOT in SMHV. CYCLE / Mid. (SK Hynix still held
+                        # for the clean Korean-memory bet; Samsung -> watchlist.)
     "CDNS":      0.03,  # Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
                         # layer; not in SMHV. Secular high-margin compounder. DCA / Mid.
     "ONTO":      0.03,  # Onto Innovation — metrology / process-control inspection. Fills the
@@ -141,13 +143,17 @@ W3_DCINFRA_TARGETS = {
     "ANET":  0.15,  # Arista — DC networking monopoly, DCA
     "CRDO":  0.15,  # optical/copper interconnect — CYCLE
     "COHR":  0.14,  # Coherent optical components — CYCLE
-    "NVT":   0.13,  # nVent enclosures + cooling — DCA
+    "FN":    0.13,  # SWAP (was NVT): Fabrinet — optical contract mfr, de-risked, record
+                    # revenue. More torque than "steady" enclosures in the same DC/optical
+                    # lane. Profitable. CYCLE / Mid.
     "ALAB":  0.14,  # Astera Labs — AI connectivity pure-play (CXL/PCIe retimers),
                     # highest-beta name in the sleeve. CYCLE / Mid — bottleneck is young
                     # but the stock already ran +500%/2y, so remaining runway = Mid.
                     # Trim when growth <30%.
-    "APH":   0.14,  # Amphenol — diversified interconnect compounder. Quality
-                    # "sleep at night" anchor for the wave. DCA / Mid — hold forever.
+    "S":     0.14,  # SWAP (was APH): SentinelOne — AI-native cyber, just turned profitable,
+                    # cheap, small (best 8-pt profile). NB: thematically a SOFTWARE (W5) name,
+                    # placed in W3 as an in-slot swap to keep weights constant per request.
+                    # CYCLE / Early.
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (20%) ---
@@ -232,7 +238,7 @@ STRATEGY = {
     "AMD":       "cycle",   # #2 GPU — high-beta; trim near cycle peak, don't blind-DCA
     "BESI.AS":   "cycle",   # Advanced packaging — single-tech bet (hybrid bonding); trim at peak
     "000660.KS": "cycle",   # SK Hynix — HBM leader; same memory cycle as MU, trim at peak
-    "005930.KS": "cycle",   # Samsung — memory+foundry; same memory cycle, trim at peak
+    "CAMT":      "cycle",   # Camtek — HBM inspection/AOI bottleneck; high-beta, trim near peak
     "CDNS":      "dca",     # Cadence — EDA duopoly, secular high-margin compounder, hold forever
     "ONTO":      "cycle",   # Onto — metrology/inspection, high-beta WFE; Mid-cycle, buy dips, trim at peak
     "SMHN.DE":   "cycle",   # SUSS MicroTec — packaging/bonding equipment, high-beta; trim near peak
@@ -255,9 +261,9 @@ STRATEGY = {
     "ANET":    "dca",       # Networking monopoly — 38% margin, $4.4B FCF, software moat
     "CRDO":    "cycle",     # +2127% hypergrowth — sell when growth <30%
     "COHR":    "cycle",     # Optical — already ran, cyclical
-    "NVT":     "dca",       # nVent — DC enclosures + liquid cooling, early-cycle, hold forever
+    "FN":      "cycle",     # Fabrinet — optical contract mfr; cyclical, buy dips, trim at peak
     "ALAB":    "cycle",     # Astera — AI connectivity pure-play, high-beta; Mid-cycle (+500%/2y), trim when growth <30%
-    "APH":     "dca",       # Amphenol — diversified interconnect compounder, hold forever
+    "S":       "cycle",     # SentinelOne — AI-native cyber, just-turned-profitable; buy dips, trim at peak
     # REMOVED from basket (kept commented for easy re-add — see W3_DCINFRA_TARGETS):
     #   "FIX":     "cycle",     # +2206% — late-cycle DC construction (removed)
 

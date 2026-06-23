@@ -143,7 +143,7 @@ WAVE_FORECASTS = {
     "AMD":       {"min_rate": 8.4,  "max_rate": 22.0},  # 5Y +50/+170% — #2 GPU, high beta (est.)
     "BESI.AS":   {"min_rate": 9.9,  "max_rate": 22.9},  # 5Y +60/+180% — advanced packaging pure-play, high-beta single-tech (est.)
     "000660.KS": {"min_rate": 4.6,  "max_rate": 22.9},  # 5Y +25/+180% — SK Hynix, HBM leader, same memory cycle as MU (est.)
-    "005930.KS": {"min_rate": 3.7,  "max_rate": 17.1},  # 5Y +20/+120% — Samsung, diluted conglomerate, lower beta (est.)
+    "CAMT":      {"min_rate": 9.9,  "max_rate": 22.9},  # 5Y +60/+180% — Camtek, HBM inspection/AOI bottleneck, profitable + accelerating (est.)
     "CDNS":      {"min_rate": 9.9,  "max_rate": 18.1},  # 5Y +60/+130% — EDA duopoly, secular high-margin compounder (est.)
     "ONTO":      {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — metrology/inspection, high-beta WFE, mid-cycle (est.)
     "SMHN.DE":   {"min_rate": 9.9,  "max_rate": 24.6},  # 5Y +60/+200% — adv-packaging/bonding equip, same HBM bottleneck as BESI, early-cycle (est.)
@@ -165,12 +165,12 @@ WAVE_FORECASTS = {
     "VRT":     {"min_rate": 11.2, "max_rate": 22.9},  # 5Y +70/+180% — liquid cooling leader, capex wave
     "ANET":    {"min_rate": 9.9,  "max_rate": 20.1},  # 5Y +60/+150% — DC networking, profitable
     "CRDO":    {"min_rate": 9.9,  "max_rate": 24.6},  # 5Y +60/+200% — optical interconnect, hypergrowth
-    "NVT":     {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — DC enclosures + liquid cooling, early-cycle (est.)
+    "FN":      {"min_rate": 9.9,  "max_rate": 21.1},  # 5Y +60/+160% — Fabrinet, optical contract mfr, de-risked + record revenue (est.)
     # REMOVED from basket (kept for reference / easy re-add):
     #   "FIX":     {"min_rate": 5.4,  "max_rate": 16.0},  # 5Y +30/+110% — DC construction, late-cycle
     "COHR":    {"min_rate": 8.4,  "max_rate": 21.1},  # 5Y +50/+160% — optical components
     "ALAB":    {"min_rate": 9.9,  "max_rate": 27.2},  # 5Y +60/+230% — AI connectivity pure-play; mid-cycle (already +500%/2y) (est.)
-    "APH":     {"min_rate": 8.4,  "max_rate": 16.0},  # 5Y +50/+110% — diversified interconnect compounder (est.)
+    "S":       {"min_rate": 9.9,  "max_rate": 24.6},  # 5Y +60/+200% — SentinelOne, AI-native cyber, just-turned-profitable, small (est.)
 
     # --- W4 CLOUD ---
     # CHANGED 2026-06: trimmed the optimistic TOPS for law-of-large-numbers. These
