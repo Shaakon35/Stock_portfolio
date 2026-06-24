@@ -630,6 +630,16 @@ names already "priced for perfection." Apply it before the 10-pillar reporting f
 8. **Confirm the trend, size small, pre-set the exit** — a death cross or break of trend
    overrides the fundamental thesis; enter on confirmation, not hope.
 
+> **A low P/E does NOT mean cheap (cyclical P/E trap).** For cyclical names, P/E is
+> *inverted* at the extremes: at the **peak** of the cycle, earnings (the denominator) are
+> blown out, so the trailing P/E looks *deceptively low* — that is the most dangerous time to
+> buy, not the cheapest. Conversely at the **trough**, earnings collapse, so the P/E looks
+> *deceptively high* — often the best entry (Point 6 trough thesis).
+> **Example — MU (Micron, memory):** at a memory up-cycle peak MU can show a single-digit
+> trailing P/E and still be expensive, because next year's earnings are about to fall off a
+> cliff. Judge cyclicals on **mid-cycle / normalized earnings and P/B**, never on a snapshot
+> trailing P/E. (Same logic flags the late-cycle NAND/HDD names SNDK/WDC/STX.)
+
 ### Growth-Maximization Pass (recurring request pattern)
 
 When asked "how do I improve growth in the AI allocation," the playbook is:
