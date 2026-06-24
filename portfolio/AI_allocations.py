@@ -29,13 +29,17 @@ TARGET_WEIGHTS = {
     "W1_SILICON":   0.4991,# CHANGED: 0.475 -> 0.4991 — grown so the 4 top-10 W1 singles
                            #          (CAMT/ONTO/BESI/SIMO) each clear 2% of book while
                            #          SMHV stays fixed at exactly 37.5%.
-    "W2_POWER":     0.175, # +1% from the zeroed W4 wave
-    "W3_DCINFRA":   0.2093,# CHANGED: 0.1889 -> 0.2093 — absorbs SNOW (cross-wave -> CRDO)
-                           #          on the growth-maximization pass.
+    "W2_POWER":     0.1531,# CHANGED: 0.175 -> 0.1531 — ABBN.SW cut (2.19% book, only name
+                           #          analysts call overvalued, slowest-growth ballast). Wave
+                           #          shrunk by ABBN's book; the other 7 names keep their book.
+    "W3_DCINFRA":   0.2202,# CHANGED: 0.2093 -> 0.2202 — absorbs half the ABBN cut into FN
+                           #          (2.86% -> 3.95% book), the cleanest growth-at-reasonable-
+                           #          price name (28% EPS gr, net cash, +28% analyst upside).
     "W4_CLOUD":     0.000, # WAVE ZEROED. Mega-cap cloud is capped by law-of-large-numbers
                            #          AND held passively elsewhere. Names kept at 0% book.
-    "W5_SOFTWARE":  0.0566,# CHANGED: 0.107 -> 0.0566 — SNOW moved to CRDO (W3) and weight
-                           #          shifted to W6; remaining 4 names (PANW/CRWD/NOW/DDOG).
+    "W5_SOFTWARE":  0.0676,# CHANGED: 0.0566 -> 0.0676 — absorbs half the ABBN cut into NOW
+                           #          (1.42% -> 2.51% book), most mispriced quality held
+                           #          (22x fwd / 0.89 PEG, +48% analyst upside).
     "W6_SPEC":      0.060, # CHANGED: 0.03 -> 0.06 — GROWN so the highest-upside names IONQ
                            #          (+175% mid) and RKLB (+171%) get real ~1.5% slots, plus
                            #          TMDX 2.5% (uncorrelated decorrelator). Funded from W5.
@@ -129,17 +133,21 @@ W1_SILICON_TARGETS = {
 # the basket back to 1.0.
 #   "POWL":  0.07,   # switchgear — LATE-cycle, already +389% (CYCLE)
 #   "VST":   0.07,   # merchant power — LATE-cycle, already ran (CYCLE)
+# CHANGED: ABBN.SW CUT entirely (was 0.1250 basket / 2.19% book). It was the only
+# holding analysts rated overvalued (-13% to PT), slowest-growth ballast (13% EPS gr,
+# net debt). Its book split half -> FN (W3) and half -> NOW (W5). The wave shrank by
+# ABBN's book; the 7 survivors were renormalized so their book values are UNCHANGED.
+# Kept commented for easy re-add (restore here + in STRATEGY, then renormalize to 1.0).
+#   "ABBN.SW": 0.1250,# HVDC / transformers (EU) — long-distance grid, DCA
 W2_POWER_TARGETS = {
-    "GEV":     0.2046,# grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
-    "CCJ":     0.1818,# uranium leader, HOLD FOREVER
+    "GEV":     0.2338,# grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
+    "CCJ":     0.2078,# uranium leader, HOLD FOREVER
     "CEG":     0.0000,# CHANGED: 0.12 -> 0.00 — TRIMMED: below 200d / death cross (tech sell
                       # signal overrides thesis, pt 8). Kept at 0% for easy re-add.
-    "ETN":     0.1477,# transmission/electrification, DCA
-    "HUBB":    0.1364,# transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
-    "PWR":     0.1136,# builds transmission lines, CYCLE
-    "OKLO":    0.0909,# SMR catalyst (binary)
-    "ABBN.SW": 0.1250,# HVDC / transformers (EU) — long-distance grid bottleneck,
-                      # adds CHF/EU diversification. DCA.
+    "ETN":     0.1688,# transmission/electrification, DCA
+    "HUBB":    0.1559,# transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
+    "PWR":     0.1298,# builds transmission lines, CYCLE
+    "OKLO":    0.1039,# SMR catalyst (binary)
 }
 
 # --- WAVE 3: DC INFRASTRUCTURE (18%) ---
@@ -153,17 +161,19 @@ W2_POWER_TARGETS = {
 # Option B (de-concentrate): flattened toward equal weight to lower single-name
 # risk across the sleeve.
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.1574,# Liquid cooling leader — CYCLE
-    "ANET":  0.1574,# Arista — DC networking monopoly, DCA
-    "CRDO":  0.3062,# CHANGED: 0.1744 -> 0.3062 — growth-max pass concentrates the SNOW
-                    # exit (cross-wave) AND the COHR trim into CRDO, the sleeve's
-                    # highest-mid name (+472M net income, +206% rev, +60/+200 forecast).
-                    # Now ~6.4% book — the largest non-SMHV position. CYCLE (top-10).
-    "COHR":  0.0956,# CHANGED: 0.1628 -> 0.0956 — TRIMMED to ~2.0% book (kept some
-                    # optical-materials exposure; lowest-mid name in the sleeve). CYCLE.
-    "FN":    0.1365,# Fabrinet — optical contract mfr, de-risked, record revenue (top-10,
-                    # ~2.55% book). More torque than "steady" enclosures. CYCLE / Mid.
-    "ALAB":  0.1469,# Astera Labs — AI connectivity pure-play (CXL/PCIe retimers),
+    "VRT":   0.1496,# CHANGED: 0.1574 -> 0.1496 — basket renormalized (book unchanged) as FN
+                    # absorbed half the ABBN cut. Liquid cooling leader — CYCLE.
+    "ANET":  0.1496,# CHANGED: 0.1574 -> 0.1496 — renorm (book unchanged). Arista — DC
+                    # networking monopoly, DCA.
+    "CRDO":  0.2909,# CHANGED: 0.3062 -> 0.2909 — renorm only (book UNCHANGED at ~6.41%, still
+                    # the largest non-SMHV position). Growth-max pass folded SNOW + COHR trim
+                    # into CRDO (+472M net income, +206% rev, +60/+200 forecast). CYCLE (top-10).
+    "COHR":  0.0909,# CHANGED: 0.0956 -> 0.0909 — renorm (book unchanged, ~2.0%). CYCLE.
+    "FN":    0.1794,# CHANGED: 0.1365 -> 0.1794 — ABSORBS half the ABBN cut (book 2.86% ->
+                    # 3.95%). Fabrinet — optical contract mfr; cleanest growth-at-reasonable-
+                    # price name (28% EPS gr, net cash, +28% analyst upside). CYCLE / Mid.
+    "ALAB":  0.1396,# CHANGED: 0.1469 -> 0.1396 — renorm (book unchanged). Astera Labs —
+                    # AI connectivity pure-play (CXL/PCIe retimers),
                     # highest-beta name in the sleeve. CYCLE / Mid — bottleneck is young
                     # but the stock already ran +500%/2y, so remaining runway = Mid.
                     # CHANGED 2026-06: S (SentinelOne) MOVED OUT to W5 (it's a software/cyber
@@ -189,14 +199,17 @@ W5_SOFTWARE_TARGETS = {
     "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.2500,# Security platform — biggest, cheapest, steadiest
-    "CRWD":  0.2501,# AI cybersecurity — highest-quality platform
-    "NOW":   0.2501,# Workflow AI (Now Assist) — profitable, cheap re-rating play
+    "PANW":  0.2095,# CHANGED: 0.2500 -> 0.2095 — renorm (book unchanged) as NOW absorbed
+                    # half the ABBN cut. Security platform — biggest, cheapest, steadiest.
+    "CRWD":  0.2096,# CHANGED: 0.2501 -> 0.2096 — renorm (book unchanged). AI cybersecurity.
+    "NOW":   0.3716,# CHANGED: 0.2501 -> 0.3716 — ABSORBS half the ABBN cut (book 1.42% ->
+                    # 2.51%). Most mispriced quality held: 22x fwd / 0.89 PEG, +48% analyst
+                    # upside, down ~50% on the year. Workflow AI (Now Assist), profitable.
     "PLTR":  0.0000,# TRIMMED: below 200d / death cross (tech sell signal, pt 8).
                     # Kept at 0% for easy re-add.
     "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
                     # Healed bubble hangover but slowest forecast of the survivors.
-    "DDOG":  0.2498,# AI observability — purest AI-data, consumption-cyclical
+    "DDOG":  0.2093,# CHANGED: 0.2498 -> 0.2093 — renorm (book unchanged). AI observability.
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (6%) ---
@@ -276,8 +289,9 @@ STRATEGY = {
     "CCJ":     "dca",       # Uranium structural deficit — hold forever
     "ETN":     "dca",       # Transmission/electrification — quality compounder, hold forever
     "HUBB":    "dca",       # Transformers/grid gear — 2-4yr lead-times, quality, hold forever
-    "ABBN.SW": "dca",       # HVDC/transformers (EU) — long-distance grid, hold forever
     "CEG":     "cycle",     # Nuclear utility — power-price sensitive
+    # CUT: ABBN.SW (was "dca") — only overvalued name (analysts -13%), slowest ballast;
+    #      book split to FN (W3) + NOW (W5). Re-add here + in W2_POWER_TARGETS if restored.
     "PWR":     "cycle",     # Transmission contractor — high-beta backlog play, trim at peak
     "OKLO":    "catalyst",  # Pre-revenue SMR — sell on NRC approval, never avg down
     # REMOVED from baskets (kept commented for easy re-add — see W2_POWER_TARGETS):
