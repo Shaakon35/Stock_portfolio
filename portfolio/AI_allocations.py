@@ -801,6 +801,211 @@ WATCHLIST = {
                     "company, datacenter cooling is a small revenue slice. VRT (held) "
                     "is the better cooling pure-play.",
     },
+
+    # --- Cybersecurity (new screen) — CRWD/PANW too big (fail Pt 1); CYBR
+    #     absorbed by PANW's ~$25B CyberArk deal (closed Feb 2026). S is HELD
+    #     in W5. These are the genuinely new, framework-relevant cyber names. ---
+    "ZS": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (12, 26),
+        "area":     "Zero-trust / SASE (Zscaler)",
+        "note":     "Best-value cyber after the fall: ~29-35x fwd, down ~36% YTD, "
+                    "rev +26%, ARR $3.36B (+25%), agentic-AI security angle. Reasonable "
+                    "multiple for the growth. Watchlist-first; size on confirmation.",
+    },
+    "RBRK": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (15, 30),
+        "area":     "AI-data security / cyber-resilience (Rubrik)",
+        "note":     "AI-data protection + cyber-resilience, expanding into unstructured/"
+                    "AI-data. Strong momentum, likely still pre-/just-profit (Group 1). "
+                    "Early — add on dips, but unproven profitability: keep tiny.",
+    },
+    "NET": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (12, 24),
+        "area":     "Edge + security (Cloudflare)",
+        "note":     "Broadest AI-infra + security angle, but bigger and EXPENSIVE "
+                    "(rich multiple). Quality compounder — dip-only, never DCA at this "
+                    "valuation. Watchlist until a real pullback.",
+    },
+    "OKTA": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 18),
+        "area":     "Identity for the agentic-AI era (Okta)",
+        "note":     "Identity for AI agents; mid-cap, more REASONABLE valuation but "
+                    "SLOWER growth than peers. Solid Pt-6 value angle, weaker Pt-3. "
+                    "Watchlist-grade.",
+    },
+
+    # --- Packaging / optical / semi picks-and-shovels (new screen) ---
+    #     CAMT, FN, SIMO are now HELD in W1/W3 — not repeated here.
+    "KLIC": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (8, 22),
+        "area":     "HBM bonding / TCB (Kulicke & Soffa)",
+        "note":     "HBM thermo-compression bonding pick-and-shovel. Cyclical at/near "
+                    "trough — Pt-6 trough thesis applies (low TTM earnings = setup). "
+                    "Buy the down-cycle, trim into the HBM ramp.",
+    },
+    "NVMI": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (9, 20),
+        "area":     "Metrology (Nova)",
+        "note":     "Process-control metrology — same picks-and-shovels seam as held "
+                    "ONTO/CAMT. Profitable, quality, but partly covered via SMHV.SW "
+                    "equipment slice. Watchlist for concentrated metrology conviction.",
+    },
+    "AMKR": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (7, 18),
+        "area":     "Advanced packaging / test (Amkor)",
+        "note":     "OSAT advanced-packaging/test — direct AI-packaging exposure. "
+                    "Profitable but lower-margin, capex-heavy and cyclical. Buy dips, "
+                    "trim at peak; cleaner packaging beta than the equipment names.",
+    },
+    "AAOI": {
+        "strategy": "cycle",
+        "pos":      "Late",
+        "cagr":     (3, 18),
+        "area":     "Optical components (Applied Optoelectronics)",
+        "note":     "Optical with THIN profit and high volatility. Torque on the AI-"
+                    "optical cycle but quality is low vs held COHR/FN/CRDO. Late/"
+                    "trader-grade — tiny size only, never DCA.",
+    },
+    "AEHR": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-20, 35),
+        "area":     "Test / burn-in (Aehr Test Systems)",
+        "note":     "TINY test/burn-in name surfaced in passing. Highly customer-"
+                    "concentrated and lumpy — a single design-win swings the P&L. "
+                    "Binary micro-cap punt; size tiny or skip.",
+    },
+    "ICHR": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (6, 18),
+        "area":     "Semi equipment subsystems (Ichor)",
+        "note":     "Surfaced in passing. Fluid-delivery subsystems supplier to the "
+                    "fab-equipment makers — deep-cyclical, thin-margin second-derivative "
+                    "play. Trough-cycle only; lower quality than the held names.",
+    },
+
+    # --- Neocloud / AI infrastructure (new screen) ---
+    "NBIS": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (15, 35),
+        "area":     "Neocloud / GPU cloud (Nebius)",
+        "note":     "RARE profitable hypergrowth neocloud — unlike DEBT-FUNDED CRWV/"
+                    "APLD it is actually making money, which is why it's cycle/Early "
+                    "not Binary. Capex-cyclical and competitive; size on confirmation.",
+    },
+
+    # --- AI health / drug discovery (new screen) ---
+    "TEM": {
+        "strategy": "catalyst",
+        "pos":      "Binary",
+        "cagr":     (-15, 40),
+        "area":     "AI diagnostics (Tempus AI)",
+        "note":     "AI diagnostics, Group-1 PRE-PROFIT growth story. Real AI linkage "
+                    "(genomic data + models) but unprofitable and execution-gated — "
+                    "binary on the path to profit. Catalyst sizing, never average down.",
+    },
+    "RXRX": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
+        "area":     "AI drug discovery (Recursion)",
+        "note":     "AI drug discovery, CASH-BURNING and pipeline-binary. Lottery-ish: "
+                    "the upside needs a clinical/platform win AND continued funding. "
+                    "->$0 risk if burn outruns catalysts. Tiny punt or skip.",
+    },
+
+    # --- Physical AI / robotics ('next boom' — mostly speculative) ---
+    "VPG": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (6, 18),
+        "area":     "Robotics / semi sensors (Vishay Precision Group)",
+        "note":     "UNDER-RADAR and PROFITABLE precision-sensor maker (robotics/semi). "
+                    "Best-quality name in the physical-AI bucket — real earnings, not a "
+                    "story. Cyclical/industrial; buy dips. Watchlist-first.",
+    },
+    "MCHP": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (7, 16),
+        "area":     "Robotics-enabler MCUs (Microchip)",
+        "note":     "Mid-large MCU/analog supplier — robotics & embedded enabler. "
+                    "Cyclical, currently working off an inventory down-cycle (Pt-6 "
+                    "trough angle). Quality but lower torque; buy the trough.",
+    },
+    "9880.HK": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-30, 50),
+        "area":     "Humanoid robotics (UBTECH, HK-listed)",
+        "note":     "PURE-PLAY humanoid, HK-listed, PRE-PROFIT. Maximum thematic "
+                    "torque on the physical-AI boom but binary on commercialization + "
+                    "cash. Currency/listing risk too. Lottery — size tiny.",
+    },
+    "OUST": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
+        "area":     "Lidar (Ouster)",
+        "note":     "Lidar for autonomy/robotics. Improving but still unprofitable in a "
+                    "brutally competitive, commoditizing segment. Binary on a margin "
+                    "turn; lottery sizing only.",
+    },
+    "RR": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-35, 50),
+        "area":     "Service robots (Richtech Robotics)",
+        "note":     "MICRO-CAP service-robot lottery. Tiny revenue, deeply unprofitable, "
+                    "hype-driven. Classic ->$0 binary punt — size minimal or skip.",
+    },
+    "BOT": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-25, 40),
+        "area":     "Robotics fund / private exposure (RoboStrategy CEF)",
+        "note":     "Closed-end fund holding PRIVATE robotics names — a way to get "
+                    "pre-IPO physical-AI exposure. Watch the NAV discount/premium and "
+                    "fees. Not a single-stock thesis; treat as a speculative basket.",
+    },
+
+    # --- Space (new screen) ---
+    "ASTS": {
+        "strategy": "catalyst",
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
+        "area":     "Satellite-to-phone (AST SpaceMobile)",
+        "note":     "Near PRE-REVENUE, capital-intensive constellation build. Binary on "
+                    "satellite launches + carrier deals + funding. RKLB (held) owns the "
+                    "cleaner space slot; ASTS is a higher-risk catalyst punt.",
+    },
+
+    # --- Nuclear SMR (new screen) — SMR (NuScale) already on the list above. ---
+    "NNE": {
+        "strategy": "catalyst",
+        "pos":      "Binary",
+        "cagr":     (-20, 38),
+        "area":     "Nuclear / small modular reactors (Nano Nuclear)",
+        "note":     "PRE-REVENUE SMR, same profile as SMR/NuScale: binary on first "
+                    "commercial reactor + licensing, debt/dilution-funded. One-and-done "
+                    "catalyst bet — size tiny, NEVER average down.",
+    },
 }
 
 
