@@ -55,45 +55,65 @@ Replace `xxx` with the notebook prefix (`sig-`, `rank-`, `po-`).
 
 ---
 
-## Notebook Editing Rules (No Python Environment)
+## Notebook Editing Rules
 
-This repo is developed in GitHub Codespaces / Ona where **no Python runtime is available**. All `.ipynb` editing must use `jq` for JSON manipulation.
+The runtime is the target for execution (Colab), but the **Ona dev environment DOES have a
+working Python 3 runtime**. Use it: edit the notebook source, then run it offline to catch
+errors before committing. (`portfolio_overview.ipynb` is a single code cell — `cell 0`.)
 
-### Workflow
+### Editing Workflow (Python-script method — preferred)
 
-1. **Extract source** from the target cell:
-   ```bash
-   jq -r '.cells[CELL_INDEX].source[]' notebook.ipynb > /tmp/cell_src.py
-   ```
-2. **Edit** `/tmp/cell_src.py` using normal text tools (str_replace, sed, etc.)
-3. **Convert back to JSON source array** — every line MUST end with `\n`:
-   ```bash
-   jq -R -s 'split("\n") | if .[-1] == "" then .[:-1] else . end | [.[] + "\n"]' /tmp/cell_src.py > /tmp/cell_source.json
-   ```
-4. **Inject back** into the notebook:
-   ```bash
-   jq --slurpfile src /tmp/cell_source.json '.cells[CELL_INDEX].source = $src[0] | .cells[CELL_INDEX].outputs = []' notebook.ipynb > /tmp/notebook_new.ipynb
-   cp /tmp/notebook_new.ipynb notebook.ipynb
-   ```
-5. **Validate** the result:
-   ```bash
-   jq empty notebook.ipynb && echo "Valid JSON"
-   ```
+`cell 0`'s `source` is stored as JSON-decoded plain strings. For multi-line edits with
+escaped content, **edit via a small Python script**, not `str_replace` (str_replace fights
+the JSON escaping). The pattern that works:
 
-### Critical Rule: Trailing Newlines
+```python
+import json
+p = 'portfolio_overview.ipynb'
+nb = json.load(open(p))
+joined = ''.join(nb['cells'][0]['source'])   # reassemble full cell text
+assert OLD in joined, 'anchor not found'      # always assert before replacing
+joined = joined.replace(OLD, NEW)
+nb['cells'][0]['source'] = joined.splitlines(keepends=True)  # keepends preserves \n
+json.dump(nb, open(p, 'w'), indent=1)
+```
 
-Every element in a cell's `source` array **MUST** end with `\n`. Without it, Colab/Jupyter joins adjacent lines and creates syntax errors like `import systry:`. This is the single most common bug when editing notebooks via jq.
+`splitlines(keepends=True)` guarantees every element keeps its trailing `\n` (the #1 notebook
+bug — without it Jupyter merges lines into `import systry:`).
 
-### Finding the Right Cell
+### `jq` is still fine for inspection / single-line tweaks
 
 ```bash
-# Find cell index containing a specific string
-jq '[.cells | to_entries[] | select(.value.cell_type == "code" and (.value.source | join("") | test("SEARCH_STRING")))] | .[0].key' notebook.ipynb
+# Find the cell index containing a string
+jq '[.cells | to_entries[] | select(.value.cell_type=="code" and (.value.source|join("")|test("SEARCH")))] | .[0].key' notebook.ipynb
+# Validate JSON after any edit (mandatory gate)
+jq empty notebook.ipynb && echo "Valid JSON"
 ```
+
+### Offline run test (mandatory before commit)
+
+Run the notebook headless in BOTH modes. Stub IPython (no display in headless) and exec cell 0:
+
+```python
+import json, sys, types
+ip = types.ModuleType('IPython'); disp = types.ModuleType('IPython.display')
+disp.HTML = lambda *a, **k: None; disp.display = lambda *a, **k: None; ip.display = disp
+sys.modules['IPython'] = ip; sys.modules['IPython.display'] = disp
+exec(''.join(json.load(open('portfolio_overview.ipynb'))['cells'][0]['source']), {'__name__':'__main__'})
+```
+
+```bash
+PORTFOLIO_USE=ai_allocation python3 /tmp/run_ov.py   # AI-wave mode
+PORTFOLIO_USE=allocation    python3 /tmp/run_ov.py   # sector mode
+```
+
+Note: the live yfinance feed in this env is **unreliable / date-corrupted** (see "Data Source
+Caveat" below), so the offline run only proves the code executes — weight math must be proven
+separately via `verify_allocations()`.
 
 ### Clean Up Temp Files
 
-Always remove `/tmp/*.py`, `/tmp/*.json`, `/tmp/*_new.ipynb` after rebuilding.
+Always remove `/tmp/*.py`, `/tmp/*.json`, `/tmp/*_new.ipynb` after editing/testing.
 
 ---
 
@@ -109,13 +129,75 @@ config/          — static data (what we own, forecasts, styling)
   styling.py     — HTML color maps, CSS
   watchlist.py   — PUMP watchlist entries
 
-portfolio/       — runtime logic (what to do with what we own)
-  allocations.py — target weights, basket sub-allocations, current shares
-  audit.py       — portfolio audit engine (value calc, sell triggers, exposure)
-  helpers.py     — shared utilities (FX rates, formatting)
-  crypto.py      — crypto-specific logic
-  signals.py     — buy/sell signal engine (technical analysis)
+portfolio/          — runtime logic (what to do with what we own)
+  allocations.py    — SECTOR-mode target weights, basket sub-allocations
+  AI_allocations.py — AI VALUE-CHAIN mode: wave weights W1-W6, baskets, STRATEGY, WATCHLIST
+  audit.py          — portfolio audit engine (value calc, sell triggers, exposure)
+  helpers.py        — shared utilities (FX rates, formatting)
+  crypto.py         — crypto-specific logic
+  signals.py        — buy/sell signal engine (technical analysis)
 ```
+
+### Two Allocation Modes (IMPORTANT)
+
+The portfolio runs in one of **two mutually exclusive modes**, selected at runtime:
+
+| Mode | Module | Structure | Selector |
+| :--- | :--- | :--- | :--- |
+| **Sector** | `portfolio/allocations.py` | sector/satellite targets (`[CORE]`, `[NUC]`, …) | `portfolio_use = 'allocation'` |
+| **AI value-chain** (default) | `portfolio/AI_allocations.py` | six waves **W1–W6** of the AI buildout | `portfolio_use = 'ai_allocation'` |
+
+Resolution order: explicit `portfolio_use` var → env `PORTFOLIO_USE` → `'ai'`.
+**Always test both modes** after any change to either module (see offline-run test above).
+
+### AI Value-Chain Waves (W1–W6)
+
+`AI_allocations.py` models the AI buildout as six sequential waves. `TARGET_WEIGHTS` holds the
+wave-level book weights (must sum to 1.0); each `Wn_*_TARGETS` dict holds sub-weights within a
+wave (each must sum to 1.0). Book weight of a name = `sub_weight × wave_weight`.
+
+| Wave | Theme | Basket dict |
+| :--- | :--- | :--- |
+| **W1** | Silicon / semis & equipment (anchored by SMHV.SW ETF) | `W1_SILICON_TARGETS` |
+| **W2** | Power & electrification for data centers | `W2_POWER_TARGETS` |
+| **W3** | Data-center infrastructure (interconnect, cooling, networking) | `W3_DCINFRA_TARGETS` |
+| **W4** | Hyperscaler cloud (currently ZEROED — see below) | `W4_CLOUD_TARGETS` |
+| **W5** | AI software / apps | `W5_SOFTWARE_TARGETS` |
+| **W6** | Speculative / second-order (lottery/convex tail) | `W6_SPEC_TARGETS` |
+
+### The SMHV Fixed-Core Constraint (critical)
+
+`SMHV.SW` is a **held windfall of 899 shares ≈ 90k CHF = 37.5% of the 240k book**. It is an
+**OUTPUT, not a tunable target** — its book weight is fixed by reality, so trimming it means
+**actually selling shares** (a real tax event + diversification loss). It is pinned via:
+
+```
+SMHV_sub_weight × W1_wave_weight = 0.375   (≈ SMHV.SW sub 0.7511 × W1 0.4991)
+```
+
+Because SMHV holds the semi mega-caps (NVDA, AVGO, ASML, TSM, MU, AMD), those six are held at
+**0% as individual names** in W1 to avoid paying twice. W1's surviving singles are names SMHV
+does NOT meaningfully hold. When asked to "improve growth," remember SMHV at 37.5% / ~+90% mid
+is the dominant growth drag — tinkering with 2% singles is marginal; the real lever is the
+SMHV weight, which requires selling.
+
+### W4 Zeroed
+
+W4 (hyperscaler cloud — MSFT/GOOGL/AMZN/META/ORCL) is held at **0% book** (wave weight 0).
+Mega-cap cloud is capped by law-of-large-numbers and already owned passively via the core ETFs.
+Names are kept in the basket at 0% for easy re-add. The freed weight was tilted into W2/W3/W5/W6.
+
+### Validation Gate (run ALL before any commit to AI_allocations / notebook)
+
+```python
+import portfolio.AI_allocations as a
+a.verify_allocations()                 # raises if wave/basket sums or constraints break
+assert a.validate_watchlist() == []    # watchlist schema integrity
+# every basket and TARGET_WEIGHTS must sum to 1.0 within 1e-9
+```
+
+Plus: `python3 -m py_compile portfolio/AI_allocations.py config/forecasts.py`, `jq empty` on
+the notebook, and the offline run in BOTH modes. Only commit when all are green.
 
 ### Reload Pattern (Colab)
 
@@ -134,27 +216,51 @@ for mod in [config.assets, config.forecasts, config.styling, config.settings, co
 
 ## Portfolio Strategy Classification
 
-Every asset is classified into one of three strategies that determine buy depth, sell behavior, and stop-loss:
+Every asset is tagged in the `STRATEGY` dict with one of **four** operating modes that
+determine buy depth, sell behavior, and stop-loss. The key question each mode answers is:
+*what does a price DROP mean, and am I allowed to add?*
 
-| Strategy | Hold Period | Buy Depth | Sell Rule | Stop-Loss |
-| :--- | :--- | :--- | :--- | :--- |
-| `hold_forever` | 3-10+ years | Shallow (50-SMA, 10% off highs) | Never sell | None |
-| `cycle` | 1-3 years | Medium (blended avg 50/200-SMA, 15% off highs) | Sell when growth decelerates | 20% below buy target |
-| `catalyst` | <18 months | Deep (200-SMA, 20% off highs) | Sell on binary event outcome | 25% below buy target |
+| Strategy | Meaning | A drop means | Add on drop? | Sell Rule | Stop-Loss |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `dca` | DCA / hold forever — profitable, survivable | a DISCOUNT | yes, on autopilot | never (rebalance only) | none |
+| `cycle` | Buy-low/sell-high — real profitable cyclicals | depends on cycle position | yes, if early/mid | sell when growth decelerates | 20% below buy target |
+| `catalyst` | Binary-event driven | event-dependent | only pre-event | sell on event outcome | 25% below buy target |
+| `lottery` | Convex tail — pre-rev / frontier, tiny size | noise | no (size fixed small) | trim into spikes | mental, wide |
+
+> Historical note: an earlier `hold_forever` label was folded into `dca`. Current code uses
+> `dca / cycle / catalyst / lottery` only.
 
 ### Strategy Assignment Rules
 
-- **hold_forever**: Core ETFs, monopoly businesses (BWXT navy nuclear), secular growth (CRWD cybersecurity), uranium miners (CCJ)
-- **cycle**: Capex-driven businesses where revenue growth will peak and decline (VRT data center cooling, POWL switchgear, CRDO connectivity)
-- **catalyst**: Pre-revenue or binary-event stocks (OKLO NRC license, VKTX Phase III data, RKLB Neutron launch)
+- **dca**: Core ETFs (SMHV.SW), monopoly/secular compounders (CRWD, ANET), uranium (CCJ)
+- **cycle**: Capex-driven names where revenue growth peaks then declines (VRT, CRDO, COHR,
+  CAMT, ONTO, BESI.AS, SIMO, FN). Most W1/W3 singles are `cycle`.
+- **catalyst**: Binary-event stocks (OKLO NRC license, CRCL, single-readout biotech)
+- **lottery**: W6 convex tail (IONQ, RKLB) — sized small, payoff-skewed, never averaged down
 
-### Cycle Timing Signals
+### Cycle Position (Early / Mid / Late / Binary)
 
-Watch for these deceleration indicators to time cycle exits:
-- Revenue growth YoY dropping (e.g., POWL went from +45% to +4.5%)
+`cycle` and `catalyst` names also carry a **cycle position** (in the notebook's `_CYCLE_POS`
+map) telling you *where in its run* a name sits — this gates how aggressively to add:
+
+| Position | Meaning | Add behavior |
+| :--- | :--- | :--- |
+| **Early** | Bottleneck young, runway long | Add freely on dips |
+| **Mid** | Thesis working, partial run done | Add selectively |
+| **Late** | Most of the move banked | Trim, don't add |
+| **Binary** | Outcome hinges on one event | Size pre-event only |
+
+The **cyclical-trough buy thesis**: for trough names (e.g. CAMT/ONTO/BESI) *falling current
+earnings and a high trailing P/E are the SETUP, not a red flag* — you're buying the trough
+ahead of the next up-cycle. Don't reject a trough name for low TTM earnings.
+
+### Cycle Timing Signals (when to exit a `cycle` name)
+
+- Revenue growth YoY decelerating
 - Backlog growth flattening
-- Gross margin compression
-- Insider selling acceleration
+- Gross-margin compression
+- **Death cross** (SMA-50 crossing below SMA-200) — technical sell signal that overrides the
+  thesis (this is why CEG and PLTR were trimmed to 0%)
 
 ---
 
@@ -501,6 +607,96 @@ else:
 - **Volume spikes**: 1.5x+ or 2x+ average volume flags institutional activity
 - **52-week position**: % from 52w high used for pullback-based buy targets
 - **SMA crossovers**: SMA-50 crossing below SMA-200 (death cross) confirms downtrend
+
+---
+
+## The 8-Point Stock-Selection Framework
+
+This is the owner's primary screen for *whether to own a name at all*. It is **forward-looking
+and deliberately anti-momentum** — it rewards beaten-down, cheap turnarounds and penalizes
+names already "priced for perfection." Apply it before the 10-pillar reporting format below.
+
+1. **Small enough to multiply** — market cap leaves room for a multi-bagger (avoid law-of-
+   large-numbers mega-caps; that's why W4 cloud is zeroed).
+2. **Profitable or clearly turning** — GAAP-profitable, or a credible, near-complete turn.
+   *FCF-positive but GAAP-unprofitable is NOT "profitable"* (this is why **S/SentinelOne was
+   cut** — −$319M TTM net income, never a profitable year, despite positive FCF).
+3. **Growth accelerating** — revenue growth re-accelerating, not just high.
+4. **Demand > supply** — a genuine bottleneck the company sits in front of.
+5. **Secular driver, early** — riding a multi-year wave near its start.
+6. **Not priced for perfection** — PEG- and cycle-aware valuation. For cyclicals, a high
+   *trailing* P/E at the trough is acceptable (see cyclical-trough thesis above).
+7. **Fresh catalyst** — an identifiable near-term re-rating trigger.
+8. **Confirm the trend, size small, pre-set the exit** — a death cross or break of trend
+   overrides the fundamental thesis; enter on confirmation, not hope.
+
+### Growth-Maximization Pass (recurring request pattern)
+
+When asked "how do I improve growth in the AI allocation," the playbook is:
+
+- Quantify the current **blended 5Y mid return** (book-weighted average of forecast mids).
+- Identify the lowest-forecast held names and rotate them into the highest-forecast proven
+  growers (e.g. SNOW → CRDO, COHR trim → CRDO).
+- Size up the convex tail (W6: IONQ/RKLB) within a small total wave budget.
+- Always state the SMHV caveat: ~37.5% at ~+90% mid is the dominant drag; the only large
+  lever is trimming SMHV, which means **real share sales** (tax + diversification cost).
+- Present options as discrete plans (SMHV fixed vs. SMHV trimmed) with the resulting blended
+  return delta, and let the owner choose before editing files.
+
+### 5-Year Return Math
+
+Forecasts are stored as a CAGR band (`min_rate`/`max_rate`, %). Convert to 5Y total return:
+
+```python
+five_yr_total = ((1 + cagr/100) ** 5 - 1) * 100      # per leg
+forecast_mid  = (five_yr_lo + five_yr_hi) / 2          # "mid" = avg of lo/hi 5Y returns
+blended_mid   = sum(book_weight_i * mid_i for i in holdings)   # portfolio-level
+```
+
+---
+
+## Data Source Caveat (env feed is unreliable)
+
+The live `yfinance` feed in this environment is **date-corrupted / unreliable** (it has
+returned nonsensical prices, e.g. MU at $1,134, with a far-future "current" date). Do **not**
+trust it for fundamentals or current-price decisions.
+
+- For **real financials** (net income, revenue, margins), fetch from **stockanalysis.com via
+  `web_read`** instead of yfinance.
+- The offline notebook run only proves the *code executes*; it does **not** validate numbers
+  coming from the feed. Validate weight math via `verify_allocations()`, not feed output.
+- When stating a fundamental figure to the owner, cite that it came from stockanalysis.com and
+  note feed unreliability.
+
+---
+
+## Currency & Book Conventions
+
+- **Book size**: ~240,000 CHF total. Many requests are framed as a % of this book.
+- **Reporting currency**: figures may be requested in **CHF** even though forecasts/prices are
+  USD-native; convert in-chat when asked (do not hardcode FX into committed files).
+- **Held real shares** are recorded in the notebook's `my_current_shares` override (e.g.
+  SMHV.SW 899, CRCL 147, BESI.AS 15, ABBN.SW 40, SMHN.DE 30). Update this when the owner
+  reports a real holding — these drive the windfall/overlap logic.
+- **2%-of-book floor**: any *held* top-10 framework name should clear ~2.0% of book; size
+  waves/subs so floors are met (e.g. W6 re-opened so TMDX clears 2%).
+
+---
+
+## Git & Commit Conventions
+
+- **Never push unless explicitly asked.** A single prior "commit"/"push" instruction does not
+  authorize future pushes — ask again each time.
+- Stage only the files relevant to the task. Two untracked files —
+  `yahoo_portfolio_import.csv` and `yahoo_watchlist_symbols.csv` — are **always left
+  uncommitted**; never add them.
+- Commit messages: state what changed and why (book weights, the constraint touched), not a
+  blow-by-blow. Always append the trailer:
+  ```
+  Co-authored-by: Ona <no-reply@ona.com>
+  ```
+- Run the full validation gate (py_compile + verify_allocations + validate_watchlist +
+  basket sums + both-mode offline run + `jq empty`) **before** committing.
 
 ---
 
