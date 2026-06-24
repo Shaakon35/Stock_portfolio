@@ -238,21 +238,70 @@ determine buy depth, sell behavior, and stop-loss. The key question each mode an
 - **catalyst**: Binary-event stocks (OKLO NRC license, CRCL, single-readout biotech)
 - **lottery**: W6 convex tail (IONQ, RKLB) — sized small, payoff-skewed, never averaged down
 
-### Cycle Position (Early / Mid / Late / Binary)
+### Cycle Position (5-level scale + Binary)
 
 `cycle` and `catalyst` names also carry a **cycle position** (in the notebook's `_CYCLE_POS`
-map) telling you *where in its run* a name sits — this gates how aggressively to add:
+map) telling you *where in its run* a name sits — this gates how aggressively to add and how
+hard to haircut its forecast. The scale has **five ordered grades plus Binary**:
 
 | Position | Meaning | Add behavior |
 | :--- | :--- | :--- |
 | **Early** | Bottleneck young, runway long | Add freely on dips |
+| **Early/Mid** | Ramp accelerating, nearly full runway | Accumulate |
 | **Mid** | Thesis working, partial run done | Add selectively |
+| **Mid/Late** | Nearing the crest — record margins / parabolic price = **warning** | Hold, **don't add** |
 | **Late** | Most of the move banked | Trim, don't add |
 | **Binary** | Outcome hinges on one event | Size pre-event only |
 
-The **cyclical-trough buy thesis**: for trough names (e.g. CAMT/ONTO/BESI) *falling current
+The two intermediate grades (`Early/Mid`, `Mid/Late`) exist to stop a name that is clearly
+*not yet* at the peak and a name that *is* approaching the peak from sharing one bucket.
+**Mid/Late is the cycle-trap flag**: record-high gross margins or a parabolic 52-week move
+mean you are at/near the top of the curve — exactly where a low forward P/E is a *warning*
+(peak earnings about to mean-revert), not a bargain.
+
+**Forecast haircut multipliers** (`_CYCLE_MULT`, applied to a name's 5Y forecast mid; the
+notebook legend renders these). `catalyst` is never haircut (event-driven, not cyclical):
+
+| Position | `cycle` | `dca` |
+| :--- | ---: | ---: |
+| Early | ×1.00 | ×1.00 |
+| Early/Mid | ×0.92 | ×0.98 |
+| Mid | ×0.85 | ×0.95 |
+| Mid/Late | ×0.70 | ×0.85 |
+| Late | ×0.55 | ×0.75 |
+| Binary | ×1.00 | ×1.00 |
+
+Whenever you add or change a grade, it must resolve in **all five** consuming structures or
+the notebook KeyErrors at render: `_CYCLE_POS`, `_CYCLE_MULT`, `_CYCLE_COLOR`, and the
+bottleneck table's `_pos_color` / `_pos_note`. A validation check asserts every grade used in
+`_CYCLE_POS` and the bottleneck tuples is present in all five.
+
+The **cyclical-trough buy thesis** (the mirror of the trap): for trough names *falling current
 earnings and a high trailing P/E are the SETUP, not a red flag* — you're buying the trough
-ahead of the next up-cycle. Don't reject a trough name for low TTM earnings.
+ahead of the next up-cycle. Don't reject a trough name for low TTM earnings. A genuine trough
+name is graded `Early` / `Early/Mid`, never `Mid/Late`.
+
+### DRAM vs NAND — they are SEPARATE cycles
+
+A common mistake is lumping all memory/back-end semis into one cycle. They are not:
+
+- **DRAM / HBM** is the cycle that runs with AI capex and was at a **record peak** (Micron
+  gross margin ~74%, an all-time high above the 2022 ~56% peak; SK Hynix +~900% over 52 weeks).
+  Names riding it are graded **Mid/Late**: **000660.KS (SK Hynix)**, **CAMT** (HBM inspection),
+  **MU**. At this point a 6–7× forward P/E is the warning, not the buy. **Do not add**; these
+  are trim-into-strength candidates. The signal to act is the first DRAM down-quarter / margin
+  roll.
+- **NAND / SSD** is a **different, lagged cycle** that did *not* blow off with DRAM. **SIMO**
+  (Silicon Motion, NAND/SSD controllers) is therefore graded **Early/Mid**, not Mid/Late — its
+  sub-1 PEG reflects a less-extended cycle, not peak earnings mean-reverting.
+- **Advanced packaging / hybrid bonding** is the **next** ramp, still ahead of its peak.
+  **BESI.AS** (die/hybrid bonding) and **SMHN.DE** (SUSS, bonding equipment) stay **Early** —
+  the only back-end names you may still add to. BESI is the legitimate add candidate in the
+  memory/packaging complex while DRAM is at its top.
+
+> Takeaway: the "don't add, peak-cycle trap" warning applies to **SK Hynix / CAMT / MU only**
+> — *not* to the whole back-end trio. BESI/SMHN (Early) and SIMO (Early/Mid) are different
+> stories, by design.
 
 ### Cycle Timing Signals (when to exit a `cycle` name)
 
@@ -638,7 +687,10 @@ names already "priced for perfection." Apply it before the 10-pillar reporting f
 > **Example — MU (Micron, memory):** at a memory up-cycle peak MU can show a single-digit
 > trailing P/E and still be expensive, because next year's earnings are about to fall off a
 > cliff. Judge cyclicals on **mid-cycle / normalized earnings and P/B**, never on a snapshot
-> trailing P/E. (Same logic flags the late-cycle NAND/HDD names SNDK/WDC/STX.)
+> trailing P/E. (Same logic flags the late-cycle NAND/HDD names SNDK/WDC/STX.) This is the
+> valuation form of the **Mid/Late** cycle grade — see *Cycle Position* and *DRAM vs NAND*:
+> SK Hynix / CAMT / MU sit at the DRAM peak (Mid/Late), while NAND (SIMO, Early/Mid) and
+> hybrid bonding (BESI/SMHN, Early) are earlier in their own separate cycles.
 
 ### Growth-Maximization Pass (recurring request pattern)
 
