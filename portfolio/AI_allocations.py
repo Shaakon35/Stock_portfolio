@@ -205,13 +205,19 @@ W5_SOFTWARE_TARGETS = {
 # to ~1.5% book each, alongside TMDX 2.5% (profitable, uncorrelated decorrelator).
 # These are the portfolio's convex tail — small absolute size, large payoff skew.
 W6_SPEC_TARGETS = {
-    "TMDX":  0.4167,  # CHANGED: 0.6667 -> 0.4167 — TOP-10 name; 0.4167 x 6% = 2.5% book.
-                      # MedTech organ-transport, profitable, off-radar, non-AI diversifier.
+    "TMDX":  0.4166,  # TOP-10 name; 0.4166 x 6% = 2.5% book. MedTech organ-transport,
+                      # profitable, off-radar, non-AI diversifier.
     "AXON":  0.0833,  # Defense/policing AI (profitable anchor) — small spec slice (0.5%)
-    "IONQ":  0.2500,  # CHANGED: 0.10 -> 0.25 — Quantum revenue leader; sized to 1.5% book
-                      # for its +175% mid (highest forecast in the book). Lottery/convex.
-    "RKLB":  0.2500,  # CHANGED: 0.10 -> 0.25 — Space/autonomy; sized to 1.5% book for its
-                      # +171% mid. Lottery/convex tail alongside IONQ.
+    "IONQ":  0.1667,  # CHANGED: 0.25 -> 0.1667 — trimmed to 1.0% book to fund SYM.
+                      # Quantum revenue leader; +175% mid (highest forecast). Lottery/convex.
+    "RKLB":  0.1667,  # CHANGED: 0.25 -> 0.1667 — trimmed to 1.0% book to fund SYM.
+                      # Space/autonomy; +171% mid. Lottery/convex tail alongside IONQ.
+    "SYM":   0.1667,  # NEW 2026-06: Symbotic — warehouse/logistics automation robotics
+                      # (physical-AI). 1.0% book, funded by trimming IONQ+RKLB. Real
+                      # business ($2.5B rev, +$749M FCF) so HIGHER quality than the pre-rev
+                      # lottery names it sits beside — but GAAP-unprofitable (net -$28M TTM,
+                      # fails Pt 2) + lumpy/customer-concentrated (Walmart), so it lives in
+                      # the convex tail. CATALYST / Binary — size tiny, never average down.
     "CRCL":  0.0000,  # Circle (USDC) — held windfall (147 shares), TARGET 0%. Parked to
                       # track/manage down, NOT to add to. Catalyst.
 }
@@ -311,6 +317,7 @@ STRATEGY = {
     "TMDX":    "cycle",     # MedTech growth — momentum-sensitive
     "IONQ":    "catalyst",  # Quantum binary — size once, event-driven, no avg down
     "RKLB":    "catalyst",  # Space — size once, milestone-driven, no avg down
+    "SYM":     "catalyst",  # Symbotic — robotics, GAAP-unprofitable + lumpy; size once, no avg down
     "CRCL":    "catalyst",  # Circle — held windfall, target 0%; manage down, never avg in
 }
 
