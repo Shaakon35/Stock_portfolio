@@ -103,15 +103,22 @@ W1_SILICON_TARGETS = {
                         # margin halved). Its only edge was trough-rebound timing, a bet
                         # not a quality case. Weight redeployed to CAMT + BESI. 0% (re-add
                         # easy). BESI (bonding) is the non-redundant, highest-quality name.
-    "BESI.AS":   0.0601,# CHANGED: 0.0401 -> 0.0601 — absorbs half the ONTO trim. TOP-10:
-                        # advanced packaging (hybrid bonding for HBM4+/chiplets) — western
-                        # CoWoS pure-play, the NON-redundant trio member (assembly step,
-                        # not inspection). Highest quality (63% GM, 33% FCF margin). EUR-
-                        # listed. CYCLE. Now 3.0% of book.
+    "BESI.AS":   0.0896,# CHANGED: 0.0601 -> 0.0896 — absorbs the SK Hynix trim (1.47% book)
+                        # on top of the earlier ONTO split. BESI is the Early, NON-peak add
+                        # candidate in the back-end complex: advanced packaging (hybrid
+                        # bonding for HBM4+/chiplets), western CoWoS pure-play, the assembly
+                        # step (not inspection), highest quality (63% GM, 33% FCF margin).
+                        # Its ramp is still AHEAD while DRAM is at its peak. EUR-listed.
+                        # CYCLE / Early. Now ~4.47% of book.
     "SIMO":      0.0401,# TOP-10: Silicon Motion — NAND/SSD controllers. Fills the missing
-                        # memory sub-segment. Profitable, ~39x. CYCLE / Mid. 2.0% of book.
-    "000660.KS": 0.0295,# SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest HBM
-                        # bet. KRX-listed (KRW), buy via IBKR. CYCLE / Mid. ~1.47% book.
+                        # memory sub-segment. NAND is a SEPARATE, lagged cycle (not DRAM).
+                        # Profitable, ~39x. CYCLE / Early-Mid. 2.0% of book.
+    "000660.KS": 0.0000,# CHANGED: 0.0295 -> 0.00 — TRIMMED. SK Hynix rode the DRAM/HBM cycle
+                        # to a record peak (+~900% / 52wk, MU memory GM ~74% = all-time high):
+                        # graded Mid/Late, the cycle-trap zone where a 6-7x fwd P/E is the
+                        # WARNING (peak earnings about to mean-revert), not the bargain. Book
+                        # redeployed to BESI.AS (Early, ramp ahead). 0% for easy re-add on the
+                        # first DRAM down-quarter / margin roll. CYCLE / Mid-Late.
     "CDNS":      0.0295,# Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
                         # layer; not in SMHV. Secular high-margin compounder. ~1.47% book.
     "SMHN.DE":   0.0295,# SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
