@@ -86,15 +86,24 @@ W1_SILICON_TARGETS = {
     "TSM":       0.00,  # SMHV #5 (7.5%); covered by ETF
     "MU":        0.00,  # SMHV #1 (14.3%); covered by ETF
     "AMD":       0.00,  # SMHV #2 (12.2%); covered by ETF
-    # --- SURVIVING SINGLES. The four TOP-10 names (CAMT/ONTO/BESI/SIMO) are sized
-    #     to clear the 2%-of-book floor (0.0401 each = 2.0% book); the remaining
-    #     three (SK Hynix/CDNS/SMHN) sit just below at ~1.47% book. ---
-    "CAMT":      0.0401,# TOP-10: Camtek — HBM inspection/AOI bottleneck. 2.0% of book.
-                        # (was Samsung 005930.KS; profitable accelerating pure-play.)
-    "ONTO":      0.0401,# TOP-10: Onto Innovation — metrology/process-control inspection.
-                        # NOT inside SMHV. High-beta WFE, Mid. 2.0% of book.
-    "BESI.AS":   0.0401,# TOP-10: advanced packaging (hybrid bonding for HBM4+/chiplets) —
-                        # western CoWoS pure-play. EUR-listed. CYCLE. 2.0% of book.
+    # --- SURVIVING SINGLES. CAMT/BESI/SIMO are TOP-10 names. ONTO was TRIMMED
+    #     (see below) and its 2% split into CAMT + BESI (now 3% book each). The
+    #     three smaller names (SK Hynix/CDNS/SMHN) sit at ~1.47% book. ---
+    "CAMT":      0.0602,# CHANGED: 0.0401 -> 0.0602 — absorbs half the ONTO trim. TOP-10:
+                        # Camtek — HBM inspection/AOI bottleneck. Best GROWTH of the back-
+                        # end trio (+10.7% rev, only one still growing double-digit) and
+                        # the smallest = most multiplier room (Pt 1). Now 3.0% of book.
+    "ONTO":      0.0000,# CHANGED: 0.0401 -> 0.00 — TRIMMED. Redundant see/measure tool vs
+                        # CAMT (both inspection/metrology), and the weakest of the trio:
+                        # flat revenue (+0.5%), deepest earnings trough (net -51%, op
+                        # margin halved). Its only edge was trough-rebound timing, a bet
+                        # not a quality case. Weight redeployed to CAMT + BESI. 0% (re-add
+                        # easy). BESI (bonding) is the non-redundant, highest-quality name.
+    "BESI.AS":   0.0601,# CHANGED: 0.0401 -> 0.0601 — absorbs half the ONTO trim. TOP-10:
+                        # advanced packaging (hybrid bonding for HBM4+/chiplets) — western
+                        # CoWoS pure-play, the NON-redundant trio member (assembly step,
+                        # not inspection). Highest quality (63% GM, 33% FCF margin). EUR-
+                        # listed. CYCLE. Now 3.0% of book.
     "SIMO":      0.0401,# TOP-10: Silicon Motion — NAND/SSD controllers. Fills the missing
                         # memory sub-segment. Profitable, ~39x. CYCLE / Mid. 2.0% of book.
     "000660.KS": 0.0295,# SK Hynix — HBM LEADER (Nvidia's #1 HBM supplier), the purest HBM
