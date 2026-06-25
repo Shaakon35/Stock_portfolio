@@ -32,14 +32,15 @@ TARGET_WEIGHTS = {
     "W2_POWER":     0.1531,# CHANGED: 0.175 -> 0.1531 — ABBN.SW cut (2.19% book, only name
                            #          analysts call overvalued, slowest-growth ballast). Wave
                            #          shrunk by ABBN's book; the other 7 names keep their book.
-    "W3_DCINFRA":   0.2202,# CHANGED: 0.2093 -> 0.2202 — absorbs half the ABBN cut into FN
-                           #          (2.86% -> 3.95% book), the cleanest growth-at-reasonable-
-                           #          price name (28% EPS gr, net cash, +28% analyst upside).
+    "W3_DCINFRA":   0.2045,# CHANGED: 0.2202 -> 0.2045 — ALAB trimmed (3.07% -> 1.5% book):
+                           #          Mid/Late, 118x fwd P/E, the most stretched name held
+                           #          (8-Point #6 fail). Freed book rotated to ZS in W5.
     "W4_CLOUD":     0.000, # WAVE ZEROED. Mega-cap cloud is capped by law-of-large-numbers
                            #          AND held passively elsewhere. Names kept at 0% book.
-    "W5_SOFTWARE":  0.0676,# CHANGED: 0.0566 -> 0.0676 — absorbs half the ABBN cut into NOW
-                           #          (1.42% -> 2.51% book), most mispriced quality held
-                           #          (22x fwd / 0.89 PEG, +48% analyst upside).
+    "W5_SOFTWARE":  0.0833,# CHANGED: 0.0676 -> 0.0833 — absorbs the ALAB trim as new name ZS
+                           #          (Zscaler, ~1.57% book): washed-out quality cyber (down
+                           #          ~36-59%, PEG 1.23, 30% FCF margin), fills the cyber gap
+                           #          left when S was cut. Mirror-image rotation of ALAB.
     "W6_SPEC":      0.060, # CHANGED: 0.03 -> 0.06 — GROWN so the highest-upside names IONQ
                            #          (+175% mid) and RKLB (+171%) get real ~1.5% slots, plus
                            #          TMDX 2.5% (uncorrelated decorrelator). Funded from W5.
@@ -168,18 +169,20 @@ W2_POWER_TARGETS = {
 # Option B (de-concentrate): flattened toward equal weight to lower single-name
 # risk across the sleeve.
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.1496,# CHANGED: 0.1574 -> 0.1496 — basket renormalized (book unchanged) as FN
-                    # absorbed half the ABBN cut. Liquid cooling leader — CYCLE.
-    "ANET":  0.1496,# CHANGED: 0.1574 -> 0.1496 — renorm (book unchanged). Arista — DC
+    "VRT":   0.1611,# CHANGED: 0.1496 -> 0.1611 — renorm (book UNCHANGED) as the ALAB trim
+                    # shrank the wave. Liquid cooling leader — CYCLE.
+    "ANET":  0.1611,# CHANGED: 0.1496 -> 0.1611 — renorm (book unchanged). Arista — DC
                     # networking monopoly, DCA.
-    "CRDO":  0.2909,# CHANGED: 0.3062 -> 0.2909 — renorm only (book UNCHANGED at ~6.41%, still
+    "CRDO":  0.3133,# CHANGED: 0.2909 -> 0.3133 — renorm only (book UNCHANGED at ~6.41%, still
                     # the largest non-SMHV position). Growth-max pass folded SNOW + COHR trim
                     # into CRDO (+472M net income, +206% rev, +60/+200 forecast). CYCLE (top-10).
-    "COHR":  0.0909,# CHANGED: 0.0956 -> 0.0909 — renorm (book unchanged, ~2.0%). CYCLE.
-    "FN":    0.1794,# CHANGED: 0.1365 -> 0.1794 — ABSORBS half the ABBN cut (book 2.86% ->
-                    # 3.95%). Fabrinet — optical contract mfr; cleanest growth-at-reasonable-
-                    # price name (28% EPS gr, net cash, +28% analyst upside). CYCLE / Mid.
-    "ALAB":  0.1396,# CHANGED: 0.1469 -> 0.1396 — renorm (book unchanged). Astera Labs —
+    "COHR":  0.0979,# CHANGED: 0.0909 -> 0.0979 — renorm (book unchanged, ~2.0%). CYCLE.
+    "FN":    0.1932,# CHANGED: 0.1794 -> 0.1932 — renorm (book UNCHANGED at ~3.95%). Fabrinet —
+                    # optical contract mfr; cleanest growth-at-reasonable-price name (28% EPS
+                    # gr, net cash). CYCLE / Mid.
+    "ALAB":  0.0734,# CHANGED: 0.1396 -> 0.0734 — TRIMMED to ~1.5% book (was 3.07%). Mid/Late,
+                    # 118x fwd P/E, analysts -36%: most stretched name held, fails 8-Point #6
+                    # (priced for perfection). Book rotated to ZS (W5). Astera Labs —
                     # AI connectivity pure-play (CXL/PCIe retimers),
                     # highest-beta name in the sleeve. CYCLE / Mid — bottleneck is young
                     # but the stock already ran +500%/2y, so remaining runway = Mid.
@@ -206,17 +209,22 @@ W5_SOFTWARE_TARGETS = {
     "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.2095,# CHANGED: 0.2500 -> 0.2095 — renorm (book unchanged) as NOW absorbed
-                    # half the ABBN cut. Security platform — biggest, cheapest, steadiest.
-    "CRWD":  0.2096,# CHANGED: 0.2501 -> 0.2096 — renorm (book unchanged). AI cybersecurity.
-    "NOW":   0.3716,# CHANGED: 0.2501 -> 0.3716 — ABSORBS half the ABBN cut (book 1.42% ->
-                    # 2.51%). Most mispriced quality held: 22x fwd / 0.89 PEG, +48% analyst
-                    # upside, down ~50% on the year. Workflow AI (Now Assist), profitable.
+    "PANW":  0.1699,# CHANGED: 0.2095 -> 0.1699 — renorm (book unchanged) as ZS was added to
+                    # the wave. Security platform — biggest, cheapest, steadiest.
+    "CRWD":  0.1700,# CHANGED: 0.2096 -> 0.1700 — renorm (book unchanged). AI cybersecurity.
+    "NOW":   0.3014,# CHANGED: 0.3716 -> 0.3014 — renorm (book UNCHANGED at ~2.51%). Most
+                    # mispriced quality held: 22x fwd / 0.89 PEG, down ~50% on the year.
+                    # Workflow AI (Now Assist), profitable. CYCLE / Mid.
+    "ZS":    0.1889,# NEW: ~1.57% book. Zscaler — zero-trust / SASE cyber. Washed-out quality
+                    # (down ~36-59%, RSI ~43, PEG 1.23, 30% FCF margin, $3.5B ARR +25%);
+                    # agentic-AI security catalyst live. Mirror-image rotation from ALAB;
+                    # fills the cyber gap left when S was cut. CYCLE / Mid. Promoted from
+                    # WATCHLIST. Stage entry on a 50-SMA reclaim ("size on confirmation").
     "PLTR":  0.0000,# TRIMMED: below 200d / death cross (tech sell signal, pt 8).
                     # Kept at 0% for easy re-add.
     "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
                     # Healed bubble hangover but slowest forecast of the survivors.
-    "DDOG":  0.2093,# CHANGED: 0.2498 -> 0.2093 — renorm (book unchanged). AI observability.
+    "DDOG":  0.1698,# CHANGED: 0.2093 -> 0.1698 — renorm (book unchanged). AI observability.
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (6%) ---
@@ -327,6 +335,7 @@ STRATEGY = {
     "PANW":    "dca",       # Profitable platform — hold forever
     "CRWD":    "dca",       # Profitable platform, ~$1.9B FCF — hold forever
     "NOW":     "dca",       # Profitable (+13% GAAP, $5.1B FCF) — hold forever
+    "ZS":      "cycle",     # Zscaler — zero-trust/SASE cyber; washed-out, FCF+ but GAAP-light; buy dips
     "SNOW":    "dca",       # FCF-positive, healed bubble hangover
     "PLTR":    "cycle",     # Best business but 62x sales — trim/add, not blind DCA
     "DDOG":    "cycle",     # Consumption model — buy dips, trim momentum spikes
@@ -842,15 +851,8 @@ WATCHLIST = {
     # --- Cybersecurity (new screen) — CRWD/PANW too big (fail Pt 1); CYBR
     #     absorbed by PANW's ~$25B CyberArk deal (closed Feb 2026). S is HELD
     #     in W5. These are the genuinely new, framework-relevant cyber names. ---
-    "ZS": {
-        "strategy": "cycle",
-        "pos":      "Mid",
-        "cagr":     (12, 26),
-        "area":     "Zero-trust / SASE (Zscaler)",
-        "note":     "Best-value cyber after the fall: ~29-35x fwd, down ~36% YTD, "
-                    "rev +26%, ARR $3.36B (+25%), agentic-AI security angle. Reasonable "
-                    "multiple for the growth. Watchlist-first; size on confirmation.",
-    },
+    # PROMOTED to held: ZS (Zscaler) — moved into W5_SOFTWARE_TARGETS at ~1.57% book,
+    # funded by the ALAB trim. Removed from WATCHLIST. Re-add here if it is ever cut to 0%.
     "RBRK": {
         "strategy": "cycle",
         "pos":      "Early",

@@ -187,6 +187,7 @@ WAVE_FORECASTS = {
     "PANW":    {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — security platform, profitable
     "CRWD":    {"min_rate": 9.9,  "max_rate": 19.1},  # 5Y +60/+140% — cybersecurity platform, profitable
     "NOW":     {"min_rate": 8.4,  "max_rate": 18.1},  # 5Y +50/+130% — workflow AI compounder (est.)
+    "ZS":      {"min_rate": 9.9,  "max_rate": 24.6},  # 5Y +60/+200% — Zscaler, zero-trust/SASE, washed-out, 30% FCF margin, +25% ARR (est.)
     "PLTR":    {"min_rate": 7.0,  "max_rate": 20.1},  # 5Y +40/+150% — AI ops leader, very expensive
     "SNOW":    {"min_rate": 7.0,  "max_rate": 20.1},  # 5Y +40/+150% — data-cloud + Cortex (est.)
     "DDOG":    {"min_rate": 7.0,  "max_rate": 18.1},  # 5Y +40/+130% — AI observability, growth re-accel
