@@ -27,9 +27,25 @@ PORTFOLIO_USE=ai python3 scoring/score_holdings.py --watchlist --sort growth
 # Single blended score, ranked by it (balanced | growth | quality)
 PORTFOLIO_USE=ai python3 scoring/score_holdings.py --blend balanced --sort blend
 
+# Grade each name on ITS OWN strategy rubric (recommended for DCA names)
+PORTFOLIO_USE=ai python3 scoring/score_holdings.py --by-strategy
+
 # All options
 PORTFOLIO_USE=ai python3 scoring/score_holdings.py --help
 ```
+
+## Why `--by-strategy` exists
+
+The default Growth/8-Point grid rewards *small + cheap + accelerating* — the
+CYCLE/CATALYST archetype. A DCA name (a proven, often large, richly-valued
+compounder you buy on schedule) can almost never reach PRIME and tends to land
+in AVOID, which is a category error, not a sell signal. `--by-strategy` judges
+each mode on the job it does:
+
+- **DCA** → `KEEP-DCA` / `RICH` / `IMPAIRED`, driven by margins, FCF, durable
+  growth, and valuation sanity (PEG, distance from 200DMA). Small-cap and
+  momentum penalties are ignored.
+- **CYCLE / CATALYST** → the existing two-axis quadrant (appropriate there).
 
 ## Reading the table
 
