@@ -49,11 +49,13 @@ TARGET_WEIGHTS = {
 # Context: a 90k CHF SMHV.SW position (899 shares) is now a FIXED 37.5% of the
 # 240k book. SMHV's top holdings (MU/AMD/AVGO/INTC/TSM/ASML/NVDA) already give
 # full mega-cap silicon exposure, so the six overlapping singles (NVDA, AVGO,
-# ASML, TSM, MU, AMD) are ZEROED — kept in the basket at 0.0 for easy re-add but
-# no fresh money. The remaining ~62.5% is tilted (Option B) toward the waves SMHV
-# does NOT cover — POWER (W2) and DC-INFRA (W3) — and away from Cloud/Software.
-# SMHV lives INSIDE W1 (~79% of the W1 basket); the 7 surviving singles (MRVL,
-# BESI.AS, SK Hynix, Samsung, CDNS, ONTO, SMHN.DE) make up the rest of W1.
+# ASML, TSM, MU, AMD) are REMOVED from the basket — the ETF already provides
+# their exposure, so no fresh money and no clutter. The remaining ~62.5% is
+# tilted (Option B) toward the waves SMHV does NOT cover — POWER (W2) and
+# DC-INFRA (W3) — and away from Cloud/Software.
+# SMHV lives INSIDE W1 (~75% of the W1 basket); the surviving singles (CAMT,
+# BESI.AS, SIMO, CDNS, SMHN.DE) make up the rest of W1 — all names SMHV's
+# US-listed index under-covers or misses.
 # Book-level mix: SMHV 37.5 / W1-singles 10 / W2 19 / W3 21 / W4 5 / W5 7.5 / W6 0.
 # Wave-level mix: W1 47.5 / W2 19 / W3 21 / W4 5 / W5 7.5 / W6 0 = 100.
 
@@ -62,35 +64,26 @@ TARGET_WEIGHTS = {
 # =========================================================================
 
 # --- WAVE 1: SILICON / COMPUTE (23%) ---
-# MU and AMD are explicit CYCLE picks (0.05 each), adding high-beta semi torque
-# without diluting the dca compounders. BESI.AS (0.05) added as the advanced-
-# packaging pure-play — the next silicon bottleneck after compute/HBM. All three
-# funded by trimming the SMHV.SW ETF (0.40 -> 0.29), where the big-caps already
-# sit. SMHV still anchors the sleeve, bringing fab equipment (LRCX 5.6% / AMAT
-# 5.1%) and analog (TXN) the single picks miss.
-# NB (look-through, refreshed 2026-06-15): SMHV's TOP TWO holdings are MU 14.3%
-# and AMD 12.2% — the SAME names we hold as explicit singles (0.06 each). So the
-# MU/AMD bets are DOUBLED UP via the ETF, not diversified by it. Plus INTC 8.0%
-# (#4) is held indirectly here even though it's a Binary skip on the watchlist.
-# Kept deliberately: the small singles are intentional cycle torque on top of the
-# ETF's passive weight; just don't size them as if SMHV gave zero MU/AMD.
-# NB: MU/AMD/BESI.AS + the two Korean memory names (SK Hynix, Samsung) are CYCLE —
-# trim near the ~2027-29 peak, not set-and-forget. The memory oligopoly (MU +
-# SK Hynix + Samsung) crashes together when the DRAM/HBM cycle turns; sized small
-# and deliberately for that reason. Korean names are KRX-listed (buy via IBKR).
+# SMHV.SW anchors the sleeve (~75% of W1) and already carries the mega-cap silicon
+# the ETF's index covers — MU 14.3%, AMD 12.2%, AVGO 8.3%, INTC 8.0%, TSM 7.5%,
+# ASML 7.4%, NVDA 7.2%, plus fab equipment (LRCX 5.6% / AMAT 5.1%) and analog
+# (TXN). Those names are NOT held as singles — the ETF gives full exposure.
+# The surviving SINGLES are the segments SMHV under-covers or misses: back-end
+# packaging/inspection (CAMT, BESI.AS, SMHN.DE), NAND controllers (SIMO), and
+# EDA design tools (CDNS). They are the fresh-money tilt on top of the ETF core.
+# NB: CAMT/BESI.AS/SIMO are CYCLE — trim near the ~2027-29 peak, not set-and-
+# forget. BESI's hybrid-bonding ramp is Early (ahead of the DRAM peak); SIMO's
+# NAND cycle is a separate, lagged one. Sized small and deliberately. The EUR/
+# Frankfurt names (BESI.AS, SMHN.DE) are bought via IBKR.
 W1_SILICON_TARGETS = {
     "SMHV.SW":   0.7511,# CHANGED: 0.79 -> 0.7511 — the 90k CHF windfall (899 shares) held
                         # FIXED at exactly 37.5% of book (= 0.7511 of the 49.91% W1 wave).
                         # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
                         # Samsung/SK Hynix — those are genuine new exposure, not a dup.
-    # --- ZEROED 2026-06: all six are SMHV's TOP holdings, so the ETF already
-    #     gives full exposure. Kept at 0.0 for easy re-add (no fresh money). ---
-    "NVDA":      0.00,  # SMHV #7 (7.2%); covered by ETF
-    "AVGO":      0.00,  # SMHV #3 (8.3%); covered by ETF
-    "ASML":      0.00,  # SMHV #6 (7.4%); covered by ETF
-    "TSM":       0.00,  # SMHV #5 (7.5%); covered by ETF
-    "MU":        0.00,  # SMHV #1 (14.3%); covered by ETF
-    "AMD":       0.00,  # SMHV #2 (12.2%); covered by ETF
+    # --- REMOVED 2026-06: NVDA/AVGO/ASML/TSM/MU/AMD dropped from the basket.
+    #     They are SMHV's top holdings, so the ETF already gives full mega-cap
+    #     exposure and holding them as 0.0 singles only cluttered the table. To
+    #     re-add as a fresh-money single, restore a line here + a STRATEGY tag. ---
     # --- SURVIVING SINGLES. CAMT/BESI/SIMO are TOP-10 names. ONTO was TRIMMED
     #     (see below) and its 2% split into CAMT + BESI (now 3% book each). The
     #     three smaller names (SK Hynix/CDNS/SMHN) sit at ~1.47% book. ---
@@ -285,13 +278,9 @@ W6_SPEC_TARGETS = {
 STRATEGY = {
     # --- W1 SILICON ---
     "SMHV.SW": "dca",       # Diversified ETF — buy monthly, never sell
-    "NVDA":    "dca",       # Profitable mega-cap compounder
-    "AVGO":    "dca",       # Profitable, dividend, ~$27B FCF
+    # NVDA/AVGO/ASML/TSM/MU/AMD removed from the basket (SMHV covers them) — no
+    # STRATEGY tags either, so verify_allocations() stays clean.
     "SIMO":    "cycle",     # Silicon Motion — NAND/SSD controllers; memory-cycle, trim at peak
-    "ASML":    "dca",       # EUV monopoly — secular grower; each cycle troughs higher
-    "TSM":     "dca",       # Foundry monopoly — secular grower, sane valuation (~20x)
-    "MU":        "cycle",   # Memory/HBM — violently cyclical; buy dips, trim at peak
-    "AMD":       "cycle",   # #2 GPU — high-beta; trim near cycle peak, don't blind-DCA
     "BESI.AS":   "cycle",   # Advanced packaging — single-tech bet (hybrid bonding); trim at peak
     "000660.KS": "cycle",   # SK Hynix — HBM leader; same memory cycle as MU, trim at peak
     "CAMT":      "cycle",   # Camtek — HBM inspection/AOI bottleneck; high-beta, trim near peak
