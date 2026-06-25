@@ -1,0 +1,50 @@
+# Fundamentals snapshot — source: stockanalysis.com, prices/close Jun 24 2026.
+# Reproducible INPUT for scoring/score_holdings.py. Refresh by copying this file
+# to a new date and updating the numbers (the env yfinance feed is corrupted).
+#
+# Columns:
+#   mktcap_b          : market cap, USD billions (EUR names converted ~1.08)
+#   fwd_rev_growth    : analyst 3Y revenue growth forecast, %
+#   ttm_rev_growth    : trailing-12m revenue growth YoY, % (blank = unknown -> no re-accel bonus)
+#   fwd_eps_growth    : analyst 3Y EPS growth forecast, %
+#   gross_margin      : %, ttm
+#   net_margin        : GAAP profit margin %, ttm (for IONQ/NBIS the GAAP figure is
+#                       distorted by one-off tax/fair-value items, so the OPERATING
+#                       margin is used to reflect true profitability)
+#   fcf_positive      : 1 if trailing FCF > 0 else 0
+#   peg               : PEG ratio (blank = n/a)
+#   pct_above_200dma  : (price - 200DMA)/200DMA * 100  (negative = below = washed out)
+#   pct_below_52w_high: blank (not captured this snapshot; P8 uses 200DMA distance)
+#   eps_beat_rate     : fraction of last ~8 qtrs with an EPS beat (0..1). APPROXIMATE —
+#                       seeded only for well-documented serial beaters; refresh from
+#                       each name's stockanalysis.com /earnings/ page. Blank = neutral.
+#   eps_beat_streak   : consecutive EPS beats (caps the surprise bonus)
+ticker,mktcap_b,fwd_rev_growth,ttm_rev_growth,fwd_eps_growth,gross_margin,net_margin,fcf_positive,peg,pct_above_200dma,pct_below_52w_high,eps_beat_rate,eps_beat_streak
+CRDO,50.16,50.46,,44.25,68.04,35.37,1,0.97,72.6,,0.875,6
+ALAB,68.55,48.22,,43.34,75.99,26.72,1,2.38,110.9,,1.0,5
+VRT,121.54,28.21,,39.04,37.15,14.37,1,1.43,39.4,,0.875,6
+ANET,203.66,24.35,,22.22,63.54,38.32,1,2.44,13.5,,1.0,8
+COHR,76.79,30.53,,52.48,36.99,7.10,0,1.17,71.8,,0.75,4
+FN,20.36,26.16,,27.85,12.04,9.94,1,,10.5,,0.75,4
+CAMT,7.68,17.69,,18.12,50.97,9.63,,2.97,17.6,,0.75,4
+BESI.AS,25.05,39.13,,70.40,63.27,24.00,1,0.98,59.9,,0.625,3
+SIMO,10.91,35.14,,48.94,48.09,16.02,0,0.63,130.8,,0.75,4
+CDNS,102.71,14.52,,15.36,86.08,21.18,1,3.19,14.0,,0.875,8
+SMHN.DE,1.92,11.88,,22.35,34.79,6.88,0,1.68,75.4,,0.5,2
+GEV,284.21,15.87,,27.69,20.28,23.81,1,1.81,35.6,,0.875,5
+CCJ,46.44,7.39,,32.88,36.78,18.39,1,,3.1,,0.5,2
+ETN,157.10,11.95,,14.23,37.10,13.99,1,3.00,9.4,,0.625,3
+HUBB,27.38,11.23,,12.69,35.68,15.10,1,2.51,9.5,,0.625,3
+PWR,105.32,16.94,,22.43,15.10,3.67,1,2.78,32.8,,0.75,4
+OKLO,9.41,,,,,-100,0,,-36.3,,,
+NOW,96.74,19.74,,20.23,76.56,12.59,1,0.87,-30.8,,0.875,8
+ZS,20.58,19.42,,18.44,76.74,-2.44,1,1.24,-39.2,,0.75,5
+CRWD,171.33,22.25,,29.67,75.14,-0.60,1,4.62,36.4,,0.875,8
+PANW,232.49,19.26,,12.87,71.96,7.95,1,4.80,44.4,,0.75,6
+DDOG,79.25,23.62,,20.17,79.91,3.69,1,3.33,45.8,,0.875,8
+TMDX,2.68,18.50,,20.53,59.09,27.04,1,,-32.3,,0.625,2
+AXON,36.81,30.15,,26.07,59.46,6.90,1,1.86,-15.4,,0.875,8
+RKLB,49.44,39.51,,,36.56,-26.87,0,,14.6,,0.5,2
+IONQ,20.01,69.96,,,36.11,-413,0,,8.3,,,
+SYM,23.76,25.89,,-23.56,20.41,-1.12,1,0.24,-32.0,,0.5,2
+NBIS,66.48,242.77,,,72.06,-70,0,,102.6,,,
