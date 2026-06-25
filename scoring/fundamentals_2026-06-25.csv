@@ -3,14 +3,16 @@
 # to a new date and updating the numbers (the env yfinance feed is corrupted).
 #
 # Columns:
-#   mktcap_b          : market cap, USD billions (EUR names converted ~1.08)
+#   mktcap_b          : market cap, USD billions. FX: EUR ~1.08, KRW ~1350/USD,
+#                       HKD ~7.8/USD (Korea/HK names converted from local currency).
 #   fwd_rev_growth    : analyst 3Y revenue growth forecast, %
 #   ttm_rev_growth    : trailing-12m revenue growth YoY, % (blank = unknown -> no re-accel bonus)
 #   fwd_eps_growth    : analyst 3Y EPS growth forecast, %
 #   gross_margin      : %, ttm
-#   net_margin        : GAAP profit margin %, ttm (for IONQ/NBIS the GAAP figure is
-#                       distorted by one-off tax/fair-value items, so the OPERATING
-#                       margin is used to reflect true profitability)
+#   net_margin        : GAAP profit margin %, ttm. For IONQ/NBIS/WDC/APLD the GAAP
+#                       figure is distorted by one-off tax/fair-value/pretax items,
+#                       so the OPERATING margin is used to reflect true profitability.
+#                       Blank for pre-/near-pre-revenue names (SMR/NNE/ASTS) -> neutral.
 #   fcf_positive      : 1 if trailing FCF > 0 else 0
 #   peg               : PEG ratio (blank = n/a)
 #   pct_above_200dma  : (price - 200DMA)/200DMA * 100  (negative = below = washed out)
@@ -64,3 +66,39 @@ SNOW,78.31,26.83,,42.87,67.15,-23.79,1,3.42,9.8,,0.75,4
 BWXT,18.84,12.54,,13.41,22.66,10.20,1,3.56,4.2,,0.625,3
 PNR,12.09,3.95,,8.61,41.22,15.97,1,1.26,-22.4,,0.625,3
 SIE.DE,225.83,6.40,,4.06,38.84,9.69,1,3.19,11.7,,0.5,2
+RBRK,15.34,22.34,,,80.58,-20.25,1,,11.3,,,
+S,5.18,17.96,,50.90,73.25,-30.38,1,0.39,-2.3,,,
+KLIC,6.45,28.02,,177.76,49.80,7.16,1,,92.3,,,
+NET,78.99,28.14,,31.75,73.33,-3.72,1,4.00,7.6,,,
+ICHR,3.12,15.18,,67.46,12.00,-5.28,0,0.72,125.7,,,
+VPG,1.77,8.82,,84.45,39.24,1.85,0,5.83,147.9,,,
+ARM,383.53,29.07,,31.32,97.54,18.37,1,5.36,109.4,,,
+NVMI,16.59,17.92,,18.84,57.31,29.21,1,2.64,26.8,,,
+MTSI,28.46,23.11,,32.56,55.68,16.46,1,2.00,65.7,,,
+KTOS,8.98,24.52,,36.31,22.89,2.08,0,,-39.9,,,
+LSCC,19.72,29.17,,45.57,68.44,3.46,1,2.08,54.6,,,
+PENG,3.28,14.78,,17.60,28.32,4.07,1,,134.2,,,
+OKTA,20.61,9.74,,11.38,77.44,8.24,1,1.16,35.3,,,
+AMKR,20.51,10.82,,24.39,14.43,6.17,1,1.83,69.7,,,
+TER,66.87,28.25,,46.71,58.70,22.55,1,1.92,65.5,,,
+MCHP,50.13,18.07,,41.70,57.73,4.88,1,0.97,26.6,,,
+ONTO,16.03,24.05,,33.45,54.19,10.33,1,1.17,62.1,,,
+PLTR,272.09,53.03,,58.97,84.07,43.67,1,1.40,-28.8,,,
+CEG,95.69,13.51,,21.86,23.26,12.69,1,1.23,-15.9,,,
+000660.KS,1354,76.31,,94.70,68.34,56.89,1,0.08,208.0,,,
+TXN,275.86,13.04,,27.02,57.32,29.11,1,1.75,42.9,,,
+QCOM,208.07,1.58,,0.07,54.80,22.31,1,7.86,17.8,,,
+AAOI,11.79,,,,29.64,-8.55,0,,86.3,,,
+SNDK,283.51,83.99,,298.20,56.04,34.19,1,0.04,197.7,,,
+WDC,221.92,34.49,,73.11,45.43,31.26,1,0.66,134.1,,,
+STX,224.72,33.10,,73.07,41.57,21.60,1,0.65,128.5,,,
+005930.KS,1601,40.10,,109.77,47.68,21.46,1,0.08,113.6,,,
+1810.HK,75.7,12.66,,10.27,22.06,7.96,1,1.23,-42.3,,,
+LEU,3.37,-0.22,,1.13,25.67,13.40,0,21.92,-30.8,,,
+TEM,9.33,22.17,,,63.39,-22.20,0,,-18.6,,,
+CRWV,55.04,97.99,,,69.38,-25.57,0,,0.2,,,
+APLD,12.00,123.94,,,45.41,-11.92,0,,32.6,,,
+SMR,3.73,114.51,,,23.84,,0,,-49.8,,,
+NNE,1.21,,,,,,0,,-25.4,,,
+CRCL,17.64,25.60,,9.67,8.11,-2.76,1,,-28.1,,,
+ASTS,26.40,198.40,,,44.82,,0,,-15.9,,,
