@@ -210,19 +210,85 @@ def eps_surprise_factor(beat_rate, streak):
 # 4. SCORING PRIMITIVES (deterministic, bounded 0..1 each)
 # =========================================================================
 def _band(x, lo, hi):
-    """Linear 0..1 ramp; clamps outside [lo,hi]."""
+    """Linear 0..1 ramp; clamps outside [lo,hi].
+
+    Returns None for missing input (NOT a neutral 0.5). A blanket 0.5 default
+    subsidises bad names with no data and penalises great names with a single
+    gap; instead, missing sub-scores are dropped and their weight is
+    redistributed across the present ones by _blend(). See _blend.
+    """
     if x is None:
-        return 0.5  # unknown -> neutral
+        return None  # unknown -> let _blend renormalize, don't fake-neutral it
     if hi == lo:
-        return 0.5
+        return None
     return max(0.0, min(1.0, (x - lo) / (hi - lo)))
 
 
 def _band_inv(x, lo, hi):
-    """Inverse ramp: smaller x scores higher."""
-    if x is None:
-        return 0.5
-    return 1.0 - _band(x, lo, hi)
+    """Inverse ramp: smaller x scores higher. None propagates as missing."""
+    b = _band(x, lo, hi)
+    return None if b is None else 1.0 - b
+
+
+_MISSING_PENALTY = 0.15  # speculative bucket: a data gap IS a red flag
+
+
+def _blend(components, scale=1.0, risk_penalize=False):
+    """Weighted aggregate with two missing-data policies (the hybrid model).
+
+    components: iterable of (value_or_None, weight).
+
+    risk_penalize=False  (CORE assets — DCA / established cycle):
+        Missing components are DROPPED and their weight is redistributed across
+        the present ones (weighted MEAN * scale). A quality name is not punished
+        because a feed intermittently dropped one forward field; the remaining
+        data safely carries the score.
+
+    risk_penalize=True   (SPECULATIVE assets — W6 spec / Binary cycle):
+        Missing components are NOT dropped. Each contributes a fixed penalty
+        (_MISSING_PENALTY) at full weight and the denominator stays the full
+        weight. An opaque, non-reporting lottery name is therefore suppressed
+        rather than flattered — a gap is treated as a structural risk.
+
+    Returns (score, coverage) where coverage = present_weight / total_weight
+    in BOTH modes (so the gap is always visible). If nothing is present and we
+    are not risk-penalizing, returns (0.5 * scale, 0.0) — an explicit neutral
+    the 0.0 coverage flags as unknown.
+    """
+    total_w = sum(w for _, w in components)
+    if total_w == 0:
+        return 0.5 * scale, 0.0
+    present = [(v, w) for v, w in components if v is not None]
+    pres_w = sum(w for _, w in present)
+    coverage = pres_w / total_w
+
+    if risk_penalize:
+        # Denominator fixed at total weight; missing -> penalty, not dropped.
+        num = sum(v * w for v, w in present) \
+            + sum(_MISSING_PENALTY * w for v, w in components if v is None)
+        return (num / total_w) * scale, coverage
+
+    if pres_w == 0:
+        return 0.5 * scale, 0.0
+    mean = sum(v * w for v, w in present) / pres_w
+    return mean * scale, coverage
+
+
+# Names whose data gaps are a RED FLAG, not noise: the speculative tail (W6) and
+# binary-outcome bets. For these, missing fundamentals are penalized, not
+# renormalized away (see _blend risk_penalize).
+def _is_speculative(t, info):
+    return info.get("wave") == "W6" or cycle_of(t, info) == "Binary"
+
+
+def _coverage(f):
+    """Fraction of CSV fundamental fields actually present for this name (0..1).
+    Reported alongside each score so a number earned on real data is visibly
+    distinct from one propped up by defaults."""
+    fields = [k for k in FUND_FIELDS if k != "ticker"]
+    if not fields:
+        return 0.0
+    return sum(1 for k in fields if f.get(k) is not None) / len(fields)
 
 
 # --- 8-POINT (each sub-score 0..1; summed *8/8 -> 0..8) ------------------
@@ -232,9 +298,10 @@ def score_8point(t, f, info):
     # P1 small enough to multiply: smaller mkt cap better (log-ish via bands).
     p1 = _band_inv(f.get("mktcap_b"), 5, 300)
     # P2 profitable or turning: GAAP net margin>0 full; FCF+ only = 0.5.
+    #     Missing margin -> None (dropped by _blend), NOT a faked neutral.
     nm = f.get("net_margin")
     if nm is None:
-        p2 = 0.5
+        p2 = None
     elif nm > 0:
         p2 = min(1.0, 0.6 + _band(nm, 0, 30) * 0.4)
     else:
@@ -244,7 +311,7 @@ def score_8point(t, f, info):
     fwd = f.get("fwd_rev_growth")
     fwd_corr = None if fwd is None else fwd * eps_f
     p3 = _band(fwd_corr, 5, 45)
-    if fwd is not None and f.get("ttm_rev_growth") is not None:
+    if p3 is not None and fwd is not None and f.get("ttm_rev_growth") is not None:
         if fwd > f["ttm_rev_growth"]:
             p3 = min(1.0, p3 + 0.15)        # genuine re-acceleration
     # P4 bottleneck (owner tag); unknown watchlist names -> neutral 0.3.
@@ -256,7 +323,7 @@ def score_8point(t, f, info):
     peg = f.get("peg")
     peg_corr = None if peg is None else peg / eps_f   # beaters -> lower PEG
     p6 = _band_inv(peg_corr, 0.8, 3.5)
-    if t in _CYCLICAL:
+    if p6 is not None and t in _CYCLICAL:
         p6 = 0.5 + (p6 - 0.5) * 0.6                   # pull toward neutral
     # P7 fresh catalyst.
     p7 = 1.0 if info["strategy"] == "catalyst" else (0.4 if info["strategy"] == "cycle" else 0.2)
@@ -265,10 +332,19 @@ def score_8point(t, f, info):
     above = f.get("pct_above_200dma")
     p8a = _band_inv(above, 0, 80)         # 0% above = 1.0, 80%+ above = 0.0
     p8b = _band(f.get("pct_below_52w_high"), 0, 40)
-    p8 = (p8a + p8b) / 2.0 if (above is not None or f.get("pct_below_52w_high") is not None) else 0.5
+    if p8a is None and p8b is None:
+        p8 = None                          # both missing -> drop the point
+    else:
+        p8, _ = _blend([(p8a, 1.0), (p8b, 1.0)])
 
+    # Sum-of-8 stays on a 0..8 scale. CORE names: missing data-driven points are
+    # dropped and their weight redistributed. SPECULATIVE names: missing points
+    # are penalised (a data gap is a structural red flag, not noise).
+    spec = _is_speculative(t, info)
     parts = {"P1": p1, "P2": p2, "P3": p3, "P4": p4, "P5": p5, "P6": p6, "P7": p7, "P8": p8}
-    return sum(parts.values()), parts, eps_f
+    eight, _cov = _blend([(v, 1.0) for v in parts.values()], scale=8.0,
+                         risk_penalize=spec)
+    return eight, parts, eps_f
 
 
 # --- GROWTH (0..10), momentum-tolerant ----------------------------------
@@ -283,9 +359,15 @@ def score_growth(t, f, info):
     g_eps = _band(eps_corr, 5, 60)                       # forward EPS
     g_cagr = _band(info.get("cagr_mid"), 8, 22)          # the old forecast (now 1 of 4)
     g_sec = _CYCLE_P5.get(cycle_of(t, info), 0.5)        # secular runway
-    # weights: growth-engine emphasises actual fwd numbers over the hand forecast
-    score10 = (g_rev * 3.5 + g_eps * 3.0 + g_cagr * 2.0 + g_sec * 1.5)
-    return score10, {"rev": g_rev, "eps": g_eps, "cagr": g_cagr, "sec": g_sec}
+    # weights: growth-engine emphasises actual fwd numbers over the hand
+    # forecast. CORE names: missing components drop out and weight is
+    # redistributed (no faked 0.5). SPECULATIVE names: missing fwd numbers are
+    # penalised so opaque lottery tickets are suppressed, not flattered.
+    score10, cov = _blend([(g_rev, 3.5), (g_eps, 3.0),
+                           (g_cagr, 2.0), (g_sec, 1.5)], scale=10.0,
+                          risk_penalize=_is_speculative(t, info))
+    return score10, {"rev": g_rev, "eps": g_eps, "cagr": g_cagr,
+                     "sec": g_sec, "coverage": cov}
 
 
 # =========================================================================
@@ -344,20 +426,31 @@ def dca_quality(t, f):
     eps_f = eps_surprise_factor(f.get("eps_beat_rate"), f.get("eps_beat_streak"))
 
     # --- QUALITY (is it still a great business?) ---
+    #     Missing inputs propagate as None and are dropped by _blend (their
+    #     weight is redistributed), instead of being faked to a neutral 0.5.
     nm = f.get("net_margin")
+    fcf = f.get("fcf_positive")
     if nm is None:
-        q_margin = 0.5
+        q_margin = None
     elif nm > 0:
         q_margin = min(1.0, 0.55 + _band(nm, 0, 30) * 0.45)
     else:
-        q_margin = 0.4 if f.get("fcf_positive") == 1 else 0.1
-    q_fcf = 1.0 if f.get("fcf_positive") == 1 else (0.5 if nm and nm > 0 else 0.0)
+        q_margin = 0.4 if fcf == 1 else 0.1
+    if fcf == 1:
+        q_fcf = 1.0
+    elif fcf == 0:
+        q_fcf = 0.5 if (nm is not None and nm > 0) else 0.0
+    elif nm is not None:                         # no FCF flag, infer from margin
+        q_fcf = 0.5 if nm > 0 else 0.0
+    else:
+        q_fcf = None                             # nothing known -> drop it
     fwd = f.get("fwd_rev_growth")
     fwd_corr = None if fwd is None else fwd * eps_f
     q_growth = _band(fwd_corr, 6, 25)          # DCA wants durable, not explosive
     eps_g = f.get("fwd_eps_growth")
     q_eps = _band(None if eps_g is None else eps_g * eps_f, 6, 30)
-    quality10 = (q_margin * 3.5 + q_growth * 2.5 + q_eps * 2.0 + q_fcf * 2.0)
+    quality10, cov = _blend([(q_margin, 3.5), (q_growth, 2.5),
+                             (q_eps, 2.0), (q_fcf, 2.0)], scale=10.0)
 
     # --- RICHNESS (is the price ahead of the business?) 0=cheap .. 1=stretched
     peg = f.get("peg")
@@ -365,14 +458,11 @@ def dca_quality(t, f):
     r_peg = _band(peg_corr, 1.0, 4.0)          # PEG 1 -> 0, 4+ -> 1
     above = f.get("pct_above_200dma")
     r_dma = _band(above, 0, 60)                # 0% above -> 0, 60%+ -> 1
-    parts_present = [x for x in (None if peg is None else r_peg,
-                                 None if above is None else r_dma) if x is not None]
-    richness = sum(parts_present) / len(parts_present) if parts_present else 0.5
+    richness, _ = _blend([(r_peg, 1.0), (r_dma, 1.0)])
 
     return quality10, richness, {
         "margin": q_margin, "growth": q_growth, "eps": q_eps, "fcf": q_fcf,
-        "r_peg": (None if peg is None else r_peg),
-        "r_dma": (None if above is None else r_dma)}
+        "r_peg": r_peg, "r_dma": r_dma, "coverage": cov}
 
 
 def dca_grade(quality10, richness, f):
@@ -469,11 +559,11 @@ def render_by_strategy(results, fund, args):
     print("\n-- DCA (steady compounders; buy on schedule) "
           "--------------------------")
     print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'QUALITY':>7s} "
-          f"{'RICHNESS':>8s} {'grade':9s} data")
+          f"{'RICHNESS':>8s} {'grade':9s} {'data%':>5s}")
     for r, q10, rich, grade in dca_scored:
         print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
               f"{q10:7.1f} {rich:8.2f} {grade:9s} "
-              f"{'Y' if r['has_data'] else '-'}")
+              f"{r['coverage'] * 100:4.0f}%")
     for grade, desc in [("KEEP-DCA", "durable + reasonably priced -> keep buying"),
                         ("RICH", "quality intact but price extended -> slow buys"),
                         ("IMPAIRED", "business cracking -> pause / reduce")]:
@@ -489,11 +579,11 @@ def render_by_strategy(results, fund, args):
         print(f"\n-- {title} "
               + "-" * max(2, 46 - len(title)))
         print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'GROWTH':>6s} "
-              f"{'8PT':>4s} {'quadrant':10s} data")
+              f"{'8PT':>4s} {'quadrant':10s} {'data%':>5s}")
         for r in grp:
             print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
                   f"{r['growth10']:6.1f} {r['eight']:4.2f} {r['quad']:10s} "
-                  f"{'Y' if r['has_data'] else '-'}")
+                  f"{r['coverage'] * 100:4.0f}%")
 
 
 def main():
@@ -543,7 +633,8 @@ def main():
         blend = composite(eight, g10, args.blend) if args.blend else None
         results.append({**info, "eight": eight, "growth10": g10, "blend": blend,
                         "quad": quadrant(eight, g10), "eps_f": eps_f,
-                        "p8": parts8, "pg": partsg, "has_data": t in fund})
+                        "p8": parts8, "pg": partsg, "has_data": t in fund,
+                        "coverage": _coverage(f)})
 
     keyf = {"growth": lambda r: -r["growth10"],
             "eight": lambda r: -r["eight"],
@@ -562,7 +653,7 @@ def main():
           f"{'GROWTH':>6s} {'8PT':>4s} {'quadrant':10s} {'epsF':>5s}"
     if args.blend:
         hdr += f" {'blend':>5s}"
-    hdr += "  data"
+    hdr += f" {'data%':>5s}"
     print(hdr)
     for i, r in enumerate(results, 1):
         line = f"{i:2d} {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} " \
@@ -570,8 +661,10 @@ def main():
                f"{r['eps_f']:5.2f}"
         if args.blend:
             line += f" {r['blend']:5.2f}"
-        line += f"   {'Y' if r['has_data'] else '-'}"
+        line += f" {r['coverage'] * 100:4.0f}%"
         print(line)
+    print("  data% = share of fundamentals present; scores are renormalized "
+          "over present metrics (low data% = trust the score less).")
 
     # ----- quadrant summary -----
     print("\n=== QUADRANTS ===")
