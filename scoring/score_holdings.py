@@ -291,6 +291,24 @@ def _coverage(f):
     return sum(1 for k in fields if f.get(k) is not None) / len(fields)
 
 
+# Coverage below this is flagged with a GAP marker in the output tables.
+_GAP_THRESHOLD = 0.75
+_GAP_FOOTNOTE = (
+    "  data% = share of fundamentals present; scores are renormalized over "
+    "present metrics.\n"
+    f"  [GAP] = coverage < {_GAP_THRESHOLD:.0%}: score rests on thin data — "
+    "trust it less (and for\n"
+    "        speculative W6/Binary names the gap is penalised, not "
+    "renormalized away)."
+)
+
+
+def _cov_cell(coverage):
+    """Format a coverage value for a table cell, flagging low coverage."""
+    cell = f"{coverage * 100:4.0f}%"
+    return f"{cell} [GAP]" if coverage < _GAP_THRESHOLD else cell
+
+
 # --- 8-POINT (each sub-score 0..1; summed *8/8 -> 0..8) ------------------
 def score_8point(t, f, info):
     eps_f = eps_surprise_factor(f.get("eps_beat_rate"), f.get("eps_beat_streak"))
@@ -563,7 +581,7 @@ def render_by_strategy(results, fund, args):
     for r, q10, rich, grade in dca_scored:
         print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
               f"{q10:7.1f} {rich:8.2f} {grade:9s} "
-              f"{r['coverage'] * 100:4.0f}%")
+              f"{_cov_cell(r['coverage'])}")
     for grade, desc in [("KEEP-DCA", "durable + reasonably priced -> keep buying"),
                         ("RICH", "quality intact but price extended -> slow buys"),
                         ("IMPAIRED", "business cracking -> pause / reduce")]:
@@ -583,7 +601,10 @@ def render_by_strategy(results, fund, args):
         for r in grp:
             print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
                   f"{r['growth10']:6.1f} {r['eight']:4.2f} {r['quad']:10s} "
-                  f"{r['coverage'] * 100:4.0f}%")
+                  f"{_cov_cell(r['coverage'])}")
+
+    print()
+    print(_GAP_FOOTNOTE)
 
 
 def main():
@@ -661,10 +682,9 @@ def main():
                f"{r['eps_f']:5.2f}"
         if args.blend:
             line += f" {r['blend']:5.2f}"
-        line += f" {r['coverage'] * 100:4.0f}%"
+        line += f" {_cov_cell(r['coverage'])}"
         print(line)
-    print("  data% = share of fundamentals present; scores are renormalized "
-          "over present metrics (low data% = trust the score less).")
+    print(_GAP_FOOTNOTE)
 
     # ----- quadrant summary -----
     print("\n=== QUADRANTS ===")
