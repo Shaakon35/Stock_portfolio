@@ -241,6 +241,10 @@ W6_SPEC_TARGETS = {
                       # the convex tail. CATALYST / Binary — size tiny, never average down.
     "CRCL":  0.0000,  # Circle (USDC) — held windfall (147 shares), TARGET 0%. Parked to
                       # track/manage down, NOT to add to. Catalyst.
+    "LEU":   0.0000,  # Centrus Energy — HALEU/uranium enrichment for advanced reactors
+                      # (SMR fuel-supply bottleneck). TARGET 0% — watch-only stub so it
+                      # shows in the basket; re-size if the enrichment thesis firms up.
+                      # Catalyst / Binary (policy/contract-driven, pre-scale economics).
 }
 
 # =========================================================================
@@ -338,6 +342,7 @@ STRATEGY = {
     "RKLB":    "catalyst",  # Space — size once, milestone-driven, no avg down
     "SYM":     "catalyst",  # Symbotic — robotics, GAAP-unprofitable + lumpy; size once, no avg down
     "CRCL":    "catalyst",  # Circle — held windfall, target 0%; manage down, never avg in
+    "LEU":     "catalyst",  # Centrus — HALEU enrichment, policy/contract-driven; watch-only 0%
 }
 
 # =========================================================================
