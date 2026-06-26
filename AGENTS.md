@@ -34,7 +34,7 @@ refreshing or extending the data.
 
 ```
 ticker,mktcap_b,fwd_rev_growth,ttm_rev_growth,fwd_eps_growth,gross_margin,
-net_margin,fcf_positive,peg,pct_above_200dma,pct_below_52w_high,
+net_margin,fcf_positive,peg,ps_ratio,pct_above_200dma,pct_below_52w_high,
 eps_beat_rate,eps_beat_streak
 ```
 
@@ -43,12 +43,20 @@ eps_beat_rate,eps_beat_streak
 - `ttm_rev_growth` — trailing-12m rev YoY %; blank = unknown (no re-accel bonus).
 - `net_margin` — GAAP profit margin %, ttm. See operating-margin proxy rule.
 - `fcf_positive` — `1` if trailing FCF > 0 else `0`.
-- `peg` — blank if n/a.
+- `peg` — blank if n/a. When blank, P6 falls back to `ps_ratio` vs growth.
+- `ps_ratio` — price/sales, ttm. Valuation fallback for P6 so loss-makers /
+  pre-revenue names (no PEG) still get a valuation score instead of neutral.
 - `pct_above_200dma` — `(price − 200DMA) / 200DMA × 100`; compute from the real
   price and 200-day MA (do **not** cap; the scoring bands clamp internally).
-- `pct_below_52w_high` — currently left blank; P8 uses 200DMA distance.
-- `eps_beat_rate` (0..1) / `eps_beat_streak` — blank = neutral. Seed only for
-  well-documented serial beaters; source from each name's `/earnings/` page.
+  Blank for names too recently listed to have a 200DMA.
+- `pct_below_52w_high` — left blank; the source has no clean field. P8 now scores
+  on the 200DMA leg alone when this is absent (it no longer averages with a
+  neutral 0.5, which used to drag every name toward the middle).
+- `eps_beat_rate` (0..1) / `eps_beat_streak` — blank = neutral. **The source has
+  no scrapable estimate-vs-actual table** (`/earnings/` 404s; financials pages
+  carry actuals but no consensus), so this is a deliberate *partial* field: seed
+  only well-documented serial beaters, leave the rest blank. The surprise factor
+  is a ±12% tie-breaker by design, never a dominant term.
 
 ### 3. Sourcing from stockanalysis.com
 

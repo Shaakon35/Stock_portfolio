@@ -57,7 +57,7 @@ each mode on the job it does:
 | `8PT`      | 0–8, anti-momentum quality screen                          |
 | `quadrant` | PRIME (size up) · MOMENTUM (starter) · QUALITY · AVOID     |
 | `epsF`     | EPS-surprise factor (>1 = serial beater, consensus too low)|
-| `data`     | `Y` = real fundamentals; `-` = scored on tags/forecast only|
+| `cov`      | field coverage `n/13` — how many data fields are populated  |
 
 ## Refreshing the data
 
@@ -67,6 +67,9 @@ auto-picks the newest `scoring/fundamentals_YYYY-MM-DD.csv`.
 
 To refresh: copy the latest CSV to a new date, update the numbers by hand from
 stockanalysis.com (`/stocks/TICKER/statistics/`; foreign names use
-`/quote/<exch>/<TICKER>/statistics/`), and re-run. EPS beat-rate/streak come
-from each name's `/earnings/` page. `--live` attempts a best-effort scrape but
-the committed CSV is the reproducible cache.
+`/quote/<exch>/<TICKER>/statistics/`), and re-run. The statistics page supplies
+12 of the 14 fields; `pct_below_52w_high` and the two `eps_beat_*` fields are
+not available there at scale (no estimate-vs-actual table), so they are left
+blank for most names and treated as neutral — see AGENTS.md for the rationale.
+`--live` only fills margins and **overwrites** the other fields blank, so do not
+run it against a hand-curated CSV; the committed CSV is the reproducible cache.
