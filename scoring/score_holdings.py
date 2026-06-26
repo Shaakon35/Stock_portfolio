@@ -50,7 +50,18 @@ from portfolio.AI_allocations import (  # noqa: E402
     TARGET_WEIGHTS, W1_SILICON_TARGETS, W2_POWER_TARGETS, W3_DCINFRA_TARGETS,
     W4_CLOUD_TARGETS, W5_SOFTWARE_TARGETS, W6_SPEC_TARGETS, STRATEGY, WATCHLIST,
 )
+from portfolio.allocations import ETF_LOOK_THROUGH  # noqa: E402
 from config.forecasts import WAVE_FORECASTS  # noqa: E402
+
+# ETF book weights — SMHV.SW is the only ETF held in the AI book (a fixed 37.5%
+# windfall). Its constituents (MU/TSM/LRCX/...) are therefore held INDIRECTLY:
+# each carries an implied book% = (its weight inside SMHV) x (SMHV's book%).
+# portfolio_rows() uses this to surface that pass-through exposure so the table
+# shows e.g. MU ~5.4% / TSM ~2.8% instead of a misleading 0.00.
+_ETF_BOOK = {
+    "SMHV.SW": (W1_SILICON_TARGETS.get("SMHV.SW", 0.0)
+                * TARGET_WEIGHTS.get("W1_SILICON", 0.0)),
+}
 
 # =========================================================================
 # 0. PORTFOLIO MAP (weights + forecasts, pulled live from the source of truth)
@@ -76,9 +87,31 @@ def _forecast(ticker):
     return (lo, hi, (lo + hi) / 2.0)
 
 
+def _etf_lookthrough_book():
+    """Map each ETF constituent -> its implied INDIRECT book % via the ETFs held.
+
+    For every ETF with a book weight in _ETF_BOOK, multiply each underlying's
+    weight inside the ETF by the ETF's book %. A name held in several ETFs sums
+    across them. Synthetic 'OTHER_*' buckets are skipped. Returns {ticker: pct}.
+    """
+    out = {}
+    for etf, book_frac in _ETF_BOOK.items():
+        holdings = ETF_LOOK_THROUGH.get(etf, {})
+        for c, w in holdings.items():
+            if c.startswith("OTHER"):
+                continue
+            out[c] = out.get(c, 0.0) + w * book_frac * 100
+    return out
+
+
 def portfolio_rows(include_watchlist=False):
     """Each held ticker with wave, sub-weight, book %, strategy, forecast band.
-    With include_watchlist, also append WATCHLIST names (wave='WL', book=0)."""
+    With include_watchlist, also append WATCHLIST names (wave='WL').
+
+    Watchlist names that are ETF constituents (e.g. SMHV's TSM/LRCX/MU) are NOT
+    book=0: they are held INDIRECTLY through the ETF, so they get an `etf_pct`
+    (sum of weight-in-ETF x ETF-book%) surfaced as their book%, tagged wave='ET'.
+    """
     rows = {}
     for w, wk, basket in _WAVES:
         wv = TARGET_WEIGHTS[wk]
@@ -88,20 +121,37 @@ def portfolio_rows(include_watchlist=False):
                 "ticker": t, "wave": w, "sub": sw, "book_pct": sw * wv * 100,
                 "strategy": STRATEGY.get(t, "?"), "held": True,
                 "cagr_lo": lo, "cagr_hi": hi, "cagr_mid": mid,
-                "wl_pos": None,
+                "wl_pos": None, "etf_pct": 0.0,
             }
+    etf_book = _etf_lookthrough_book()
     if include_watchlist:
         for t, v in WATCHLIST.items():
             if t in rows:
-                continue  # already held; don't double-list
+                continue  # already held directly; don't double-list
             cagr = v.get("cagr") if isinstance(v, dict) else None
             lo, hi = (cagr if cagr else (None, None))
             mid = (lo + hi) / 2.0 if (lo is not None and hi is not None) else None
+            ep = etf_book.get(t, 0.0)
             rows[t] = {
-                "ticker": t, "wave": "WL", "sub": 0.0, "book_pct": 0.0,
+                "ticker": t, "wave": ("ET" if ep > 0 else "WL"), "sub": 0.0,
+                "book_pct": ep, "etf_pct": ep,
                 "strategy": (v.get("strategy") if isinstance(v, dict) else "?"),
-                "held": False, "cagr_lo": lo, "cagr_hi": hi, "cagr_mid": mid,
+                "held": ep > 0, "cagr_lo": lo, "cagr_hi": hi, "cagr_mid": mid,
                 "wl_pos": (v.get("pos") if isinstance(v, dict) else None),
+            }
+    # ETF constituents that are NOT on the watchlist (e.g. MU) — still held
+    # indirectly, so surface them too when watchlist scoring is on.
+    if include_watchlist:
+        for t, ep in etf_book.items():
+            if t in rows or ep <= 0:
+                continue
+            lo, hi, mid = _forecast(t)
+            rows[t] = {
+                "ticker": t, "wave": "ET", "sub": 0.0,
+                "book_pct": ep, "etf_pct": ep,
+                "strategy": STRATEGY.get(t, "?"), "held": True,
+                "cagr_lo": lo, "cagr_hi": hi, "cagr_mid": mid,
+                "wl_pos": None,
             }
     return rows
 
@@ -531,7 +581,13 @@ _GAP_FOOTNOTE = (
     f"  [GAP] = coverage < {_GAP_THRESHOLD:.0%}: score rests on thin data — "
     "trust it less (and for\n"
     "        speculative W6/Binary names the gap is penalised, not "
-    "renormalized away)."
+    "renormalized away).\n"
+    "  wv=ET = held INDIRECTLY via the SMHV.SW ETF; its book% is the pass-"
+    "through weight\n"
+    "        (constituent weight in SMHV x SMHV's 37.5% book), not a separate "
+    "position.\n"
+    "        Excluded from the wave averages so it is not double-counted with "
+    "SMHV itself."
 )
 
 # --- per-score explanations shown under each table -----------------------
@@ -1610,11 +1666,14 @@ def main():
             print(f"            {', '.join(names)}")
 
     # ----- wave-level averages (held movable sleeve only) -----
-    print("\n=== WAVE AVERAGES (book-weighted, held, ex-SMHV) ===")
+    print("\n=== WAVE AVERAGES (book-weighted, held movable sleeve, "
+          "ex-SMHV & ex-ETF-lookthrough) ===")
     agg = {}
     for r in results:
         if not r["held"] or r["book_pct"] == 0:
             continue
+        if r["wave"] == "ET":
+            continue  # ETF pass-through: same money as SMHV, would double-count
         a = agg.setdefault(r["wave"], [0.0, 0.0, 0.0])
         a[0] += r["book_pct"] * r["growth10"]
         a[1] += r["book_pct"] * r["eight"]

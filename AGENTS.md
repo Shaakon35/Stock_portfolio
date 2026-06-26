@@ -192,6 +192,16 @@ print('PASS')"
 ### 7. Notes on interpreting results
 
 - **SMHV.SW is excluded** from scoring throughout (fixed windfall, semi index).
+  Its **constituents** are surfaced via ETF look-through instead: each top-10
+  holding (MU/AMD/AVGO/INTC/TSM/ASML/NVDA/LRCX/AMAT/TXN) is shown with `wv=ET`
+  and a `book%` equal to its weight inside SMHV × SMHV's 37.5% book weight (e.g.
+  MU 14.33% × 37.5% ≈ 5.4%, TSM ≈ 2.8%). The look-through table is
+  `ETF_LOOK_THROUGH["SMHV.SW"]` in `portfolio/allocations.py`; refresh it from
+  the ETF fact sheet when holdings drift. `ET` rows are **excluded from the wave
+  averages** so they are not double-counted against SMHV itself. MU has no CSV
+  row by design: stockanalysis.com's MU snapshot is source-corrupted (reports
+  ~$1.37T mktcap / $90B rev / PEG 0.05 for Micron), so it scores on
+  forecast/tags only (`data = -`) rather than ingest garbage.
 - The default Growth/8-Point quadrant is anti-momentum and mis-grades DCA
   compounders into AVOID by design — use `--by-strategy` to grade DCA on
   quality+valuation instead. See `scoring/README.md` for the rationale.

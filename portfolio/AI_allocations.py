@@ -452,7 +452,16 @@ def tickers_by_strategy(mode):
 
 WATCHLIST = {
     # --- Memory / storage (HBM + NAND/HDD) — the deepest-cyclical corner ---
-    # NB: MU promoted to a held W1 CYCLE pick (see W1_SILICON_TARGETS) — removed here.
+    "MU": {
+        "pos":      "Mid",
+        "cagr":     (10, 30),
+        "strategy": "cycle",
+        "area":     "Memory / DRAM+HBM (Micron) — LARGE",
+        "note":     "Held INDIRECTLY — SMHV's #1 holding (~14.3% of the ETF, "
+                    "~5.4% of book). HBM/DRAM supercycle leader; same memory "
+                    "cycle as SK Hynix. Deep-cyclical commodity — buy dips, trim "
+                    "near peak. Listed here so the look-through book% renders.",
+    },
     "SNDK": {
         "pos":      "Late",
         "cagr":     (2, 15),
