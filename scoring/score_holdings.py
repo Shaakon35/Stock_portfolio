@@ -1002,6 +1002,51 @@ _CONV_FOOTNOTE = (
 )
 
 
+def dca_conviction(quality10, layers, binding_val, richness, coverage):
+    """Continuous 0..10 conviction rank for a DCA compounder.
+
+    The cycle conviction() above is wrong for DCA names: it uses GROWTH (which a
+    steady compounder does not have) and 8PT (which penalises size/extension —
+    the exact bias that mis-grades compounders into AVOID). This variant keeps
+    the SAME geometric REWARD x SAFETY skeleton but swaps the inputs for the
+    ones that matter when you buy on a SCHEDULE:
+
+        REWARD = durability   = 0.50*QUALITY + 0.50*F
+        SAFETY = price entry  = 0.45*V + 0.35*(1-RICHNESS)*10 + 0.20*bind
+
+    RICHNESS (the DCA price gate, 0=cheap..1=stretched) replaces 8PT: a stretched
+    name is slowed, not skipped. Cycle position (C) enters only via 'bind' since
+    market timing is irrelevant to scheduled buying. No [PEAK?] haircut — a
+    peak-cycle flag is meaningless for a buy-forever name. Thin data still scales
+    the score down so a number earned on guesses is trusted less.
+    """
+    F = layers["FUND"]
+    V = layers["VAL"]
+    cheapness = (1.0 - richness) * 10.0      # 0..1 richness -> 0..10 cheapness
+
+    reward = 0.50 * quality10 + 0.50 * F
+    safety = 0.45 * V + 0.35 * cheapness + 0.20 * binding_val
+    raw = (reward * safety) ** 0.5           # same geometric mean as cycle CONV
+
+    if coverage < _GAP_THRESHOLD:
+        raw *= coverage                      # thin data -> trust less
+    return raw
+
+
+_DCA_CONV_FOOTNOTE = (
+    "  CONV 0-10 (DCA variant, higher = stronger compounder to keep buying): the\n"
+    "        same sqrt(REWARD * SAFETY) skeleton as the cycle CONV, but with the\n"
+    "        inputs that matter for a SCHEDULED buy. REWARD = 0.50*QUALITY +\n"
+    "        0.50*F (durability, not cyclical growth); SAFETY = 0.45*V +\n"
+    "        0.35*(1-RICHNESS) + 0.20*bind (entry discipline — RICHNESS is the\n"
+    "        DCA price gate, so a stretched name is SLOWED not skipped). 8PT and\n"
+    "        the [PEAK?] haircut are dropped (they penalise the size/extension a\n"
+    "        proven compounder is allowed to have); cycle position enters only via\n"
+    "        bind. So a dead-cheap NOW can out-CONV a richer ANET even though ANET\n"
+    "        is the better business — CONV ranks the BUY, QUALITY ranks the firm."
+)
+
+
 # =========================================================================
 # 5b. STRATEGY-AWARE GRADING — judge each name by the JOB it does
 # =========================================================================
@@ -1546,28 +1591,32 @@ def render_by_strategy(results, fund, args):
     for r in dca:
         f = fund.get(r["ticker"], {})
         q10, rich, _ = dca_quality(r["ticker"], f)
-        dca_scored.append((r, q10, rich, dca_grade(q10, rich, f)))
-    dca_scored.sort(key=lambda x: -x[1])
+        dconv = dca_conviction(q10, r["layers"], r["layers"][r["binding"]],
+                               rich, r["coverage"])
+        dca_scored.append((r, q10, rich, dca_grade(q10, rich, f), dconv))
+    dca_scored.sort(key=lambda x: -x[4])           # rank by DCA CONVICTION
     print("\n-- DCA (steady compounders; buy on schedule) "
           "--------------------------")
-    print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'QUALITY':>7s} "
-          f"{'RICHNESS':>8s} {'grade':9s} {'F':>4s} {'V':>4s} {'C':>4s} "
-          f"{'bind':5s} {'data%':>5s}")
-    for r, q10, rich, grade in dca_scored:
+    print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'CONV':>5s} "
+          f"{'QUALITY':>7s} {'RICHNESS':>8s} {'grade':9s} {'F':>4s} {'V':>4s} "
+          f"{'C':>4s} {'bind':5s} {'data%':>5s}")
+    for r, q10, rich, grade, dconv in dca_scored:
         peak = " [PEAK?]" if r["peak"] else ""
         print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
+              f"{dconv:5.2f} "
               f"{q10:7.1f} {rich:8.2f} {grade:9s} {_layer_cell(r['layers'])} "
               f"{_LAYER_ABBR[r['binding']]:5s} "
               f"{_cov_cell(r['coverage'])}{peak}")
     for grade, desc in [("KEEP-DCA", "durable + reasonably priced -> keep buying"),
                         ("RICH", "quality intact but price extended -> slow buys"),
                         ("IMPAIRED", "business cracking -> pause / reduce")]:
-        names = [r["ticker"] for r, _, _, g in dca_scored if g == grade]
+        names = [r["ticker"] for r, _, _, g, _ in dca_scored if g == grade]
         print(f"     {grade:9s} ({len(names):2d}) {desc}")
         if names:
             print(f"               {', '.join(names)}")
     print()
     print(_DCA_FOOTNOTE)
+    print(_DCA_CONV_FOOTNOTE)
 
     # ---- CYCLE & CATALYST: the two-axis grid, now RANKED by CONVICTION ----
     # The quadrant label is kept (it still answers "which corner?") but the rows
@@ -1690,17 +1739,25 @@ def main():
         cov = _coverage(f)
         peak = peak_trap(t, f, info)
         conv = conviction(g10, eight, layers, layers[binding], peak, cov)
+        # DCA names get the schedule-appropriate variant; the unified conviction
+        # routes each name to the rubric that matches its job so a single column
+        # / --sort is apples-to-apples across strategies.
+        q10, rich, _ = dca_quality(t, f)
+        conv_dca = dca_conviction(q10, layers, layers[binding], rich, cov)
+        conv_unified = conv_dca if info.get("strategy") == "dca" else conv
         results.append({**info, "eight": eight, "growth10": g10, "blend": blend,
                         "quad": quadrant(eight, g10), "eps_f": eps_f,
                         "p8": parts8, "pg": partsg, "has_data": t in fund,
                         "coverage": cov, "conviction": conv,
+                        "conviction_dca": conv_dca,
+                        "conviction_unified": conv_unified,
                         "layers": layers, "binding": binding,
                         "peak": peak})
 
     keyf = {"growth": lambda r: -r["growth10"],
             "eight": lambda r: -r["eight"],
             "blend": lambda r: -(r["blend"] or 0),
-            "conviction": lambda r: -r["conviction"]}[args.sort]
+            "conviction": lambda r: -r["conviction_unified"]}[args.sort]
     results.sort(key=keyf)
 
     if args.by_strategy:
@@ -1718,8 +1775,13 @@ def main():
     hdr += f" {'F':>4s} {'V':>4s} {'C':>4s} {'bind':5s} {'data%':>5s}"
     print(hdr)
     for i, r in enumerate(results, 1):
+        # CONV is strategy-aware: DCA names show the schedule-appropriate variant
+        # (marked 'd'); cycle/catalyst show the entry variant. This keeps the
+        # column consistent with --sort conviction, which uses the same value.
+        is_dca = r.get("strategy") == "dca"
+        conv_mark = "d" if is_dca else " "
         line = f"{i:2d} {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} " \
-               f"{r['conviction']:5.2f} " \
+               f"{r['conviction_unified']:5.2f}{conv_mark}" \
                f"{r['growth10']:6.1f} {r['eight']:4.2f} {r['quad']:10s} " \
                f"{r['eps_f']:5.2f}"
         if args.blend:
@@ -1730,8 +1792,11 @@ def main():
                 f"{_cov_cell(r['coverage'])}{peak}"
         print(line)
     print()
+    print("  CONV column: a trailing 'd' marks a DCA name scored with the DCA "
+          "conviction variant (QUALITY+RICHNESS); others use the cycle variant.")
     print(_GROWTH_8PT_FOOTNOTE)
     print(_CONV_FOOTNOTE)
+    print(_DCA_CONV_FOOTNOTE)
     print(_GAP_FOOTNOTE)
     print(_LAYER_FOOTNOTE)
 
