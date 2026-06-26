@@ -1845,6 +1845,287 @@ WATCHLIST = {
         "note":     "Cheap China commerce/logistics; consumer + geo cyclical. "
                     "Deep-value cycle.",
     },
+
+    # =====================================================================
+    # BROAD SCREEN (2026-06) — candidates beyond the core AI value chain.
+    # Added on owner request. These widen the watchlist into adjacent and
+    # off-thesis sectors (healthcare, financials, miners, defense, consumer,
+    # energy). Tentative tags only — NOT held, do not affect any weight.
+    # cagr bands are rough forward 3-5Y estimates for screening, not
+    # forecasts. Refine pos/cagr/note before promoting any name into a wave.
+    # Names already present upstream (Block=XYZ, Alibaba=9988.HK, JD=9618.HK,
+    # and ~29 overlaps) were dropped to avoid duplicates.
+    # =====================================================================
+    "FSLY": {"strategy": "cycle",    "pos": "Mid",      "cagr": (3, 28),
+             "area": "Edge cloud / CDN (Fastly)",
+             "note": "Edge compute platform; execution-challenged, washed-out. "
+                     "Speculative cyclical recovery, not a compounder."},
+    "ESTC": {"strategy": "cycle",    "pos": "Mid",      "cagr": (10, 22),
+             "area": "Search / analytics + vector (Elastic)",
+             "note": "Search + vector-DB layer for RAG/AI. Profitable-ish, "
+                     "consumption model; buy dips."},
+    "MSTR": {"strategy": "catalyst", "pos": "Binary",   "cagr": (-40, 60),
+             "area": "Bitcoin treasury vehicle (MicroStrategy)",
+             "note": "Leveraged BTC proxy via convertible debt. Outcome is the "
+                     "BTC cycle + financing — Binary. Size tiny, never avg down."},
+    "AISP": {"strategy": "catalyst", "pos": "Binary",   "cagr": (-50, 80),
+             "area": "Edge-AI defense video surveillance (Airship AI)",
+             "note": "Micro-cap, contract-dependent. Binary on defense awards + "
+                     "funding. Lottery-grade punt — size tiny, never avg down."},
+    "PATH": {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 25),
+             "area": "AI-native RPA (UiPath)",
+             "note": "Robotic process automation pivoting to agentic AI. "
+                     "Turnaround cyclical — buy dips on execution proof."},
+    "DUOL": {"strategy": "dca",      "pos": "Mid",      "cagr": (18, 30),
+             "area": "Consumer LLM-localized learning app (Duolingo)",
+             "note": "Gamified learning monetizing LLM features; high growth, "
+                     "FCF+. Quality consumer compounder."},
+    "U":    {"strategy": "cycle",    "pos": "Mid",      "cagr": (5, 28),
+             "area": "RT3D engine / spatial compute (Unity)",
+             "note": "Real-time 3D engine; post-reset turnaround, lumpy. "
+                     "Cyclical recovery bet — buy dips."},
+    "PYPL": {"strategy": "dca",      "pos": "Mid",      "cagr": (6, 14),
+             "area": "Payments turnaround (PayPal)",
+             "note": "Cheap value with large FCF; margin/branded-checkout "
+                     "turnaround. DCA-grade value compounder."},
+
+    # --- Semis, Specialized Silicon & Equipment ---
+    "POWI": {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 20),
+             "area": "High-voltage gate drivers (Power Integrations)",
+             "note": "HV drivers for energy infra; cyclical analog. Buy dips."},
+    "DIOD": {"strategy": "cycle",    "pos": "Mid",      "cagr": (6, 18),
+             "area": "Discrete/analog silicon (Diodes Inc)",
+             "note": "Auto/industrial discretes; deep-cyclical analog. "
+                     "Buy trough, trim peak."},
+    "COHU": {"strategy": "cycle",    "pos": "Early/Mid","cagr": (5, 25),
+             "area": "Back-end test handlers (Cohu)",
+             "note": "Semi test/handling, thermal subsystems; early-cycle "
+                     "back-end. High-beta — buy dips."},
+    "FORM": {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 22),
+             "area": "Probe cards (FormFactor)",
+             "note": "Advanced probe cards for HBM/HD silicon verification; "
+                     "bottleneck-adjacent. CYCLE."},
+    "AEIS": {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 20),
+             "area": "Precision power for etch/depo (Advanced Energy)",
+             "note": "Plasma power conversion for WFE; cyclical equipment. "
+                     "Buy dips with the WFE cycle."},
+    "MKSI": {"strategy": "cycle",    "pos": "Mid",      "cagr": (6, 18),
+             "area": "Vacuum/laser subsystems (MKS Instruments)",
+             "note": "Subsystems for advanced nodes; levered to WFE cycle + "
+                     "debt. Cyclical — buy dips."},
+    "UMC":  {"strategy": "cycle",    "pos": "Mid/Late", "cagr": (2, 12),
+             "area": "Mature-node foundry (United Microelectronics)",
+             "note": "Commodity mature-node foundry; deep-cyclical, low-growth. "
+                     "Trough-buy only."},
+    "ASX":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (5, 15),
+             "area": "OSAT / advanced packaging (ASE Technology)",
+             "note": "Global OSAT leader; advanced packaging tailwind but "
+                     "cyclical/commodity. Buy dips. (Was listed as ASEH.)"},
+    "TSEM": {"strategy": "cycle",    "pos": "Mid",      "cagr": (6, 18),
+             "area": "Analog/RF specialty foundry (Tower Semi)",
+             "note": "Specialty analog/RF foundry; cyclical. Buy dips."},
+
+    # --- Hardware, Datacenter Infrastructure & Optics ---
+    "NTAP": {"strategy": "dca",      "pos": "Mid",      "cagr": (4, 12),
+             "area": "Enterprise data storage (NetApp)",
+             "note": "Storage management; FCF+, dividend. Slow DCA-grade, "
+                     "AI-data tailwind optional."},
+    "PSTG": {"strategy": "cycle",    "pos": "Mid",      "cagr": (10, 22),
+             "area": "All-flash arrays for AI (Pure Storage)",
+             "note": "High-perf flash for AI clusters; growthier cyclical. "
+                     "Buy dips."},
+    "HPQ":  {"strategy": "dca",      "pos": "Late",     "cagr": (2, 8),
+             "area": "PC/print client devices (HP Inc)",
+             "note": "Defensive value; AI-PC refresh optional upside. "
+                     "Low-growth DCA/value, high yield."},
+    "DELL": {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 18),
+             "area": "Tier-1 AI server integrator (Dell)",
+             "note": "Scale liquid-cooled AI servers; thin-margin integrator, "
+                     "cyclical. Buy dips, watch margin."},
+    "LITE": {"strategy": "cycle",    "pos": "Mid",      "cagr": (10, 28),
+             "area": "Optical components (Lumentum)",
+             "note": "Short-reach AI optics; cyclical optical supplier. "
+                     "Buy dips with the optics cycle."},
+    "CIEN": {"strategy": "cycle",    "pos": "Mid",      "cagr": (6, 18),
+             "area": "Coherent optical transport (Ciena)",
+             "note": "DC-interconnect + telco transport; lumpy cyclical. "
+                     "Buy dips."},
+    "BDC":  {"strategy": "dca",      "pos": "Mid",      "cagr": (6, 14),
+             "area": "Industrial networking / cabling (Belden)",
+             "note": "High-speed data cabling for industrial/DC; steady "
+                     "compounder. DCA-grade."},
+    "CLS":  {"strategy": "cycle",    "pos": "Mid/Late", "cagr": (12, 30),
+             "area": "EMS for hyperscalers (Celestica)",
+             "note": "Hyperscaler EMS; huge run, thin-margin/cyclical. "
+                     "High-beta — trim into strength."},
+    "JBL":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 18),
+             "area": "Electronics manufacturing (Jabil)",
+             "note": "Diversified EMS/lifecycle mfg; cyclical, buyback-driven. "
+                     "Buy dips. (Was listed as JABIL.)"},
+    "SANM": {"strategy": "cycle",    "pos": "Mid",      "cagr": (5, 15),
+             "area": "Integrated mfg (Sanmina)",
+             "note": "EMS for defense/computing; cyclical, modest growth. "
+                     "Buy dips."},
+    "EMR":  {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 15),
+             "area": "Process automation + cooling controls (Emerson)",
+             "note": "Automation + liquid-cooling valves; quality industrial "
+                     "compounder. DCA-grade."},
+    "GRMN": {"strategy": "dca",      "pos": "Mid",      "cagr": (6, 12),
+             "area": "Proprietary hardware / GPS telemetry (Garmin)",
+             "note": "High-margin niche hardware; net cash, steady. "
+                     "DCA-grade compounder."},
+
+    # --- Grid Electrification, Utilities & Materials ---
+    "NEE":  {"strategy": "dca",      "pos": "Mid",      "cagr": (6, 12),
+             "area": "Clean-energy generation (NextEra)",
+             "note": "Largest renewables + regulated utility; secular grid "
+                     "demand. DCA-grade."},
+    "SO":   {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 9),
+             "area": "Nuclear/gas base-load utility (Southern Co)",
+             "note": "Regulated base-load; new nuclear online. Slow DCA yield "
+                     "compounder."},
+    "DUK":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 8),
+             "area": "Regulated grid utility (Duke Energy)",
+             "note": "Large regulated grid; DC-load tailwind. Slow DCA yield."},
+    "SRE":  {"strategy": "dca",      "pos": "Mid",      "cagr": (6, 10),
+             "area": "Regulated infra + LNG (Sempra)",
+             "note": "Regulated T&D tracking industrial demand. DCA-grade."},
+    "LNT":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 8),
+             "area": "Regulated utility (Alliant Energy)",
+             "note": "Solid regulated compounder; DC pipeline. Slow DCA yield."},
+    "HON":  {"strategy": "dca",      "pos": "Mid",      "cagr": (6, 12),
+             "area": "Industrial + building controls (Honeywell)",
+             "note": "Diversified high-margin industrial; steady. DCA-grade."},
+    "MMM":  {"strategy": "dca",      "pos": "Late",     "cagr": (2, 8),
+             "area": "Diversified manufacturing (3M)",
+             "note": "Deep-value turnaround, high yield, litigation overhang. "
+                     "DCA/value — slow."},
+    "URI":  {"strategy": "cycle",    "pos": "Mid/Late", "cagr": (6, 15),
+             "area": "Equipment rental (United Rentals)",
+             "note": "Industrial fleet leasing; construction-cycle proxy. "
+                     "CYCLE — buy dips, trim at peak."},
+    "EME":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (10, 20),
+             "area": "Electrical/mechanical construction (EMCOR)",
+             "note": "DC + electrification contractor; backlog-driven cyclical. "
+                     "Buy dips."},
+    "MYRG": {"strategy": "cycle",    "pos": "Early/Mid","cagr": (8, 20),
+             "area": "Transmission-line contractor (MYR Group)",
+             "note": "Specialized grid T&D contractor; early-cycle build. "
+                     "High-beta — buy dips."},
+    "FLR":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (6, 18),
+             "area": "Engineering / infra constructor (Fluor)",
+             "note": "Macro EPC for energy/infra; lumpy cyclical. Buy dips."},
+
+    # --- Aerospace, Sovereignty & Defense Infrastructure ---
+    "NOC":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 11),
+             "area": "Strategic bombers / space (Northrop)",
+             "note": "Long-cycle strategic programs (B-21) + space. DCA-grade "
+                     "defense prime."},
+    "GD":   {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 11),
+             "area": "Marine + land combat systems (General Dynamics)",
+             "note": "Subs/combat vehicles + Gulfstream. Durable backlog. "
+                     "DCA-grade."},
+    "HWM":  {"strategy": "dca",      "pos": "Mid",      "cagr": (10, 18),
+             "area": "Jet-engine component castings (Howmet)",
+             "note": "Aero structural castings; aftermarket-rich. Quality "
+                     "compounder — DCA-grade."},
+    "TDG":  {"strategy": "dca",      "pos": "Mid",      "cagr": (10, 16),
+             "area": "Proprietary aero aftermarket (TransDigm)",
+             "note": "High-margin sole-source aftermarket parts; serial "
+                     "compounder (levered). DCA-grade."},
+    "PDD":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (10, 25),
+             "area": "Cross-border value commerce (PDD / Temu)",
+             "note": "High-growth value marketplace; China + trade risk. "
+                     "Cyclical-growth — buy dips."},
+
+    # --- Secular Healthcare, MedTech & Biopharma Ballast ---
+    "AMGN": {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 10),
+             "area": "Biologics platform (Amgen)",
+             "note": "Large biologic base + obesity optionality. DCA-grade "
+                     "yield compounder."},
+    "GILD": {"strategy": "dca",      "pos": "Mid",      "cagr": (4, 9),
+             "area": "Anti-viral cash generator (Gilead)",
+             "note": "Cheap, high-yield, HIV/oncology. DCA/value."},
+    "BMY":  {"strategy": "dca",      "pos": "Late",     "cagr": (2, 8),
+             "area": "Oncology portfolio (Bristol Myers)",
+             "note": "Washed-out, patent-cliff overhang, high yield. "
+                     "DCA/value — slow."},
+    "PFE":  {"strategy": "dca",      "pos": "Late",     "cagr": (2, 8),
+             "area": "Diversified pharma (Pfizer)",
+             "note": "Depressed post-COVID value, high yield, pipeline doubts. "
+                     "DCA/value."},
+    "SYK":  {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 13),
+             "area": "Orthopedics / hospital tech (Stryker)",
+             "note": "Dominant ortho + hospital ecosystem. DCA-grade "
+                     "compounder."},
+    "MDT":  {"strategy": "dca",      "pos": "Mid",      "cagr": (4, 9),
+             "area": "Diversified medical devices (Medtronic)",
+             "note": "Broad device portfolio, high yield, steady. DCA-grade. "
+                     "(Tag was 'mca' in the source list — read as dca.)"},
+    "BSX":  {"strategy": "dca",      "pos": "Mid",      "cagr": (10, 16),
+             "area": "Interventional medtech (Boston Scientific)",
+             "note": "High-growth cardio/interventional. Quality compounder — "
+                     "DCA-grade."},
+
+    # --- Financial Networks & Commodity Infrastructure ---
+    "JPM":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 10),
+             "area": "Fortress bank franchise (JPMorgan)",
+             "note": "Best-in-class diversified bank. DCA-grade, rate/credit "
+                     "cyclical underneath."},
+    "GS":   {"strategy": "cycle",    "pos": "Mid",      "cagr": (5, 14),
+             "area": "Investment bank / markets (Goldman Sachs)",
+             "note": "Capital-markets cyclical; earnings swing with the cycle. "
+                     "Buy dips, trim booms."},
+    "MS":   {"strategy": "cycle",    "pos": "Mid",      "cagr": (5, 12),
+             "area": "Wealth mgmt + IB (Morgan Stanley)",
+             "note": "Wealth-management scale + cyclical IB. Buy dips."},
+    "AXP":  {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 14),
+             "area": "Premium credit network (American Express)",
+             "note": "Closed-loop premium network; affluent base. DCA-grade, "
+                     "mild credit cyclicality."},
+    "BLK":  {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 14),
+             "area": "Asset-management anchor (BlackRock)",
+             "note": "Institutional flow + ETF (iShares) capture. DCA-grade "
+                     "compounder."},
+    "TECK": {"strategy": "cycle",    "pos": "Mid",      "cagr": (5, 20),
+             "area": "Copper expansion miner (Teck Resources)",
+             "note": "Copper growth pipeline. Commodity CYCLE — buy dips."},
+    "BHP":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (3, 12),
+             "area": "Diversified major miner (BHP)",
+             "note": "Bulk commodities + copper; cyclical, high yield. "
+                     "Buy trough."},
+    "RIO":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (2, 10),
+             "area": "Iron ore / bauxite major (Rio Tinto)",
+             "note": "Tier-1 iron ore + copper growth. Commodity CYCLE, "
+                     "high yield — buy trough."},
+    "LAC":  {"strategy": "catalyst", "pos": "Binary",   "cagr": (-40, 50),
+             "area": "Nevada lithium development (Lithium Americas)",
+             "note": "Dev-stage physical lithium (Thacker Pass); binary on "
+                     "financing/permits/price. Size tiny, never avg down."},
+    "SQM":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (3, 18),
+             "area": "Low-cost lithium brine (SQM)",
+             "note": "Low-cost brine producer; lithium price cyclical. "
+                     "Buy trough."},
+    "TGT":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (2, 10),
+             "area": "Discretionary retail (Target)",
+             "note": "Discretionary-spend recovery candidate; execution risk. "
+                     "Cyclical-value — buy dips."},
+    "CVX":  {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 9),
+             "area": "Integrated supermajor (Chevron)",
+             "note": "Permian-dense supermajor; FCF + dividend. DCA/value "
+                     "yield."},
+    "OXY":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (3, 15),
+             "area": "Upstream + carbon capture (Occidental)",
+             "note": "Leveraged upstream oil + CCUS optionality. Oil-price "
+                     "CYCLE — buy dips."},
+    "NVAX": {"strategy": "catalyst", "pos": "Binary",   "cagr": (-50, 60),
+             "area": "Vaccine adjuvant platform (Novavax)",
+             "note": "Binary on partnership/pipeline milestones; cash-burn "
+                     "risk. Size tiny, never avg down."},
+    "BNTX": {"strategy": "catalyst", "pos": "Binary",   "cagr": (-30, 50),
+             "area": "mRNA oncology platform (BioNTech)",
+             "note": "Cash-rich but binary on oncology readouts. Catalyst "
+                     "punt — size on data, never avg down."},
 }
 
 
