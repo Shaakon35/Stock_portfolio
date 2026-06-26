@@ -38,13 +38,16 @@ TARGET_WEIGHTS = {
                            #          (8-Point #6 fail). Freed book rotated to ZS in W5.
     "W4_CLOUD":     0.000, # WAVE ZEROED. Mega-cap cloud is capped by law-of-large-numbers
                            #          AND held passively elsewhere. Names kept at 0% book.
-    "W5_SOFTWARE":  0.0833,# CHANGED: 0.0676 -> 0.0833 — absorbs the ALAB trim as new name ZS
-                           #          (Zscaler, ~1.57% book): washed-out quality cyber (down
-                           #          ~36-59%, PEG 1.23, 30% FCF margin), fills the cyber gap
-                           #          left when S was cut. Mirror-image rotation of ALAB.
-    "W6_SPEC":      0.060, # CHANGED: 0.03 -> 0.06 — GROWN so the highest-upside names IONQ
-                           #          (+175% mid) and RKLB (+171%) get real ~1.5% slots, plus
-                           #          TMDX 2.5% (uncorrelated decorrelator). Funded from W5.
+    "W5_SOFTWARE":  0.0883,# CHANGED: 0.0833 -> 0.0883 — absorbs AXON's ~0.5% book moved in
+                           #          from W6 (2026-06). AXON is a profitable public-safety SaaS
+                           #          monopoly — an application-layer name that fits W5, not the
+                           #          speculative tail. Prior change: 0.0676 -> 0.0833 added ZS
+                           #          (Zscaler, ~1.57% book), the ALAB mirror-rotation cyber name.
+    "W6_SPEC":      0.055, # CHANGED: 0.06 -> 0.055 — shrunk by AXON's ~0.5% book moved OUT to
+                           #          W5 (AXON was the lone hold-forever name in the spec sleeve).
+                           #          The remaining convex tail (TMDX/IONQ/RKLB/SYM) keeps its
+                           #          book unchanged. Prior change: 0.03 -> 0.06 grew IONQ/RKLB
+                           #          to ~1.0% slots + TMDX 2.5% (uncorrelated decorrelator).
 }
 # OPTION B (BOTTLENECK TILT) + SMHV WINDFALL — restructured 2026-06.
 # Context: a 90k CHF SMHV.SW position (899 shares) is now a FIXED 37.5% of the
@@ -214,47 +217,61 @@ W4_CLOUD_TARGETS = {
     "ORCL":  0.20,  # Cloud-capacity winner
 }
 
-# --- WAVE 5: AI SOFTWARE / APPS (5.66%) ---
-# CHANGED (growth-max pass): SNOW MOVED OUT to CRDO (W3) — it was the weakest
-# software name (slowest forecast, multiple-compression hangover) and CRDO is the
-# sleeve's proven hyper-grower. The wave was also trimmed to fund W6 growth.
-# Four profitable anchors remain (PANW/CRWD/NOW/DDOG); PLTR & S kept at 0%.
+# --- WAVE 5: AI SOFTWARE / APPS (8.83%) ---
+# CHANGED (2026-06): AXON MOVED IN from W6, kept dca. A profitable public-safety
+# SaaS monopoly (59% gross margin, sticky recurring revenue) is an application-
+# layer name and belongs here, not in the speculative tail. It joins at its
+# unchanged ~0.5% book; the existing names were renormalized so their book values
+# are UNCHANGED (the wave grew by exactly AXON's book).
+# Prior (growth-max pass): SNOW MOVED OUT to CRDO (W3) — weakest software name;
+# four profitable anchors remain (PANW/CRWD/NOW/DDOG); PLTR & S kept at 0%.
 W5_SOFTWARE_TARGETS = {
     "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.1699,# CHANGED: 0.2095 -> 0.1699 — renorm (book unchanged) as ZS was added to
-                    # the wave. Security platform — biggest, cheapest, steadiest.
-    "CRWD":  0.1700,# CHANGED: 0.2096 -> 0.1700 — renorm (book unchanged). AI cybersecurity.
-    "NOW":   0.3014,# CHANGED: 0.3716 -> 0.3014 — renorm (book UNCHANGED at ~2.51%). Most
+    "PANW":  0.1603,# CHANGED: 0.1699 -> 0.1603 — renorm only (book UNCHANGED) after AXON
+                    # joined the wave. Security platform — biggest, cheapest, steadiest.
+    "CRWD":  0.1604,# CHANGED: 0.1700 -> 0.1604 — renorm only (book unchanged). AI cybersecurity.
+    "NOW":   0.2843,# CHANGED: 0.3014 -> 0.2843 — renorm only (book UNCHANGED at ~2.51%). Most
                     # mispriced quality held: 22x fwd / 0.89 PEG, down ~50% on the year.
                     # Workflow AI (Now Assist), profitable. CYCLE / Mid.
-    "ZS":    0.1889,# NEW: ~1.57% book. Zscaler — zero-trust / SASE cyber. Washed-out quality
-                    # (down ~36-59%, RSI ~43, PEG 1.23, 30% FCF margin, $3.5B ARR +25%);
-                    # agentic-AI security catalyst live. Mirror-image rotation from ALAB;
-                    # fills the cyber gap left when S was cut. CYCLE / Mid. Promoted from
-                    # WATCHLIST. Stage entry on a 50-SMA reclaim ("size on confirmation").
+    "ZS":    0.1782,# CHANGED: 0.1889 -> 0.1782 — renorm only (book UNCHANGED at ~1.57%).
+                    # Zscaler — zero-trust / SASE cyber. Washed-out quality (down ~36-59%,
+                    # RSI ~43, PEG 1.23, 30% FCF margin, $3.5B ARR +25%); agentic-AI security
+                    # catalyst live. Mirror-image rotation from ALAB; fills the cyber gap left
+                    # when S was cut. CYCLE / Mid. Stage entry on a 50-SMA reclaim.
+    "AXON":  0.0566,# NEW 2026-06: MOVED from W6, kept dca. Public-safety SaaS monopoly —
+                    # 59% gross margin, sticky recurring revenue (evidence.com, Draft One AI),
+                    # end-market that doesn't cycle. ~0.5% book (unchanged from its W6 slot).
+                    # Thin net/FCF is reinvestment by choice, not weak economics; hold through
+                    # dips. It belongs with the profitable apps here, not the convex tail.
     "PLTR":  0.0000,# TRIMMED: below 200d / death cross (tech sell signal, pt 8).
                     # Kept at 0% for easy re-add.
     "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
                     # Healed bubble hangover but slowest forecast of the survivors.
-    "DDOG":  0.1698,# CHANGED: 0.2093 -> 0.1698 — renorm (book unchanged). AI observability.
+    "DDOG":  0.1602,# CHANGED: 0.1698 -> 0.1602 — renorm only (book unchanged). AI observability.
 }
 
-# --- WAVE 6: SPECULATIVE / SECOND-ORDER (6%) ---
-# CHANGED (growth-max pass): wave grown 3% -> 6% (funded from W5) so the two
-# highest-upside names get real slots: IONQ (+175% mid) and RKLB (+171%) sized
-# to ~1.5% book each, alongside TMDX 2.5% (profitable, uncorrelated decorrelator).
+# --- WAVE 6: SPECULATIVE / SECOND-ORDER (5.5%) ---
+# CHANGED (2026-06): AXON MOVED OUT to W5 — it was the lone hold-forever DCA name
+# in the speculative sleeve (a profitable public-safety SaaS monopoly belongs in
+# AI Software/Apps, not the convex tail). The wave shrank by AXON's ~0.5% book;
+# the four survivors (TMDX/IONQ/RKLB/SYM) were renormalized so their book values
+# are UNCHANGED. Prior: wave grown 3% -> 6% to give IONQ (+175% mid) and RKLB
+# (+171%) real ~1.0% slots alongside TMDX 2.5% (profitable, uncorrelated).
 # These are the portfolio's convex tail — small absolute size, large payoff skew.
 W6_SPEC_TARGETS = {
-    "TMDX":  0.4166,  # TOP-10 name; 0.4166 x 6% = 2.5% book. MedTech organ-transport,
-                      # profitable, off-radar, non-AI diversifier.
-    "AXON":  0.0833,  # Defense/policing AI (profitable anchor) — small spec slice (0.5%)
-    "IONQ":  0.1667,  # CHANGED: 0.25 -> 0.1667 — trimmed to 1.0% book to fund SYM.
+    "TMDX":  0.4546,  # CHANGED: 0.4166 -> 0.4546 — renorm only (book UNCHANGED at ~2.5%)
+                      # after AXON left the wave. MedTech organ-transport, profitable,
+                      # off-radar, non-AI diversifier. TOP-10 name.
+    # --- AXON MOVED 2026-06 to W5 (AI Software/Apps), kept dca. It is a profitable
+    #     monopoly, not a speculative punt; it never fit the convex-tail sleeve. ---
+    "IONQ":  0.1818,  # CHANGED: 0.1667 -> 0.1818 — renorm only (book UNCHANGED at ~1.0%).
                       # Quantum revenue leader; +175% mid (highest forecast). Lottery/convex.
-    "RKLB":  0.1667,  # CHANGED: 0.25 -> 0.1667 — trimmed to 1.0% book to fund SYM.
+    "RKLB":  0.1818,  # CHANGED: 0.1667 -> 0.1818 — renorm only (book UNCHANGED at ~1.0%).
                       # Space/autonomy; +171% mid. Lottery/convex tail alongside IONQ.
-    "SYM":   0.1667,  # NEW 2026-06: Symbotic — warehouse/logistics automation robotics
+    "SYM":   0.1818,  # CHANGED: 0.1667 -> 0.1818 — renorm only (book UNCHANGED at ~1.0%).
+                      # NEW 2026-06: Symbotic — warehouse/logistics automation robotics
                       # (physical-AI). 1.0% book, funded by trimming IONQ+RKLB. Real
                       # business ($2.5B rev, +$749M FCF) so HIGHER quality than the pre-rev
                       # lottery names it sits beside — but GAAP-unprofitable (net -$28M TTM,
@@ -351,14 +368,14 @@ STRATEGY = {
     "CRWD":    "dca",       # Profitable platform, ~$1.9B FCF — hold forever
     "NOW":     "dca",       # Profitable (+13% GAAP, $5.1B FCF) — hold forever
     "ZS":      "cycle",     # Zscaler — zero-trust/SASE cyber; washed-out, FCF+ but GAAP-light; buy dips
+    "AXON":    "dca",       # MOVED from W6 (2026-06). Public-safety monopoly — 59% gross margin,
+                            # sticky SaaS; thin net/FCF is reinvestment by choice, not weak
+                            # economics. End-market doesn't cycle -> hold through dips.
     "SNOW":    "dca",       # FCF-positive, healed bubble hangover
     "PLTR":    "cycle",     # Best business but 62x sales — trim/add, not blind DCA
     "DDOG":    "cycle",     # Consumption model — buy dips, trim momentum spikes
 
     # --- W6 SPECULATIVE ---
-    "AXON":    "dca",       # Public-safety monopoly — 59% gross margin, sticky SaaS;
-                            # thin net/FCF is reinvestment by choice, not weak economics.
-                            # Volatile but end-market doesn't cycle -> hold through dips.
     "TMDX":    "cycle",     # MedTech growth — momentum-sensitive
     "IONQ":    "catalyst",  # Quantum binary — size once, event-driven, no avg down
     "RKLB":    "catalyst",  # Space — size once, milestone-driven, no avg down
