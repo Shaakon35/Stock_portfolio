@@ -282,8 +282,15 @@ W5_SOFTWARE_TARGETS = {
                     # SaaS monopoly — 59% gross margin, sticky recurring revenue (evidence.com,
                     # Draft One AI), end-market that doesn't cycle. QUALITY 8.5, KEEP-DCA. Thin
                     # net/FCF is reinvestment by choice; hold through dips.
-    "PLTR":  0.0000,# TRIMMED: below 200d / death cross (tech sell signal, pt 8).
-                    # Kept at 0% for easy re-add. (Note: now scores PRIME — re-add candidate.)
+    "PLTR":  0.0000,# HELD AT 0% (re-add candidate, 2026-06). Now the HIGHEST-CONVICTION
+                    # cycle name on the whole board (CONV 8.25, PRIME, F 10.0 / V 8.1 /
+                    # C 6.4) — the business scores elite. Kept at 0% NOT on quality but on
+                    # POSITION RISK the scorer can't see: US-gov customer concentration
+                    # (declining but still the larger base), Europe/France data-sovereignty
+                    # pushback capping the international TAM, and a priced-for-perfection
+                    # multiple (~60x+ sales) where a single lumpy gov quarter de-rates it.
+                    # Re-add as a SMALL starter (~1.5% book) bought on weakness, never chased.
+                    # CYCLE — trim/add, not blind DCA.
     "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
                     # Healed bubble hangover but slowest forecast of the survivors.
     "DDOG":  0.0000,# CHANGED: 0.1602 -> 0.00 — CUT (REBALANCE 2026-06). AI observability.
