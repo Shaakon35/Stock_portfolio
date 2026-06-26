@@ -240,6 +240,17 @@ W3_DCINFRA_TARGETS = {
                     # CHANGED 2026-06: S (SentinelOne) MOVED OUT to W5 (it's a software/cyber
                     # name). Growth-max pass: SNOW + COHR trim folded into CRDO; 6 names
                     # renormalized to sum to 1.0.
+    "CLS":   0.0000,# HELD AT 0% (re-add candidate, 2026-06). Celestica — EMS for
+                    # hyperscalers. Scores PRIME (CONV 7.17, GROWTH 7.3, 8PT 5.09) with
+                    # the CHEAPEST valuation in the whole DC-infra sleeve (V 9.3): AI-
+                    # datacenter exposure (custom 400G/800G networking + compute) at a
+                    # hardware multiple. Kept at 0% NOT on quality but on POSITION RISK
+                    # the scorer can't see: customer concentration (a few hyperscalers
+                    # drive most CCS revenue — its own version of the PLTR concentration
+                    # worry) and thin EMS margins (less cushion if volumes fall). The
+                    # binding layer is CYC 4.4 (cyclical capex). Re-add as a ~2.0% book
+                    # add-on weakness; clean on-thesis fit next to ANET/CRDO/COHR.
+                    # CYCLE / Mid-Late — buy dips, trim into strength.
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (20%) ---
@@ -418,6 +429,7 @@ STRATEGY = {
     "COHR":    "cycle",     # Optical — already ran, cyclical
     "FN":      "cycle",     # Fabrinet — optical contract mfr; cyclical, buy dips, trim at peak
     "ALAB":    "cycle",     # Astera — AI connectivity pure-play, high-beta; Mid-cycle (+500%/2y), trim when growth <30%
+    "CLS":     "cycle",     # Celestica — hyperscaler EMS; cheapest DC-infra name (V 9.3) but customer-concentrated + thin margins. Buy dips, trim strength.
     "S":       "cycle",     # SentinelOne — AI-native cyber, just-turned-profitable; buy dips, trim at peak
     # REMOVED from basket (kept commented for easy re-add — see W3_DCINFRA_TARGETS):
     #   "FIX":     "cycle",     # +2206% — late-cycle DC construction (removed)
@@ -2016,10 +2028,8 @@ WATCHLIST = {
              "area": "Industrial networking / cabling (Belden)",
              "note": "High-speed data cabling for industrial/DC; steady "
                      "compounder. DCA-grade."},
-    "CLS":  {"strategy": "cycle",    "pos": "Mid/Late", "cagr": (12, 30),
-             "area": "EMS for hyperscalers (Celestica)",
-             "note": "Hyperscaler EMS; huge run, thin-margin/cyclical. "
-                     "High-beta — trim into strength."},
+    # CLS (Celestica) PROMOTED 2026-06 to W3_DCINFRA_TARGETS as a 0% held re-add
+    # candidate (see basket). Removed from the watchlist so it isn't double-listed.
     "JBL":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 18),
              "area": "Electronics manufacturing (Jabil)",
              "note": "Diversified EMS/lifecycle mfg; cyclical, buyback-driven. "
