@@ -1155,6 +1155,254 @@ def fill_ttm(csv_path, tickers):
 
 
 # =========================================================================
+# 6c. CSV SYNC — add rows for AI-allocation names missing from the snapshot.
+# =========================================================================
+# Problem this solves: when names are added to portfolio/AI_allocations.py
+# (held baskets or WATCHLIST) they have no fundamentals row, so they score on
+# tags/forecast only (data = -). This scrapes the mechanically-available fields
+# from stockanalysis.com for those missing names and APPENDS them, so the next
+# score run has real data. It is deliberately conservative:
+#   * default: add ONLY missing tickers; never touch an existing row.
+#   * --overwrite: also re-scrape existing rows, but PRESERVE the hand-curated
+#     judgement cells (net_margin operating-margin proxies, seeded eps_beat_*),
+#     overwriting only the purely-mechanical fields.
+#   * fwd_rev_growth / fwd_eps_growth (analyst 3Y forecasts) CANNOT be scraped
+#     reliably (they render in SVG/obfuscated JSON), so they are left BLANK and
+#     every name still needing them by hand is reported at the end.
+#   * ttm_rev_growth / rev_growth_hist / net_margin_hist are intentionally left
+#     for --fill-ttm (the dedicated financials-page scraper), not duplicated
+#     here — run --fill-ttm after --sync-csv to populate them.
+# FX: foreign market caps are reported in local currency; converted to USD
+# billions with the same approximate rates documented in the CSV header.
+_FX_PER_USD = {  # local currency units per 1 USD (divide local cap by this)
+    "KRW": 1350.0,  # Korea (.KS)
+    "HKD": 7.8,     # Hong Kong (.HK)
+    "EUR": None,    # EUR is quoted USD-per-EUR; handled specially below
+    "CHF": 0.90,    # approx CHF per USD (.SW) — placeholder, refine in header
+}
+_EUR_USD = 1.08     # USD per 1 EUR (.AS / .DE listings priced in EUR)
+
+# Map the CSV ticker suffix to the local currency of its market-cap figure.
+_SUFFIX_CCY = {
+    "KS": "KRW", "HK": "HKD", "AS": "EUR", "DE": "EUR", "SW": "CHF",
+}
+
+
+def _stats_url(ticker):
+    """stockanalysis.com /statistics/ URL for a CSV ticker (US or foreign)."""
+    if "." in ticker:
+        code, suf = ticker.rsplit(".", 1)
+        exch = _FIN_EXCH.get(suf.upper())
+        if exch:
+            return f"https://stockanalysis.com/quote/{exch[0]}/{exch[1](code)}/statistics/"
+    return f"https://stockanalysis.com/stocks/{ticker.lower()}/statistics/"
+
+
+def _quote_price(ticker):
+    """Current price for a ticker, or None. US names use the clean quotes API;
+    foreign listings decode the price out of the SvelteKit __data.json blob."""
+    import json
+    import urllib.request
+
+    def get(url):
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            return r.read().decode("utf-8", "ignore")
+
+    try:
+        if "." not in ticker:
+            d = json.loads(get(
+                f"https://stockanalysis.com/api/quotes/s/{ticker.upper()}"))
+            return d.get("data", {}).get("p")
+        # foreign: /quote/<exch>/<code>/__data.json holds a flattened array; the
+        # quote sub-object maps key 'p' to an INDEX into the same data list.
+        code, suf = ticker.rsplit(".", 1)
+        exch = _FIN_EXCH.get(suf.upper())
+        if not exch:
+            return None
+        d = json.loads(get(
+            f"https://stockanalysis.com/quote/{exch[0]}/{exch[1](code)}/__data.json"))
+        for node in d.get("nodes", []):
+            data = node.get("data")
+            if not isinstance(data, list):
+                continue
+            for el in data:
+                if isinstance(el, dict) and "p" in el and "h52" in el:
+                    idx = el["p"]
+                    if isinstance(idx, int) and idx < len(data):
+                        return data[idx]
+        return None
+    except Exception:
+        return None
+
+
+def _stat_cell(html, label):
+    """Pull a single statistics-table value by row label. Uses the LAST match of
+    '>label<' so the stat row wins over the same words in the page nav, then
+    grabs the next title="..." (the unrounded value)."""
+    import re
+    idx = html.rfind(">" + label + "<")
+    if idx < 0:
+        idx = html.rfind(label)
+    if idx < 0:
+        return None
+    m = re.search(r'title="([^"]+)"', html[idx:idx + 280])
+    return m.group(1) if m else None
+
+
+def _clean_num(s):
+    """'4,041,226,003,400' / '27.152%' / '2.632' -> float, or None."""
+    if s is None:
+        return None
+    s = s.replace(",", "").replace("%", "").strip()
+    return _num(s)
+
+
+def scrape_stats(ticker):
+    """Scrape the mechanically-available fundamentals for one ticker from the
+    statistics page (+ quotes price + financials FCF sign). Returns a dict of
+    CSV cells (strings; blank where unavailable). fwd_* are always blank — they
+    are not reliably scrapable and must be hand-entered."""
+    import re
+    import urllib.request
+
+    def get(url):
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            return r.read().decode("utf-8", "ignore")
+
+    try:
+        html = get(_stats_url(ticker))
+    except Exception as e:
+        print(f"  [sync] {ticker}: statistics fetch failed ({e})")
+        return None
+
+    # market cap -> USD billions (FX-convert foreign caps)
+    cap_raw = _clean_num(_stat_cell(html, "Market Cap"))
+    mktcap_b = ""
+    if cap_raw is not None:
+        usd = cap_raw
+        if "." in ticker:
+            ccy = _SUFFIX_CCY.get(ticker.rsplit(".", 1)[1].upper())
+            if ccy == "EUR":
+                usd = cap_raw * _EUR_USD
+            elif ccy and _FX_PER_USD.get(ccy):
+                usd = cap_raw / _FX_PER_USD[ccy]
+        mktcap_b = f"{usd / 1e9:.2f}"
+
+    gross = _clean_num(_stat_cell(html, "Gross Margin"))
+    net = _clean_num(_stat_cell(html, "Profit Margin"))
+    peg = _clean_num(_stat_cell(html, "PEG Ratio"))
+    ps = _clean_num(_stat_cell(html, "PS Ratio"))
+    dma200 = _clean_num(_stat_cell(html, "200-Day Moving Average"))
+
+    # pct above/below the 200DMA needs the current price
+    pct_200 = ""
+    price = _quote_price(ticker)
+    if price is not None and dma200:
+        pct_200 = f"{(price - dma200) / dma200 * 100:.1f}"
+
+    # FCF sign from the financials page fcf[] array (index 0 = TTM/latest)
+    fcf_pos = ""
+    try:
+        fin = get(_fin_url(ticker))
+        m = re.search(r"(?<![\w])fcf:\[([^\]]+)\]", fin)
+        if m:
+            first = _num(m.group(1).split(",")[0])
+            if first is not None:
+                fcf_pos = "1" if first > 0 else "0"
+    except Exception:
+        pass
+
+    return {
+        "ticker": ticker,
+        "mktcap_b": mktcap_b,
+        "fwd_rev_growth": "",          # not scrapable — hand-enter
+        "ttm_rev_growth": "",          # leave for --fill-ttm
+        "fwd_eps_growth": "",          # not scrapable — hand-enter
+        "gross_margin": "" if gross is None else f"{gross}",
+        "net_margin": "" if net is None else f"{net}",
+        "fcf_positive": fcf_pos,
+        "peg": "" if peg is None else f"{peg}",
+        "ps_ratio": "" if ps is None else f"{ps}",
+        "pct_above_200dma": pct_200,
+        "pct_below_52w_high": "",      # CSV convention: left blank (P8 uses 200DMA)
+        "eps_beat_rate": "",           # hand-seeded only
+        "eps_beat_streak": "",         # hand-seeded only
+        "rev_growth_hist": "",         # leave for --fill-ttm
+        "net_margin_hist": "",         # leave for --fill-ttm
+    }
+
+
+# Fields --overwrite is allowed to replace on an EXISTING row. Deliberately
+# excludes net_margin (may hold an operating-margin proxy), eps_beat_rate /
+# eps_beat_streak (hand-seeded), and the *_hist series (owned by --fill-ttm),
+# so re-syncing never clobbers a curated judgement cell.
+_SYNC_OVERWRITE_FIELDS = (
+    "mktcap_b", "gross_margin", "fcf_positive", "peg", "ps_ratio",
+    "pct_above_200dma",
+)
+
+
+def sync_csv(csv_path, wanted, overwrite=False):
+    """Append fundamentals rows for `wanted` tickers missing from csv_path (and,
+    with overwrite=True, refresh the mechanical fields on existing rows while
+    preserving curated cells). Preserves the leading '#' header and LF endings.
+    Returns the list of tickers still missing fwd_rev_growth/fwd_eps_growth so
+    the caller can report what still needs hand entry."""
+    with open(csv_path, newline="") as fh:
+        raw = fh.readlines()
+    comments = [ln for ln in raw if ln.lstrip().startswith("#")]
+    data_lines = [ln for ln in raw if not ln.lstrip().startswith("#")]
+    reader = csv.DictReader(data_lines)
+    header = list(reader.fieldnames)
+    for col in ("ps_ratio", "rev_growth_hist", "net_margin_hist"):
+        if col not in header:
+            header.append(col)            # extend older CSVs in place
+    rows = list(reader)
+    have = {(r.get("ticker") or "").strip() for r in rows}
+
+    missing = [t for t in wanted if t not in have]
+    existing = [t for t in wanted if t in have] if overwrite else []
+
+    added, refreshed, fwd_todo = [], [], []
+    for t in missing:
+        rec = scrape_stats(t)
+        if rec is None:
+            continue
+        rows.append({k: rec.get(k, "") for k in header})
+        added.append(t)
+        fwd_todo.append(t)               # new rows always need fwd_* by hand
+        print(f"  [sync] +{t}: mktcap={rec['mktcap_b']} gm={rec['gross_margin']} "
+              f"nm={rec['net_margin']} peg={rec['peg']} ps={rec['ps_ratio']} "
+              f"200dma%={rec['pct_above_200dma']} fcf={rec['fcf_positive']}")
+
+    if overwrite:
+        by_ticker = {(r.get("ticker") or "").strip(): r for r in rows}
+        for t in existing:
+            rec = scrape_stats(t)
+            if rec is None:
+                continue
+            row = by_ticker[t]
+            for f in _SYNC_OVERWRITE_FIELDS:
+                if rec.get(f, "") != "":
+                    row[f] = rec[f]
+            refreshed.append(t)
+            print(f"  [sync] ~{t}: refreshed mechanical fields "
+                  f"(curated net_margin/eps_beat preserved)")
+
+    # Force LF (same rationale as fill_ttm — avoid CRLF flipping the whole diff).
+    with open(csv_path, "w", newline="") as fh:
+        fh.writelines(comments)
+        w = csv.DictWriter(fh, fieldnames=header, lineterminator="\n")
+        w.writeheader()
+        w.writerows(rows)
+    print(f"  [sync] added {len(added)}, refreshed {len(refreshed)} "
+          f"-> {csv_path}")
+    return fwd_todo
+
+
+# =========================================================================
 # 7. RUN
 # =========================================================================
 def default_csv():
@@ -1243,9 +1491,38 @@ def main():
                     help="scrape ttm_rev_growth from stockanalysis.com /financials/ "
                          "and write it into the CSV in place (powers the "
                          "deceleration penalty); preserves all other cells")
+    ap.add_argument("--sync-csv", action="store_true",
+                    help="scrape & APPEND fundamentals rows for AI-allocation names "
+                         "(held + watchlist) missing from the CSV; never edits "
+                         "existing rows. fwd_rev_growth/fwd_eps_growth are left "
+                         "blank (not scrapable) and reported for hand entry. "
+                         "Run --fill-ttm afterwards to add the ttm/hist series.")
+    ap.add_argument("--overwrite", action="store_true",
+                    help="with --sync-csv, ALSO re-scrape existing rows, refreshing "
+                         "only mechanical fields (mktcap, gross_margin, peg, "
+                         "ps_ratio, fcf, 200dma%%) while PRESERVING curated cells "
+                         "(net_margin proxies, seeded eps_beat_*)")
     args = ap.parse_args()
 
-    port = portfolio_rows(include_watchlist=args.watchlist)
+    port = portfolio_rows(include_watchlist=True if args.sync_csv else args.watchlist)
+
+    if args.sync_csv:
+        if not args.csv or not Path(args.csv).exists():
+            sys.exit("--sync-csv needs an existing CSV (it appends to it).")
+        # full AI-allocation universe (held baskets + watchlist), minus the
+        # no-fundamentals windfall ETF and the physical-commodity trust SRUUF
+        # (no statistics page — correctly scored on tags/forecast only).
+        targets = [t for t in port if t not in ("SMHV.SW", "SRUUF")]
+        fwd_todo = sync_csv(args.csv, targets, overwrite=args.overwrite)
+        if fwd_todo:
+            print("\n(!) fwd_rev_growth / fwd_eps_growth NOT scrapable — enter by "
+                  f"hand for {len(fwd_todo)} new names:")
+            print("    " + ", ".join(fwd_todo))
+            print("    Source: stockanalysis.com/stocks/<TICKER>/forecast/ "
+                  "(analyst 3Y revenue & EPS growth).")
+        print("\nNext: run --fill-ttm to populate ttm_rev_growth + the "
+              "rev_growth_hist / net_margin_hist series for the new rows.")
+        return
 
     if args.fill_ttm:
         if not args.csv or not Path(args.csv).exists():
