@@ -887,6 +887,24 @@ WATCHLIST = {
                     "real earnings. Powers the AI-datacenter electricity thesis and "
                     "is DCA-able, unlike the pre-revenue SMR crowd.",
     },
+    "POWL": {
+        "pos":      "Mid",
+        "cagr":     (8, 18),
+        "strategy": "cycle",
+        "area":     "Power / electrical switchgear (Powell Industries)",
+        "note":     "Profitable switchgear maker riding data-center + grid orders; "
+                    "real earnings and backlog, not a story stock. Capex-cyclical — "
+                    "buy dips, trim into the buildout peak.",
+    },
+    "FIX": {
+        "pos":      "Mid",
+        "cagr":     (10, 20),
+        "strategy": "cycle",
+        "area":     "Datacenter HVAC + electrical buildout (Comfort Systems)",
+        "note":     "Mechanical/electrical contractor levered to data-center "
+                    "construction; profitable with a large backlog. Late-ish cycle — "
+                    "buy dips, sell into the capex peak.",
+    },
     "LEU": {
         "strategy": "cycle",
         "pos":      "Early",
