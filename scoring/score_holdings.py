@@ -32,7 +32,7 @@
 # USAGE:
 #   PORTFOLIO_USE=ai python3 scoring/score_holdings.py
 #   PORTFOLIO_USE=ai python3 scoring/score_holdings.py --csv scoring/fundamentals_2026-06-25.csv
-#   PORTFOLIO_USE=ai python3 scoring/score_holdings.py --tilt growth   # growth-weighted composite
+#   PORTFOLIO_USE=ai python3 scoring/score_holdings.py --blend growth --sort blend  # growth-weighted composite
 # =========================================================================
 
 import argparse
@@ -208,6 +208,12 @@ def load_fundamentals(path):
         # _num parsing nor inflates the data% coverage denominator. It powers the
         # multi-year trend baseline in _trend_adjust (median of the series).
         rec["rev_growth_hist"] = _num_list(row.get("rev_growth_hist"))
+        # net_margin_hist is a pipe-separated trailing net-margin % series (TTM
+        # first, then full FYs, newest-first), kept OUTSIDE the numeric
+        # FUND_FIELDS schema like rev_growth_hist so it neither breaks _num
+        # parsing nor inflates data%. It powers the margin-expansion sub-score
+        # (_margin_trend) in the FUND + DCA quality blends.
+        rec["net_margin_hist"] = _num_list(row.get("net_margin_hist"))
         out[t] = rec
     return out
 
@@ -219,7 +225,9 @@ def load_fundamentals(path):
 # understated. We nudge forward-growth UP and PEG DOWN (cheaper) for beaters,
 # and the reverse for missers. beat_rate in [0,1] (fraction of last ~8 qtrs
 # beaten); streak is consecutive beats (caps the bonus). Neutral at 0.5.
-# Correction is intentionally MILD (max +-12%) so it tilts, never dominates.
+# Correction is intentionally MILD (asymmetric: up to +12% for a perfect beater,
+# down to -10% for a perfect misser — the streak bonus only adds on the upside)
+# so it tilts, never dominates.
 # =========================================================================
 def eps_surprise_factor(beat_rate, streak):
     if beat_rate is None:
@@ -265,6 +273,38 @@ def _band_inv_log(x, lo, hi):
     return max(0.0, min(1.0, 1.0 - t))
 
 
+# --- GROWTH-BAND CONVENTION (why the same metric uses different (lo,hi)) -----
+# Forward revenue and forward EPS growth are scored in several places, and the
+# (lo,hi) band differs ON PURPOSE because each scorer asks a different question.
+# The band sets what counts as "10%" vs "full marks"; a higher ceiling makes the
+# SAME growth number score LOWER (it now has to clear a taller bar). The bands:
+#
+#   rev-growth band   eps-growth band   used by        rationale
+#   --------------    ---------------   -----------    --------------------------
+#   (5, 45)           (5, 50)           8-Point P3 /   the "ownership screen" bar:
+#                                       FUND layer     a disciplined entry wants
+#                                                      real but not frothy growth.
+#   (5, 50)           (5, 60)           GROWTH score   the return-MAXIMISING bar:
+#                                                      momentum-tolerant, so it
+#                                                      keeps separating names that
+#                                                      are already pinned at the
+#                                                      top of the tighter screen.
+#   (6, 25)           (6, 30)           DCA quality    DCA wants DURABLE, not
+#                                                      explosive: a steady 25%
+#                                                      compounder should max this
+#                                                      axis; hypergrowth is not the
+#                                                      job, so the ceiling is low.
+#
+# CONSEQUENCE / KNOWN LIMITATION: because the GROWTH ceiling (50/60) is higher
+# than the 8-Point/FUND ceiling (45/50), the FUND-layer F score and the GROWTH
+# score can rank the SAME pair of names in a slightly different order purely from
+# the ceiling, even though both read the same underlying number. This is accepted
+# (the two axes are meant to answer different questions), but it is the reason a
+# name can look marginally "better on F than on GROWTH" or vice-versa. If the two
+# axes ever need to agree, unify these bands.
+# ----------------------------------------------------------------------------
+
+
 # --- TREND adjustment: reward re-acceleration, PENALISE deceleration --------
 # A forward growth number in isolation hides whether the business is speeding up
 # or rolling over. CCJ's fwd_rev 7.4% looks merely "slow", but against its multi-
@@ -284,12 +324,41 @@ def _band_inv_log(x, lo, hi):
 # Falls back to the single-year ttm_rev_growth when no history is present, and
 # returns the score unchanged when neither baseline nor fwd is available.
 #
+# BASE-EFFECT DAMPING (the horizon-mismatch correction): `fwd` is a FORWARD 3Y
+# CAGR while the baseline is a TRAILING per-year YoY. A name growing off a tiny
+# base (ALAB 115/242/45, IONQ ~150 median) MUST show a lower forward CAGR — that
+# is arithmetic (you cannot sustain triple-digit YoY), not deceleration. Judged
+# raw, such names eat the full penalty for simply maturing. So the DECELERATION
+# penalty is scaled DOWN when the trailing baseline sits in the base-effect zone
+# (above _TREND_HOT_BASE), fading to ~0 by _TREND_HOT_FADE above it:
+#   - CCJ (base 21)  -> base normal      -> full penalty kept (real slowdown)
+#   - CRDO (base 81) -> mildly hot       -> penalty ~80% (still flagged)
+#   - ALAB (base 115)-> hot              -> penalty ~45% (maturation, softened)
+#   - IONQ (base 150)-> very hot         -> penalty ~10% (pure base effect)
+# The damping applies to the DOWNSIDE ONLY: a re-acceleration bonus off a high
+# base is still a genuine positive signal and is left at full strength.
+#
 # "Materially" is a deadband (_TREND_DEADBAND, pts of growth) so ordinary wobble
 # does not move the score; magnitude scales with the gap up to a cap.
 _TREND_DEADBAND = 5.0     # pts of growth: ignore gaps smaller than this
 _TREND_FULL = 25.0        # pts: gap at/above this gets the full adjustment
 _TREND_BONUS_MAX = 0.15   # max upward nudge (matches the old re-accel bonus)
 _TREND_PENALTY_MAX = 0.25  # max downward nudge; decel is judged the harder risk
+_TREND_HOT_BASE = 60.0    # trailing baseline above this is base-effect-dominated:
+#                           a forward CAGR cannot be compared to it like-for-like
+_TREND_HOT_FADE = 100.0   # pts above _TREND_HOT_BASE over which the decel penalty
+#                           fades from full to ~0 (base 160+ -> penalty ~0)
+
+
+def _decel_damping(base):
+    """0..1 multiplier on the DECELERATION penalty. 1.0 when the trailing
+    baseline is in the normal range (<= _TREND_HOT_BASE); fades linearly to 0
+    as the baseline climbs _TREND_HOT_FADE pts beyond it. This neutralises the
+    false 'cliff' that the forward-CAGR-vs-trailing-YoY horizon mismatch creates
+    for names growing off a tiny base (see BASE-EFFECT DAMPING above)."""
+    if base is None or base <= _TREND_HOT_BASE:
+        return 1.0
+    return max(0.0, 1.0 - (base - _TREND_HOT_BASE) / _TREND_HOT_FADE)
 
 
 def _trend_baseline(f):
@@ -306,9 +375,11 @@ def _trend_baseline(f):
 
 
 def _trend_adjust(score, fwd, f):
-    """Nudge a 0..1 growth sub-score by fwd-vs-trend. Symmetric: re-acceleration
-    (fwd above the multi-year median) lifts it, deceleration cuts it, deadband
-    ignores noise. `f` is the fundamentals dict (supplies the history series)."""
+    """Nudge a 0..1 growth sub-score by fwd-vs-trend. Re-acceleration (fwd above
+    the multi-year median) lifts it, deceleration cuts it, deadband ignores
+    noise. The DECELERATION side is damped when the trailing baseline sits in the
+    base-effect zone (a forward CAGR cannot be compared like-for-like to a triple-
+    digit trailing YoY — see BASE-EFFECT DAMPING). `f` supplies the history."""
     if score is None or fwd is None:
         return score
     base = _trend_baseline(f)
@@ -321,8 +392,51 @@ def _trend_adjust(score, fwd, f):
     span = max(_TREND_FULL - _TREND_DEADBAND, 1e-9)
     mag = min((abs(gap) - _TREND_DEADBAND) / span, 1.0)
     if gap > 0:
-        return min(1.0, score + mag * _TREND_BONUS_MAX)
-    return max(0.0, score - mag * _TREND_PENALTY_MAX)
+        return min(1.0, score + mag * _TREND_BONUS_MAX)   # bonus: full strength
+    # deceleration: scale the penalty down for base-effect-dominated names so a
+    # maturing hypergrowth name is not falsely branded a "cliff" (Option D).
+    damp = _decel_damping(base)
+    return max(0.0, score - mag * _TREND_PENALTY_MAX * damp)
+
+
+# --- MARGIN-EXPANSION sub-score: is profitability IMPROVING or COMPRESSING? --
+# Level alone (the net_margin snapshot) cannot tell a -5%->+1% turnaround from a
+# 20%->11% melt: both can print "low single-digit margin" today. Margin
+# *trajectory* is one of the strongest forward-return signals there is — a
+# business climbing the operating-leverage curve re-rates, one whose margins are
+# rolling over de-rates. This reads the trailing net_margin_hist series (TTM
+# first, then full FYs, newest-first — same shape as rev_growth_hist) and scores
+# the DRIFT in margin POINTS from the older half of the window to the newer half:
+#   expanding  (newer margins > older) -> high score (1.0 at +_MARGIN_FULL pts)
+#   flat                               -> neutral 0.5 (inside the deadband)
+#   compressing(newer < older)         -> low score  (0.0 at -_MARGIN_FULL pts)
+# It is a SELF-CONTAINED 0..1 sub-score (unlike _trend_adjust, which nudges an
+# existing growth band), blended at modest weight into FUND quality + DCA
+# quality so margin direction informs "is this a good business?" without
+# swamping the level term. Returns None when fewer than 2 points exist (no
+# trajectory to read) so _blend drops it instead of faking a neutral.
+_MARGIN_DEADBAND = 1.0    # pts of margin: ignore drift smaller than this (noise)
+_MARGIN_FULL = 8.0        # pts: drift at/above this maps to the 0 or 1 extreme
+
+
+def _margin_trend(f):
+    """Score net-margin TRAJECTORY 0..1 (1=expanding, .5=flat, 0=compressing),
+    or None when there is no usable history. Compares the mean of the newer half
+    of net_margin_hist to the mean of the older half, in margin POINTS."""
+    hist = f.get("net_margin_hist") or []
+    if len(hist) < 2:
+        return None                       # no trajectory -> let _blend drop it
+    # series is newest-first; split into newer vs older halves (odd length: the
+    # middle point is shared/ignored so each half is a clean recent/old sample).
+    half = len(hist) // 2
+    newer = hist[:half]
+    older = hist[-half:]
+    drift = (sum(newer) / len(newer)) - (sum(older) / len(older))  # +expand/-compress
+    if abs(drift) <= _MARGIN_DEADBAND:
+        return 0.5                        # essentially flat -> neutral
+    # map drift in [-_MARGIN_FULL, +_MARGIN_FULL] onto [0, 1] around 0.5
+    norm = max(-1.0, min(1.0, drift / _MARGIN_FULL))
+    return 0.5 + 0.5 * norm
 
 
 _MISSING_PENALTY = 0.15  # speculative bucket: a data gap IS a red flag
@@ -426,11 +540,10 @@ _GAP_FOOTNOTE = (
 # out here so a reader can interpret a number without reading the source.
 _GROWTH_8PT_FOOTNOTE = (
     "  GROWTH 0-10 (higher = faster, momentum-TOLERANT): a weighted blend of\n"
-    "        forward revenue growth (35%), forward EPS growth (30%), the hand-\n"
-    "        authored forecast mid-CAGR (20%) and secular runway (15%). All\n"
-    "        forward figures are EPS-surprise corrected (serial beaters nudged\n"
-    "        up, missers down). It answers \"how much can this compound?\" and\n"
-    "        does NOT punish an extended chart.\n"
+    "        forward revenue growth (45%), forward EPS growth (40%) and secular\n"
+    "        runway (15%). All forward figures are EPS-surprise corrected (serial\n"
+    "        beaters nudged up, missers down). It answers \"how much can this\n"
+    "        compound?\" and does NOT punish an extended chart.\n"
     "  8PT 0-8 (higher = more disciplined, ANTI-momentum): the owner's 8-point\n"
     "        ownership screen — P1 small mkt-cap, P2 profitable/turning, P3\n"
     "        accelerating growth, P4 bottleneck moat, P5 secular & early, P6\n"
@@ -443,11 +556,13 @@ _GROWTH_8PT_FOOTNOTE = (
     "        AVOID). epsF = the EPS-surprise multiplier applied to forward data."
 )
 _DCA_FOOTNOTE = (
-    "  QUALITY 0-10 (higher = better business): durable margins (35%), durable\n"
-    "        forward revenue growth (25%), forward EPS growth (20%) and free-\n"
-    "        cash-flow positivity (20%). Unlike 8PT it does NOT penalise size or\n"
-    "        an extended chart — a proven large compounder is meant to score\n"
-    "        well here. It answers \"is this still a great business?\".\n"
+    "  QUALITY 0-10 (higher = better business): durable margins, durable\n"
+    "        forward revenue growth, forward EPS growth, free-cash-flow\n"
+    "        positivity, and net-margin TRAJECTORY (expanding margins lift it,\n"
+    "        compression cuts it — direction, not just level). Unlike 8PT it does\n"
+    "        NOT penalise size or an extended chart — a proven large compounder is\n"
+    "        meant to score well here. It answers \"is this still a great\n"
+    "        business?\".\n"
     "  RICHNESS 0-1 (0 = cheap .. 1 = stretched): a normalized PRICE index, not\n"
     "        a score to maximise. It is the mean of two 0..1 bands — PEG (1.0->0,\n"
     "        4.0+->1) and distance above the 200DMA (0%->0, 60%+->1). It stays on\n"
@@ -470,7 +585,7 @@ def _cov_cell(coverage):
 _LAYER_FOOTNOTE = (
     "  layers (0-10, higher=SAFER on that layer) decompose the score by the "
     "force that moves price:\n"
-    "    F=FUND  business quality (margins+growth+FCF) ...... wins the LONG run\n"
+    "    F=FUND  business quality (margins+margin-trend+growth+FCF)  wins the LONG run\n"
     "    V=VAL   price vs the business (PEG/PS + extension) . mean-reverts (months)\n"
     "    C=CYC   cycle position + crowding (pos+neck+chart) .. drives the SHORT run / hype\n"
     "  bind = the BINDING (lowest) layer: the dominant risk you take buying here.\n"
@@ -508,7 +623,7 @@ def score_8point(t, f, info):
     #     deceleration (fwd << ttm, the CCJ growth-cliff case) cuts it.
     fwd = f.get("fwd_rev_growth")
     fwd_corr = None if fwd is None else fwd * eps_f
-    p3 = _band(fwd_corr, 5, 45)
+    p3 = _band(fwd_corr, 5, 45)   # ownership-screen bar; see GROWTH-BAND CONVENTION
     p3 = _trend_adjust(p3, fwd, f)
     # P4 bottleneck (owner tag); unknown watchlist names -> neutral 0.3.
     p4 = BOTTLENECK.get(t, 0.3)
@@ -569,6 +684,8 @@ def score_growth(t, f, info):
     eps_g = f.get("fwd_eps_growth")
     eps_corr = None if eps_g is None else eps_g * eps_f
 
+    # return-MAXIMISING bars (higher ceiling than the screen); see
+    # GROWTH-BAND CONVENTION above for why these differ from P3 / FUND / DCA.
     g_rev = _band(fwd_corr, 5, 50)                       # forward revenue
     g_rev = _trend_adjust(g_rev, fwd, f)  # decel bites
     g_eps = _band(eps_corr, 5, 60)                       # forward EPS
@@ -630,6 +747,8 @@ def layer_scores(t, f, info):
         l_margin = min(1.0, 0.55 + _band(nm, 0, 30) * 0.45)
     else:
         l_margin = 0.4 if fcf == 1 else 0.1
+    # FUND uses the same (lower) bars as the 8-Point screen, NOT the GROWTH
+    # ceiling; see GROWTH-BAND CONVENTION above.
     fwd = f.get("fwd_rev_growth")
     l_rev = _band(None if fwd is None else fwd * eps_f, 5, 45)
     l_rev = _trend_adjust(l_rev, fwd, f)   # decel bites
@@ -641,8 +760,11 @@ def layer_scores(t, f, info):
         l_fcf = 0.5 if (nm is not None and nm > 0) else 0.0
     else:
         l_fcf = None                                  # nothing known -> drop
+    # margin TRAJECTORY (expanding/compressing); None when no history -> dropped
+    l_mtrend = _margin_trend(f)
     fund10, _ = _blend([(l_margin, 3.5), (l_rev, 2.5), (l_eps, 2.0),
-                        (l_fcf, 2.0)], scale=10.0, risk_penalize=spec)
+                        (l_fcf, 2.0), (l_mtrend, 1.5)], scale=10.0,
+                       risk_penalize=spec)
 
     # --- VAL (Layer 2): how much of the business is already in the price -
     #     Higher = cheaper / fairer. PEG first (P/S-vs-growth fallback), plus
@@ -797,11 +919,15 @@ def dca_quality(t, f):
     fwd = f.get("fwd_rev_growth")
     fwd_corr = None if fwd is None else fwd * eps_f
     q_growth = _band(fwd_corr, 6, 25)          # DCA wants durable, not explosive
-    q_growth = _trend_adjust(q_growth, fwd, f)  # decel bites
+    q_growth = _trend_adjust(q_growth, fwd, f)  # decel bites; see GROWTH-BAND CONVENTION
     eps_g = f.get("fwd_eps_growth")
     q_eps = _band(None if eps_g is None else eps_g * eps_f, 6, 30)
+    # margin TRAJECTORY: a DCA compounder with expanding margins is the ideal;
+    # compression is an early crack. None when no history -> dropped by _blend.
+    q_mtrend = _margin_trend(f)
     quality10, cov = _blend([(q_margin, 3.5), (q_growth, 2.5),
-                             (q_eps, 2.0), (q_fcf, 2.0)], scale=10.0)
+                             (q_eps, 2.0), (q_fcf, 2.0),
+                             (q_mtrend, 1.5)], scale=10.0)
 
     # --- RICHNESS (is the price ahead of the business?) 0=cheap .. 1=stretched
     # PEG used raw: eps_f already lifts the growth side of the quality score, so
@@ -934,7 +1060,15 @@ def ttm_growth_for(ticker):
             html = r.read().decode("utf-8", "ignore")
     except Exception:
         return None, []
-    m = re.search(r"revenueGrowth:\[([^\]]+)\]", html)
+    return _parse_series(html, "revenueGrowth")
+
+
+def _parse_series(html, key):
+    """Pull a financialData array (key:[..]) from a /financials/ page and return
+    (ttm_scalar, [trailing-FY series]) as percentages. index 0 = TTM, indices
+    1.. = full FYs newest-first. Shared by revenueGrowth and profitMargin."""
+    import re
+    m = re.search(re.escape(key) + r":\[([^\]]+)\]", html)
     if not m:
         return None, []
     vals = []
@@ -942,18 +1076,34 @@ def ttm_growth_for(ticker):
         v = _num(part.strip())
         vals.append(round(v * 100, 2) if v is not None else None)
     ttm = vals[0] if vals else None
-    # FY series = everything after the TTM cell; drop trailing blanks (e.g. the
-    # first reporting year has no prior-year YoY).
+    # FY series = everything after the TTM cell; drop blanks (e.g. the first
+    # reporting year has no prior-year figure).
     hist = [v for v in vals[1:] if v is not None]
     return ttm, hist
 
 
+def margin_hist_for(ticker):
+    """Return (ttm_net_margin, [trailing net-margin series]) for a ticker, or
+    (None, []) on any failure. Parses financialData.profitMargin (GAAP net
+    margin) from the /financials/ page — same array shape as revenueGrowth.
+    Feeds the margin-expansion sub-score (_margin_trend)."""
+    import urllib.request
+    url = _fin_url(ticker)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            html = r.read().decode("utf-8", "ignore")
+    except Exception:
+        return None, []
+    return _parse_series(html, "profitMargin")
+
+
 def fill_ttm(csv_path, tickers):
-    """Update the ttm_rev_growth scalar AND the rev_growth_hist series (pipe-
-    separated trailing-FY YoY) for `tickers` in csv_path, in place. Preserves the
-    `#` comment header and every other cell, and appends the rev_growth_hist
-    column to the header if the CSV predates it. Skips names that fail to fetch
-    (their existing values are left untouched)."""
+    """Update the ttm_rev_growth scalar, the rev_growth_hist series (trailing-FY
+    YoY) AND the net_margin_hist series (trailing net margin) for `tickers` in
+    csv_path, in place. Preserves the `#` comment header and every other cell,
+    and appends the rev_growth_hist / net_margin_hist columns to the header if
+    the CSV predates them. Skips names that fail to fetch (existing values kept)."""
     with open(csv_path, newline="") as fh:
         raw = fh.readlines()
     comments = [ln for ln in raw if ln.lstrip().startswith("#")]
@@ -962,6 +1112,8 @@ def fill_ttm(csv_path, tickers):
     header = list(reader.fieldnames)
     if "rev_growth_hist" not in header:
         header.append("rev_growth_hist")     # extend older CSVs in place
+    if "net_margin_hist" not in header:
+        header.append("net_margin_hist")     # extend older CSVs in place
     rows = list(reader)
     want = set(tickers)
     n = 0
@@ -970,23 +1122,32 @@ def fill_ttm(csv_path, tickers):
         if t not in want:
             continue
         ttm, hist = ttm_growth_for(t)
-        if ttm is None and not hist:
+        _, mhist = margin_hist_for(t)        # net-margin trajectory series
+        if ttm is None and not hist and not mhist:
             print(f"  [ttm] {t}: no figure (kept existing '{row.get('ttm_rev_growth','')}')")
             continue
         if ttm is not None:
             row["ttm_rev_growth"] = f"{ttm}"
         row["rev_growth_hist"] = "|".join(f"{v}" for v in hist)
+        if mhist:
+            row["net_margin_hist"] = "|".join(f"{v}" for v in mhist)
         n += 1
         med = "n/a"
         if hist:
             import statistics
             med = f"{statistics.median(hist):.1f}"
-        print(f"  [ttm] {t}: ttm={ttm}%  hist=[{row['rev_growth_hist']}]  median={med}")
-    # newline="\n" forces LF; the default "" lets csv emit CRLF, which would
-    # rewrite every line in the diff and flip the file's line endings.
-    with open(csv_path, "w", newline="\n") as fh:
+        mt = _margin_trend({"net_margin_hist": mhist})
+        mt_s = "n/a" if mt is None else f"{mt:.2f}"
+        print(f"  [ttm] {t}: ttm={ttm}%  hist=[{row['rev_growth_hist']}]  "
+              f"median={med}  margins=[{row.get('net_margin_hist','')}]  mtrend={mt_s}")
+    # Force LF line endings. csv.writer defaults to a CRLF lineterminator; if
+    # left at the default it emits "\r\n" which (with newline="") reaches disk
+    # literally, flipping every line in the diff. Setting lineterminator="\n"
+    # AND opening with newline="" (so Python does no extra translation) keeps
+    # the file pure-LF, matching the hand-edited snapshot.
+    with open(csv_path, "w", newline="") as fh:
         fh.writelines(comments)
-        w = csv.DictWriter(fh, fieldnames=header)
+        w = csv.DictWriter(fh, fieldnames=header, lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
     print(f"  [ttm] updated {n} rows in {csv_path}")

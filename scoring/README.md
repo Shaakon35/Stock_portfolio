@@ -42,9 +42,10 @@ compounder you buy on schedule) can almost never reach PRIME and tends to land
 in AVOID, which is a category error, not a sell signal. `--by-strategy` judges
 each mode on the job it does:
 
-- **DCA** → `KEEP-DCA` / `RICH` / `IMPAIRED`, driven by margins, FCF, durable
-  growth, and valuation sanity (PEG, distance from 200DMA). Small-cap and
-  momentum penalties are ignored.
+- **DCA** → `KEEP-DCA` / `RICH` / `IMPAIRED`, driven by margins, **net-margin
+  trajectory** (expanding vs compressing), FCF, durable growth, and valuation
+  sanity (PEG, distance from 200DMA). Small-cap and momentum penalties are
+  ignored.
 - **CYCLE / CATALYST** → the existing two-axis quadrant (appropriate there).
 
 ## Reading the table
@@ -68,10 +69,19 @@ auto-picks the newest `scoring/fundamentals_YYYY-MM-DD.csv`.
 To refresh: copy the latest CSV to a new date, update the numbers by hand from
 stockanalysis.com (`/stocks/TICKER/statistics/`; foreign names use
 `/quote/<exch>/<TICKER>/statistics/`), and re-run. The statistics page supplies
-the obtainable fields; `ttm_rev_growth`, `pct_below_52w_high` and the two
-`eps_beat_*` fields are not available there at scale (no trailing-YoY or
-estimate-vs-actual table), so they are left blank for most names and treated as
-neutral — see AGENTS.md for the rationale. `data%` **excludes** these four
+the obtainable fields; `pct_below_52w_high` and the two `eps_beat_*` fields are
+not available there at scale (no estimate-vs-actual table), so they are left
+blank for most names and treated as neutral — see AGENTS.md for the rationale.
+The trailing series — `ttm_rev_growth` + `rev_growth_hist` (revenue) and
+`net_margin_hist` (margin trajectory) — are sourced together from the
+`/financials/` page by `--fill-ttm`; run it after editing the snapshot:
+
+```bash
+PORTFOLIO_USE=ai python3 scoring/score_holdings.py --fill-ttm
+```
+
+`net_margin_hist` powers the margin-expansion sub-score (expanding margins lift
+FUND + DCA quality, compression cuts them — margin *direction*, not just level). `data%` **excludes** these four
 unobtainable fields from its denominator, so a fully-sourced name reads ~100%
 and `[GAP]` means genuinely thin data, not the unavoidable absence of fields no
 source provides.

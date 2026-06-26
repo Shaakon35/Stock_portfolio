@@ -1095,6 +1095,756 @@ WATCHLIST = {
                     "commercial reactor + licensing, debt/dilution-funded. One-and-done "
                     "catalyst bet — size tiny, NEVER average down.",
     },
+    "NVDA": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 35),
+        "area":     "AI accelerators (Nvidia) — LARGE",
+        "note":     "AI-capex bellwether; owned indirectly via SMHV.SW. Cycle/Mid — "
+                    "trim into the capex peak, not hold-forever.",
+    },
+    "AVGO": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (12, 22),
+        "area":     "Custom AI silicon + networking (Broadcom) — LARGE",
+        "note":     "AI ASIC + VMware software annuity, fat FCF, dividend grower. "
+                    "Quality compounder; overlaps SMHV.SW.",
+    },
+    "TSM": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (15, 25),
+        "area":     "Leading-edge foundry (Taiwan Semi) — LARGE",
+        "note":     "Whole AI supply chain depends on it; near-monopoly at the leading "
+                    "edge. Geopolitical tail risk the only knock.",
+    },
+    "AMD": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (15, 35),
+        "area":     "GPU/CPU #2 (AMD) — LARGE",
+        "note":     "MI-series share-gainer vs NVDA; high beta to the same capex wave. "
+                    "Cyclical, trim at peak. Overlaps SMHV.SW.",
+    },
+    "ASML": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (12, 25),
+        "area":     "EUV litho monopoly (ASML) — LARGE",
+        "note":     "Sole EUV supplier — deepest bottleneck in the stack. WFE-cyclical "
+                    "(China + memory). Buy dips, trim at peak.",
+    },
+    "MRVL": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 35),
+        "area":     "Custom AI silicon + optical DSP (Marvell)",
+        "note":     "Custom-compute + electro-optics levered to hyperscaler capex. "
+                    "High-beta cyclical; trim when DC capex decelerates.",
+    },
+    "MPWR": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (15, 28),
+        "area":     "Power-management IC for AI servers (Monolithic Power)",
+        "note":     "Power delivery into GPU boards — high-margin, capex-levered. "
+                    "Cyclical, quality; accumulate on dips.",
+    },
+    "GFS": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 20),
+        "area":     "Specialty foundry (GlobalFoundries)",
+        "note":     "Trailing-edge/specialty nodes (auto, RF, power). Cheaper, less "
+                    "AI-direct than TSM; cyclical auto+industrial demand.",
+    },
+    "ENTG": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 22),
+        "area":     "Semicap materials/purity (Entegris)",
+        "note":     "Consumable materials + filtration — picks-and-shovels WFE with "
+                    "recurring revenue. Cyclical but stickier than tools.",
+    },
+    "TSLA": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 35),
+        "area":     "EV + autonomy/robotics (Tesla) — LARGE",
+        "note":     "Auto-cyclical today, robotaxi/Optimus optionality tomorrow. "
+                    "Valuation prices the optionality; high-beta cycle.",
+    },
+    "CRM": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (9, 16),
+        "area":     "Enterprise SaaS / CRM (Salesforce) — LARGE",
+        "note":     "Agentforce AI upsell on a huge installed base. Mature, FCF-rich, "
+                    "cheaper than peers. DCA-grade compounder.",
+    },
+    "ADBE": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (9, 16),
+        "area":     "Creative + document SaaS (Adobe) — LARGE",
+        "note":     "Firefly GenAI on a wide moat; de-rated on AI-disruption fear, now "
+                    "cheap-but-quality. DCA.",
+    },
+    "INTU": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (12, 18),
+        "area":     "Fintech SaaS (Intuit) — LARGE",
+        "note":     "TurboTax/QuickBooks + AI assistant; durable SMB lock-in, high "
+                    "margins. Quality DCA, rarely cheap.",
+    },
+    "SNOW": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (20, 40),
+        "area":     "Data cloud (Snowflake)",
+        "note":     "Consumption-model data platform riding the AI data wave; improving "
+                    "margins. Held? no — monitor for cycle add.",
+    },
+    "MDB": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (18, 35),
+        "area":     "Developer database (MongoDB)",
+        "note":     "Atlas cloud growth + AI app backends. Just-turning-profitable, "
+                    "high-beta; cycle/Early.",
+    },
+    "FTNT": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 18),
+        "area":     "Network security (Fortinet)",
+        "note":     "Firewall + SASE, self-funded FCF machine, hardware-refresh "
+                    "cyclicality. Quality DCA at a fair price.",
+    },
+    "CYBR": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 30),
+        "area":     "Identity security (CyberArk)",
+        "note":     "Privileged-access + machine-identity leader; secular identity "
+                    "tailwind. Cycle/Mid, accumulate on dips.",
+    },
+    "TTD": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 30),
+        "area":     "Ad-tech DSP (The Trade Desk)",
+        "note":     "Open-internet ad buying + CTV; AI-optimized bidding. High-beta to "
+                    "ad cycle; trim at peak.",
+    },
+    "SHOP": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 32),
+        "area":     "Commerce platform (Shopify)",
+        "note":     "Merchant GMV + payments; consumer-cyclical but secular SMB "
+                    "e-commerce. Cycle/Mid.",
+    },
+    "APP": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 35),
+        "area":     "Mobile ad-tech / AI engine (AppLovin)",
+        "note":     "AXON AI ad engine drove a huge re-rate. High momentum + high beta "
+                    "— cyclical, trim into strength.",
+    },
+    "HUBS": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (14, 22),
+        "area":     "SMB marketing SaaS (HubSpot)",
+        "note":     "AI Breeze upsell, durable SMB CRM. Quality growth, rarely cheap; "
+                    "DCA on weakness.",
+    },
+    "WDAY": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (12, 18),
+        "area":     "HR/finance SaaS (Workday)",
+        "note":     "Sticky enterprise back-office suite + AI agents. Mature, FCF-rich. "
+                    "DCA.",
+    },
+    "TEAM": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (16, 26),
+        "area":     "Dev collaboration SaaS (Atlassian)",
+        "note":     "Jira/Confluence cloud migration + AI (Rovo). Founder-led, "
+                    "high-beta; cycle/Mid.",
+    },
+    "GTLB": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (20, 35),
+        "area":     "DevSecOps platform (GitLab)",
+        "note":     "Single-app DevSecOps + AI (Duo). Small, high-growth, "
+                    "near-breakeven; cycle/Early.",
+    },
+    "V": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 15),
+        "area":     "Payment network (Visa) — LARGE",
+        "note":     "Toll-booth on global card spend; ~50% margins, "
+                    "recession-resilient. Premier DCA compounder.",
+    },
+    "MA": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (11, 16),
+        "area":     "Payment network (Mastercard) — LARGE",
+        "note":     "Same toll-booth model as Visa with a slightly faster growth tilt. "
+                    "DCA.",
+    },
+    "FI": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 16),
+        "area":     "Merchant acquiring (Fiserv/Clover)",
+        "note":     "Clover POS growth + payments scale; cheaper than networks. "
+                    "Cheap-but-quality DCA.",
+    },
+    "ADYEY": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 30),
+        "area":     "Payments platform (Adyen)",
+        "note":     "Single-platform global acquiring; high incremental margins. "
+                    "Growth-cyclical to consumer spend; cycle/Mid.",
+    },
+    "XYZ": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (12, 28),
+        "area":     "Fintech / Cash App (Block)",
+        "note":     "Cash App + Square ecosystem, BTC optionality. Consumer-cyclical, "
+                    "execution-gated; cycle/Mid.",
+    },
+    "HOOD": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (15, 40),
+        "area":     "Retail brokerage (Robinhood)",
+        "note":     "Crypto + options + cash sweep; highly sensitive to retail risk "
+                    "appetite and rates. High-beta cycle.",
+    },
+    "SOFI": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (18, 40),
+        "area":     "Digital bank (SoFi)",
+        "note":     "Bank-charter lending + tech platform; rate- and credit-cyclical. "
+                    "Cycle/Early, volatile.",
+    },
+    "NU": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (20, 40),
+        "area":     "LatAm digital bank (Nubank)",
+        "note":     "Hyper-growth Brazil/Mexico neobank; EM credit + FX risk. "
+                    "Profitable now; cycle/Early.",
+    },
+    "COIN": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 45),
+        "area":     "Crypto exchange (Coinbase)",
+        "note":     "Levered to crypto volume + price; revenue swings violently with "
+                    "the cycle. High-beta cycle, trim into mania.",
+    },
+    "LLY": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (12, 22),
+        "area":     "Pharma / GLP-1 (Eli Lilly) — LARGE",
+        "note":     "Zepbound/Mounjaro obesity franchise + pipeline. Premium but "
+                    "durable double-digit grower. DCA.",
+    },
+    "ISRG": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (12, 18),
+        "area":     "Surgical robotics (Intuitive Surgical) — LARGE",
+        "note":     "da Vinci installed-base razor/blade model; secular procedure "
+                    "growth. Quality DCA, rarely cheap.",
+    },
+    "UNH": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 15),
+        "area":     "Managed care (UnitedHealth) — LARGE",
+        "note":     "Integrated insurer + Optum; de-rated on regulatory/cost fears — "
+                    "cheap-but-quality value. DCA.",
+    },
+    "TMO": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (8, 14),
+        "area":     "Life-science tools (Thermo Fisher) — LARGE",
+        "note":     "Picks-and-shovels for pharma/biotech R&D; bioprocessing cycle "
+                    "bottoming. DCA value.",
+    },
+    "DHR": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (8, 14),
+        "area":     "Life-science / diagnostics (Danaher)",
+        "note":     "Bioprocessing + diagnostics, recurring consumables. De-rated, "
+                    "cheap-but-quality. DCA.",
+    },
+    "VRTX": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 18),
+        "area":     "Biotech (Vertex)",
+        "note":     "CF monopoly + non-opioid pain (Journavx) + pipeline. Profitable, "
+                    "durable; quality DCA.",
+    },
+    "CRSP": {
+        "strategy": "catalyst",
+        "pos":      "Binary",
+        "cagr":     (-25, 45),
+        "area":     "Gene editing (CRISPR Therapeutics)",
+        "note":     "Casgevy launch + pipeline; binary on commercial ramp and trial "
+                    "readouts. Catalyst — never average down.",
+    },
+    "NTLA": {
+        "strategy": "catalyst",
+        "pos":      "Binary",
+        "cagr":     (-30, 45),
+        "area":     "In-vivo gene editing (Intellia)",
+        "note":     "Pre-commercial CRISPR; binary on pivotal data + first approvals. "
+                    "Catalyst sizing only.",
+    },
+    "HIMS": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 40),
+        "area":     "Telehealth (Hims & Hers)",
+        "note":     "DTC telehealth + compounded GLP-1; regulatory + competitive risk. "
+                    "High-beta cycle.",
+    },
+    "GE": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 16),
+        "area":     "Aerospace engines (GE Aerospace) — LARGE",
+        "note":     "Commercial-engine aftermarket annuity; secular air-travel growth. "
+                    "Quality industrial DCA.",
+    },
+    "RTX": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (8, 13),
+        "area":     "Defense + aerospace (RTX) — LARGE",
+        "note":     "Pratt engines + missiles/defense backlog. Cheap-but-quality, "
+                    "dividend. DCA.",
+    },
+    "LMT": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (6, 11),
+        "area":     "Defense prime (Lockheed Martin)",
+        "note":     "F-35 + missiles backlog; cheap, high-yield defensive ballast. Slow "
+                    "DCA value.",
+    },
+    "PH": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (9, 15),
+        "area":     "Motion/flow control (Parker Hannifin)",
+        "note":     "Diversified industrial with aerospace mix; serial compounder. DCA.",
+    },
+    "ROK": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 16),
+        "area":     "Factory automation (Rockwell)",
+        "note":     "Industrial automation + reshoring; capex-cyclical. Cycle/Mid, buy "
+                    "dips.",
+    },
+    "DE": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (6, 14),
+        "area":     "Ag + construction machinery (Deere)",
+        "note":     "Precision-ag autonomy optionality on a deep ag-cycle trough. "
+                    "Cyclical value; cycle/Mid.",
+    },
+    "VST": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 25),
+        "area":     "Power merchant (Vistra)",
+        "note":     "Nuclear + gas fleet levered to AI-datacenter power demand + power "
+                    "prices. Late-ish cycle; trim at peak.",
+    },
+    "NRG": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 22),
+        "area":     "Integrated power (NRG Energy)",
+        "note":     "Retail + generation levered to power-price upcycle and DC demand. "
+                    "Cyclical; cycle/Mid.",
+    },
+    "TLN": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 25),
+        "area":     "Nuclear power merchant (Talen Energy)",
+        "note":     "Nuclear fleet with hyperscaler PPAs (datacenter power). High-beta "
+                    "to power prices; cycle/Mid.",
+    },
+    "FSLR": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 25),
+        "area":     "Solar manufacturing (First Solar)",
+        "note":     "US thin-film solar with IRA tailwind + policy risk. "
+                    "Capex/policy-cyclical; cycle/Mid.",
+    },
+    "ENPH": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 30),
+        "area":     "Solar microinverters (Enphase)",
+        "note":     "Residential solar, rate-sensitive demand; deeply cyclical and "
+                    "beaten down. Cycle, high-beta.",
+    },
+    "XOM": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (4, 9),
+        "area":     "Integrated oil major (Exxon) — LARGE",
+        "note":     "Cheap, high-yield commodity ballast; buybacks. Slow DCA value, "
+                    "commodity-cyclical underneath.",
+    },
+    "FCX": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (6, 20),
+        "area":     "Copper miner (Freeport-McMoRan)",
+        "note":     "Copper levered to electrification + datacenter buildout; classic "
+                    "deep-cyclical. Cycle, trim at peak.",
+    },
+    "ALB": {
+        "strategy": "cycle",
+        "pos":      "Late",
+        "cagr":     (5, 30),
+        "area":     "Lithium (Albemarle)",
+        "note":     "Lithium trough play; EV-demand + price cyclical, currently "
+                    "depressed. Cyclical value; cycle.",
+    },
+    "LIN": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (8, 13),
+        "area":     "Industrial gases (Linde) — LARGE",
+        "note":     "Wide-moat industrial gas oligopoly with contracted volumes. "
+                    "Premier defensive DCA.",
+    },
+    "COST": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (9, 14),
+        "area":     "Membership warehouse (Costco) — LARGE",
+        "note":     "Membership-fee annuity + traffic moat; recession-resilient. "
+                    "Quality DCA, perennially pricey.",
+    },
+    "WMT": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (7, 12),
+        "area":     "Retail + ads/commerce (Walmart) — LARGE",
+        "note":     "Scale moat + high-margin ad/membership flywheel. Defensive DCA "
+                    "compounder.",
+    },
+    "MELI": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 30),
+        "area":     "LatAm e-commerce + fintech (MercadoLibre)",
+        "note":     "Dominant LatAm commerce + Mercado Pago; EM-cyclical, high-growth. "
+                    "Cycle/Mid.",
+    },
+    "SBUX": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (7, 13),
+        "area":     "Coffee retail (Starbucks)",
+        "note":     "Turnaround on a durable brand; de-rated, cheap-but-quality. DCA "
+                    "value.",
+    },
+    "NKE": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (7, 13),
+        "area":     "Athletic apparel (Nike)",
+        "note":     "Beaten-down brand-moat turnaround; cheap vs history. DCA value, "
+                    "execution-gated.",
+    },
+    "CMG": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (12, 18),
+        "area":     "Fast-casual restaurants (Chipotle)",
+        "note":     "Unit-growth + pricing power; high-quality, premium multiple. DCA "
+                    "on weakness.",
+    },
+    "PG": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (5, 9),
+        "area":     "Consumer staples (Procter & Gamble) — LARGE",
+        "note":     "Brand-moat defensive ballast, dividend king. Slow DCA, low beta.",
+    },
+    "KO": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (5, 9),
+        "area":     "Beverages (Coca-Cola) — LARGE",
+        "note":     "Defensive staple, pricing power, dividend aristocrat. Low-beta DCA "
+                    "ballast.",
+    },
+    "NFLX": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (12, 20),
+        "area":     "Streaming (Netflix) — LARGE",
+        "note":     "Scale + ad-tier + password monetization; FCF inflecting up. "
+                    "Quality DCA, premium multiple.",
+    },
+    "SPOT": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (15, 28),
+        "area":     "Audio streaming (Spotify)",
+        "note":     "Price hikes + margin expansion on a huge user base. "
+                    "Growth-cyclical; cycle/Mid.",
+    },
+    "RDDT": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (18, 40),
+        "area":     "Social + data licensing (Reddit)",
+        "note":     "Ad ramp + AI data-licensing optionality; young public co, "
+                    "high-beta. Cycle/Early.",
+    },
+    "DASH": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 30),
+        "area":     "Delivery marketplace (DoorDash)",
+        "note":     "Category-leading delivery + new verticals; consumer-cyclical. "
+                    "Cycle/Mid.",
+    },
+    "ABNB": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 18),
+        "area":     "Travel marketplace (Airbnb)",
+        "note":     "Asset-light travel platform, strong FCF; travel-cyclical. Quality "
+                    "DCA on dips.",
+    },
+    "UBER": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 28),
+        "area":     "Mobility + delivery (Uber)",
+        "note":     "Profitable network-effect platform + AV optionality. "
+                    "Consumer-cyclical; cycle/Mid.",
+    },
+    "QSI": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-40, 50),
+        "area":     "Quantum sensing/sequencing (Quantum-Si)",
+        "note":     "Micro-cap protein-sequencing lottery; tiny revenue, cash-burn. "
+                    "Pure asymmetric punt — size minimal or skip.",
+    },
+    "LAES": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-40, 55),
+        "area":     "Post-quantum security (SEALSQ)",
+        "note":     "PQC-crypto + semiconductor micro-cap; hype-driven, deeply "
+                    "unprofitable. Lottery — size minimal.",
+    },
+    "ARQQ": {
+        "strategy": "lottery",
+        "pos":      "Binary",
+        "cagr":     (-40, 55),
+        "area":     "Quantum-safe encryption (Arqit)",
+        "note":     "Pre-scale quantum encryption micro-cap; going-concern risk. "
+                    "Lottery punt only.",
+    },
+    "PL": {
+        "strategy": "catalyst",
+        "pos":      "Binary",
+        "cagr":     (-30, 40),
+        "area":     "Earth-observation satellites (Planet Labs)",
+        "note":     "Data-subscription space play; binary on enterprise/defense "
+                    "contract ramp + cash burn. Catalyst sizing.",
+    },
+    "BKSY": {
+        "strategy": "catalyst",
+        "pos":      "Binary",
+        "cagr":     (-35, 45),
+        "area":     "Radar imaging satellites (BlackSky)",
+        "note":     "Defense/intel imaging; binary on contract wins + constellation "
+                    "funding. Catalyst — never average down.",
+    },
+    "STLD": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (4, 16),
+        "area":     "Steel mini-mill (Steel Dynamics)",
+        "note":     "Low-cost steel levered to reshoring/construction; deep-cyclical, "
+                    "cheap. Cycle, buy troughs.",
+    },
+    "NUE": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (4, 15),
+        "area":     "Steel (Nucor)",
+        "note":     "Best-in-class steel cyclical; cheap at mid-cycle, dividend. "
+                    "Cycle/Mid, buy weakness.",
+    },
+    "CAT": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (6, 14),
+        "area":     "Construction/mining machinery (Caterpillar) — LARGE",
+        "note":     "Global capex bellwether + datacenter/power gensets. Cyclical "
+                    "quality; cycle/Mid.",
+    },
+    "UNP": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (6, 11),
+        "area":     "Class-I railroad (Union Pacific)",
+        "note":     "Wide-moat rail oligopoly, pricing power. Cyclical-defensive DCA, "
+                    "dividend.",
+    },
+    "WM": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (7, 12),
+        "area":     "Waste management (Waste Management)",
+        "note":     "Local-monopoly waste + recycling; inflation pass-through. "
+                    "Defensive DCA compounder.",
+    },
+    "ELF": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (15, 30),
+        "area":     "Mass cosmetics (e.l.f. Beauty)",
+        "note":     "Share-gaining value beauty brand; consumer-cyclical, "
+                    "momentum-rich. Cycle/Mid.",
+    },
+    "CELH": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (15, 35),
+        "area":     "Energy drinks (Celsius)",
+        "note":     "High-growth energy-drink share gainer; distribution-cyclical, "
+                    "volatile. Cycle/Mid.",
+    },
+    "DKNG": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (18, 35),
+        "area":     "Online sports betting (DraftKings)",
+        "note":     "US OSB/iGaming duopoly scaling to profitability; "
+                    "consumer-cyclical. Cycle/Mid.",
+    },
+    "ANF": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (6, 18),
+        "area":     "Apparel retail (Abercrombie)",
+        "note":     "Brand-turnaround retailer, cheap, momentum; deeply "
+                    "consumer-cyclical. Cycle, volatile.",
+    },
+    "TOST": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (18, 35),
+        "area":     "Restaurant fintech (Toast)",
+        "note":     "POS + payments for restaurants, scaling profitability; "
+                    "SMB-cyclical. Cycle/Early.",
+    },
+    "DOCS": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (14, 22),
+        "area":     "Healthcare SaaS network (Doximity)",
+        "note":     "Profitable physician network + pharma ads; high-margin, niche "
+                    "moat. Quality DCA/cycle.",
+    },
+    "9988.HK": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 22),
+        "area":     "China cloud + commerce (Alibaba)",
+        "note":     "Cheap China megacap + AI-cloud re-acceleration; regulatory/geo "
+                    "risk. Deep-value cycle.",
+    },
+    "0700.HK": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 18),
+        "area":     "China gaming + fintech (Tencent)",
+        "note":     "Wide-moat games + WeChat + AI; cheap vs growth, geo risk. "
+                    "DCA/value for China sleeve.",
+    },
+    "SAP": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (10, 16),
+        "area":     "Enterprise ERP cloud (SAP) — LARGE",
+        "note":     "ERP cloud migration + AI (Joule); durable, FCF-rich EU megacap. "
+                    "DCA.",
+    },
+    "NVO": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (8, 18),
+        "area":     "Pharma / GLP-1 (Novo Nordisk)",
+        "note":     "Ozempic/Wegovy franchise; de-rated on competition — "
+                    "cheap-but-quality. DCA value.",
+    },
+    "SHEL": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (4, 9),
+        "area":     "Integrated energy (Shell)",
+        "note":     "Cheap, high-yield European energy ballast; buybacks. Slow DCA "
+                    "value, commodity-cyclical.",
+    },
+    "INFY": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (7, 13),
+        "area":     "IT services (Infosys)",
+        "note":     "AI-services + cheap, high-ROIC EM IT outsourcer; dividend. DCA "
+                    "value, demand-cyclical.",
+    },
+    "9618.HK": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 18),
+        "area":     "China e-commerce + logistics (JD.com)",
+        "note":     "Cheap China commerce/logistics; consumer + geo cyclical. "
+                    "Deep-value cycle.",
+    },
 }
 
 

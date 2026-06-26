@@ -29,9 +29,11 @@ refreshing or extending the data.
   edit an old dated file in place once it represents a past snapshot.
 - After updating the numbers, run `PORTFOLIO_USE=ai python3
   scoring/score_holdings.py --fill-ttm --watchlist` to (re)source the
-  `ttm_rev_growth` scalar **and** the `rev_growth_hist` multi-year series in
-  place — it preserves every other cell and the `#` header. This keeps the
-  trend term (re-accel bonus / decel penalty) fed with current trailing data.
+  `ttm_rev_growth` scalar, the `rev_growth_hist` multi-year revenue series **and**
+  the `net_margin_hist` margin-trajectory series in place — it preserves every
+  other cell and the `#` header. This keeps the trend term (re-accel bonus /
+  decel penalty) and the margin-expansion sub-score fed with current trailing
+  data.
 - The CSV starts with `#` comment lines (column legend + FX + proxy notes); the
   loader skips them. Keep that header current when conventions change.
 
@@ -40,11 +42,12 @@ refreshing or extending the data.
 ```
 ticker,mktcap_b,fwd_rev_growth,ttm_rev_growth,fwd_eps_growth,gross_margin,
 net_margin,fcf_positive,peg,ps_ratio,pct_above_200dma,pct_below_52w_high,
-eps_beat_rate,eps_beat_streak,rev_growth_hist
+eps_beat_rate,eps_beat_streak,rev_growth_hist,net_margin_hist
 ```
 
-(`rev_growth_hist` is appended last and is pipe-separated, not a plain number;
-it is parsed specially by the loader and sits outside the numeric schema.)
+(`rev_growth_hist` and `net_margin_hist` are appended last and are pipe-
+separated, not plain numbers; they are parsed specially by the loader and sit
+outside the numeric schema.)
 
 - `mktcap_b` — market cap in **USD billions** (convert foreign, see FX below).
 - `fwd_rev_growth` / `fwd_eps_growth` — analyst **3Y** growth forecasts, %.
@@ -65,6 +68,33 @@ it is parsed specially by the loader and sits outside the numeric schema.)
   quiet multi-year ramps (VRT 14→28%). Kept **outside** the numeric `FUND_FIELDS`
   schema, so it does not affect `data%`. Blank only for pre-revenue names with
   no FY history (no trend signal, score unchanged).
+
+  **Base-effect damping (Option D):** the forecast `fwd` is a *forward 3Y CAGR*
+  but the baseline is a *trailing per-year YoY*, so a name growing off a tiny
+  base (ALAB 115/242/45, IONQ ~150 median) is arithmetically forced to a lower
+  forward CAGR — maturation, not deceleration. The **deceleration penalty only**
+  is scaled down when the trailing baseline exceeds `_TREND_HOT_BASE` (60%),
+  fading to ~0 by `_TREND_HOT_FADE` (100 pts) beyond it. Genuine slowdowns off a
+  normal base (CCJ, base 21 → full penalty) are unaffected; the re-acceleration
+  bonus is never damped. See `_decel_damping` / the BASE-EFFECT DAMPING block in
+  `score_holdings.py`.
+- `net_margin_hist` — trailing **net-margin %** series (TTM first, then full FYs,
+  most-recent first), pipe-separated (e.g. ANET `38.99|40.73|35.62|30.87|28.52`).
+  Sourced together with the revenue series by `score_holdings.py --fill-ttm`
+  (from the `/financials/` `profitMargin` array; preserves the `#` header and all
+  other cells; appends the column to older CSVs). Powers the **margin-expansion**
+  sub-score (`_margin_trend`): the mean of the **newer** half of the window minus
+  the **older** half, in margin **points** —
+  - newer margins materially **above** older → **expansion** (sub-score → 1.0)
+  - within `±1` pt → **flat** (neutral 0.5)
+  - newer materially **below** older → **compression** (sub-score → 0.0)
+
+  Blended at modest weight (1.5) into the **FUND layer** and **DCA quality** so
+  margin *direction* — not just level — feeds "is this a good business?". Margin
+  *level* alone cannot tell a −5%→+1% turnaround from a 20%→11% melt; this term
+  can. Kept **outside** the numeric `FUND_FIELDS` schema, so it does not affect
+  `data%`. Blank when no margin history is available (sub-score dropped, weight
+  redistributed — score unchanged for that name).
 - `net_margin` — GAAP profit margin %, ttm. See operating-margin proxy rule.
 - `fcf_positive` — `1` if trailing FCF > 0 else `0`.
 - `peg` — blank if n/a. When blank, P6 falls back to `ps_ratio` vs growth.
