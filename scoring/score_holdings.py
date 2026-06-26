@@ -154,15 +154,18 @@ def cycle_of(t, info):
 # =========================================================================
 # 2. FUNDAMENTALS SNAPSHOT (dated CSV from stockanalysis.com)
 # =========================================================================
-# CSV columns (all numeric unless noted; blank = unknown -> neutral score):
+# CSV columns (all numeric unless noted; blank = unknown -> dropped/renormalized
+# by _blend, not faked-neutral):
 #   ticker, mktcap_b, fwd_rev_growth, ttm_rev_growth, fwd_eps_growth,
-#   gross_margin, net_margin, fcf_positive(0/1), peg, pct_above_200dma,
-#   pct_below_52w_high, eps_beat_rate(0..1), eps_beat_streak(int)
+#   gross_margin, net_margin, fcf_positive(0/1), peg, ps_ratio,
+#   pct_above_200dma, pct_below_52w_high, eps_beat_rate(0..1), eps_beat_streak(int)
+#   ps_ratio: price/sales; valuation fallback for P6 when peg is absent
+#            (loss-makers / pre-revenue names have no PEG).
 # =========================================================================
 FUND_FIELDS = [
     "ticker", "mktcap_b", "fwd_rev_growth", "ttm_rev_growth", "fwd_eps_growth",
-    "gross_margin", "net_margin", "fcf_positive", "peg", "pct_above_200dma",
-    "pct_below_52w_high", "eps_beat_rate", "eps_beat_streak",
+    "gross_margin", "net_margin", "fcf_positive", "peg", "ps_ratio",
+    "pct_above_200dma", "pct_below_52w_high", "eps_beat_rate", "eps_beat_streak",
 ]
 
 
@@ -228,6 +231,18 @@ def _band_inv(x, lo, hi):
     """Inverse ramp: smaller x scores higher. None propagates as missing."""
     b = _band(x, lo, hi)
     return None if b is None else 1.0 - b
+
+
+def _band_inv_log(x, lo, hi):
+    """Inverse ramp on a log10 scale: smaller x scores higher, falloff even
+    across orders of magnitude. Used for market cap so a $40B and a $250B name
+    are separated and there is no cliff at the top of the range. None propagates
+    as missing (so _blend renormalizes), matching _band."""
+    if x is None or x <= 0 or lo <= 0 or hi <= lo:
+        return None
+    import math
+    t = (math.log10(x) - math.log10(lo)) / (math.log10(hi) - math.log10(lo))
+    return max(0.0, min(1.0, 1.0 - t))
 
 
 _MISSING_PENALTY = 0.15  # speculative bucket: a data gap IS a red flag
@@ -313,8 +328,11 @@ def _cov_cell(coverage):
 def score_8point(t, f, info):
     eps_f = eps_surprise_factor(f.get("eps_beat_rate"), f.get("eps_beat_streak"))
 
-    # P1 small enough to multiply: smaller mkt cap better (log-ish via bands).
-    p1 = _band_inv(f.get("mktcap_b"), 5, 300)
+    # P1 small enough to multiply: smaller mkt cap better, on a LOG scale so the
+    #    penalty is smooth across orders of magnitude instead of a hard cliff at
+    #    $300B (a $40B and a $250B name should differ; $310B and $3T should too).
+    #    $5B -> 1.0, $3T -> 0.0, evenly spaced in log10 between.
+    p1 = _band_inv_log(f.get("mktcap_b"), 5, 3000)
     # P2 profitable or turning: GAAP net margin>0 full; FCF+ only = 0.5.
     #     Missing margin -> None (dropped by _blend), NOT a faked neutral.
     nm = f.get("net_margin")
@@ -336,11 +354,29 @@ def score_8point(t, f, info):
     p4 = BOTTLENECK.get(t, 0.3)
     # P5 secular & early (cycle position).
     p5 = _CYCLE_P5.get(cycle_of(t, info), 0.5)
-    # P6 not priced for perfection: PEG, corrected down for beaters; cyclicals
-    #    get a softer penalty (snapshot PEG misleads at cycle extremes).
+    # P6 not priced for perfection. PEG first; when PEG is absent (loss-makers,
+    #    pre-revenue) fall back to P/S-vs-growth so valuation discipline still
+    #    applies instead of dropping the point. Cyclicals get a softer penalty
+    #    (snapshot multiples mislead at cycle extremes). NB: the EPS-surprise
+    #    factor is intentionally NOT applied here — it already lifts the growth
+    #    inputs (P3), and PEG embeds EPS, so correcting both double-counts a
+    #    single signal.
     peg = f.get("peg")
-    peg_corr = None if peg is None else peg / eps_f   # beaters -> lower PEG
-    p6 = _band_inv(peg_corr, 0.8, 3.5)
+    if peg is not None:
+        p6 = _band_inv(peg, 0.8, 3.5)
+    else:
+        # Fallback: price/sales judged against forward growth. A high P/S is only
+        # "priced for perfection" if growth doesn't justify it, so scale the P/S
+        # bands by the growth rate (ps/growth ~ a crude PEG-on-sales). Returns
+        # None (point dropped/penalised by _blend) only when P/S is also absent.
+        ps = f.get("ps_ratio")
+        if ps is None:
+            p6 = None
+        else:
+            g = f.get("fwd_rev_growth")
+            denom = max(g, 10.0) if g is not None else 25.0
+            ps_to_growth = ps / (denom / 10.0)        # normalise: 10% growth -> raw P/S
+            p6 = _band_inv(ps_to_growth, 1.0, 15.0)   # cheap on sales -> high score
     if p6 is not None and t in _CYCLICAL:
         p6 = 0.5 + (p6 - 0.5) * 0.6                   # pull toward neutral
     # P7 fresh catalyst.
@@ -375,16 +411,18 @@ def score_growth(t, f, info):
 
     g_rev = _band(fwd_corr, 5, 50)                       # forward revenue
     g_eps = _band(eps_corr, 5, 60)                       # forward EPS
-    g_cagr = _band(info.get("cagr_mid"), 8, 22)          # the old forecast (now 1 of 4)
     g_sec = _CYCLE_P5.get(cycle_of(t, info), 0.5)        # secular runway
-    # weights: growth-engine emphasises actual fwd numbers over the hand
-    # forecast. CORE names: missing components drop out and weight is
-    # redistributed (no faked 0.5). SPECULATIVE names: missing fwd numbers are
-    # penalised so opaque lottery tickets are suppressed, not flattered.
-    score10, cov = _blend([(g_rev, 3.5), (g_eps, 3.0),
-                           (g_cagr, 2.0), (g_sec, 1.5)], scale=10.0,
+    # The hand-authored forecast mid-CAGR was dropped: it is a subjective input,
+    # and scoring on it is the exact circularity this engine set out to avoid
+    # (see module docstring). The growth score now rests only on observable
+    # forward analyst numbers + the secular-runway tag. CORE names: missing
+    # components drop out and weight is redistributed (no faked 0.5).
+    # SPECULATIVE names: missing fwd numbers are penalised so opaque lottery
+    # tickets are suppressed, not flattered.
+    score10, cov = _blend([(g_rev, 4.5), (g_eps, 4.0),
+                           (g_sec, 1.5)], scale=10.0,
                           risk_penalize=_is_speculative(t, info))
-    return score10, {"rev": g_rev, "eps": g_eps, "cagr": g_cagr,
+    return score10, {"rev": g_rev, "eps": g_eps,
                      "sec": g_sec, "coverage": cov}
 
 
@@ -471,9 +509,15 @@ def dca_quality(t, f):
                              (q_eps, 2.0), (q_fcf, 2.0)], scale=10.0)
 
     # --- RICHNESS (is the price ahead of the business?) 0=cheap .. 1=stretched
+    # PEG used raw: eps_f already lifts the growth side of the quality score, so
+    # applying it to PEG too would double-count the same surprise signal. Fall
+    # back to P/S when PEG is absent so the richness leg is not silently dropped.
     peg = f.get("peg")
-    peg_corr = None if peg is None else peg / eps_f
-    r_peg = _band(peg_corr, 1.0, 4.0)          # PEG 1 -> 0, 4+ -> 1
+    if peg is not None:
+        r_peg = _band(peg, 1.0, 4.0)           # PEG 1 -> 0, 4+ -> 1
+    else:
+        ps = f.get("ps_ratio")
+        r_peg = _band(ps, 3.0, 20.0)           # cheap on sales -> low richness
     above = f.get("pct_above_200dma")
     r_dma = _band(above, 0, 60)                # 0% above -> 0, 60%+ -> 1
     richness, _ = _blend([(r_peg, 1.0), (r_dma, 1.0)])

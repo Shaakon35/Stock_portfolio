@@ -57,7 +57,7 @@ each mode on the job it does:
 | `8PT`      | 0–8, anti-momentum quality screen                          |
 | `quadrant` | PRIME (size up) · MOMENTUM (starter) · QUALITY · AVOID     |
 | `epsF`     | EPS-surprise factor (>1 = serial beater, consensus too low)|
-| `cov`      | field coverage `n/13` — how many data fields are populated  |
+| `data%`    | field coverage; `[GAP]` flags < 75% (trust the score less) |
 
 ## Refreshing the data
 

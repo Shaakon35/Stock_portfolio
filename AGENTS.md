@@ -49,14 +49,22 @@ eps_beat_rate,eps_beat_streak
 - `pct_above_200dma` — `(price − 200DMA) / 200DMA × 100`; compute from the real
   price and 200-day MA (do **not** cap; the scoring bands clamp internally).
   Blank for names too recently listed to have a 200DMA.
-- `pct_below_52w_high` — left blank; the source has no clean field. P8 now scores
-  on the 200DMA leg alone when this is absent (it no longer averages with a
-  neutral 0.5, which used to drag every name toward the middle).
+- `pct_below_52w_high` — left blank; the source has no clean field. P8 scores on
+  the 200DMA leg alone when this is absent (see blank-handling note below).
 - `eps_beat_rate` (0..1) / `eps_beat_streak` — blank = neutral. **The source has
   no scrapable estimate-vs-actual table** (`/earnings/` 404s; financials pages
   carry actuals but no consensus), so this is a deliberate *partial* field: seed
   only well-documented serial beaters, leave the rest blank. The surprise factor
   is a ±12% tie-breaker by design, never a dominant term.
+
+**Blank handling (important):** a blank field is **not** scored as a faked
+neutral 0.5. `_band()` returns `None` for missing input and `_blend()` then
+*drops* that sub-score and redistributes its weight across the present metrics
+(for CORE / DCA / established names), or *penalises* the gap (for speculative
+W6 / Binary names, where opacity is itself a red flag). Each row's output shows
+`data%` (coverage) and a `[GAP]` flag when coverage < 75%, so thin-data scores
+can be trusted less. Because several columns above are structurally blank for
+most names, `data%` commonly tops out near 70% — that is expected, not an error.
 
 ### 3. Sourcing from stockanalysis.com
 
