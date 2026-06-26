@@ -982,7 +982,9 @@ def fill_ttm(csv_path, tickers):
             import statistics
             med = f"{statistics.median(hist):.1f}"
         print(f"  [ttm] {t}: ttm={ttm}%  hist=[{row['rev_growth_hist']}]  median={med}")
-    with open(csv_path, "w", newline="") as fh:
+    # newline="\n" forces LF; the default "" lets csv emit CRLF, which would
+    # rewrite every line in the diff and flip the file's line endings.
+    with open(csv_path, "w", newline="\n") as fh:
         fh.writelines(comments)
         w = csv.DictWriter(fh, fieldnames=header)
         w.writeheader()
