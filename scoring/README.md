@@ -57,7 +57,7 @@ each mode on the job it does:
 | `8PT`      | 0–8, anti-momentum quality screen                          |
 | `quadrant` | PRIME (size up) · MOMENTUM (starter) · QUALITY · AVOID     |
 | `epsF`     | EPS-surprise factor (>1 = serial beater, consensus too low)|
-| `data%`    | field coverage; `[GAP]` flags < 75% (trust the score less) |
+| `data%`    | coverage of *obtainable* fields; `[GAP]` flags < 75% (thin data) |
 
 ## Refreshing the data
 
@@ -68,8 +68,12 @@ auto-picks the newest `scoring/fundamentals_YYYY-MM-DD.csv`.
 To refresh: copy the latest CSV to a new date, update the numbers by hand from
 stockanalysis.com (`/stocks/TICKER/statistics/`; foreign names use
 `/quote/<exch>/<TICKER>/statistics/`), and re-run. The statistics page supplies
-12 of the 14 fields; `pct_below_52w_high` and the two `eps_beat_*` fields are
-not available there at scale (no estimate-vs-actual table), so they are left
-blank for most names and treated as neutral — see AGENTS.md for the rationale.
+the obtainable fields; `ttm_rev_growth`, `pct_below_52w_high` and the two
+`eps_beat_*` fields are not available there at scale (no trailing-YoY or
+estimate-vs-actual table), so they are left blank for most names and treated as
+neutral — see AGENTS.md for the rationale. `data%` **excludes** these four
+unobtainable fields from its denominator, so a fully-sourced name reads ~100%
+and `[GAP]` means genuinely thin data, not the unavoidable absence of fields no
+source provides.
 `--live` only fills margins and **overwrites** the other fields blank, so do not
 run it against a hand-curated CSV; the committed CSV is the reproducible cache.

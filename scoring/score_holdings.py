@@ -296,11 +296,31 @@ def _is_speculative(t, info):
     return info.get("wave") == "W6" or cycle_of(t, info) == "Binary"
 
 
+# Columns that exist in the schema but are NOT obtainable from the source at
+# scale, so they are excluded from the coverage denominator. Counting them
+# would cap every name's data% well below 100% no matter how complete its real
+# data is (the source has no scrapable field for them), making [GAP] fire on
+# fully-sourced names and rendering the flag meaningless. They are still scored
+# when seeded by hand (e.g. eps_beat for documented serial beaters); excluding
+# them here only changes the coverage metric, not the scoring.
+#   ttm_rev_growth     - statistics page exposes no trailing-YoY field
+#   pct_below_52w_high - no clean 52w-high distance field; P8 uses 200DMA
+#   eps_beat_rate      - /earnings/ estimate-vs-actual table 404s; unscrapable
+#   eps_beat_streak    - same source gap as eps_beat_rate
+_UNSOURCEABLE = frozenset({
+    "ttm_rev_growth", "pct_below_52w_high", "eps_beat_rate", "eps_beat_streak",
+})
+
+
 def _coverage(f):
-    """Fraction of CSV fundamental fields actually present for this name (0..1).
+    """Fraction of OBTAINABLE fundamental fields actually present (0..1).
     Reported alongside each score so a number earned on real data is visibly
-    distinct from one propped up by defaults."""
-    fields = [k for k in FUND_FIELDS if k != "ticker"]
+    distinct from one propped up by defaults. The denominator counts only
+    fields that can actually be sourced (see _UNSOURCEABLE): a name with every
+    obtainable fact present reads ~100%, and [GAP] therefore means genuinely
+    thin data — not the unavoidable absence of fields no source provides."""
+    fields = [k for k in FUND_FIELDS
+              if k != "ticker" and k not in _UNSOURCEABLE]
     if not fields:
         return 0.0
     return sum(1 for k in fields if f.get(k) is not None) / len(fields)

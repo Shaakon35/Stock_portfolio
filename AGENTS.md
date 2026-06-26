@@ -63,8 +63,17 @@ neutral 0.5. `_band()` returns `None` for missing input and `_blend()` then
 (for CORE / DCA / established names), or *penalises* the gap (for speculative
 W6 / Binary names, where opacity is itself a red flag). Each row's output shows
 `data%` (coverage) and a `[GAP]` flag when coverage < 75%, so thin-data scores
-can be trusted less. Because several columns above are structurally blank for
-most names, `data%` commonly tops out near 70% — that is expected, not an error.
+can be trusted less.
+
+`data%` counts only **obtainable** fields: the four structurally-unsourceable
+columns (`ttm_rev_growth`, `pct_below_52w_high`, `eps_beat_rate`,
+`eps_beat_streak`) are excluded from its denominator — see `_UNSOURCEABLE` in
+`score_holdings.py`. The source has no scrapable field for them, so counting
+them would cap every name below 100% no matter how complete its real data is,
+making `[GAP]` fire on fully-sourced names. With them excluded, a fully-sourced
+name reads ~100% and `[GAP]` means genuinely thin data (pre-revenue lottery
+names, the SRUUF commodity trust). This affects only the coverage metric, not
+the scoring — those fields are still scored whenever seeded by hand.
 
 ### 3. Sourcing from stockanalysis.com
 
