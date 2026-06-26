@@ -27,6 +27,11 @@ refreshing or extending the data.
 - The engine auto-picks the **newest** `scoring/fundamentals_*.csv`.
 - To refresh: copy the latest CSV to a new date and update the numbers; do not
   edit an old dated file in place once it represents a past snapshot.
+- After updating the numbers, run `PORTFOLIO_USE=ai python3
+  scoring/score_holdings.py --fill-ttm --watchlist` to (re)source the
+  `ttm_rev_growth` scalar **and** the `rev_growth_hist` multi-year series in
+  place — it preserves every other cell and the `#` header. This keeps the
+  trend term (re-accel bonus / decel penalty) fed with current trailing data.
 - The CSV starts with `#` comment lines (column legend + FX + proxy notes); the
   loader skips them. Keep that header current when conventions change.
 
@@ -35,12 +40,31 @@ refreshing or extending the data.
 ```
 ticker,mktcap_b,fwd_rev_growth,ttm_rev_growth,fwd_eps_growth,gross_margin,
 net_margin,fcf_positive,peg,ps_ratio,pct_above_200dma,pct_below_52w_high,
-eps_beat_rate,eps_beat_streak
+eps_beat_rate,eps_beat_streak,rev_growth_hist
 ```
+
+(`rev_growth_hist` is appended last and is pipe-separated, not a plain number;
+it is parsed specially by the loader and sits outside the numeric schema.)
 
 - `mktcap_b` — market cap in **USD billions** (convert foreign, see FX below).
 - `fwd_rev_growth` / `fwd_eps_growth` — analyst **3Y** growth forecasts, %.
-- `ttm_rev_growth` — trailing-12m rev YoY %; blank = unknown (no re-accel bonus).
+- `ttm_rev_growth` — trailing-12m rev YoY %, sourced from the `/financials/`
+  page (`revenueGrowth` JSON array, index 0). Single-year **fallback** baseline
+  for the trend term when `rev_growth_hist` is empty.
+- `rev_growth_hist` — trailing **full-FY** rev YoY % series, most-recent first,
+  pipe-separated (e.g. CCJ `11.04|21.18|38.53|26.65|-18.06`). Sourced together
+  with `ttm` by `score_holdings.py --fill-ttm` (touches only these two columns,
+  preserves the `#` header and all other cells; appends the column to older
+  CSVs). Its **median** is the baseline for the trend term:
+  - fwd materially **above** the median → **re-acceleration bonus** (≤ +0.15)
+  - fwd materially **below** the median → **deceleration penalty** (≤ −0.25)
+
+  The multi-year median (not a single year) is deliberate: a one-year baseline
+  mis-flags young hypergrowth names whose base year was spiky (CRDO printing
+  206% off a tiny base would brand any forward number a "collapse") and misses
+  quiet multi-year ramps (VRT 14→28%). Kept **outside** the numeric `FUND_FIELDS`
+  schema, so it does not affect `data%`. Blank only for pre-revenue names with
+  no FY history (no trend signal, score unchanged).
 - `net_margin` — GAAP profit margin %, ttm. See operating-margin proxy rule.
 - `fcf_positive` — `1` if trailing FCF > 0 else `0`.
 - `peg` — blank if n/a. When blank, P6 falls back to `ps_ratio` vs growth.
@@ -65,15 +89,19 @@ W6 / Binary names, where opacity is itself a red flag). Each row's output shows
 `data%` (coverage) and a `[GAP]` flag when coverage < 75%, so thin-data scores
 can be trusted less.
 
-`data%` counts only **obtainable** fields: the four structurally-unsourceable
-columns (`ttm_rev_growth`, `pct_below_52w_high`, `eps_beat_rate`,
-`eps_beat_streak`) are excluded from its denominator — see `_UNSOURCEABLE` in
-`score_holdings.py`. The source has no scrapable field for them, so counting
-them would cap every name below 100% no matter how complete its real data is,
-making `[GAP]` fire on fully-sourced names. With them excluded, a fully-sourced
-name reads ~100% and `[GAP]` means genuinely thin data (pre-revenue lottery
-names, the SRUUF commodity trust). This affects only the coverage metric, not
-the scoring — those fields are still scored whenever seeded by hand.
+`data%` counts only **obtainable** fields: the three structurally-unsourceable
+columns (`pct_below_52w_high`, `eps_beat_rate`, `eps_beat_streak`) are excluded
+from its denominator — see `_UNSOURCEABLE` in `score_holdings.py`. The source
+has no scrapable field for them, so counting them would cap every name below
+100% no matter how complete its real data is, making `[GAP]` fire on
+fully-sourced names. With them excluded, a fully-sourced name reads ~100% and
+`[GAP]` means genuinely thin data (pre-revenue lottery names, the SRUUF
+commodity trust). This affects only the coverage metric, not the scoring —
+those fields are still scored whenever seeded by hand.
+
+(`ttm_rev_growth` was formerly in this list but is in fact sourceable from the
+`/financials/` JSON, so it is now a real, counted field — see `--fill-ttm`
+above. It powers the deceleration penalty.)
 
 ### 3. Sourcing from stockanalysis.com
 

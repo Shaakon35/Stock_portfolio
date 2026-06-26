@@ -179,6 +179,20 @@ def _num(s):
         return None
 
 
+def _num_list(s):
+    """Parse a pipe-separated series ('28.6|19.5|33.8') into a list of floats,
+    skipping blanks. Returns [] for empty/missing. Used for rev_growth_hist."""
+    s = (s or "").strip()
+    if not s:
+        return []
+    out = []
+    for part in s.split("|"):
+        v = _num(part)
+        if v is not None:
+            out.append(v)
+    return out
+
+
 def load_fundamentals(path):
     out = {}
     with open(path, newline="") as fh:
@@ -188,7 +202,13 @@ def load_fundamentals(path):
         t = (row.get("ticker") or "").strip()
         if not t or t.startswith("#"):
             continue
-        out[t] = {k: _num(row.get(k)) for k in FUND_FIELDS if k != "ticker"}
+        rec = {k: _num(row.get(k)) for k in FUND_FIELDS if k != "ticker"}
+        # rev_growth_hist is a pipe-separated trailing-FY YoY% series (most-recent
+        # first), kept OUTSIDE the numeric FUND_FIELDS schema so it neither breaks
+        # _num parsing nor inflates the data% coverage denominator. It powers the
+        # multi-year trend baseline in _trend_adjust (median of the series).
+        rec["rev_growth_hist"] = _num_list(row.get("rev_growth_hist"))
+        out[t] = rec
     return out
 
 
@@ -243,6 +263,66 @@ def _band_inv_log(x, lo, hi):
     import math
     t = (math.log10(x) - math.log10(lo)) / (math.log10(hi) - math.log10(lo))
     return max(0.0, min(1.0, 1.0 - t))
+
+
+# --- TREND adjustment: reward re-acceleration, PENALISE deceleration --------
+# A forward growth number in isolation hides whether the business is speeding up
+# or rolling over. CCJ's fwd_rev 7.4% looks merely "slow", but against its multi-
+# year trend (~21% median, 38->21->11->7) it is a growth CLIFF the snapshot
+# misses. This applies a single symmetric adjustment to any growth sub-score:
+#   fwd materially ABOVE the trend -> re-acceleration BONUS  (the upside side)
+#   fwd materially BELOW the trend -> deceleration PENALTY   (the downside side)
+#
+# BASELINE = the MEDIAN of the trailing multi-year YoY series (rev_growth_hist),
+# NOT a single year. A one-year baseline is fragile for young hypergrowth names:
+# CRDO printing 206% off a tiny base would brand *any* forward number a
+# "collapse", and VRT's quiet multi-year ramp (14->28%) would read as flat. The
+# median absorbs a single spiky year and captures the sustained trajectory, so:
+#   - CCJ (38/21/11/7, med 21) vs fwd 7  -> correctly penalised (one-year missed it)
+#   - VRT (14/14/21/17/28, med 17) vs fwd 28 -> correctly a re-accel BONUS
+#   - CRDO (81/73/5/126/206, med 81) vs fwd 50 -> still decel, but -31 not -155
+# Falls back to the single-year ttm_rev_growth when no history is present, and
+# returns the score unchanged when neither baseline nor fwd is available.
+#
+# "Materially" is a deadband (_TREND_DEADBAND, pts of growth) so ordinary wobble
+# does not move the score; magnitude scales with the gap up to a cap.
+_TREND_DEADBAND = 5.0     # pts of growth: ignore gaps smaller than this
+_TREND_FULL = 25.0        # pts: gap at/above this gets the full adjustment
+_TREND_BONUS_MAX = 0.15   # max upward nudge (matches the old re-accel bonus)
+_TREND_PENALTY_MAX = 0.25  # max downward nudge; decel is judged the harder risk
+
+
+def _trend_baseline(f):
+    """The trailing-growth baseline the forward forecast is judged against:
+    the MEDIAN of the multi-year rev_growth_hist series (robust to one spiky
+    year), or the single-year ttm_rev_growth when no history exists, or None."""
+    hist = f.get("rev_growth_hist") or []
+    if len(hist) >= 2:
+        import statistics
+        return statistics.median(hist)
+    if len(hist) == 1:
+        return hist[0]
+    return f.get("ttm_rev_growth")
+
+
+def _trend_adjust(score, fwd, f):
+    """Nudge a 0..1 growth sub-score by fwd-vs-trend. Symmetric: re-acceleration
+    (fwd above the multi-year median) lifts it, deceleration cuts it, deadband
+    ignores noise. `f` is the fundamentals dict (supplies the history series)."""
+    if score is None or fwd is None:
+        return score
+    base = _trend_baseline(f)
+    if base is None:
+        return score                      # no trailing signal -> leave untouched
+    gap = fwd - base                      # >0 accelerating, <0 decelerating
+    if abs(gap) <= _TREND_DEADBAND:
+        return score                      # within noise -> leave untouched
+    # fraction of the way from the deadband edge to the full-effect threshold
+    span = max(_TREND_FULL - _TREND_DEADBAND, 1e-9)
+    mag = min((abs(gap) - _TREND_DEADBAND) / span, 1.0)
+    if gap > 0:
+        return min(1.0, score + mag * _TREND_BONUS_MAX)
+    return max(0.0, score - mag * _TREND_PENALTY_MAX)
 
 
 _MISSING_PENALTY = 0.15  # speculative bucket: a data gap IS a red flag
@@ -303,12 +383,15 @@ def _is_speculative(t, info):
 # fully-sourced names and rendering the flag meaningless. They are still scored
 # when seeded by hand (e.g. eps_beat for documented serial beaters); excluding
 # them here only changes the coverage metric, not the scoring.
-#   ttm_rev_growth     - statistics page exposes no trailing-YoY field
 #   pct_below_52w_high - no clean 52w-high distance field; P8 uses 200DMA
 #   eps_beat_rate      - /earnings/ estimate-vs-actual table 404s; unscrapable
 #   eps_beat_streak    - same source gap as eps_beat_rate
+# ttm_rev_growth was here but is in fact sourceable: the /financials/ page
+# embeds a `financialData.revenueGrowth` JSON array (index 1 = latest FY YoY).
+# It now powers the deceleration penalty, so it is a real, counted field; see
+# the sourcing helper in section 6.
 _UNSOURCEABLE = frozenset({
-    "ttm_rev_growth", "pct_below_52w_high", "eps_beat_rate", "eps_beat_streak",
+    "pct_below_52w_high", "eps_beat_rate", "eps_beat_streak",
 })
 
 
@@ -420,14 +503,13 @@ def score_8point(t, f, info):
         p2 = min(1.0, 0.6 + _band(nm, 0, 30) * 0.4)
     else:
         p2 = 0.5 if (f.get("fcf_positive") == 1) else 0.15
-    # P3 growth accelerating: fwd rev growth, bonus if fwd>ttm (re-accel),
-    #     EPS-surprise corrects the forward figure.
+    # P3 growth accelerating: fwd rev growth, EPS-surprise corrects the forward
+    #     figure, then a symmetric TREND adjustment — re-acceleration lifts it,
+    #     deceleration (fwd << ttm, the CCJ growth-cliff case) cuts it.
     fwd = f.get("fwd_rev_growth")
     fwd_corr = None if fwd is None else fwd * eps_f
     p3 = _band(fwd_corr, 5, 45)
-    if p3 is not None and fwd is not None and f.get("ttm_rev_growth") is not None:
-        if fwd > f["ttm_rev_growth"]:
-            p3 = min(1.0, p3 + 0.15)        # genuine re-acceleration
+    p3 = _trend_adjust(p3, fwd, f)
     # P4 bottleneck (owner tag); unknown watchlist names -> neutral 0.3.
     p4 = BOTTLENECK.get(t, 0.3)
     # P5 secular & early (cycle position).
@@ -488,6 +570,7 @@ def score_growth(t, f, info):
     eps_corr = None if eps_g is None else eps_g * eps_f
 
     g_rev = _band(fwd_corr, 5, 50)                       # forward revenue
+    g_rev = _trend_adjust(g_rev, fwd, f)  # decel bites
     g_eps = _band(eps_corr, 5, 60)                       # forward EPS
     g_sec = _CYCLE_P5.get(cycle_of(t, info), 0.5)        # secular runway
     # The hand-authored forecast mid-CAGR was dropped: it is a subjective input,
@@ -549,6 +632,7 @@ def layer_scores(t, f, info):
         l_margin = 0.4 if fcf == 1 else 0.1
     fwd = f.get("fwd_rev_growth")
     l_rev = _band(None if fwd is None else fwd * eps_f, 5, 45)
+    l_rev = _trend_adjust(l_rev, fwd, f)   # decel bites
     eps_g = f.get("fwd_eps_growth")
     l_eps = _band(None if eps_g is None else eps_g * eps_f, 5, 50)
     if fcf == 1:
@@ -713,6 +797,7 @@ def dca_quality(t, f):
     fwd = f.get("fwd_rev_growth")
     fwd_corr = None if fwd is None else fwd * eps_f
     q_growth = _band(fwd_corr, 6, 25)          # DCA wants durable, not explosive
+    q_growth = _trend_adjust(q_growth, fwd, f)  # decel bites
     eps_g = f.get("fwd_eps_growth")
     q_eps = _band(None if eps_g is None else eps_g * eps_f, 6, 30)
     quality10, cov = _blend([(q_margin, 3.5), (q_growth, 2.5),
@@ -806,6 +891,107 @@ def live_refresh(tickers, out_csv):
 
 
 # =========================================================================
+# 6b. TTM REVENUE-GROWTH SOURCING — fills only the ttm_rev_growth column.
+# =========================================================================
+# Unlike the statistics page, the /financials/ page embeds a JSON blob with a
+# `revenueGrowth:[...]` array (index 0 = TTM YoY, index 1 = latest full FY, ...).
+# That TTM figure is the trailing rate the deceleration penalty compares the
+# forward forecast against. This helper scrapes it for the requested tickers and
+# writes it back into an EXISTING CSV in place, touching ONLY the
+# ttm_rev_growth cell and preserving every other hand-curated value and the
+# leading `#` comment header. Run via --fill-ttm; it is deliberately separate
+# from --live (which overwrites the whole row from the thinner statistics page).
+_FIN_EXCH = {  # foreign listings use /quote/<exch>/<code>/financials/
+    "KS": ("krx", lambda code: code),       # Korea: 000660.KS -> krx/000660
+    "HK": ("hkg", lambda code: code),       # Hong Kong: 1810.HK -> hkg/1810
+    "DE": ("etr", lambda code: code),       # Xetra
+    "AS": ("ams", lambda code: code),       # Amsterdam
+    "SW": ("swx", lambda code: code),       # SIX Swiss
+}
+
+
+def _fin_url(ticker):
+    """Map a CSV ticker to its stockanalysis.com /financials/ URL."""
+    if "." in ticker:
+        code, suf = ticker.rsplit(".", 1)
+        exch = _FIN_EXCH.get(suf.upper())
+        if exch:
+            return f"https://stockanalysis.com/quote/{exch[0]}/{exch[1](code)}/financials/"
+    return f"https://stockanalysis.com/stocks/{ticker.lower()}/financials/"
+
+
+def ttm_growth_for(ticker):
+    """Return (ttm, hist) for a ticker, or (None, []) on any failure.
+    Parses financialData.revenueGrowth: index 0 is TTM YoY (the `ttm` scalar);
+    indices 1.. are the trailing full-FY YoY series, most-recent first (`hist`),
+    which feeds the multi-year median baseline in _trend_adjust."""
+    import re
+    import urllib.request
+    url = _fin_url(ticker)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            html = r.read().decode("utf-8", "ignore")
+    except Exception:
+        return None, []
+    m = re.search(r"revenueGrowth:\[([^\]]+)\]", html)
+    if not m:
+        return None, []
+    vals = []
+    for part in m.group(1).split(","):
+        v = _num(part.strip())
+        vals.append(round(v * 100, 2) if v is not None else None)
+    ttm = vals[0] if vals else None
+    # FY series = everything after the TTM cell; drop trailing blanks (e.g. the
+    # first reporting year has no prior-year YoY).
+    hist = [v for v in vals[1:] if v is not None]
+    return ttm, hist
+
+
+def fill_ttm(csv_path, tickers):
+    """Update the ttm_rev_growth scalar AND the rev_growth_hist series (pipe-
+    separated trailing-FY YoY) for `tickers` in csv_path, in place. Preserves the
+    `#` comment header and every other cell, and appends the rev_growth_hist
+    column to the header if the CSV predates it. Skips names that fail to fetch
+    (their existing values are left untouched)."""
+    with open(csv_path, newline="") as fh:
+        raw = fh.readlines()
+    comments = [ln for ln in raw if ln.lstrip().startswith("#")]
+    data_lines = [ln for ln in raw if not ln.lstrip().startswith("#")]
+    reader = csv.DictReader(data_lines)
+    header = list(reader.fieldnames)
+    if "rev_growth_hist" not in header:
+        header.append("rev_growth_hist")     # extend older CSVs in place
+    rows = list(reader)
+    want = set(tickers)
+    n = 0
+    for row in rows:
+        t = (row.get("ticker") or "").strip()
+        if t not in want:
+            continue
+        ttm, hist = ttm_growth_for(t)
+        if ttm is None and not hist:
+            print(f"  [ttm] {t}: no figure (kept existing '{row.get('ttm_rev_growth','')}')")
+            continue
+        if ttm is not None:
+            row["ttm_rev_growth"] = f"{ttm}"
+        row["rev_growth_hist"] = "|".join(f"{v}" for v in hist)
+        n += 1
+        med = "n/a"
+        if hist:
+            import statistics
+            med = f"{statistics.median(hist):.1f}"
+        print(f"  [ttm] {t}: ttm={ttm}%  hist=[{row['rev_growth_hist']}]  median={med}")
+    with open(csv_path, "w", newline="") as fh:
+        fh.writelines(comments)
+        w = csv.DictWriter(fh, fieldnames=header)
+        w.writeheader()
+        w.writerows(rows)
+    print(f"  [ttm] updated {n} rows in {csv_path}")
+    return csv_path
+
+
+# =========================================================================
 # 7. RUN
 # =========================================================================
 def default_csv():
@@ -890,9 +1076,21 @@ def main():
     ap.add_argument("--by-strategy", action="store_true",
                     help="group output by strategy mode and grade each on its OWN "
                          "rubric (DCA judged on quality+price, not small/explosive)")
+    ap.add_argument("--fill-ttm", action="store_true",
+                    help="scrape ttm_rev_growth from stockanalysis.com /financials/ "
+                         "and write it into the CSV in place (powers the "
+                         "deceleration penalty); preserves all other cells")
     args = ap.parse_args()
 
     port = portfolio_rows(include_watchlist=args.watchlist)
+
+    if args.fill_ttm:
+        if not args.csv or not Path(args.csv).exists():
+            sys.exit("--fill-ttm needs an existing CSV (it updates in place).")
+        # held book + watchlist if requested, minus the no-fundamentals windfall
+        targets = [t for t in port if t != "SMHV.SW"]
+        fill_ttm(args.csv, targets)
+        return
 
     if args.live:
         target = args.csv or str(Path(ROOT, "scoring",
