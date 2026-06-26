@@ -26,27 +26,30 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 # =========================================================================
 
 TARGET_WEIGHTS = {
-    "W1_SILICON":   0.438, # CHANGED: 0.45 -> 0.438 (W4-FUNDING 2026-06). The SINGLES (BESI/ADI)
-                           #          took the pro-rata x0.84 trim that funds W4; SMHV held EXACTLY
-                           #          at 37.5% book (basket share rose to 0.375/0.438 = 0.85616 to
-                           #          keep the CHF windfall pinned). Prior: 0.47 -> 0.45 (SIMO CUT
-                           #          to 0%, CONV 5.28 [PEAK?], rotated to RDDT in W7). The wave
-                           #          holds SMHV (fixed 37.5%) + the two best-graded singles (BESI
-                           #          PRIME, ADI KEEP-DCA).
-    "W2_POWER":     0.126, # CHANGED: 0.15 -> 0.126 (W4-FUNDING 2026-06). Pro-rata trim (x0.84)
-                           #          to free 10% book for the W4 cloud sleeve; basket UNCHANGED.
-                           #          Prior: 0.1531 -> 0.15. PWR (AVOID G4.0) and OKLO (AVOID, 30%
+    "W1_SILICON":   0.439039846639, # CHANGED: 0.438 -> 0.43904 (SW-CUT 2026-06). PANW/CRWD/PLTR
+                           #          cut to 0.01% stubs and the freed book spread pro-rata across
+                           #          all surviving names (x1.01651), nudging every wave; SMHV held
+                           #          EXACTLY at 37.5% book (basket share = 0.375/0.43904 = 0.85414).
+                           #          Prior: 0.45 -> 0.438 (W4-FUNDING). The wave holds SMHV (fixed
+                           #          37.5%) + the two best-graded singles (BESI PRIME, ADI KEEP-DCA).
+    "W2_POWER":     0.128079693224, # CHANGED: 0.126 -> 0.12808 (SW-CUT 2026-06). Pro-rata grow
+                           #          (x1.01651) absorbing the PANW/CRWD/PLTR cut; basket UNCHANGED.
+                           #          Prior: 0.15 -> 0.126 (W4-FUNDING). PWR (AVOID G4.0) and OKLO (AVOID, 30%
                            #          data [GAP], F1.2 — a blind bet) CUT. Added TLN (Talen) —
                            #          PRIME cycle (G7.7/8PT5.07, V9.4): nuclear power contracted to
                            #          data centers, on-thesis for the power wave.
-    "W3_DCINFRA":   0.1428,# CHANGED: 0.17 -> 0.1428 (W4-FUNDING 2026-06). Pro-rata trim (x0.84)
-                           #          to free 10% book for W4; basket UNCHANGED. Prior: 0.2045 ->
-                           #          0.17. CRDO TRIMMED from the book's #1 line (6.41%) to in-line
+    "W3_DCINFRA":   0.160156985654, # CHANGED: 0.1428 -> 0.16016 (SW-CUT 2026-06). GREW: absorbs
+                           #          the PANW/CRWD/PLTR cut pro-rata (x1.01651) AND gains CLS at
+                           #          1.5% book (re-add candidate promoted off the 0% stub — PRIME
+                           #          cycle, CONV 7.27, cheapest in the DC-infra sleeve). Prior:
+                           #          0.17 -> 0.1428 (W4-FUNDING). CRDO TRIMMED from the book's #1 line (6.41%) to in-line
                            #          (~3.5%): it is MOMENTUM [PEAK?] — fake-cheap on peak earnings,
                            #          most $ in the highest mean-reversion risk. VRT trimmed (AVOID
                            #          G5.8). ANET grown (QUALITY 9.6, best all-round name). FN/COHR/
                            #          ALAB kept.
-    "W4_CLOUD":     0.10,  # CHANGED: 0.000 -> 0.10 (W4-FUNDING 2026-06). Wave UNZEROED to a 10%
+    "W4_CLOUD":     0.101650550198, # CHANGED: 0.10 -> 0.10165 (SW-CUT 2026-06). Grew pro-rata
+                           #          (x1.01651) absorbing the PANW/CRWD/PLTR cut; basket UNCHANGED
+                           #          (still 6 equal slots). Prior: 0.000 -> 0.10 (W4-FUNDING). Wave UNZEROED to a 10%
                            #          anchor sleeve — the scorer's highest-CONV DCA names (ORCL
                            #          8.73, META 8.50, MSFT 7.97, GOOGL 7.50, AMZN 7.15) plus NFLX
                            #          (streaming DCA, CONV 8.14) promoted from the watchlist as a
@@ -55,20 +58,23 @@ TARGET_WEIGHTS = {
                            #          37.5% book). Mega-cap cloud is the cheapest large-cap quality
                            #          on the board and the single best diversifier off the silicon-
                            #          heavy book the scorer points to.
-    "W5_SOFTWARE":  0.0756,# CHANGED: 0.09 -> 0.0756 (W4-FUNDING 2026-06). Pro-rata trim (x0.84)
-                           #          to free 10% book for W4; basket UNCHANGED. Prior: 0.0883 ->
-                           #          0.09. ZS (AVOID G2.0) and DDOG (AVOID G3.7) CUT — the two
-                           #          weakest software names. NOW grown (QUALITY 8.2 / RICHNESS 0.00,
-                           #          best-value DCA on the board) and AXON grown (QUALITY 8.5, a
-                           #          0.5% slot was too small for a monopoly). CRWD/PANW held flat
-                           #          (RICH — let them de-rate).
-    "W6_SPEC":      0.042, # CHANGED: 0.05 -> 0.042 (W4-FUNDING 2026-06). Pro-rata trim (x0.84) to
-                           #          free 10% book for W4; basket UNCHANGED. Prior: 0.055 -> 0.05.
+    "W5_SOFTWARE":  0.051531877284, # CHANGED: 0.0756 -> 0.05153 (SW-CUT 2026-06). SHRANK: PANW,
+                           #          CRWD and PLTR cut to 0.01% stubs (all RICH/position-risk
+                           #          names — see basket); only NOW + AXON keep real book. The
+                           #          freed weight spread across the rest of the book pro-rata.
+                           #          Prior: 0.09 -> 0.0756 (W4-FUNDING). NOW is the wave anchor
+                           #          (QUALITY 8.2 / RICHNESS 0.00, best-value DCA on the board);
+                           #          AXON the public-safety SaaS monopoly (QUALITY 8.5). ZS/DDOG/
+                           #          S/SNOW remain at 0%.
+    "W6_SPEC":      0.042693231075, # CHANGED: 0.042 -> 0.04269 (SW-CUT 2026-06). Grew pro-rata
+                           #          (x1.01651) absorbing the PANW/CRWD/PLTR cut; basket UNCHANGED.
+                           #          Prior: 0.05 -> 0.042 (W4-FUNDING).
                            #          RKLB (AVOID) and SYM (GAAP-unprofitable Binary) SHRUNK to 0.5%
                            #          lottery stubs; IONQ (PRIME catalyst 6.5/6.28) grown. TMDX
                            #          kept. The convex tail stays small.
-    "W7_DIVERSIFY": 0.0756,# CHANGED: 0.09 -> 0.0756 (W4-FUNDING 2026-06). Pro-rata trim (x0.84) to
-                           #          free 10% book for W4; basket UNCHANGED. Prior: 0.07 -> 0.09
+    "W7_DIVERSIFY": 0.076847815927, # CHANGED: 0.0756 -> 0.07685 (SW-CUT 2026-06). Grew pro-rata
+                           #          (x1.01651) absorbing the PANW/CRWD/PLTR cut; basket UNCHANGED.
+                           #          Prior: 0.09 -> 0.0756 (W4-FUNDING)
                            #          diversifiers that break the book's single-factor AI-capex
                            #          bet. LLY (pharma, KEEP-DCA 9.2/0.19) + NU (fintech, PRIME
                            #          cycle 7.7/6.22, every layer >=8) + RDDT (NEW — social/AI
@@ -108,7 +114,7 @@ TARGET_WEIGHTS = {
 # NAND cycle is a separate, lagged one. Sized small and deliberately. The EUR/
 # Frankfurt names (BESI.AS, SMHN.DE) are bought via IBKR.
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.8561643836,# CHANGED: 0.83333 -> 0.85616 (W4-FUNDING 2026-06) — the
+    "SMHV.SW":   0.854136595734,# CHANGED: 0.85616 -> 0.85414 (SW-CUT 2026-06) — the
                         # 90k CHF windfall (899 shares) held FIXED at exactly 37.5% of book
                         # (= 0.85616 of the 43.8% W1 wave; 0.438 * 0.85616 = 0.375). The W1 wave
                         # shrank again (BESI/ADI singles took the x0.84 W4-funding trim), so SMHV's
@@ -135,17 +141,19 @@ W1_SILICON_TARGETS = {
                         # keeps the better, non-redundant leg (BESI, the bonding/assembly step,
                         # higher quality) and drops the duplicate metrology bet. 0% for easy
                         # re-add on a fresh trough. Its book funded the ANET/NOW growth.
-    "BESI.AS":   0.0958904110,# CHANGED: 0.11111 -> 0.09589 (W4-FUNDING 2026-06) — TRIMMED x0.84
-                        # to ~4.2% book (0.438 * 0.09589 = 0.042) to help fund the W4 cloud sleeve.
-                        # Prior held flat at ~5.0%. The sharpest cyclical in the sleeve. Scores
+    "BESI.AS":   0.097242269511,# CHANGED: 0.09589 -> 0.09724 (SW-CUT 2026-06) — held ~FLAT at
+                        # ~4.27% book (0.43904 * 0.09724 = 0.04269); basket share rose only because
+                        # SMHV pins and the wave grew on the SW-cut redistribution. The sharpest
+                        # cyclical in the sleeve. Scores
                         # PRIME (GROWTH 9.6, 8PT 6.13, no weak layer: F8.4/V5.8/C8.4). The Early,
                         # NON-peak name in the back-end complex: advanced packaging (hybrid bonding
                         # for HBM4+/chiplets), western CoWoS pure-play, the assembly step (not
                         # inspection), highest quality (63% GM, 33% FCF margin). Ramp still AHEAD
                         # while DRAM is at its peak. EUR-listed. CYCLE / Early. ~5.0% of book.
-    "ADI":       0.0479452055,# CHANGED: 0.05556 -> 0.04795 (W4-FUNDING 2026-06) — TRIMMED x0.84
-                        # to ~2.1% book (0.438 * 0.04795 = 0.021) to help fund the W4 cloud sleeve.
-                        # Prior held flat at ~2.5%. Analog Devices — analog/industrial silicon,
+    "ADI":       0.048621134755,# CHANGED: 0.04795 -> 0.04862 (SW-CUT 2026-06) — held ~FLAT at
+                        # ~2.13% book (0.43904 * 0.04862 = 0.02135); basket share rose only because
+                        # SMHV pins and the wave grew on the SW-cut redistribution. Analog Devices
+                        # — analog/industrial silicon,
                         # the highest-QUALITY KEEP-DCA ballast in this otherwise cycle-heavy sleeve
                         # (scorer 8.3, 37% gross, 26% net, $3.9B FCF, PEG ~1.3). NB: despite the DCA
                         # tag it behaves cyclically (FY24 earnings halved, FY26 doubled), so a deep
@@ -237,25 +245,30 @@ W2_POWER_TARGETS = {
 # Option B (de-concentrate): flattened toward equal weight to lower single-name
 # risk across the sleeve.
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.0882352941,# CHANGED: 0.1611 -> 0.08824 (REBALANCE 2026-06) — TRIMMED to ~1.5%
-                    # book. Scores AVOID (GROWTH 5.8) but keeps a strong F=8.0, so trimmed not
-                    # cut. Liquid cooling leader — CYCLE.
-    "ANET":  0.2647058825,# CHANGED: 0.1611 -> 0.26471 (REBALANCE 2026-06) — GROWN to ~4.5%
-                    # book, the new anchor of the wave. Arista — DC networking monopoly. The
-                    # best all-round name in the book: QUALITY 9.6, KEEP-DCA, 38% margin, $4.4B
-                    # FCF, software moat. DCA.
-    "CRDO":  0.2058823529,# CHANGED: 0.3133 -> 0.20588 (REBALANCE 2026-06) — TRIMMED from the
+    "VRT":   0.079971343539,# CHANGED: 0.08824 -> 0.07997 (SW-CUT 2026-06) — share fell only
+                    # because CLS joined the basket at 1.5% book (the wave grew, all incumbents
+                    # renormalized); book ~FLAT at ~1.28%. Scores AVOID (GROWTH 5.8) but keeps a
+                    # strong F=8.0, so trimmed not cut. Liquid cooling leader — CYCLE.
+    "ANET":  0.239914030797,# CHANGED: 0.26471 -> 0.23991 (SW-CUT 2026-06) — share fell only
+                    # because CLS joined the basket (book ~FLAT at ~3.84%). Still the anchor of
+                    # the wave. Arista — DC networking monopoly. The best all-round name in the
+                    # book: QUALITY 9.6, KEEP-DCA, 38% margin, $4.4B FCF, software moat. DCA.
+    "CRDO":  0.186599801590,# CHANGED: 0.20588 -> 0.18660 (SW-CUT 2026-06) — share fell only
+                    # because CLS joined the basket (book ~FLAT at ~2.99%). Prior: 0.3133 ->
+                    # 0.20588 TRIMMED from the
                     # book's #1 line (~6.41%) to in-line (~3.5%). It scores MOMENTUM with the
                     # [PEAK?] flag: low PEG is FAKE-CHEAP on peak earnings + an extended chart —
                     # the SK-Hynix/Micron trap. Having the MOST money in the highest mean-
                     # reversion risk was backwards; the gain is banked into ANET/NOW. Still a
                     # real hypergrowth business — trim, don't cut. CYCLE — sell when growth <30%.
-    "COHR":  0.1176470588,# CHANGED: 0.0979 -> 0.11765 (REBALANCE 2026-06) — ~2.0% book held.
+    "COHR":  0.106628458051,# CHANGED: 0.11765 -> 0.10663 (SW-CUT 2026-06) — share fell only
+                    # because CLS joined the basket (book ~FLAT at ~1.71%).
                     # Coherent — optical; already ran, cyclical. MOMENTUM. CYCLE.
-    "FN":    0.2352941176,# CHANGED: 0.1932 -> 0.23529 (REBALANCE 2026-06) — ~4.0% book held.
+    "FN":    0.213256916103,# CHANGED: 0.23529 -> 0.21326 (SW-CUT 2026-06) — share fell only
+                    # because CLS joined the basket (book ~FLAT at ~3.42%).
                     # Fabrinet — optical contract mfr; cleanest growth-at-reasonable-price name
                     # (QUALITY quadrant, 8PT 5.11, net cash). CYCLE / Mid.
-    "ALAB":  0.0882352941,# CHANGED: 0.0734 -> 0.08824 (REBALANCE 2026-06) — ~1.5% book held. Mid/Late,
+    "ALAB":  0.079971343539,# CHANGED: 0.08824 -> 0.07997 (SW-CUT 2026-06) — book ~FLAT at ~1.28%. Mid/Late,
                     # 118x fwd P/E, analysts -36%: most stretched name held, fails 8-Point #6
                     # (priced for perfection). Book rotated to ZS (W5). Astera Labs —
                     # AI connectivity pure-play (CXL/PCIe retimers),
@@ -264,17 +277,17 @@ W3_DCINFRA_TARGETS = {
                     # CHANGED 2026-06: S (SentinelOne) MOVED OUT to W5 (it's a software/cyber
                     # name). Growth-max pass: SNOW + COHR trim folded into CRDO; 6 names
                     # renormalized to sum to 1.0.
-    "CLS":   0.0000,# HELD AT 0% (re-add candidate, 2026-06). Celestica — EMS for
-                    # hyperscalers. Scores PRIME (CONV 7.17, GROWTH 7.3, 8PT 5.09) with
-                    # the CHEAPEST valuation in the whole DC-infra sleeve (V 9.3): AI-
+    "CLS":   0.093658106381,# CHANGED: 0.0000 -> 0.09366 (SW-CUT 2026-06) — PROMOTED off the 0%
+                    # stub to ~1.5% book, funded by the PANW/CRWD/PLTR cut. Celestica — EMS for
+                    # hyperscalers. Scores PRIME (CONV 7.27, GROWTH 7.6, 8PT 5.14) with
+                    # the CHEAPEST valuation in the whole DC-infra sleeve (V 8.1): AI-
                     # datacenter exposure (custom 400G/800G networking + compute) at a
-                    # hardware multiple. Kept at 0% NOT on quality but on POSITION RISK
+                    # hardware multiple. Sized at ~1.5% (not full ~2%) on POSITION RISK
                     # the scorer can't see: customer concentration (a few hyperscalers
                     # drive most CCS revenue — its own version of the PLTR concentration
                     # worry) and thin EMS margins (less cushion if volumes fall). The
-                    # binding layer is CYC 4.4 (cyclical capex). Re-add as a ~2.0% book
-                    # add-on weakness; clean on-thesis fit next to ANET/CRDO/COHR.
-                    # CYCLE / Mid-Late — buy dips, trim into strength.
+                    # binding layer is CYC (cyclical capex). Clean on-thesis fit next to
+                    # ANET/CRDO/COHR. CYCLE / Mid-Late — buy dips, trim into strength.
 }
 
 # --- WAVE 4: HYPERSCALER CLOUD (10% book) ---
@@ -311,34 +324,37 @@ W5_SOFTWARE_TARGETS = {
     "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.1666666667,# CHANGED: 0.1603 -> 0.16667 (REBALANCE 2026-06) — ~1.5% book held
-                    # FLAT. Security platform — biggest, cheapest, steadiest. Scores RICH
-                    # (RICHNESS 0.90) — quality intact but price extended, so DON'T add; let it
-                    # de-rate. DCA.
-    "CRWD":  0.1666666667,# CHANGED: 0.1604 -> 0.16667 (REBALANCE 2026-06) — ~1.5% book held
-                    # FLAT. AI cybersecurity. Scores RICH (RICHNESS 0.81) — same logic as PANW,
-                    # don't add at this price. DCA.
-    "NOW":   0.4444444444,# CHANGED: 0.2843 -> 0.44444 (REBALANCE 2026-06) — GROWN to ~4.0%
-                    # book, the wave anchor. The best-value DCA name on the board: QUALITY 8.2
-                    # with RICHNESS 0.00 (cheapest possible on the gate), 22x fwd / 0.89 PEG,
-                    # down ~50% on the year. Workflow AI (Now Assist), profitable. KEEP-DCA.
+    "PANW":  0.001940546420,# CHANGED: 0.16667 -> 0.00194 (SW-CUT 2026-06) — CUT to a 0.01%-book
+                    # stub (owner decision). Security platform — biggest, cheapest, steadiest, but
+                    # scores RICH (RICHNESS 0.90, CONV 3.02 — lowest DCA on the board): price too
+                    # extended to keep real book. Held at 0.01% for easy re-add once it de-rates.
+                    # Book redistributed across the rest of the holdings. DCA.
+    "CRWD":  0.001940546420,# CHANGED: 0.16667 -> 0.00194 (SW-CUT 2026-06) — CUT to a 0.01%-book
+                    # stub (owner decision). AI cybersecurity. Scores RICH (RICHNESS 0.81, CONV
+                    # 3.72) — same logic as PANW, too extended to keep real book. Held at 0.01%
+                    # for easy re-add once it de-rates. Book redistributed. DCA.
+    "NOW":   0.662785573826,# CHANGED: 0.44444 -> 0.66279 (SW-CUT 2026-06) — share rose to the
+                    # wave anchor as PANW/CRWD were cut to stubs; book ~FLAT at ~3.42%. The
+                    # best-value DCA name on the board: QUALITY 8.2 with RICHNESS 0.00 (cheapest
+                    # possible on the gate), 22x fwd / 0.89 PEG, down ~50% on the year. Workflow
+                    # AI (Now Assist), profitable. KEEP-DCA.
     "ZS":    0.0000,# CHANGED: 0.1782 -> 0.00 — CUT (REBALANCE 2026-06). Zscaler scores AVOID
                     # (GROWTH 2.0) — the weakest software name held. Book rotated to NOW/AXON.
                     # 0% for easy re-add if the growth re-accelerates. CYCLE.
-    "AXON":  0.2222222222,# CHANGED: 0.0566 -> 0.22222 (REBALANCE 2026-06) — GROWN to ~2.0%
-                    # book (a 0.5% slot was too small for a KEEP-DCA monopoly). Public-safety
+    "AXON":  0.331392786913,# CHANGED: 0.22222 -> 0.33139 (SW-CUT 2026-06) — share rose as PANW/
+                    # CRWD were cut to stubs; book ~FLAT at ~1.71%. Public-safety
                     # SaaS monopoly — 59% gross margin, sticky recurring revenue (evidence.com,
                     # Draft One AI), end-market that doesn't cycle. QUALITY 8.5, KEEP-DCA. Thin
                     # net/FCF is reinvestment by choice; hold through dips.
-    "PLTR":  0.0000,# HELD AT 0% (re-add candidate, 2026-06). Now the HIGHEST-CONVICTION
-                    # cycle name on the whole board (CONV 8.25, PRIME, F 10.0 / V 8.1 /
-                    # C 6.4) — the business scores elite. Kept at 0% NOT on quality but on
-                    # POSITION RISK the scorer can't see: US-gov customer concentration
-                    # (declining but still the larger base), Europe/France data-sovereignty
-                    # pushback capping the international TAM, and a priced-for-perfection
-                    # multiple (~60x+ sales) where a single lumpy gov quarter de-rates it.
-                    # Re-add as a SMALL starter (~1.5% book) bought on weakness, never chased.
-                    # CYCLE — trim/add, not blind DCA.
+    "PLTR":  0.001940546420,# CHANGED: 0.0000 -> 0.00194 (SW-CUT 2026-06) — set to a 0.01%-book
+                    # tracking stub (owner decision). The HIGHEST-CONVICTION cycle name on the
+                    # whole board (CONV 8.25, PRIME, F 10.0 / V 8.1 / C 6.4) — the business scores
+                    # elite — but kept at a token 0.01% NOT on quality, on POSITION RISK the scorer
+                    # can't see: US-gov customer concentration (declining but still the larger
+                    # base), Europe/France data-sovereignty pushback capping the international TAM,
+                    # and a priced-for-perfection multiple (~60x+ sales) where a single lumpy gov
+                    # quarter de-rates it. Grow into a SMALL starter (~1.5% book) bought on
+                    # weakness, never chased. CYCLE — trim/add, not blind DCA.
     "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
                     # Healed bubble hangover but slowest forecast of the survivors.
     "DDOG":  0.0000,# CHANGED: 0.1602 -> 0.00 — CUT (REBALANCE 2026-06). AI observability.
