@@ -337,6 +337,45 @@ _GAP_FOOTNOTE = (
     "renormalized away)."
 )
 
+# --- per-score explanations shown under each table -----------------------
+# GROWTH + 8-POINT live on the two-axis grid (cycle/catalyst hunt + the main
+# holding table); QUALITY + RICHNESS are the DCA rubric. Each metric is spelled
+# out here so a reader can interpret a number without reading the source.
+_GROWTH_8PT_FOOTNOTE = (
+    "  GROWTH 0-10 (higher = faster, momentum-TOLERANT): a weighted blend of\n"
+    "        forward revenue growth (35%), forward EPS growth (30%), the hand-\n"
+    "        authored forecast mid-CAGR (20%) and secular runway (15%). All\n"
+    "        forward figures are EPS-surprise corrected (serial beaters nudged\n"
+    "        up, missers down). It answers \"how much can this compound?\" and\n"
+    "        does NOT punish an extended chart.\n"
+    "  8PT 0-8 (higher = more disciplined, ANTI-momentum): the owner's 8-point\n"
+    "        ownership screen — P1 small mkt-cap, P2 profitable/turning, P3\n"
+    "        accelerating growth, P4 bottleneck moat, P5 secular & early, P6\n"
+    "        NOT priced for perfection (low PEG), P7 fresh catalyst, P8 not\n"
+    "        extended vs 200DMA. Each sub-point is 0..1, summed to 0..8. It\n"
+    "        answers \"is this still a cheap, early, sane entry?\" and PENALISES\n"
+    "        rich, crowded, far-above-trend names — the opposite bias to GROWTH.\n"
+    "  quadrant = the two crossed (GROWTH>=6 & 8PT>=5 -> PRIME; high growth but\n"
+    "        extended -> MOMENTUM; disciplined but slow -> QUALITY; neither ->\n"
+    "        AVOID). epsF = the EPS-surprise multiplier applied to forward data."
+)
+_DCA_FOOTNOTE = (
+    "  QUALITY 0-10 (higher = better business): durable margins (35%), durable\n"
+    "        forward revenue growth (25%), forward EPS growth (20%) and free-\n"
+    "        cash-flow positivity (20%). Unlike 8PT it does NOT penalise size or\n"
+    "        an extended chart — a proven large compounder is meant to score\n"
+    "        well here. It answers \"is this still a great business?\".\n"
+    "  RICHNESS 0-1 (0 = cheap .. 1 = stretched): a normalized PRICE index, not\n"
+    "        a score to maximise. It is the mean of two 0..1 bands — PEG (1.0->0,\n"
+    "        4.0+->1) and distance above the 200DMA (0%->0, 60%+->1). It stays on\n"
+    "        a 0..1 scale (not 0..10) because it is a GATE, not a ranking axis:\n"
+    "        >=0.6 trips the RICH grade. It answers \"is the price ahead of the\n"
+    "        business?\".\n"
+    "  grade = QUALITY + RICHNESS combined: KEEP-DCA (durable & fairly priced),\n"
+    "        RICH (great business but price extended -> slow the buys), IMPAIRED\n"
+    "        (quality cracking -> pause / reduce)."
+)
+
 
 def _cov_cell(coverage):
     """Format a coverage value for a table cell, flagging low coverage."""
@@ -653,6 +692,8 @@ def render_by_strategy(results, fund, args):
         print(f"     {grade:9s} ({len(names):2d}) {desc}")
         if names:
             print(f"               {', '.join(names)}")
+    print()
+    print(_DCA_FOOTNOTE)
 
     # ---- CYCLE & CATALYST: the existing two-axis grid is appropriate ----
     for mode, title in [("cycle", "CYCLE (buy the dip / sell the rip)"),
@@ -668,6 +709,7 @@ def render_by_strategy(results, fund, args):
                   f"{_cov_cell(r['coverage'])}")
 
     print()
+    print(_GROWTH_8PT_FOOTNOTE)
     print(_GAP_FOOTNOTE)
 
 
@@ -748,6 +790,8 @@ def main():
             line += f" {r['blend']:5.2f}"
         line += f" {_cov_cell(r['coverage'])}"
         print(line)
+    print()
+    print(_GROWTH_8PT_FOOTNOTE)
     print(_GAP_FOOTNOTE)
 
     # ----- quadrant summary -----

@@ -508,6 +508,28 @@ WATCHLIST = {
                     "than ONTO/SMHN (now held). Decent but least differentiated of the "
                     "equipment candidates. Lower priority; consider only if widening the sleeve.",
     },
+    "ON": {
+        "strategy": "cycle",
+        "pos":      "Early",
+        "cagr":     (8, 26),
+        "area":     "Power semis — EV + industrial (ON Semiconductor)",
+        "note":     "Cyclical-trough recovery: rev bottomed after -15% downcycle, now "
+                    "re-accelerating (+8% rev / +32% EPS off the trough), 40% gross "
+                    "margin, FCF+. But fwd P/E ~38 (trough-depressed E) and avg analyst "
+                    "target sits BELOW price — recovery already partly priced. Real-moat "
+                    "power-semi franchise; the return is in the NEXT up-cycle, not 12mo.",
+    },
+    "SMCI": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 30),
+        "area":     "AI server hardware / integration (Super Micro)",
+        "note":     "High-octane AI-server box builder: rev +80% this year, fwd P/E only "
+                    "~12 — cheap on headline. BUT gross margin collapsing (18%->8%) and "
+                    "FCF -$5.5B (buying revenue with margin + working capital). Low-moat "
+                    "assembler, Hold consensus, bimodal targets (-53% to +83%). High-risk "
+                    "cycle punt, NOT a quality compounder.",
+    },
 
     # --- Legacy / off-thesis large caps ---
     "AAPL": {
