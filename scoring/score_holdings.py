@@ -48,7 +48,8 @@ os.environ.setdefault("PORTFOLIO_USE", "ai")
 
 from portfolio.AI_allocations import (  # noqa: E402
     TARGET_WEIGHTS, W1_SILICON_TARGETS, W2_POWER_TARGETS, W3_DCINFRA_TARGETS,
-    W4_CLOUD_TARGETS, W5_SOFTWARE_TARGETS, W6_SPEC_TARGETS, STRATEGY, WATCHLIST,
+    W4_CLOUD_TARGETS, W5_SOFTWARE_TARGETS, W6_SPEC_TARGETS, W7_DIVERSIFY_TARGETS,
+    STRATEGY, WATCHLIST,
 )
 from portfolio.allocations import ETF_LOOK_THROUGH  # noqa: E402
 from config.forecasts import WAVE_FORECASTS  # noqa: E402
@@ -73,6 +74,7 @@ _WAVES = [
     ("W4", "W4_CLOUD", W4_CLOUD_TARGETS),
     ("W5", "W5_SOFTWARE", W5_SOFTWARE_TARGETS),
     ("W6", "W6_SPEC", W6_SPEC_TARGETS),
+    ("W7", "W7_DIVERSIFY", W7_DIVERSIFY_TARGETS),
 ]
 
 
@@ -936,6 +938,71 @@ def quadrant(eight, growth10):
 
 
 # =========================================================================
+# 5a. CONVICTION — a CONTINUOUS rank that fixes the quadrant's step-function
+# =========================================================================
+# The quadrant() above is a step function on two axes only (GROWTH, 8PT). Two
+# names a hair apart on a threshold get opposite labels (VRT 5.8 -> AVOID vs
+# COHR 6.0 -> MOMENTUM) even when VRT is BETTER on F/V/C/8PT — the quadrant
+# never reads the layer scores at all. CONVICTION collapses all five signals
+# into one smooth 0..10 number so the ranking matches the actual numbers.
+#
+# Design (mirrors the book's own "binding-constraint" philosophy):
+#   REWARD = upside   = 0.50*F + 0.50*GROWTH            (quality + compounding)
+#   SAFETY = entry    = 0.35*V + 0.25*p8_10 + 0.20*C    (price-weighted) plus
+#                       0.20*bind                        (extra weight on the
+#                                                         WEAKEST layer -> it is
+#                                                         penalised twice)
+#   CONVICTION = sqrt(REWARD * SAFETY)   -- GEOMETRIC, not additive, so a great
+#       business at a terrible entry (or vice-versa) CANNOT be papered over by
+#       its strong axis. This is the multiplicative version of "the lowest
+#       layer is the real risk", applied across reward vs safety.
+#
+# Two haircuts keep it honest, reusing flags the engine already computes:
+#   * [PEAK?] -> x0.85  : a low PEG on peak earnings is fake-cheap; trim its rank
+#   * data% < 75% (GAP) -> x coverage : a score on thin data is trusted less
+# Both are multiplicative and deterministic, so two runs stay byte-identical.
+_CONV_PEAK_HAIRCUT = 0.85        # [PEAK?] names: knock the fake-cheap rank down
+
+
+def conviction(growth10, eight, layers, binding_val, peak, coverage):
+    """Continuous 0..10 conviction rank. Higher = stronger risk-adjusted buy.
+
+    Replaces the quadrant's cliff with a smooth score that DOES read the F/V/C
+    layers. binding_val is the numeric value of the lowest layer (min F,V,C);
+    coverage is the 0..1 data-completeness already on the record.
+    """
+    F = layers["FUND"]
+    V = layers["VAL"]
+    C = layers["CYCLE"]
+    p8_10 = eight / 8.0 * 10.0            # rescale 8PT (0..8) onto 0..10
+
+    reward = 0.50 * F + 0.50 * growth10
+    safety = 0.35 * V + 0.25 * p8_10 + 0.20 * C + 0.20 * binding_val
+    raw = (reward * safety) ** 0.5       # geometric mean, both must be decent
+
+    if peak:
+        raw *= _CONV_PEAK_HAIRCUT        # fake-cheap-on-peak -> rank lower
+    if coverage < _GAP_THRESHOLD:
+        raw *= coverage                  # thin data -> trust less
+    return raw
+
+
+_CONV_FOOTNOTE = (
+    "  CONV 0-10 (higher = stronger risk-adjusted buy): a CONTINUOUS rank that\n"
+    "        fixes the quadrant's step-function — it reads ALL five signals, not\n"
+    "        just the two axes. REWARD = 0.50*F + 0.50*GROWTH (quality + how much\n"
+    "        it can compound); SAFETY = 0.35*V + 0.25*8PT + 0.20*C + 0.20*bind\n"
+    "        (entry quality, valuation-weighted, with the WEAKEST layer counted\n"
+    "        twice). CONV = sqrt(REWARD * SAFETY) — GEOMETRIC, so a great business\n"
+    "        at a terrible entry can't be papered over by its strong axis (the\n"
+    "        multiplicative form of \"the lowest layer is the real risk\"). A\n"
+    f"        [PEAK?] name is cut x{_CONV_PEAK_HAIRCUT} (fake-cheap on peak earnings) and a\n"
+    "        sub-75%-data name is scaled by its coverage. Unlike the quadrant,\n"
+    "        CONV ranks VRT above COHR when VRT is better on F/V/C/8PT."
+)
+
+
+# =========================================================================
 # 5b. STRATEGY-AWARE GRADING — judge each name by the JOB it does
 # =========================================================================
 # The Growth/8-Point grid above is built for the cycle/catalyst hunt (small +
@@ -1502,18 +1569,23 @@ def render_by_strategy(results, fund, args):
     print()
     print(_DCA_FOOTNOTE)
 
-    # ---- CYCLE & CATALYST: the existing two-axis grid is appropriate ----
+    # ---- CYCLE & CATALYST: the two-axis grid, now RANKED by CONVICTION ----
+    # The quadrant label is kept (it still answers "which corner?") but the rows
+    # are ordered by the continuous CONV score so neighbours that the quadrant
+    # splits apart on a threshold sit next to each other by true strength.
     for mode, title in [("cycle", "CYCLE (buy the dip / sell the rip)"),
                         ("catalyst", "CATALYST (event-driven punts)")]:
         grp = [r for r in results if r["strategy"] == mode]
+        grp.sort(key=lambda r: -r["conviction"])      # rank by CONVICTION
         print(f"\n-- {title} "
               + "-" * max(2, 46 - len(title)))
-        print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'GROWTH':>6s} "
-              f"{'8PT':>4s} {'quadrant':10s} {'F':>4s} {'V':>4s} {'C':>4s} "
-              f"{'bind':5s} {'data%':>5s}")
+        print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'CONV':>5s} "
+              f"{'GROWTH':>6s} {'8PT':>4s} {'quadrant':10s} {'F':>4s} {'V':>4s} "
+              f"{'C':>4s} {'bind':5s} {'data%':>5s}")
         for r in grp:
             peak = " [PEAK?]" if r["peak"] else ""
             print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
+                  f"{r['conviction']:5.2f} "
                   f"{r['growth10']:6.1f} {r['eight']:4.2f} {r['quad']:10s} "
                   f"{_layer_cell(r['layers'])} "
                   f"{_LAYER_ABBR[r['binding']]:5s} "
@@ -1521,6 +1593,7 @@ def render_by_strategy(results, fund, args):
 
     print()
     print(_GROWTH_8PT_FOOTNOTE)
+    print(_CONV_FOOTNOTE)
     print(_GAP_FOOTNOTE)
     print(_LAYER_FOOTNOTE)
 
@@ -1538,8 +1611,10 @@ def main():
     ap.add_argument("--blend", choices=["balanced", "growth", "quality"],
                     help="ALSO show an optional blended composite (default: off — "
                          "two scores are kept separate)")
-    ap.add_argument("--sort", choices=["growth", "eight", "blend"], default="growth",
-                    help="rank by Growth (default), 8-Point, or the blend")
+    ap.add_argument("--sort", choices=["growth", "eight", "blend", "conviction"],
+                    default="growth",
+                    help="rank by Growth (default), 8-Point, the blend, or the "
+                         "continuous CONVICTION score")
     ap.add_argument("--by-strategy", action="store_true",
                     help="group output by strategy mode and grade each on its OWN "
                          "rubric (DCA judged on quality+price, not small/explosive)")
@@ -1612,16 +1687,20 @@ def main():
         g10, partsg = score_growth(t, f, info)
         blend = composite(eight, g10, args.blend) if args.blend else None
         layers, binding = layer_scores(t, f, info)
+        cov = _coverage(f)
+        peak = peak_trap(t, f, info)
+        conv = conviction(g10, eight, layers, layers[binding], peak, cov)
         results.append({**info, "eight": eight, "growth10": g10, "blend": blend,
                         "quad": quadrant(eight, g10), "eps_f": eps_f,
                         "p8": parts8, "pg": partsg, "has_data": t in fund,
-                        "coverage": _coverage(f),
+                        "coverage": cov, "conviction": conv,
                         "layers": layers, "binding": binding,
-                        "peak": peak_trap(t, f, info)})
+                        "peak": peak})
 
     keyf = {"growth": lambda r: -r["growth10"],
             "eight": lambda r: -r["eight"],
-            "blend": lambda r: -(r["blend"] or 0)}[args.sort]
+            "blend": lambda r: -(r["blend"] or 0),
+            "conviction": lambda r: -r["conviction"]}[args.sort]
     results.sort(key=keyf)
 
     if args.by_strategy:
@@ -1632,7 +1711,7 @@ def main():
     print(f"\n=== HOLDING RATING  (csv={Path(args.csv).name}, sort={args.sort}) ===")
     print("    Growth 0-10 (momentum-tolerant) | 8-Point 0-8 (anti-momentum) | "
           "Quadrant")
-    hdr = f"{'rk':>2} {'ticker':10s} {'wv':3s} {'book%':>5s} " \
+    hdr = f"{'rk':>2} {'ticker':10s} {'wv':3s} {'book%':>5s} {'CONV':>5s} " \
           f"{'GROWTH':>6s} {'8PT':>4s} {'quadrant':10s} {'epsF':>5s}"
     if args.blend:
         hdr += f" {'blend':>5s}"
@@ -1640,6 +1719,7 @@ def main():
     print(hdr)
     for i, r in enumerate(results, 1):
         line = f"{i:2d} {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} " \
+               f"{r['conviction']:5.2f} " \
                f"{r['growth10']:6.1f} {r['eight']:4.2f} {r['quad']:10s} " \
                f"{r['eps_f']:5.2f}"
         if args.blend:
@@ -1651,6 +1731,7 @@ def main():
         print(line)
     print()
     print(_GROWTH_8PT_FOOTNOTE)
+    print(_CONV_FOOTNOTE)
     print(_GAP_FOOTNOTE)
     print(_LAYER_FOOTNOTE)
 
