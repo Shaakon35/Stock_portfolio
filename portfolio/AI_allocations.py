@@ -26,28 +26,38 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 # =========================================================================
 
 TARGET_WEIGHTS = {
-    "W1_SILICON":   0.4991,# CHANGED: 0.475 -> 0.4991 — grown so the 4 top-10 W1 singles
-                           #          (ONTO/BESI/SIMO + one of CAMT) each clear 2% of book
-                           #          while SMHV stays fixed at exactly 37.5%. NB: ONTO and
-                           #          CAMT were swapped (2026-06) — ONTO now held, CAMT 0%.
-    "W2_POWER":     0.1531,# CHANGED: 0.175 -> 0.1531 — ABBN.SW cut (2.19% book, only name
-                           #          analysts call overvalued, slowest-growth ballast). Wave
-                           #          shrunk by ABBN's book; the other 7 names keep their book.
-    "W3_DCINFRA":   0.2045,# CHANGED: 0.2202 -> 0.2045 — ALAB trimmed (3.07% -> 1.5% book):
-                           #          Mid/Late, 118x fwd P/E, the most stretched name held
-                           #          (8-Point #6 fail). Freed book rotated to ZS in W5.
+    "W1_SILICON":   0.47,  # CHANGED: 0.4991 -> 0.47 (REBALANCE 2026-06, scorer-driven). ONTO
+                           #          (AVOID G4.7) and SMHN.DE (AVOID G3.4, a BESI duplicate) CUT
+                           #          from the wave; CAMT/SK-Hynix/CDNS already 0%. The wave now
+                           #          holds SMHV (fixed 37.5%) + the three best-graded singles
+                           #          (BESI PRIME, ADI KEEP-DCA, SIMO PRIME). SMHV stays EXACTLY
+                           #          37.5% of book (0.47 * 0.79787 = 0.375).
+    "W2_POWER":     0.15,  # CHANGED: 0.1531 -> 0.15 (REBALANCE 2026-06). PWR (AVOID G4.0) and
+                           #          OKLO (AVOID, 30% data [GAP], F1.2 — a blind bet) CUT. Added
+                           #          TLN (Talen) — PRIME cycle (G7.7/8PT5.07, V9.4): nuclear power
+                           #          contracted to data centers, on-thesis for the power wave.
+    "W3_DCINFRA":   0.17,  # CHANGED: 0.2045 -> 0.17 (REBALANCE 2026-06). CRDO TRIMMED from the
+                           #          book's #1 line (6.41%) to in-line (~3.5%): it is MOMENTUM
+                           #          [PEAK?] — fake-cheap on peak earnings, most $ in the highest
+                           #          mean-reversion risk. VRT trimmed (AVOID G5.8). ANET grown
+                           #          (QUALITY 9.6, best all-round name). FN/COHR/ALAB kept.
     "W4_CLOUD":     0.000, # WAVE ZEROED. Mega-cap cloud is capped by law-of-large-numbers
                            #          AND held passively elsewhere. Names kept at 0% book.
-    "W5_SOFTWARE":  0.0883,# CHANGED: 0.0833 -> 0.0883 — absorbs AXON's ~0.5% book moved in
-                           #          from W6 (2026-06). AXON is a profitable public-safety SaaS
-                           #          monopoly — an application-layer name that fits W5, not the
-                           #          speculative tail. Prior change: 0.0676 -> 0.0833 added ZS
-                           #          (Zscaler, ~1.57% book), the ALAB mirror-rotation cyber name.
-    "W6_SPEC":      0.055, # CHANGED: 0.06 -> 0.055 — shrunk by AXON's ~0.5% book moved OUT to
-                           #          W5 (AXON was the lone hold-forever name in the spec sleeve).
-                           #          The remaining convex tail (TMDX/IONQ/RKLB/SYM) keeps its
-                           #          book unchanged. Prior change: 0.03 -> 0.06 grew IONQ/RKLB
-                           #          to ~1.0% slots + TMDX 2.5% (uncorrelated decorrelator).
+    "W5_SOFTWARE":  0.09,  # CHANGED: 0.0883 -> 0.09 (REBALANCE 2026-06). ZS (AVOID G2.0) and
+                           #          DDOG (AVOID G3.7) CUT — the two weakest software names. NOW
+                           #          grown (QUALITY 8.2 / RICHNESS 0.00, best-value DCA on the
+                           #          board) and AXON grown (QUALITY 8.5, a 0.5% slot was too small
+                           #          for a monopoly). CRWD/PANW held flat (RICH — let them de-rate).
+    "W6_SPEC":      0.05,  # CHANGED: 0.055 -> 0.05 (REBALANCE 2026-06). RKLB (AVOID) and SYM
+                           #          (GAAP-unprofitable Binary) SHRUNK to 0.5% lottery stubs;
+                           #          IONQ (PRIME catalyst 6.5/6.28) grown. TMDX kept. The convex
+                           #          tail stays small.
+    "W7_DIVERSIFY": 0.07,  # NEW 2026-06 (REBALANCE): off-thesis diversifiers that break the
+                           #          book's single-factor AI-capex bet. LLY (pharma, KEEP-DCA
+                           #          9.2/0.19) + NU (fintech, PRIME cycle 7.7/6.22, every layer
+                           #          >=8). Both are uncorrelated to AI capex — the biggest
+                           #          structural improvement for multi-year compounding. Kept in a
+                           #          SEPARATE sleeve so the AI wave taxonomy (W1-W6) stays intact.
 }
 # OPTION B (BOTTLENECK TILT) + SMHV WINDFALL — restructured 2026-06.
 # Context: a 90k CHF SMHV.SW position (899 shares) is now a FIXED 37.5% of the
@@ -80,10 +90,12 @@ TARGET_WEIGHTS = {
 # NAND cycle is a separate, lagged one. Sized small and deliberately. The EUR/
 # Frankfurt names (BESI.AS, SMHN.DE) are bought via IBKR.
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.7511,# CHANGED: 0.79 -> 0.7511 — the 90k CHF windfall (899 shares) held
-                        # FIXED at exactly 37.5% of book (= 0.7511 of the 49.91% W1 wave).
-                        # NB: SMHV tracks a US-LISTED semi index, so it holds ZERO
-                        # Samsung/SK Hynix — those are genuine new exposure, not a dup.
+    "SMHV.SW":   0.7978723404,# CHANGED: 0.7511 -> 0.79787 (REBALANCE 2026-06) — the 90k CHF
+                        # windfall (899 shares) held FIXED at exactly 37.5% of book
+                        # (= 0.79787 of the 47% W1 wave; 0.47 * 0.79787 = 0.375). The W1 wave
+                        # shrank (ONTO + SMHN.DE cut), so SMHV's basket share rose to keep its
+                        # book pinned at 37.5%. NB: SMHV tracks a US-LISTED semi index, so it
+                        # holds ZERO Samsung/SK Hynix — those are genuine new exposure, not a dup.
     # --- REMOVED 2026-06: NVDA/AVGO/ASML/TSM/MU/AMD dropped from the basket.
     #     They are SMHV's top holdings, so the ETF already gives full mega-cap
     #     exposure and holding them as 0.0 singles only cluttered the table. To
@@ -98,24 +110,30 @@ W1_SILICON_TARGETS = {
                         # trim favoured CAMT on TRAILING numbers when ONTO was mid-trough;
                         # the forecasts have since flipped. 0% for easy re-add. Its bottleneck
                         # tag (HBM inspection/AOI) is its remaining edge.
-    "ONTO":      0.0602,# CHANGED: 0.00 -> 0.0602 — SWAPPED with CAMT (2026-06). The
-                        # trough-rebound is now IN the forward numbers: fwd rev +24.1%,
-                        # fwd EPS +33.5%, and the cheapest metrology name on PEG (1.17 vs
-                        # CAMT 2.97). Mid-cycle (vs CAMT Mid/Late) so more runway. Scores
-                        # GROWTH 4.72 vs CAMT 2.89. The redundancy (both see/measure) is
-                        # resolved by keeping the better grower; BESI (bonding) stays the
-                        # non-redundant, highest-quality leg. ~3.0% of book.
-    "BESI.AS":   0.0896,# CHANGED: 0.1191 -> 0.0896 — reverted to its pre-CDNS level (2026-06):
-                        # the CDNS removal it had absorbed (1.47% book) is now redirected to ADI
-                        # (new DCA anchor below), which takes the exact slot CDNS vacated. BESI is
-                        # the Early, NON-peak add candidate in the back-end complex: advanced
-                        # packaging (hybrid bonding for HBM4+/chiplets), western CoWoS pure-play,
-                        # the assembly step (not inspection), highest quality (63% GM, 33% FCF
-                        # margin). Its ramp is still AHEAD while DRAM is at its peak. EUR-listed.
-                        # CYCLE / Early. Back to ~4.47% of book.
-    "SIMO":      0.0401,# TOP-10: Silicon Motion — NAND/SSD controllers. Fills the missing
-                        # memory sub-segment. NAND is a SEPARATE, lagged cycle (not DRAM).
-                        # Profitable, ~39x. CYCLE / Early-Mid. 2.0% of book.
+    "ONTO":      0.0000,# CHANGED: 0.0602 -> 0.00 — CUT (REBALANCE 2026-06). Scores AVOID
+                        # (GROWTH 4.7, 8PT 4.30, binding CYC 4.5) and is REDUNDANT with BESI in
+                        # the back-end complex (both inspect/measure adjacent steps). The book
+                        # keeps the better, non-redundant leg (BESI, the bonding/assembly step,
+                        # higher quality) and drops the duplicate metrology bet. 0% for easy
+                        # re-add on a fresh trough. Its book funded the ANET/NOW growth.
+    "BESI.AS":   0.1063829787,# CHANGED: 0.0896 -> 0.10638 (REBALANCE 2026-06) — grown to ~5.0%
+                        # book, the sharpest cyclical in the sleeve. Scores PRIME (GROWTH 9.6,
+                        # 8PT 6.13, no weak layer: F8.4/V5.8/C8.4). The Early, NON-peak name in
+                        # the back-end complex: advanced packaging (hybrid bonding for HBM4+/
+                        # chiplets), western CoWoS pure-play, the assembly step (not inspection),
+                        # highest quality (63% GM, 33% FCF margin). Ramp still AHEAD while DRAM is
+                        # at its peak. EUR-listed. CYCLE / Early. ~5.0% of book.
+    "ADI":       0.0531914894,# CHANGED: 0.0295 -> 0.05319 (REBALANCE 2026-06) — grown to ~2.5%
+                        # book. Analog Devices — analog/industrial silicon, the highest-QUALITY
+                        # KEEP-DCA ballast in this otherwise cycle-heavy sleeve (scorer 8.3, 37%
+                        # gross, 26% net, $3.9B FCF, PEG ~1.3). NB: despite the DCA tag it behaves
+                        # cyclically (FY24 earnings halved, FY26 doubled), so a deep drop is a
+                        # discount on a real franchise. Loosely AI-thesis (industrial/edge).
+    "SIMO":      0.0425531915,# CHANGED: 0.0401 -> 0.04255 (REBALANCE 2026-06) — ~2.0% book held.
+                        # Silicon Motion — NAND/SSD controllers. Fills the missing memory sub-
+                        # segment. NAND is a SEPARATE, lagged cycle (not DRAM). Scores PRIME
+                        # (GROWTH 8.0, 8PT 5.04) but carries the [PEAK?] flag — don't grow it,
+                        # trim rips. Profitable, ~39x. CYCLE / Early-Mid.
     "000660.KS": 0.0000,# CHANGED: 0.0295 -> 0.00 — TRIMMED. SK Hynix rode the DRAM/HBM cycle
                         # to a record peak (+~900% / 52wk, MU memory GM ~74% = all-time high):
                         # graded Mid/Late, the cycle-trap zone where a 6-7x fwd P/E is the
@@ -131,16 +149,11 @@ W1_SILICON_TARGETS = {
                         # multiple call, not a quality call. Book redeployed to BESI.AS. The
                         # design-layer gap is now UNCOVERED in the book; SNPS remains on the
                         # watchlist as the re-add route. 0% for easy re-add on a de-rating.
-    "SMHN.DE":   0.0295,# SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
-                        # CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). ~1.47% book.
-    "ADI":       0.0295,# NEW 2026-06: Analog Devices — analog/industrial silicon. Takes the
-                        # exact slot CDNS vacated (1.47% book; BESI reverted to fund it). The
-                        # highest-QUALITY name in the book (scorer 9.0 / KEEP-DCA: 37% gross,
-                        # 26% net, $3.9B FCF, PEG ~1.3) and the wave's DCA ballast among
-                        # otherwise cycle-heavy singles. Loosely AI-thesis (industrial/edge),
-                        # so it widens the sleeve slightly beyond pure AI-infra — deliberate.
-                        # NB: despite the DCA tag it behaves cyclically (FY24 earnings halved,
-                        # FY26 doubled), so a deep drop is a discount on a real franchise.
+    "SMHN.DE":   0.0000,# CHANGED: 0.0295 -> 0.00 — CUT (REBALANCE 2026-06). SUSS MicroTec —
+                        # advanced-packaging/bonding equipment, the SAME HBM4/CoWoS bottleneck as
+                        # BESI.AS, so it was a DUPLICATE leg. Scores AVOID (GROWTH 3.4). The book
+                        # keeps BESI (the higher-quality bonding name) and drops the redundant
+                        # one. Frankfurt-listed (EUR). 0% for easy re-add.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -165,14 +178,28 @@ W1_SILICON_TARGETS = {
 # Kept commented for easy re-add (restore here + in STRATEGY, then renormalize to 1.0).
 #   "ABBN.SW": 0.1250,# HVDC / transformers (EU) — long-distance grid, DCA
 W2_POWER_TARGETS = {
-    "GEV":     0.2338,# grid/gas turbines, HOLD FOREVER (Late but DCA — keep)
-    "CCJ":     0.2078,# uranium leader, HOLD FOREVER
+    "GEV":     0.2666666667,# CHANGED: 0.2338 -> 0.26667 (REBALANCE 2026-06) — grown to ~4.0%
+                      # book. grid/gas turbines, HOLD FOREVER (Late but DCA — keep). KEEP-DCA 7.8.
+    "CCJ":     0.2333333333,# CHANGED: 0.2078 -> 0.23333 (REBALANCE 2026-06) — grown to ~3.5%
+                      # book. uranium leader, HOLD FOREVER. KEEP-DCA 7.3.
     "CEG":     0.0000,# CHANGED: 0.12 -> 0.00 — TRIMMED: below 200d / death cross (tech sell
                       # signal overrides thesis, pt 8). Kept at 0% for easy re-add.
-    "ETN":     0.1688,# transmission/electrification, DCA
-    "HUBB":    0.1559,# transformers / grid gear — 2-4yr lead-times, early-cycle, DCA
-    "PWR":     0.1298,# builds transmission lines, CYCLE
-    "OKLO":    0.1039,# SMR catalyst (binary)
+    "ETN":     0.1733333333,# transmission/electrification, DCA. ~2.6% book (KEEP-DCA 6.3).
+    "HUBB":    0.16,  # transformers / grid gear — 2-4yr lead-times, early-cycle, DCA. ~2.4% book.
+    "TLN":     0.1666666667,# NEW 2026-06 (REBALANCE): Talen Energy — nuclear generation
+                      # CONTRACTED to data centers. Scores PRIME cycle (GROWTH 7.7, 8PT 5.07,
+                      # V 9.4 — cheap + clean). On-thesis for the power wave: it monetizes the
+                      # DC power-demand bottleneck directly. Replaces PWR (the wave's CYCLE leg)
+                      # with a higher-graded one. ~2.5% book. CYCLE — power-price/deal sensitive,
+                      # buy dips / trim peaks.
+    "PWR":     0.0000,# CHANGED: 0.1298 -> 0.00 — CUT (REBALANCE 2026-06). Quanta — transmission
+                      # contractor. Scores AVOID (GROWTH 4.0): the slowest-growth cyclical in the
+                      # wave. Book rotated to TLN (PRIME, on-thesis) + the GEV/CCJ growth. 0% for
+                      # easy re-add. CYCLE.
+    "OKLO":    0.0000,# CHANGED: 0.1039 -> 0.00 — CUT (REBALANCE 2026-06). Pre-revenue SMR.
+                      # Scores AVOID with only 30% data coverage [GAP] and F=1.2 — effectively a
+                      # blind bet, not a sized punt. Removed until either fundamentals exist or it
+                      # earns a true lottery-stub slot. 0% for easy re-add. Catalyst / Binary.
 }
 
 # --- WAVE 3: DC INFRASTRUCTURE (18%) ---
@@ -186,18 +213,25 @@ W2_POWER_TARGETS = {
 # Option B (de-concentrate): flattened toward equal weight to lower single-name
 # risk across the sleeve.
 W3_DCINFRA_TARGETS = {
-    "VRT":   0.1611,# CHANGED: 0.1496 -> 0.1611 — renorm (book UNCHANGED) as the ALAB trim
-                    # shrank the wave. Liquid cooling leader — CYCLE.
-    "ANET":  0.1611,# CHANGED: 0.1496 -> 0.1611 — renorm (book unchanged). Arista — DC
-                    # networking monopoly, DCA.
-    "CRDO":  0.3133,# CHANGED: 0.2909 -> 0.3133 — renorm only (book UNCHANGED at ~6.41%, still
-                    # the largest non-SMHV position). Growth-max pass folded SNOW + COHR trim
-                    # into CRDO (+472M net income, +206% rev, +60/+200 forecast). CYCLE (top-10).
-    "COHR":  0.0979,# CHANGED: 0.0909 -> 0.0979 — renorm (book unchanged, ~2.0%). CYCLE.
-    "FN":    0.1932,# CHANGED: 0.1794 -> 0.1932 — renorm (book UNCHANGED at ~3.95%). Fabrinet —
-                    # optical contract mfr; cleanest growth-at-reasonable-price name (28% EPS
-                    # gr, net cash). CYCLE / Mid.
-    "ALAB":  0.0734,# CHANGED: 0.1396 -> 0.0734 — TRIMMED to ~1.5% book (was 3.07%). Mid/Late,
+    "VRT":   0.0882352941,# CHANGED: 0.1611 -> 0.08824 (REBALANCE 2026-06) — TRIMMED to ~1.5%
+                    # book. Scores AVOID (GROWTH 5.8) but keeps a strong F=8.0, so trimmed not
+                    # cut. Liquid cooling leader — CYCLE.
+    "ANET":  0.2647058825,# CHANGED: 0.1611 -> 0.26471 (REBALANCE 2026-06) — GROWN to ~4.5%
+                    # book, the new anchor of the wave. Arista — DC networking monopoly. The
+                    # best all-round name in the book: QUALITY 9.6, KEEP-DCA, 38% margin, $4.4B
+                    # FCF, software moat. DCA.
+    "CRDO":  0.2058823529,# CHANGED: 0.3133 -> 0.20588 (REBALANCE 2026-06) — TRIMMED from the
+                    # book's #1 line (~6.41%) to in-line (~3.5%). It scores MOMENTUM with the
+                    # [PEAK?] flag: low PEG is FAKE-CHEAP on peak earnings + an extended chart —
+                    # the SK-Hynix/Micron trap. Having the MOST money in the highest mean-
+                    # reversion risk was backwards; the gain is banked into ANET/NOW. Still a
+                    # real hypergrowth business — trim, don't cut. CYCLE — sell when growth <30%.
+    "COHR":  0.1176470588,# CHANGED: 0.0979 -> 0.11765 (REBALANCE 2026-06) — ~2.0% book held.
+                    # Coherent — optical; already ran, cyclical. MOMENTUM. CYCLE.
+    "FN":    0.2352941176,# CHANGED: 0.1932 -> 0.23529 (REBALANCE 2026-06) — ~4.0% book held.
+                    # Fabrinet — optical contract mfr; cleanest growth-at-reasonable-price name
+                    # (QUALITY quadrant, 8PT 5.11, net cash). CYCLE / Mid.
+    "ALAB":  0.0882352941,# CHANGED: 0.0734 -> 0.08824 (REBALANCE 2026-06) — ~1.5% book held. Mid/Late,
                     # 118x fwd P/E, analysts -36%: most stretched name held, fails 8-Point #6
                     # (priced for perfection). Book rotated to ZS (W5). Astera Labs —
                     # AI connectivity pure-play (CXL/PCIe retimers),
@@ -229,27 +263,32 @@ W5_SOFTWARE_TARGETS = {
     "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.1603,# CHANGED: 0.1699 -> 0.1603 — renorm only (book UNCHANGED) after AXON
-                    # joined the wave. Security platform — biggest, cheapest, steadiest.
-    "CRWD":  0.1604,# CHANGED: 0.1700 -> 0.1604 — renorm only (book unchanged). AI cybersecurity.
-    "NOW":   0.2843,# CHANGED: 0.3014 -> 0.2843 — renorm only (book UNCHANGED at ~2.51%). Most
-                    # mispriced quality held: 22x fwd / 0.89 PEG, down ~50% on the year.
-                    # Workflow AI (Now Assist), profitable. CYCLE / Mid.
-    "ZS":    0.1782,# CHANGED: 0.1889 -> 0.1782 — renorm only (book UNCHANGED at ~1.57%).
-                    # Zscaler — zero-trust / SASE cyber. Washed-out quality (down ~36-59%,
-                    # RSI ~43, PEG 1.23, 30% FCF margin, $3.5B ARR +25%); agentic-AI security
-                    # catalyst live. Mirror-image rotation from ALAB; fills the cyber gap left
-                    # when S was cut. CYCLE / Mid. Stage entry on a 50-SMA reclaim.
-    "AXON":  0.0566,# NEW 2026-06: MOVED from W6, kept dca. Public-safety SaaS monopoly —
-                    # 59% gross margin, sticky recurring revenue (evidence.com, Draft One AI),
-                    # end-market that doesn't cycle. ~0.5% book (unchanged from its W6 slot).
-                    # Thin net/FCF is reinvestment by choice, not weak economics; hold through
-                    # dips. It belongs with the profitable apps here, not the convex tail.
+    "PANW":  0.1666666667,# CHANGED: 0.1603 -> 0.16667 (REBALANCE 2026-06) — ~1.5% book held
+                    # FLAT. Security platform — biggest, cheapest, steadiest. Scores RICH
+                    # (RICHNESS 0.90) — quality intact but price extended, so DON'T add; let it
+                    # de-rate. DCA.
+    "CRWD":  0.1666666667,# CHANGED: 0.1604 -> 0.16667 (REBALANCE 2026-06) — ~1.5% book held
+                    # FLAT. AI cybersecurity. Scores RICH (RICHNESS 0.81) — same logic as PANW,
+                    # don't add at this price. DCA.
+    "NOW":   0.4444444444,# CHANGED: 0.2843 -> 0.44444 (REBALANCE 2026-06) — GROWN to ~4.0%
+                    # book, the wave anchor. The best-value DCA name on the board: QUALITY 8.2
+                    # with RICHNESS 0.00 (cheapest possible on the gate), 22x fwd / 0.89 PEG,
+                    # down ~50% on the year. Workflow AI (Now Assist), profitable. KEEP-DCA.
+    "ZS":    0.0000,# CHANGED: 0.1782 -> 0.00 — CUT (REBALANCE 2026-06). Zscaler scores AVOID
+                    # (GROWTH 2.0) — the weakest software name held. Book rotated to NOW/AXON.
+                    # 0% for easy re-add if the growth re-accelerates. CYCLE.
+    "AXON":  0.2222222222,# CHANGED: 0.0566 -> 0.22222 (REBALANCE 2026-06) — GROWN to ~2.0%
+                    # book (a 0.5% slot was too small for a KEEP-DCA monopoly). Public-safety
+                    # SaaS monopoly — 59% gross margin, sticky recurring revenue (evidence.com,
+                    # Draft One AI), end-market that doesn't cycle. QUALITY 8.5, KEEP-DCA. Thin
+                    # net/FCF is reinvestment by choice; hold through dips.
     "PLTR":  0.0000,# TRIMMED: below 200d / death cross (tech sell signal, pt 8).
-                    # Kept at 0% for easy re-add.
+                    # Kept at 0% for easy re-add. (Note: now scores PRIME — re-add candidate.)
     "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
                     # Healed bubble hangover but slowest forecast of the survivors.
-    "DDOG":  0.1602,# CHANGED: 0.1698 -> 0.1602 — renorm only (book unchanged). AI observability.
+    "DDOG":  0.0000,# CHANGED: 0.1602 -> 0.00 — CUT (REBALANCE 2026-06). AI observability.
+                    # Scores AVOID (GROWTH 3.7) — weakest of the observability/sw cluster. Book
+                    # rotated to NOW/AXON. 0% for easy re-add. CYCLE.
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (5.5%) ---
@@ -261,28 +300,47 @@ W5_SOFTWARE_TARGETS = {
 # (+171%) real ~1.0% slots alongside TMDX 2.5% (profitable, uncorrelated).
 # These are the portfolio's convex tail — small absolute size, large payoff skew.
 W6_SPEC_TARGETS = {
-    "TMDX":  0.4546,  # CHANGED: 0.4166 -> 0.4546 — renorm only (book UNCHANGED at ~2.5%)
-                      # after AXON left the wave. MedTech organ-transport, profitable,
-                      # off-radar, non-AI diversifier. TOP-10 name.
+    "TMDX":  0.5,     # CHANGED: 0.4546 -> 0.50 (REBALANCE 2026-06) — ~2.5% book held. MedTech
+                      # organ-transport, profitable, off-radar, non-AI diversifier. QUALITY
+                      # quadrant (8PT 5.34), the anchor of the convex tail. TOP-10 name.
     # --- AXON MOVED 2026-06 to W5 (AI Software/Apps), kept dca. It is a profitable
     #     monopoly, not a speculative punt; it never fit the convex-tail sleeve. ---
-    "IONQ":  0.1818,  # CHANGED: 0.1667 -> 0.1818 — renorm only (book UNCHANGED at ~1.0%).
-                      # Quantum revenue leader; +175% mid (highest forecast). Lottery/convex.
-    "RKLB":  0.1818,  # CHANGED: 0.1667 -> 0.1818 — renorm only (book UNCHANGED at ~1.0%).
-                      # Space/autonomy; +171% mid. Lottery/convex tail alongside IONQ.
-    "SYM":   0.1818,  # CHANGED: 0.1667 -> 0.1818 — renorm only (book UNCHANGED at ~1.0%).
-                      # NEW 2026-06: Symbotic — warehouse/logistics automation robotics
-                      # (physical-AI). 1.0% book, funded by trimming IONQ+RKLB. Real
-                      # business ($2.5B rev, +$749M FCF) so HIGHER quality than the pre-rev
-                      # lottery names it sits beside — but GAAP-unprofitable (net -$28M TTM,
-                      # fails Pt 2) + lumpy/customer-concentrated (Walmart), so it lives in
-                      # the convex tail. CATALYST / Binary — size tiny, never average down.
+    "IONQ":  0.3,     # CHANGED: 0.1818 -> 0.30 (REBALANCE 2026-06) — GROWN to ~1.5% book, the
+                      # best-graded punt you own: PRIME catalyst (GROWTH 6.5, 8PT 6.28, C 8.5).
+                      # Quantum revenue leader; +175% mid (highest forecast). Catalyst/convex.
+    "RKLB":  0.1,     # CHANGED: 0.1818 -> 0.10 (REBALANCE 2026-06) — SHRUNK to a ~0.5% lottery
+                      # stub. Scores AVOID (GROWTH 4.6); kept tiny as an asymmetric space punt,
+                      # not grown. Space/autonomy. Catalyst — size once, no avg down.
+    "SYM":   0.1,     # CHANGED: 0.1818 -> 0.10 (REBALANCE 2026-06) — SHRUNK to a ~0.5% lottery
+                      # stub. Symbotic — warehouse/logistics robotics (physical-AI). QUALITY
+                      # quadrant but GAAP-unprofitable (net -$28M TTM, fails Pt 2) + lumpy/
+                      # customer-concentrated (Walmart), so it stays a tiny convex-tail bet.
+                      # CATALYST / Binary — size tiny, never average down.
     "CRCL":  0.0000,  # Circle (USDC) — held windfall (147 shares), TARGET 0%. Parked to
                       # track/manage down, NOT to add to. Catalyst.
     "LEU":   0.0000,  # Centrus Energy — HALEU/uranium enrichment for advanced reactors
                       # (SMR fuel-supply bottleneck). TARGET 0% — watch-only stub so it
                       # shows in the basket; re-size if the enrichment thesis firms up.
                       # Catalyst / Binary (policy/contract-driven, pre-scale economics).
+}
+
+# --- WAVE 7: DIVERSIFIERS (7%) — OFF the AI value chain (NEW 2026-06) ---
+# These two names deliberately break the book's single-factor bet on AI capex.
+# Everything in W1-W6 rises and falls with the same AI-infrastructure cycle; a
+# capex air-pocket would hit all of them at once. LLY (pharma) and NU (LatAm
+# fintech) are uncorrelated to that cycle, so they are the structural hedge that
+# most improves multi-year, drawdown-adjusted compounding. They live in a
+# SEPARATE sleeve so the AI wave taxonomy (W1-W6) stays clean — they are NOT an
+# AI thesis and should not be read as one.
+#   LLY — KEEP-DCA (QUALITY 9.2, RICHNESS 0.19): the incretin (tirzepatide ->
+#         orforglipron) compounder; growth driver runs to ~2036+ patents.
+#   NU  — PRIME cycle (GROWTH 7.7, 8PT 6.22): every layer >=8, the best-balanced
+#         PRIME name on the whole board. Digital bank, EM-consumer cyclical.
+W7_DIVERSIFY_TARGETS = {
+    "LLY":   0.5714285714,# ~4.0% book. Eli Lilly — pharma compounder, fully uncorrelated to
+                      # AI capex. KEEP-DCA. Watch: orforglipron Phase 3 + manufacturing build.
+    "NU":    0.4285714286,# ~3.0% book. Nubank — LatAm digital bank. PRIME cycle, every layer
+                      # strong. EM-consumer/credit cyclical — buy dips, trim manias.
 }
 
 # =========================================================================
@@ -339,8 +397,9 @@ STRATEGY = {
     "CEG":     "cycle",     # Nuclear utility — power-price sensitive
     # CUT: ABBN.SW (was "dca") — only overvalued name (analysts -13%), slowest ballast;
     #      book split to FN (W3) + NOW (W5). Re-add here + in W2_POWER_TARGETS if restored.
-    "PWR":     "cycle",     # Transmission contractor — high-beta backlog play, trim at peak
-    "OKLO":    "catalyst",  # Pre-revenue SMR — sell on NRC approval, never avg down
+    "PWR":     "cycle",     # CUT to 0% (REBALANCE 2026-06, AVOID G4.0) — tag kept for re-add
+    "TLN":     "cycle",     # NEW 2026-06: Talen — nuclear power contracted to data centers; PRIME cycle, on-thesis. Buy dips, trim peaks
+    "OKLO":    "catalyst",  # CUT to 0% (REBALANCE 2026-06, AVOID + 30% data) — tag kept for re-add
     # REMOVED from baskets (kept commented for easy re-add — see W2_POWER_TARGETS):
     #   "VST":     "cycle",     # Power merchant — sell at peak (late-cycle, removed)
     #   "POWL":    "cycle",     # +2657% — late-cycle switchgear (removed)
@@ -382,6 +441,10 @@ STRATEGY = {
     "SYM":     "catalyst",  # Symbotic — robotics, GAAP-unprofitable + lumpy; size once, no avg down
     "CRCL":    "catalyst",  # Circle — held windfall, target 0%; manage down, never avg in
     "LEU":     "catalyst",  # Centrus — HALEU enrichment, policy/contract-driven; watch-only 0%
+
+    # --- W7 DIVERSIFIERS (off the AI value chain) ---
+    "LLY":     "dca",       # Eli Lilly — pharma compounder (tirzepatide/orforglipron), hold forever; uncorrelated to AI capex
+    "NU":      "cycle",     # Nubank — LatAm digital bank; EM-consumer/credit cyclical, buy dips / trim manias
 }
 
 # =========================================================================
@@ -395,6 +458,7 @@ ALL_BASKETS = [
     ("W4_CLOUD", W4_CLOUD_TARGETS),
     ("W5_SOFTWARE", W5_SOFTWARE_TARGETS),
     ("W6_SPEC", W6_SPEC_TARGETS),
+    ("W7_DIVERSIFY", W7_DIVERSIFY_TARGETS),
 ]
 
 
@@ -1352,14 +1416,8 @@ WATCHLIST = {
         "note":     "Bank-charter lending + tech platform; rate- and credit-cyclical. "
                     "Cycle/Early, volatile.",
     },
-    "NU": {
-        "strategy": "cycle",
-        "pos":      "Early",
-        "cagr":     (20, 40),
-        "area":     "LatAm digital bank (Nubank)",
-        "note":     "Hyper-growth Brazil/Mexico neobank; EM credit + FX risk. "
-                    "Profitable now; cycle/Early.",
-    },
+    # NU — PROMOTED to held (W7 Diversifiers, 2026-06 rebalance). Removed from
+    #      the watchlist; see W7_DIVERSIFY_TARGETS + STRATEGY.
     "COIN": {
         "strategy": "cycle",
         "pos":      "Mid",
@@ -1368,14 +1426,8 @@ WATCHLIST = {
         "note":     "Levered to crypto volume + price; revenue swings violently with "
                     "the cycle. High-beta cycle, trim into mania.",
     },
-    "LLY": {
-        "strategy": "dca",
-        "pos":      "Mid",
-        "cagr":     (12, 22),
-        "area":     "Pharma / GLP-1 (Eli Lilly) — LARGE",
-        "note":     "Zepbound/Mounjaro obesity franchise + pipeline. Premium but "
-                    "durable double-digit grower. DCA.",
-    },
+    # LLY — PROMOTED to held (W7 Diversifiers, 2026-06 rebalance). Removed from
+    #      the watchlist; see W7_DIVERSIFY_TARGETS + STRATEGY.
     "ISRG": {
         "strategy": "dca",
         "pos":      "Mid",
@@ -1503,14 +1555,8 @@ WATCHLIST = {
         "note":     "Retail + generation levered to power-price upcycle and DC demand. "
                     "Cyclical; cycle/Mid.",
     },
-    "TLN": {
-        "strategy": "cycle",
-        "pos":      "Mid",
-        "cagr":     (8, 25),
-        "area":     "Nuclear power merchant (Talen Energy)",
-        "note":     "Nuclear fleet with hyperscaler PPAs (datacenter power). High-beta "
-                    "to power prices; cycle/Mid.",
-    },
+    # TLN — PROMOTED to held (W2 Power, 2026-06 rebalance). Removed from the
+    #      watchlist; see W2_POWER_TARGETS + STRATEGY.
     "FSLR": {
         "strategy": "cycle",
         "pos":      "Mid",
