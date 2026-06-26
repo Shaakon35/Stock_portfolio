@@ -102,13 +102,13 @@ W1_SILICON_TARGETS = {
                         # GROWTH 4.72 vs CAMT 2.89. The redundancy (both see/measure) is
                         # resolved by keeping the better grower; BESI (bonding) stays the
                         # non-redundant, highest-quality leg. ~3.0% of book.
-    "BESI.AS":   0.0896,# CHANGED: 0.0601 -> 0.0896 — absorbs the SK Hynix trim (1.47% book)
-                        # on top of the earlier ONTO split. BESI is the Early, NON-peak add
-                        # candidate in the back-end complex: advanced packaging (hybrid
-                        # bonding for HBM4+/chiplets), western CoWoS pure-play, the assembly
-                        # step (not inspection), highest quality (63% GM, 33% FCF margin).
-                        # Its ramp is still AHEAD while DRAM is at its peak. EUR-listed.
-                        # CYCLE / Early. Now ~4.47% of book.
+    "BESI.AS":   0.1191,# CHANGED: 0.0896 -> 0.1191 — absorbs the CDNS removal (1.47% book)
+                        # on top of the earlier SK Hynix trim + ONTO split. BESI is the Early,
+                        # NON-peak add candidate in the back-end complex: advanced packaging
+                        # (hybrid bonding for HBM4+/chiplets), western CoWoS pure-play, the
+                        # assembly step (not inspection), highest quality (63% GM, 33% FCF
+                        # margin). Its ramp is still AHEAD while DRAM is at its peak. EUR-listed.
+                        # CYCLE / Early. Now ~5.94% of book.
     "SIMO":      0.0401,# TOP-10: Silicon Motion — NAND/SSD controllers. Fills the missing
                         # memory sub-segment. NAND is a SEPARATE, lagged cycle (not DRAM).
                         # Profitable, ~39x. CYCLE / Early-Mid. 2.0% of book.
@@ -118,8 +118,15 @@ W1_SILICON_TARGETS = {
                         # WARNING (peak earnings about to mean-revert), not the bargain. Book
                         # redeployed to BESI.AS (Early, ramp ahead). 0% for easy re-add on the
                         # first DRAM down-quarter / margin roll. CYCLE / Mid-Late.
-    "CDNS":      0.0295,# Cadence — EDA design-tool duopoly (w/ Synopsys). The chip-DESIGN
-                        # layer; not in SMHV. Secular high-margin compounder. ~1.47% book.
+    "CDNS":      0.0000,# CHANGED: 0.0295 -> 0.00 — REMOVED (owner decision, 2026-06). Thesis
+                        # was the EDA design-tool duopoly (w/ Synopsys), chip-DESIGN layer not
+                        # in SMHV. Cut on VALUATION/momentum: rich entry (45x fwd P/E, PEG
+                        # 3.16, 18x P/S) against ~13% revenue growth, and EPS growth had
+                        # stalled (FY24 +0.8% / FY25 +5.5%) on margin compression (op margin
+                        # 30.6% -> 28.2%). Revenue itself never stalled — this is a price/
+                        # multiple call, not a quality call. Book redeployed to BESI.AS. The
+                        # design-layer gap is now UNCOVERED in the book; SNPS remains on the
+                        # watchlist as the re-add route. 0% for easy re-add on a de-rating.
     "SMHN.DE":   0.0295,# SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
                         # CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). ~1.47% book.
 }
