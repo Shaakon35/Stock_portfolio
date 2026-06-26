@@ -27,8 +27,9 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 
 TARGET_WEIGHTS = {
     "W1_SILICON":   0.4991,# CHANGED: 0.475 -> 0.4991 — grown so the 4 top-10 W1 singles
-                           #          (CAMT/ONTO/BESI/SIMO) each clear 2% of book while
-                           #          SMHV stays fixed at exactly 37.5%.
+                           #          (ONTO/BESI/SIMO + one of CAMT) each clear 2% of book
+                           #          while SMHV stays fixed at exactly 37.5%. NB: ONTO and
+                           #          CAMT were swapped (2026-06) — ONTO now held, CAMT 0%.
     "W2_POWER":     0.1531,# CHANGED: 0.175 -> 0.1531 — ABBN.SW cut (2.19% book, only name
                            #          analysts call overvalued, slowest-growth ballast). Wave
                            #          shrunk by ABBN's book; the other 7 names keep their book.
@@ -53,7 +54,7 @@ TARGET_WEIGHTS = {
 # their exposure, so no fresh money and no clutter. The remaining ~62.5% is
 # tilted (Option B) toward the waves SMHV does NOT cover — POWER (W2) and
 # DC-INFRA (W3) — and away from Cloud/Software.
-# SMHV lives INSIDE W1 (~75% of the W1 basket); the surviving singles (CAMT,
+# SMHV lives INSIDE W1 (~75% of the W1 basket); the surviving singles (ONTO,
 # BESI.AS, SIMO, CDNS, SMHN.DE) make up the rest of W1 — all names SMHV's
 # US-listed index under-covers or misses.
 # Book-level mix: SMHV 37.5 / W1-singles 10 / W2 19 / W3 21 / W4 5 / W5 7.5 / W6 0.
@@ -69,9 +70,9 @@ TARGET_WEIGHTS = {
 # ASML 7.4%, NVDA 7.2%, plus fab equipment (LRCX 5.6% / AMAT 5.1%) and analog
 # (TXN). Those names are NOT held as singles — the ETF gives full exposure.
 # The surviving SINGLES are the segments SMHV under-covers or misses: back-end
-# packaging/inspection (CAMT, BESI.AS, SMHN.DE), NAND controllers (SIMO), and
+# packaging/inspection (ONTO, BESI.AS, SMHN.DE), NAND controllers (SIMO), and
 # EDA design tools (CDNS). They are the fresh-money tilt on top of the ETF core.
-# NB: CAMT/BESI.AS/SIMO are CYCLE — trim near the ~2027-29 peak, not set-and-
+# NB: ONTO/BESI.AS/SIMO are CYCLE — trim near the ~2027-29 peak, not set-and-
 # forget. BESI's hybrid-bonding ramp is Early (ahead of the DRAM peak); SIMO's
 # NAND cycle is a separate, lagged one. Sized small and deliberately. The EUR/
 # Frankfurt names (BESI.AS, SMHN.DE) are bought via IBKR.
@@ -87,16 +88,20 @@ W1_SILICON_TARGETS = {
     # --- SURVIVING SINGLES. CAMT/BESI/SIMO are TOP-10 names. ONTO was TRIMMED
     #     (see below) and its 2% split into CAMT + BESI (now 3% book each). The
     #     three smaller names (SK Hynix/CDNS/SMHN) sit at ~1.47% book. ---
-    "CAMT":      0.0602,# CHANGED: 0.0401 -> 0.0602 — absorbs half the ONTO trim. TOP-10:
-                        # Camtek — HBM inspection/AOI bottleneck. Best GROWTH of the back-
-                        # end trio (+10.7% rev, only one still growing double-digit) and
-                        # the smallest = most multiplier room (Pt 1). Now 3.0% of book.
-    "ONTO":      0.0000,# CHANGED: 0.0401 -> 0.00 — TRIMMED. Redundant see/measure tool vs
-                        # CAMT (both inspection/metrology), and the weakest of the trio:
-                        # flat revenue (+0.5%), deepest earnings trough (net -51%, op
-                        # margin halved). Its only edge was trough-rebound timing, a bet
-                        # not a quality case. Weight redeployed to CAMT + BESI. 0% (re-add
-                        # easy). BESI (bonding) is the non-redundant, highest-quality name.
+    "CAMT":      0.0000,# CHANGED: 0.0602 -> 0.00 — SWAPPED with ONTO (2026-06). On current
+                        # FORWARD data CAMT is the weaker of the two metrology names: slower
+                        # (fwd rev +17.7% / EPS +18.1%) and far richer (PEG 2.97 vs ONTO's
+                        # 1.17), and it sits Mid/LATE cycle (closer to peak). The earlier
+                        # trim favoured CAMT on TRAILING numbers when ONTO was mid-trough;
+                        # the forecasts have since flipped. 0% for easy re-add. Its bottleneck
+                        # tag (HBM inspection/AOI) is its remaining edge.
+    "ONTO":      0.0602,# CHANGED: 0.00 -> 0.0602 — SWAPPED with CAMT (2026-06). The
+                        # trough-rebound is now IN the forward numbers: fwd rev +24.1%,
+                        # fwd EPS +33.5%, and the cheapest metrology name on PEG (1.17 vs
+                        # CAMT 2.97). Mid-cycle (vs CAMT Mid/Late) so more runway. Scores
+                        # GROWTH 4.72 vs CAMT 2.89. The redundancy (both see/measure) is
+                        # resolved by keeping the better grower; BESI (bonding) stays the
+                        # non-redundant, highest-quality leg. ~3.0% of book.
     "BESI.AS":   0.0896,# CHANGED: 0.0601 -> 0.0896 — absorbs the SK Hynix trim (1.47% book)
                         # on top of the earlier ONTO split. BESI is the Early, NON-peak add
                         # candidate in the back-end complex: advanced packaging (hybrid
@@ -876,7 +881,9 @@ WATCHLIST = {
     },
 
     # --- Packaging / optical / semi picks-and-shovels (new screen) ---
-    #     CAMT, FN, SIMO are now HELD in W1/W3 — not repeated here.
+    #     ONTO, FN, SIMO are now HELD in W1/W3 — not repeated here. (CAMT was
+    #     swapped to 0% in favour of ONTO; it stays in W1_SILICON_TARGETS as an
+    #     easy re-add, so it is not listed as a fresh watchlist idea either.)
     "KLIC": {
         "strategy": "cycle",
         "pos":      "Early",
@@ -892,7 +899,7 @@ WATCHLIST = {
         "cagr":     (9, 20),
         "area":     "Metrology (Nova)",
         "note":     "Process-control metrology — same picks-and-shovels seam as held "
-                    "ONTO/CAMT. Profitable, quality, but partly covered via SMHV.SW "
+                    "ONTO. Profitable, quality, but partly covered via SMHV.SW "
                     "equipment slice. Watchlist for concentrated metrology conviction.",
     },
     "AMKR": {
