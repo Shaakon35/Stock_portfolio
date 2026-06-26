@@ -383,6 +383,25 @@ def _cov_cell(coverage):
     return f"{cell} [GAP]" if coverage < _GAP_THRESHOLD else cell
 
 
+# --- LAYER + PEAK presentation (re-expresses scores; changes none of them) ---
+_LAYER_FOOTNOTE = (
+    "  layers (0-10, higher=SAFER on that layer) decompose the score by the "
+    "force that moves price:\n"
+    "    F=FUND  business quality (margins+growth+FCF) ...... wins the LONG run\n"
+    "    V=VAL   price vs the business (PEG/PS + extension) . mean-reverts (months)\n"
+    "    C=CYC   cycle position + crowding (pos+neck+chart) .. drives the SHORT run / hype\n"
+    "  bind = the BINDING (lowest) layer: the dominant risk you take buying here.\n"
+    "  [PEAK?] = a cyclical/late name's low PEG is fake-cheap (peak earnings) on an\n"
+    "          extended chart — the SK Hynix / Micron trap. Treat its VAL as a warning."
+)
+
+
+def _layer_cell(layers):
+    """Compact 'F V C' triple for a table cell, each 0..10 to one decimal."""
+    return (f"{layers['FUND']:4.1f} {layers['VAL']:4.1f} "
+            f"{layers['CYCLE']:4.1f}")
+
+
 # --- 8-POINT (each sub-score 0..1; summed *8/8 -> 0..8) ------------------
 def score_8point(t, f, info):
     eps_f = eps_surprise_factor(f.get("eps_beat_rate"), f.get("eps_beat_streak"))
@@ -483,6 +502,138 @@ def score_growth(t, f, info):
                           risk_penalize=_is_speculative(t, info))
     return score10, {"rev": g_rev, "eps": g_eps,
                      "sec": g_sec, "coverage": cov}
+
+
+# =========================================================================
+# 4b. LAYER DECOMPOSITION — collapse the sub-scores into the three forces that
+#     actually move a price, so a glance shows WHERE a name's risk lives.
+# =========================================================================
+# Every metric in this engine answers one of three questions. The scores appear
+# to "disagree" only because they sit on different layers, each dominant over a
+# different horizon:
+#
+#   FUND  (Layer 1) "Is the business actually good?"        long-run driver
+#                   margins + forward rev/eps growth + FCF
+#   VAL   (Layer 2) "Is the price fair for that business?"  mean-reverts (months)
+#                   PEG (P/S fallback) + distance above the 200DMA
+#   CYCLE (Layer 3) "Where in the boom/bust + how crowded?" short-run driver/hype
+#                   cycle position + bottleneck + chart extension
+#
+# Each is a 0..10 score where HIGHER = SAFER on that layer (good business /
+# fair price / early-and-uncrowded). The BINDING layer is the lowest of the
+# three — the dominant risk you are actually taking when you buy. This re-
+# expresses the existing sub-scores; it changes none of them. It exists so the
+# "the numbers contradict each other" overwhelm becomes a single legible read:
+# a great business (high FUND) bought too dear (low VAL) or too late (low CYCLE)
+# tells you precisely which way it can hurt you.
+# =========================================================================
+_LAYER_ABBR = {"FUND": "FUN", "VAL": "VAL", "CYCLE": "CYC"}
+
+
+def layer_scores(t, f, info):
+    """Return ({FUND,VAL,CYCLE}: 0..10, higher=safer) and the binding (lowest)
+    layer name. Re-uses the same primitives as the 8-Point / Growth scores so
+    the layers never contradict the underlying numbers — they only regroup
+    them by the force each one represents."""
+    eps_f = eps_surprise_factor(f.get("eps_beat_rate"), f.get("eps_beat_streak"))
+    spec = _is_speculative(t, info)
+
+    # --- FUND (Layer 1): business quality, momentum-neutral --------------
+    nm = f.get("net_margin")
+    fcf = f.get("fcf_positive")
+    if nm is None:
+        l_margin = None
+    elif nm > 0:
+        l_margin = min(1.0, 0.55 + _band(nm, 0, 30) * 0.45)
+    else:
+        l_margin = 0.4 if fcf == 1 else 0.1
+    fwd = f.get("fwd_rev_growth")
+    l_rev = _band(None if fwd is None else fwd * eps_f, 5, 45)
+    eps_g = f.get("fwd_eps_growth")
+    l_eps = _band(None if eps_g is None else eps_g * eps_f, 5, 50)
+    if fcf == 1:
+        l_fcf = 1.0
+    elif fcf == 0:
+        l_fcf = 0.5 if (nm is not None and nm > 0) else 0.0
+    else:
+        l_fcf = None                                  # nothing known -> drop
+    fund10, _ = _blend([(l_margin, 3.5), (l_rev, 2.5), (l_eps, 2.0),
+                        (l_fcf, 2.0)], scale=10.0, risk_penalize=spec)
+
+    # --- VAL (Layer 2): how much of the business is already in the price -
+    #     Higher = cheaper / fairer. PEG first (P/S-vs-growth fallback), plus
+    #     distance above the 200DMA — extension IS paid-up optimism. Cyclical
+    #     PEG is softened toward neutral (the peak/trough trap; see peak_trap).
+    peg = f.get("peg")
+    if peg is not None:
+        v_peg = _band_inv(peg, 0.8, 3.5)
+    else:
+        ps = f.get("ps_ratio")
+        if ps is None:
+            v_peg = None
+        else:
+            g = f.get("fwd_rev_growth")
+            denom = max(g, 10.0) if g is not None else 25.0
+            v_peg = _band_inv(ps / (denom / 10.0), 1.0, 15.0)
+    if v_peg is not None and t in _CYCLICAL:
+        v_peg = 0.5 + (v_peg - 0.5) * 0.6
+    v_ext = _band_inv(f.get("pct_above_200dma"), 0, 80)
+    val10, _ = _blend([(v_peg, 1.6), (v_ext, 1.0)], scale=10.0)
+
+    # --- CYCLE (Layer 3): position in the wave + crowding ----------------
+    #     Higher = earlier / less extended / sits on a real bottleneck. Built
+    #     from owner cycle tags (always present) so this layer is never blank.
+    c_pos = _CYCLE_P5.get(cycle_of(t, info), 0.5)
+    c_neck = BOTTLENECK.get(t, 0.3)
+    c_ext = _band_inv(f.get("pct_above_200dma"), 0, 100)
+    cyc10, _ = _blend([(c_pos, 1.5), (c_neck, 1.0), (c_ext, 1.0)], scale=10.0)
+
+    layers = {"FUND": fund10, "VAL": val10, "CYCLE": cyc10}
+    binding = min(layers, key=layers.get)             # lowest = dominant risk
+    return layers, binding
+
+
+# =========================================================================
+# 4c. PEAK-EARNINGS TRAP — a low PEG on a late-cycle name is FAKE-cheap.
+# =========================================================================
+# A cyclical's PEG divides today's price by PEAK-cycle earnings, so it screens
+# absurdly cheap exactly when it is most dangerous: when normalised earnings
+# arrive, that "cheap" multiple is revealed as a peak multiple and the price
+# de-rates. The memory/storage complex is the canonical case (SK Hynix, Samsung,
+# Micron, WDC, Seagate, SanDisk all show sub-1 PEGs on hugely extended charts).
+#
+# The flag fires on two paths so it does not depend on a name being hand-tagged:
+#   1. TAGGED late-cycle (cycle/Mid-Late/Late) + low PEG + extended chart.
+#   2. STRUCTURAL signature — a PEG this far below 1 simply is not seen on a
+#      healthy stable-growth name; paired with an extended chart it is the
+#      fingerprint of peak-cycle earnings, tag or not. This catches the untagged
+#      memory/storage watchlist names (SNDK, WDC, STX, Samsung, ...).
+# It does NOT change any score; it only annotates, so a fake-cheap VAL score is
+# called out instead of trusted.
+# =========================================================================
+_PEAK_TAG_PEG = 1.0      # tagged late-cycle: PEG <= this ...
+_PEAK_TAG_EXT = 60.0     #   ... AND chart >= this % above 200DMA
+_PEAK_DEEP_PEG = 0.5     # untagged: a PEG this low is almost only a peak signal
+_PEAK_DEEP_EXT = 50.0    #   ... with a moderately extended chart
+_PEAK_LOW_PEG = 0.75     # untagged: a merely-low PEG ...
+_PEAK_LOW_EXT = 100.0    #   ... needs a steeper extension to qualify
+
+
+def peak_trap(t, f, info):
+    """True when a cyclical / late-cycle name's low PEG is fake-cheap (peak
+    earnings) and the chart is extended — the SK Hynix / Micron trap."""
+    peg = f.get("peg")
+    ext = f.get("pct_above_200dma")
+    if peg is None or ext is None:
+        return False
+    late = (t in _CYCLICAL) or (cycle_of(t, info) in ("Mid/Late", "Late"))
+    if late and peg <= _PEAK_TAG_PEG and ext >= _PEAK_TAG_EXT:
+        return True
+    if peg <= _PEAK_DEEP_PEG and ext >= _PEAK_DEEP_EXT:
+        return True
+    if peg <= _PEAK_LOW_PEG and ext >= _PEAK_LOW_EXT:
+        return True
+    return False
 
 
 # =========================================================================
@@ -680,11 +831,14 @@ def render_by_strategy(results, fund, args):
     print("\n-- DCA (steady compounders; buy on schedule) "
           "--------------------------")
     print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'QUALITY':>7s} "
-          f"{'RICHNESS':>8s} {'grade':9s} {'data%':>5s}")
+          f"{'RICHNESS':>8s} {'grade':9s} {'F':>4s} {'V':>4s} {'C':>4s} "
+          f"{'bind':5s} {'data%':>5s}")
     for r, q10, rich, grade in dca_scored:
+        peak = " [PEAK?]" if r["peak"] else ""
         print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
-              f"{q10:7.1f} {rich:8.2f} {grade:9s} "
-              f"{_cov_cell(r['coverage'])}")
+              f"{q10:7.1f} {rich:8.2f} {grade:9s} {_layer_cell(r['layers'])} "
+              f"{_LAYER_ABBR[r['binding']]:5s} "
+              f"{_cov_cell(r['coverage'])}{peak}")
     for grade, desc in [("KEEP-DCA", "durable + reasonably priced -> keep buying"),
                         ("RICH", "quality intact but price extended -> slow buys"),
                         ("IMPAIRED", "business cracking -> pause / reduce")]:
@@ -702,15 +856,20 @@ def render_by_strategy(results, fund, args):
         print(f"\n-- {title} "
               + "-" * max(2, 46 - len(title)))
         print(f"   {'ticker':10s} {'wv':3s} {'book%':>5s} {'GROWTH':>6s} "
-              f"{'8PT':>4s} {'quadrant':10s} {'data%':>5s}")
+              f"{'8PT':>4s} {'quadrant':10s} {'F':>4s} {'V':>4s} {'C':>4s} "
+              f"{'bind':5s} {'data%':>5s}")
         for r in grp:
+            peak = " [PEAK?]" if r["peak"] else ""
             print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
                   f"{r['growth10']:6.1f} {r['eight']:4.2f} {r['quad']:10s} "
-                  f"{_cov_cell(r['coverage'])}")
+                  f"{_layer_cell(r['layers'])} "
+                  f"{_LAYER_ABBR[r['binding']]:5s} "
+                  f"{_cov_cell(r['coverage'])}{peak}")
 
     print()
     print(_GROWTH_8PT_FOOTNOTE)
     print(_GAP_FOOTNOTE)
+    print(_LAYER_FOOTNOTE)
 
 
 def main():
@@ -758,10 +917,13 @@ def main():
         eight, parts8, eps_f = score_8point(t, f, info)
         g10, partsg = score_growth(t, f, info)
         blend = composite(eight, g10, args.blend) if args.blend else None
+        layers, binding = layer_scores(t, f, info)
         results.append({**info, "eight": eight, "growth10": g10, "blend": blend,
                         "quad": quadrant(eight, g10), "eps_f": eps_f,
                         "p8": parts8, "pg": partsg, "has_data": t in fund,
-                        "coverage": _coverage(f)})
+                        "coverage": _coverage(f),
+                        "layers": layers, "binding": binding,
+                        "peak": peak_trap(t, f, info)})
 
     keyf = {"growth": lambda r: -r["growth10"],
             "eight": lambda r: -r["eight"],
@@ -780,7 +942,7 @@ def main():
           f"{'GROWTH':>6s} {'8PT':>4s} {'quadrant':10s} {'epsF':>5s}"
     if args.blend:
         hdr += f" {'blend':>5s}"
-    hdr += f" {'data%':>5s}"
+    hdr += f" {'F':>4s} {'V':>4s} {'C':>4s} {'bind':5s} {'data%':>5s}"
     print(hdr)
     for i, r in enumerate(results, 1):
         line = f"{i:2d} {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} " \
@@ -788,11 +950,15 @@ def main():
                f"{r['eps_f']:5.2f}"
         if args.blend:
             line += f" {r['blend']:5.2f}"
-        line += f" {_cov_cell(r['coverage'])}"
+        peak = " [PEAK?]" if r["peak"] else ""
+        line += f" {_layer_cell(r['layers'])} " \
+                f"{_LAYER_ABBR[r['binding']]:5s} " \
+                f"{_cov_cell(r['coverage'])}{peak}"
         print(line)
     print()
     print(_GROWTH_8PT_FOOTNOTE)
     print(_GAP_FOOTNOTE)
+    print(_LAYER_FOOTNOTE)
 
     # ----- quadrant summary -----
     print("\n=== QUADRANTS ===")
