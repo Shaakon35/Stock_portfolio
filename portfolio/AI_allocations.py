@@ -102,13 +102,14 @@ W1_SILICON_TARGETS = {
                         # GROWTH 4.72 vs CAMT 2.89. The redundancy (both see/measure) is
                         # resolved by keeping the better grower; BESI (bonding) stays the
                         # non-redundant, highest-quality leg. ~3.0% of book.
-    "BESI.AS":   0.1191,# CHANGED: 0.0896 -> 0.1191 — absorbs the CDNS removal (1.47% book)
-                        # on top of the earlier SK Hynix trim + ONTO split. BESI is the Early,
-                        # NON-peak add candidate in the back-end complex: advanced packaging
-                        # (hybrid bonding for HBM4+/chiplets), western CoWoS pure-play, the
-                        # assembly step (not inspection), highest quality (63% GM, 33% FCF
+    "BESI.AS":   0.0896,# CHANGED: 0.1191 -> 0.0896 — reverted to its pre-CDNS level (2026-06):
+                        # the CDNS removal it had absorbed (1.47% book) is now redirected to ADI
+                        # (new DCA anchor below), which takes the exact slot CDNS vacated. BESI is
+                        # the Early, NON-peak add candidate in the back-end complex: advanced
+                        # packaging (hybrid bonding for HBM4+/chiplets), western CoWoS pure-play,
+                        # the assembly step (not inspection), highest quality (63% GM, 33% FCF
                         # margin). Its ramp is still AHEAD while DRAM is at its peak. EUR-listed.
-                        # CYCLE / Early. Now ~5.94% of book.
+                        # CYCLE / Early. Back to ~4.47% of book.
     "SIMO":      0.0401,# TOP-10: Silicon Motion — NAND/SSD controllers. Fills the missing
                         # memory sub-segment. NAND is a SEPARATE, lagged cycle (not DRAM).
                         # Profitable, ~39x. CYCLE / Early-Mid. 2.0% of book.
@@ -129,6 +130,14 @@ W1_SILICON_TARGETS = {
                         # watchlist as the re-add route. 0% for easy re-add on a de-rating.
     "SMHN.DE":   0.0295,# SUSS MicroTec — advanced-packaging/bonding equipment, SAME HBM4/
                         # CoWoS bottleneck as BESI.AS. Frankfurt-listed (EUR). ~1.47% book.
+    "ADI":       0.0295,# NEW 2026-06: Analog Devices — analog/industrial silicon. Takes the
+                        # exact slot CDNS vacated (1.47% book; BESI reverted to fund it). The
+                        # highest-QUALITY name in the book (scorer 9.0 / KEEP-DCA: 37% gross,
+                        # 26% net, $3.9B FCF, PEG ~1.3) and the wave's DCA ballast among
+                        # otherwise cycle-heavy singles. Loosely AI-thesis (industrial/edge),
+                        # so it widens the sleeve slightly beyond pure AI-infra — deliberate.
+                        # NB: despite the DCA tag it behaves cyclically (FY24 earnings halved,
+                        # FY26 doubled), so a deep drop is a discount on a real franchise.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -303,6 +312,7 @@ STRATEGY = {
     "CDNS":      "dca",     # Cadence — EDA duopoly, secular high-margin compounder, hold forever
     "ONTO":      "cycle",   # Onto — metrology/inspection, high-beta WFE; Mid-cycle, buy dips, trim at peak
     "SMHN.DE":   "cycle",   # SUSS MicroTec — packaging/bonding equipment, high-beta; trim near peak
+    "ADI":       "dca",     # Analog Devices — analog/industrial silicon, quality compounder; hold forever (NB: cyclical, a drop is a discount)
 
     # --- W2 POWER ---
     "GEV":     "dca",       # Grid supercycle — hold forever
@@ -470,15 +480,8 @@ WATCHLIST = {
         "note":     "SKIP — cheap (20x P/E, $9.6B FCF) but rev -4%: Apple designing it "
                     "out. 'Cheap for a reason' value trap, not a growth thesis.",
     },
-    "ADI": {
-        "pos":      "Mid",
-        "cagr":     (8, 15),
-        "strategy": "dca",
-        "area":     "Analog / industrial chips",
-        "note":     "Highest-QUALITY new name (37% rev, 26% net, $3.9B FCF, 28x). "
-                    "Would be DCA-grade — but only loosely AI-thesis (industrial). "
-                    "Consider only if widening beyond pure AI-infra.",
-    },
+    # NB: ADI promoted to a held W1 DCA pick (see W1_SILICON_TARGETS) — removed here.
+    #     Took the slot CDNS vacated (~1.47% book). Highest-quality name in the book.
 
     # --- Fab equipment ('picks of the picks') — all inside SMHV.SW ---
     "KLAC": {
