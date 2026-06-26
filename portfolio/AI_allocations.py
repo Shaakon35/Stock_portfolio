@@ -26,12 +26,13 @@ DEGIRO_FEE = 3.00         # Flat transaction fee
 # =========================================================================
 
 TARGET_WEIGHTS = {
-    "W1_SILICON":   0.47,  # CHANGED: 0.4991 -> 0.47 (REBALANCE 2026-06, scorer-driven). ONTO
-                           #          (AVOID G4.7) and SMHN.DE (AVOID G3.4, a BESI duplicate) CUT
-                           #          from the wave; CAMT/SK-Hynix/CDNS already 0%. The wave now
-                           #          holds SMHV (fixed 37.5%) + the three best-graded singles
-                           #          (BESI PRIME, ADI KEEP-DCA, SIMO PRIME). SMHV stays EXACTLY
-                           #          37.5% of book (0.47 * 0.79787 = 0.375).
+    "W1_SILICON":   0.45,  # CHANGED: 0.47 -> 0.45 (SIMO->RDDT ROTATION 2026-06). SIMO CUT to 0%
+                           #          (CONV 5.28, [PEAK?] — peak-cycle NAND, fake-cheap on peak
+                           #          earnings) and rotated to RDDT in W7. The wave now holds SMHV
+                           #          (fixed 37.5%) + the two best-graded singles (BESI PRIME, ADI
+                           #          KEEP-DCA). SMHV stays EXACTLY 37.5% of book
+                           #          (0.45 * 0.83333 = 0.375). Prior: 0.4991 -> 0.47 cut ONTO +
+                           #          SMHN.DE (both AVOID, BESI duplicates).
     "W2_POWER":     0.15,  # CHANGED: 0.1531 -> 0.15 (REBALANCE 2026-06). PWR (AVOID G4.0) and
                            #          OKLO (AVOID, 30% data [GAP], F1.2 — a blind bet) CUT. Added
                            #          TLN (Talen) — PRIME cycle (G7.7/8PT5.07, V9.4): nuclear power
@@ -52,11 +53,13 @@ TARGET_WEIGHTS = {
                            #          (GAAP-unprofitable Binary) SHRUNK to 0.5% lottery stubs;
                            #          IONQ (PRIME catalyst 6.5/6.28) grown. TMDX kept. The convex
                            #          tail stays small.
-    "W7_DIVERSIFY": 0.07,  # NEW 2026-06 (REBALANCE): off-thesis diversifiers that break the
-                           #          book's single-factor AI-capex bet. LLY (pharma, KEEP-DCA
-                           #          9.2/0.19) + NU (fintech, PRIME cycle 7.7/6.22, every layer
-                           #          >=8). Both are uncorrelated to AI capex — the biggest
-                           #          structural improvement for multi-year compounding. Kept in a
+    "W7_DIVERSIFY": 0.09,  # CHANGED: 0.07 -> 0.09 (SIMO->RDDT ROTATION 2026-06). Off-thesis
+                           #          diversifiers that break the book's single-factor AI-capex
+                           #          bet. LLY (pharma, KEEP-DCA 9.2/0.19) + NU (fintech, PRIME
+                           #          cycle 7.7/6.22, every layer >=8) + RDDT (NEW — social/AI
+                           #          data-licensing, CONV 7.66, no layer <8). All uncorrelated to
+                           #          AI capex — the biggest structural improvement for multi-year
+                           #          compounding. The SIMO cut funded RDDT here. Kept in a
                            #          SEPARATE sleeve so the AI wave taxonomy (W1-W6) stays intact.
 }
 # OPTION B (BOTTLENECK TILT) + SMHV WINDFALL — restructured 2026-06.
@@ -90,12 +93,12 @@ TARGET_WEIGHTS = {
 # NAND cycle is a separate, lagged one. Sized small and deliberately. The EUR/
 # Frankfurt names (BESI.AS, SMHN.DE) are bought via IBKR.
 W1_SILICON_TARGETS = {
-    "SMHV.SW":   0.7978723404,# CHANGED: 0.7511 -> 0.79787 (REBALANCE 2026-06) — the 90k CHF
-                        # windfall (899 shares) held FIXED at exactly 37.5% of book
-                        # (= 0.79787 of the 47% W1 wave; 0.47 * 0.79787 = 0.375). The W1 wave
-                        # shrank (ONTO + SMHN.DE cut), so SMHV's basket share rose to keep its
-                        # book pinned at 37.5%. NB: SMHV tracks a US-LISTED semi index, so it
-                        # holds ZERO Samsung/SK Hynix — those are genuine new exposure, not a dup.
+    "SMHV.SW":   0.8333333333,# CHANGED: 0.79787 -> 0.83333 (SIMO->RDDT ROTATION 2026-06) — the
+                        # 90k CHF windfall (899 shares) held FIXED at exactly 37.5% of book
+                        # (= 0.83333 of the 45% W1 wave; 0.45 * 0.83333 = 0.375). The W1 wave
+                        # shrank again (SIMO cut, rotated to RDDT in W7), so SMHV's basket share
+                        # rose to keep its book pinned at 37.5%. NB: SMHV tracks a US-LISTED semi
+                        # index, so it holds ZERO Samsung/SK Hynix — genuine new exposure, not a dup.
     # --- REMOVED 2026-06: NVDA/AVGO/ASML/TSM/MU/AMD dropped from the basket.
     #     They are SMHV's top holdings, so the ETF already gives full mega-cap
     #     exposure and holding them as 0.0 singles only cluttered the table. To
@@ -116,24 +119,29 @@ W1_SILICON_TARGETS = {
                         # keeps the better, non-redundant leg (BESI, the bonding/assembly step,
                         # higher quality) and drops the duplicate metrology bet. 0% for easy
                         # re-add on a fresh trough. Its book funded the ANET/NOW growth.
-    "BESI.AS":   0.1063829787,# CHANGED: 0.0896 -> 0.10638 (REBALANCE 2026-06) — grown to ~5.0%
-                        # book, the sharpest cyclical in the sleeve. Scores PRIME (GROWTH 9.6,
-                        # 8PT 6.13, no weak layer: F8.4/V5.8/C8.4). The Early, NON-peak name in
-                        # the back-end complex: advanced packaging (hybrid bonding for HBM4+/
-                        # chiplets), western CoWoS pure-play, the assembly step (not inspection),
-                        # highest quality (63% GM, 33% FCF margin). Ramp still AHEAD while DRAM is
-                        # at its peak. EUR-listed. CYCLE / Early. ~5.0% of book.
-    "ADI":       0.0531914894,# CHANGED: 0.0295 -> 0.05319 (REBALANCE 2026-06) — grown to ~2.5%
-                        # book. Analog Devices — analog/industrial silicon, the highest-QUALITY
-                        # KEEP-DCA ballast in this otherwise cycle-heavy sleeve (scorer 8.3, 37%
-                        # gross, 26% net, $3.9B FCF, PEG ~1.3). NB: despite the DCA tag it behaves
-                        # cyclically (FY24 earnings halved, FY26 doubled), so a deep drop is a
-                        # discount on a real franchise. Loosely AI-thesis (industrial/edge).
-    "SIMO":      0.0425531915,# CHANGED: 0.0401 -> 0.04255 (REBALANCE 2026-06) — ~2.0% book held.
-                        # Silicon Motion — NAND/SSD controllers. Fills the missing memory sub-
-                        # segment. NAND is a SEPARATE, lagged cycle (not DRAM). Scores PRIME
-                        # (GROWTH 8.0, 8PT 5.04) but carries the [PEAK?] flag — don't grow it,
-                        # trim rips. Profitable, ~39x. CYCLE / Early-Mid.
+    "BESI.AS":   0.1111111111,# CHANGED: 0.10638 -> 0.11111 (SIMO->RDDT ROTATION 2026-06) — held
+                        # FLAT at ~5.0% book (0.45 * 0.11111 = 0.05); basket share rose only
+                        # because the W1 wave shrank. The sharpest cyclical in the sleeve. Scores
+                        # PRIME (GROWTH 9.6, 8PT 6.13, no weak layer: F8.4/V5.8/C8.4). The Early,
+                        # NON-peak name in the back-end complex: advanced packaging (hybrid bonding
+                        # for HBM4+/chiplets), western CoWoS pure-play, the assembly step (not
+                        # inspection), highest quality (63% GM, 33% FCF margin). Ramp still AHEAD
+                        # while DRAM is at its peak. EUR-listed. CYCLE / Early. ~5.0% of book.
+    "ADI":       0.0555555556,# CHANGED: 0.05319 -> 0.05556 (SIMO->RDDT ROTATION 2026-06) — held
+                        # FLAT at ~2.5% book (0.45 * 0.05556 = 0.025); basket share rose only
+                        # because the W1 wave shrank. Analog Devices — analog/industrial silicon,
+                        # the highest-QUALITY KEEP-DCA ballast in this otherwise cycle-heavy sleeve
+                        # (scorer 8.3, 37% gross, 26% net, $3.9B FCF, PEG ~1.3). NB: despite the DCA
+                        # tag it behaves cyclically (FY24 earnings halved, FY26 doubled), so a deep
+                        # drop is a discount on a real franchise. Loosely AI-thesis (industrial/edge).
+    "SIMO":      0.0000,# CHANGED: 0.04255 -> 0.00 — CUT (SIMO->RDDT ROTATION 2026-06). Silicon
+                        # Motion — NAND/SSD controllers. Scores PRIME on raw GROWTH (8.0) but
+                        # carries the [PEAK?] flag and the WEAKEST risk-adjusted profile of the
+                        # held cyclicals: CONV 5.28, V 4.9 / C 4.6 — a low PEG that is fake-cheap
+                        # on peak memory-cycle earnings (the SK-Hynix/Micron trap). Rotated into
+                        # RDDT (W7, CONV 7.66, every layer >=8, a non-semi AI diversifier) — a
+                        # strict risk-adjusted upgrade AND better book diversification. 0% for
+                        # easy re-add on a fresh NAND trough. CYCLE / Early-Mid.
     "000660.KS": 0.0000,# CHANGED: 0.0295 -> 0.00 — TRIMMED. SK Hynix rode the DRAM/HBM cycle
                         # to a record peak (+~900% / 52wk, MU memory GM ~74% = all-time high):
                         # graded Mid/Late, the cycle-trap zone where a 6-7x fwd P/E is the
@@ -350,15 +358,29 @@ W6_SPEC_TARGETS = {
 # most improves multi-year, drawdown-adjusted compounding. They live in a
 # SEPARATE sleeve so the AI wave taxonomy (W1-W6) stays clean — they are NOT an
 # AI thesis and should not be read as one.
-#   LLY — KEEP-DCA (QUALITY 9.2, RICHNESS 0.19): the incretin (tirzepatide ->
-#         orforglipron) compounder; growth driver runs to ~2036+ patents.
-#   NU  — PRIME cycle (GROWTH 7.7, 8PT 6.22): every layer >=8, the best-balanced
-#         PRIME name on the whole board. Digital bank, EM-consumer cyclical.
+#   LLY  — KEEP-DCA (QUALITY 9.2, RICHNESS 0.19): the incretin (tirzepatide ->
+#          orforglipron) compounder; growth driver runs to ~2036+ patents.
+#   NU   — PRIME cycle (GROWTH 7.7, 8PT 6.22): every layer >=8, the best-balanced
+#          PRIME name on the whole board. Digital bank, EM-consumer cyclical.
+#   RDDT — QUALITY cycle (CONV 7.66, no layer <8: F8.2/V10.0/C8.0): social ad
+#          ramp + AI data-licensing optionality. NOT a chip — an AI-economy play
+#          that diversifies the silicon-heavy book. Early, high-beta.
 W7_DIVERSIFY_TARGETS = {
-    "LLY":   0.5714285714,# ~4.0% book. Eli Lilly — pharma compounder, fully uncorrelated to
-                      # AI capex. KEEP-DCA. Watch: orforglipron Phase 3 + manufacturing build.
-    "NU":    0.4285714286,# ~3.0% book. Nubank — LatAm digital bank. PRIME cycle, every layer
+    "LLY":   0.4444444444,# CHANGED: 0.57143 -> 0.44444 (SIMO->RDDT ROTATION 2026-06) — held FLAT
+                      # at ~4.0% book (0.09 * 0.44444 = 0.04); basket share fell only because the
+                      # W7 wave grew to absorb RDDT. Eli Lilly — pharma compounder, fully
+                      # uncorrelated to AI capex. KEEP-DCA. Watch: orforglipron Phase 3 + mfg build.
+    "NU":    0.3333333333,# CHANGED: 0.42857 -> 0.33333 (SIMO->RDDT ROTATION 2026-06) — held FLAT
+                      # at ~3.0% book (0.09 * 0.33333 = 0.03); basket share fell only because the
+                      # W7 wave grew. Nubank — LatAm digital bank. PRIME cycle, every layer
                       # strong. EM-consumer/credit cyclical — buy dips, trim manias.
+    "RDDT":  0.2222222222,# NEW (SIMO->RDDT ROTATION 2026-06) — ~2.0% book (0.09 * 0.22222 = 0.02).
+                      # Reddit — social ads + AI data-licensing (selling 20y of human conversation
+                      # to LLM labs). Scores CONV 7.66 (3rd-highest cycle name on the board) with
+                      # NO binding layer below 8.0 (F8.2/V10.0/C8.0): cheap, not extended, good
+                      # business — a rare triple. Funded by the SIMO cut. A non-semi AI-economy
+                      # play that diversifies the silicon-heavy book. CYCLE / Early — high-beta,
+                      # young public co; buy dips, trim manias.
 }
 
 # =========================================================================
@@ -464,6 +486,7 @@ STRATEGY = {
     # --- W7 DIVERSIFIERS (off the AI value chain) ---
     "LLY":     "dca",       # Eli Lilly — pharma compounder (tirzepatide/orforglipron), hold forever; uncorrelated to AI capex
     "NU":      "cycle",     # Nubank — LatAm digital bank; EM-consumer/credit cyclical, buy dips / trim manias
+    "RDDT":    "cycle",     # Reddit — social ads + AI data-licensing; non-semi AI diversifier, Early/high-beta, buy dips / trim manias
 }
 
 # =========================================================================
@@ -1233,7 +1256,13 @@ WATCHLIST = {
         "cagr":     (18, 35),
         "area":     "Custom AI silicon + optical DSP (Marvell)",
         "note":     "Custom-compute + electro-optics levered to hyperscaler capex. "
-                    "High-beta cyclical; trim when DC capex decelerates.",
+                    "ELITE business (F 9.7, highest in the DC-infra complex) but a "
+                    "BAD entry right now: CONV 5.78, binding CYC 3.0 (extended + "
+                    "crowded), V 4.0 (expensive), fails 8PT discipline (4.15). Also "
+                    "REDUNDANT with AVGO/CRDO/COHR/ALAB already held — same AI-"
+                    "connectivity factor, no new exposure. Watch-only: re-rate when "
+                    "the chart cools (CYC recovers) and it isn't a 5th correlated "
+                    "cyclical. High-beta; accumulate on a real dip, not here.",
     },
     "MPWR": {
         "strategy": "cycle",
@@ -1703,14 +1732,8 @@ WATCHLIST = {
         "note":     "Price hikes + margin expansion on a huge user base. "
                     "Growth-cyclical; cycle/Mid.",
     },
-    "RDDT": {
-        "strategy": "cycle",
-        "pos":      "Early",
-        "cagr":     (18, 40),
-        "area":     "Social + data licensing (Reddit)",
-        "note":     "Ad ramp + AI data-licensing optionality; young public co, "
-                    "high-beta. Cycle/Early.",
-    },
+    # RDDT (Reddit) PROMOTED 2026-06 to W7_DIVERSIFY_TARGETS at ~2.0% book (the
+    # SIMO->RDDT rotation). Removed from the watchlist so it isn't double-listed.
     "DASH": {
         "strategy": "cycle",
         "pos":      "Mid",
