@@ -115,6 +115,88 @@ NECK_2023 = {
 # penalty (the trough/peak-PEG trap; the LRCX fix).
 DEEP_CYCLICAL = {"MU", "LRCX", "AMAT", "KLAC", "ASML", "INTC", "MCHP"}
 
+# ---------------------------------------------------------------------------
+# REALIZED PRICES (for the optional --with-returns columns). These are OUTCOME
+# data (post-2023) used ONLY to score the engine's 2023 calls — they never feed
+# the scoring itself, so they cannot bias it.
+#
+#   ANCHOR_PX : split-adjusted "Last Close Price" from the source FY2023 ratios
+#               column (same fiscal date the fundamentals came from).
+#   CURR_PX   : "today" (2026-06-27) price from the live feed.
+#   MAX_CLOSE : best RELIABLE fiscal-year-end close across 2023->now.
+#
+# DATA-INTEGRITY NOTE: this environment's LIVE feed is corrupt for many semis
+# (reads 2-4x reality; MU ~10x; MSFT/META read LOW; KLAC whole series /10). The
+# historical fiscal-year-end closes are internally consistent and reliable, so:
+#   * RET23>now is FLAGGED (!) when the live feed is corrupt -> not a real return.
+#   * MAX_CLOSE EXCLUDES the corrupt live column -> RET23>max is the trustworthy
+#     realized-exit return (conservative: year-end closes understate intra-year
+#     highs). Whole-series-corrupt names (MU, KLAC) are flagged outright.
+# ---------------------------------------------------------------------------
+ANCHOR_PX = {
+    "NVDA": 61.03, "AAPL": 171.21, "MSFT": 340.54, "AMZN": 151.94,
+    "GOOGL": 138.46, "GOOG": 138.46, "AVGO": 83.84, "TSLA": 248.48,
+    "META": 353.96, "MU": 69.94, "AMD": 147.41, "ASML": 756.92,
+    "INTC": 50.25, "AMAT": 131.30, "LRCX": 64.29, "CSCO": 52.09,
+    "COST": 544.25, "ARM": 124.99, "KLAC": 48.50, "WMT": 55.08,
+    "EXC": 35.90, "MCHP": 83.78, "ODFL": 202.67, "KDP": 33.32, "CCEP": 66.74,
+    "TTWO": 119.30, "IDXX": 555.05, "ADSK": 253.81, "PYPL": 61.41,
+    "ALNY": 191.41, "AXON": 258.33, "TRI": 196.56, "PAYX": 104.93,
+    "ROP": 545.17, "WDAY": 291.07, "GEHC": 77.32, "MSTR": 63.16,
+    "CPRT": 44.20, "KHC": 36.98, "DXCM": 124.09,
+}
+MAX_CLOSE = {
+    # batch 1 -- corrupt live column dropped from the max
+    "NVDA": 187.67, "AAPL": 283.78, "MSFT": 497.41, "AMZN": 232.69,
+    "GOOGL": 337.39, "GOOG": 337.39, "AVGO": 369.63, "TSLA": 449.72,
+    "META": 660.09, "MU": 122.00, "AMD": 214.16, "ASML": 1069.86,
+    "INTC": 50.25, "AMAT": 228.75, "LRCX": 106.49, "CSCO": 68.69,
+    "COST": 952.54, "ARM": 151.28, "KLAC": 89.57, "WMT": 119.14,
+    # batch 2 -- live column here was reliable
+    "EXC": 47.40, "MCHP": 89.71, "ODFL": 218.79, "KDP": 33.40, "CCEP": 101.59,
+    "TTWO": 238.53, "IDXX": 676.53, "ADSK": 311.34, "PYPL": 85.35,
+    "ALNY": 397.65, "AXON": 594.32, "TRI": 234.43, "PAYX": 157.91,
+    "ROP": 545.17, "WDAY": 291.07, "GEHC": 82.02, "MSTR": 289.62,
+    "CPRT": 52.33, "KHC": 36.98, "DXCM": 124.09,
+}
+CURR_PX = {
+    "NVDA": 192.53, "AAPL": 283.78, "MSFT": 372.97, "AMZN": 232.69,
+    "GOOGL": 337.39, "GOOG": 334.69, "AVGO": 365.02, "TSLA": 379.71,
+    "META": 550.25, "MU": 1132.33, "AMD": 521.58, "ASML": 1794.62,
+    "INTC": 128.32, "AMAT": 626.84, "LRCX": 379.09, "CSCO": 113.77,
+    "COST": 952.54, "ARM": 334.27, "KLAC": 248.64, "WMT": 115.69,
+    "EXC": 47.40, "MCHP": 87.93, "ODFL": 218.79, "KDP": 33.40, "CCEP": 101.59,
+    "TTWO": 238.53, "IDXX": 551.50, "ADSK": 196.26, "PYPL": 44.29,
+    "ALNY": 291.37, "AXON": 464.83, "TRI": 83.87, "PAYX": 99.90,
+    "ROP": 338.31, "WDAY": 124.21, "GEHC": 65.76, "MSTR": 82.31,
+    "CPRT": 30.55, "KHC": 23.70, "DXCM": 70.14,
+}
+# LIVE-feed corrupt -> RET23>now untrustworthy (flagged with '!').
+LIVE_CORRUPT = {"AMD", "ASML", "INTC", "AMAT", "LRCX", "CSCO", "ARM",
+                "MSFT", "META", "MU", "KLAC", "TRI"}
+# WHOLE price series corrupt/scaled -> both return columns unreliable.
+SERIES_CORRUPT = {"MU", "KLAC"}
+
+
+def ret_now(t):
+    """% from 2023 anchor to 'today'; flag when the live feed is corrupt."""
+    if t in SERIES_CORRUPT:
+        return " corrupt"
+    a, c = ANCHOR_PX.get(t), CURR_PX.get(t)
+    if a is None or c is None or a == 0:
+        return "       -"
+    return f"{(c / a - 1.0) * 100:+7.0f}%" + ("!" if t in LIVE_CORRUPT else "")
+
+
+def ret_max(t):
+    """% from 2023 anchor to best RELIABLE year-end close in-window."""
+    if t in SERIES_CORRUPT:
+        return " corrupt"
+    a, m = ANCHOR_PX.get(t), MAX_CLOSE.get(t)
+    if a is None or m is None or a == 0:
+        return "       -"
+    return f"{(m / a - 1.0) * 100:+7.0f}%"
+
 
 def backtest_rows(include_watchlist):
     """Stand-in for portfolio_rows(): build the frozen 2023 universe in the
@@ -153,6 +235,68 @@ def coverage_check(fund, universe):
     return missing
 
 
+def render_with_returns(results, fund):
+    """Same grouped tables as the engine's render_by_strategy, with two extra
+    OUTCOME columns appended: RET23>now and RET23>max. Reuses the engine's own
+    cell helpers so the F/V/C/bind/data% columns are identical to production."""
+    print("\n=== RATING BY STRATEGY + REALIZED RETURNS  "
+          "(2023 backtest) ===")
+    print("Each mode graded on its own rubric (engine logic); the last two "
+          "columns are post-2023 OUTCOMES, never fed into scoring.")
+
+    # ---- DCA ----
+    dca = [r for r in results if r["strategy"] == "dca"]
+    scored = []
+    for r in dca:
+        f = fund.get(r["ticker"], {})
+        q10, rich, _ = S.dca_quality(r["ticker"], f)
+        dconv = S.dca_conviction(q10, r["layers"], r["layers"][r["binding"]],
+                                 rich, r["coverage"])
+        scored.append((r, q10, rich, S.dca_grade(q10, rich, f), dconv))
+    scored.sort(key=lambda x: -x[4])
+    print("\n-- DCA (steady compounders; buy on schedule) "
+          "--------------------------")
+    print(f"   {'ticker':8s} {'wv':3s} {'book%':>5s} {'CONV':>5s} "
+          f"{'QUALITY':>7s} {'RICHNESS':>8s} {'grade':9s} {'F':>4s} {'V':>4s} "
+          f"{'C':>4s} {'bind':5s} {'data%':>5s} {'RET23>now':>9s} "
+          f"{'RET23>max':>9s}")
+    for r, q10, rich, grade, dconv in scored:
+        t = r["ticker"]
+        pk = " [PEAK?]" if r["peak"] else ""
+        print(f"   {t:8s} {r['wave']:3s} {r['book_pct']:5.2f} {dconv:5.2f} "
+              f"{q10:7.1f} {rich:8.2f} {grade:9s} {S._layer_cell(r['layers'])} "
+              f"{S._LAYER_ABBR[r['binding']]:5s} {S._cov_cell(r['coverage'])} "
+              f"{ret_now(t):>9s} {ret_max(t):>9s}{pk}")
+
+    # ---- CYCLE & CATALYST ----
+    for mode, title in [("cycle", "CYCLE (buy the dip / sell the rip)"),
+                        ("catalyst", "CATALYST (event-driven punts)")]:
+        grp = [r for r in results if r["strategy"] == mode]
+        grp.sort(key=lambda r: -r["conviction"])
+        print(f"\n-- {title} " + "-" * max(2, 46 - len(title)))
+        print(f"   {'ticker':8s} {'wv':3s} {'book%':>5s} {'CONV':>5s} "
+              f"{'GROWTH':>6s} {'8PT':>4s} {'quadrant':10s} {'F':>4s} "
+              f"{'V':>4s} {'C':>4s} {'bind':5s} {'data%':>5s} "
+              f"{'RET23>now':>9s} {'RET23>max':>9s}")
+        for r in grp:
+            t = r["ticker"]
+            pk = " [PEAK?]" if r["peak"] else ""
+            print(f"   {t:8s} {r['wave']:3s} {r['book_pct']:5.2f} "
+                  f"{r['conviction']:5.2f} {r['growth10']:6.1f} "
+                  f"{r['eight']:4.2f} {r['quad']:10s} "
+                  f"{S._layer_cell(r['layers'])} "
+                  f"{S._LAYER_ABBR[r['binding']]:5s} "
+                  f"{S._cov_cell(r['coverage'])} "
+                  f"{ret_now(t):>9s} {ret_max(t):>9s}{pk}")
+
+    print("\n   RET23>now = anchor 2023 close -> today. '!' = LIVE feed corrupt "
+          "in this env (semis 2-4x; MU ~10x; MSFT/META/TRI off) -> not real.")
+    print("   RET23>max = anchor -> best RELIABLE fiscal-year-end close "
+          "(corrupt live column excluded); conservative vs true intra-year highs.")
+    print("   corrupt = whole price series unreliable (MU ~10x, KLAC /10).")
+    print("   Returns are OUTCOME data only — they never feed the score.")
+
+
 def main():
     ap = argparse.ArgumentParser(
         description="Point-in-time 2023 backtest of the scoring engine "
@@ -167,6 +311,10 @@ def main():
     ap.add_argument("--sync-csv", action="store_true",
                     help="point-in-time COVERAGE CHECK of the frozen snapshot "
                          "(no network; a backtest must not scrape live data)")
+    ap.add_argument("--with-returns", action="store_true",
+                    help="append realized RET23>now / RET23>max OUTCOME columns "
+                         "(post-2023 prices; never fed into scoring). Implies "
+                         "the by-strategy grouped view.")
     args = ap.parse_args()
 
     # Inject the frozen 2023 owner tags so the REAL engine reads 2023 values.
@@ -210,10 +358,13 @@ def main():
 
     # Give render_by_strategy the args object it reads (.csv for the header).
     args.csv = "fundamentals_2023 (held + watchlist backtest)"
-    if args.by_strategy:
+    if args.with_returns:
+        render_with_returns(results, fund)
+    elif args.by_strategy:
         S.render_by_strategy(results, fund, args)
     else:
-        print("\n(use --by-strategy for the grouped strategy view)")
+        print("\n(use --by-strategy for the grouped strategy view, or "
+              "--with-returns to add the realized-return columns)")
 
 
 if __name__ == "__main__":
