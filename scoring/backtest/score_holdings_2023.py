@@ -36,6 +36,20 @@ glob (scoring/fundamentals_*.csv) never picks them up by accident.
 Run:
     cd /workspaces/Stock_portfolio && PORTFOLIO_USE=ai python3 \
         scoring/backtest/score_holdings_2023.py --by-strategy --watchlist --sync-csv
+
+FULL UNIVERSE MODE (--universe):
+    Scores the ENTIRE AI-allocation universe (204 backtestable names) from
+    fundamentals_2023_universe.csv, each graded in its 2023-VINTAGE strategy
+    (universe_2023.py: current strategy + documented 2023 overrides — e.g. NVDA
+    was `cycle` in 2023, and SNOW/NU/SHOP/COIN/SOFI were `catalyst` turnaround
+    bets then, not today's compounders). Post-2023 IPOs / no-fundamentals names
+    are excluded (SKIP_NOT_2023). Forward estimates + 200DMA are blank on the
+    historical pages, so the engine drops + reweights those sub-scores (data%
+    reads ~70%, [GAP] flagged) and the score rests on the obtainable
+    point-in-time fundamentals.
+
+        PORTFOLIO_USE=ai python3 scoring/backtest/score_holdings_2023.py \
+            --universe --by-strategy --sync-csv
 """
 import argparse
 import os
@@ -50,6 +64,18 @@ import scoring.score_holdings as S  # noqa: E402
 HERE = Path(__file__).resolve().parent
 CSV_HELD = HERE / "fundamentals_2023_held.csv"
 CSV_WATCH = HERE / "fundamentals_2023_watchlist.csv"
+CSV_UNIVERSE = HERE / "fundamentals_2023_universe.csv"
+
+
+def _load_universe_module():
+    """Import universe_2023.py by path (avoids the scoring/backtest.py name
+    collision that shadows the package)."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "universe_2023", HERE / "universe_2023.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
 # ---------------------------------------------------------------------------
 # Frozen end-2023 portfolio map (book%, strategy) — the backtest's stand-in for
@@ -297,6 +323,48 @@ def render_with_returns(results, fund):
     print("   Returns are OUTCOME data only — they never feed the score.")
 
 
+def universe_rows():
+    """Build the full 204-name AI-allocation backtest universe from the
+    committed snapshot + universe_2023 classifier. Returns (port, cycle, neck,
+    deep_cyclical, strat_map)."""
+    U = _load_universe_module()
+    strat = U.build_strategy_2023()
+    port = S.portfolio_rows(include_watchlist=True)  # for current book%/wave
+
+    # Engine owner-tags for 2023. Default heuristic: WFE/foundry/memory semis
+    # and AI-infra names are bottleneck owners (neck=1.0, cycle Early/Mid);
+    # everything else neck=0.5 / Mid. The hand-curated 40-name tags override.
+    SEMI = {"AMKR", "ASX", "CAMT", "COHR", "COHU", "CRDO", "DIOD", "ENTG",
+            "FN", "FORM", "GFS", "ICHR", "KLIC", "LSCC", "MKSI", "MPWR",
+            "MRVL", "MTSI", "NVMI", "ON", "ONTO", "POWI", "QCOM", "SANM",
+            "SIMO", "TER", "TSEM", "TSM", "UMC", "AAOI", "CIEN", "LITE",
+            "VRT", "CLS", "DELL", "HPQ", "NTAP", "STX", "WDC", "JBL", "AEHR",
+            "000660.KS", "005930.KS", "BESI.AS", "1810.HK"}
+    cyc, neck = {}, {}
+    for t in strat:
+        if t in SEMI:
+            cyc[t], neck[t] = "Early", 1.0
+        else:
+            cyc[t], neck[t] = "Mid", 0.5
+    # hand-curated 40-name tags win where present
+    cyc.update(CYCLE_2023)
+    neck.update(NECK_2023)
+    deep = set(DEEP_CYCLICAL) | {"AMKR", "ASX", "GFS", "TSM", "UMC", "TSEM",
+                                 "STX", "WDC", "TER", "ENTG", "KLIC", "ON",
+                                 "MKSI", "000660.KS", "005930.KS", "BESI.AS"}
+
+    rows = {}
+    for t, st in strat.items():
+        info = port.get(t, {})
+        rows[t] = {"ticker": t, "wave": info.get("wave", "AI"), "sub": 0.0,
+                   "book_pct": round(info.get("book_pct", 0.0), 2),
+                   "etf_pct": 0.0, "strategy": st,
+                   "held": bool(info.get("held")),
+                   "cagr_lo": None, "cagr_hi": None, "cagr_mid": None,
+                   "wl_pos": cyc.get(t)}
+    return rows, cyc, neck, deep, strat
+
+
 def main():
     ap = argparse.ArgumentParser(
         description="Point-in-time 2023 backtest of the scoring engine "
@@ -315,23 +383,34 @@ def main():
                     help="append realized RET23>now / RET23>max OUTCOME columns "
                          "(post-2023 prices; never fed into scoring). Implies "
                          "the by-strategy grouped view.")
+    ap.add_argument("--universe", action="store_true",
+                    help="score the FULL AI-allocation universe (204 names) from "
+                         "fundamentals_2023_universe.csv, each in its 2023-vintage "
+                         "strategy (universe_2023.py). Supersedes held/watchlist.")
     args = ap.parse_args()
 
-    # Inject the frozen 2023 owner tags so the REAL engine reads 2023 values.
-    S.CYCLE_POS = CYCLE_2023
-    S.BOTTLENECK = NECK_2023
-    S._CYCLICAL = DEEP_CYCLICAL
+    if args.universe:
+        port, cyc, neck, deep, _ = universe_rows()
+        S.CYCLE_POS, S.BOTTLENECK, S._CYCLICAL = cyc, neck, deep
+        fund = dict(S.load_fundamentals(str(CSV_UNIVERSE)))
+        if args.sync_csv:
+            coverage_check(fund, list(port))
+    else:
+        # Inject the frozen 2023 owner tags so the REAL engine reads 2023 values.
+        S.CYCLE_POS = CYCLE_2023
+        S.BOTTLENECK = NECK_2023
+        S._CYCLICAL = DEEP_CYCLICAL
 
-    port = backtest_rows(include_watchlist=args.watchlist)
+        port = backtest_rows(include_watchlist=args.watchlist)
 
-    # Load the frozen snapshot(s): held always; watchlist only when requested
-    # (mirrors production loading the held book + watchlist if --watchlist).
-    fund = dict(S.load_fundamentals(str(CSV_HELD)))
-    if args.watchlist:
-        fund.update(S.load_fundamentals(str(CSV_WATCH)))
+        # Load the frozen snapshot(s): held always; watchlist only when
+        # requested (mirrors production loading held + watchlist if --watchlist).
+        fund = dict(S.load_fundamentals(str(CSV_HELD)))
+        if args.watchlist:
+            fund.update(S.load_fundamentals(str(CSV_WATCH)))
 
-    if args.sync_csv:
-        coverage_check(fund, list(port))
+        if args.sync_csv:
+            coverage_check(fund, list(port))
 
     # ----- score every name through the REAL engine path -----
     results = []
