@@ -36,6 +36,14 @@ refreshing or extending the data.
   data.
 - The CSV starts with `#` comment lines (column legend + FX + proxy notes); the
   loader skips them. Keep that header current when conventions change.
+- To add **new** AI-allocation names (held or watchlist) that are missing from
+  the CSV, run `PORTFOLIO_USE=ai python3 scoring/score_holdings.py --sync-csv`.
+  It appends a fully-populated row for each missing name in one pass: mechanical
+  fields + `fwd_*` (nearest-FY consensus) from the scrape, **and** auto-fills the
+  `ttm_rev_growth` / `rev_growth_hist` / `net_margin_hist` series for just the
+  new rows (no separate `--fill-ttm` step; pass `--no-fill-ttm` to skip). It
+  never edits existing rows (use `--overwrite` for that) and skips the
+  source-corrupted / no-page names (`MU`/`SMHV.SW`/`SRUUF`) with a warning.
 
 ### 2. Column schema
 
@@ -50,7 +58,14 @@ separated, not plain numbers; they are parsed specially by the loader and sit
 outside the numeric schema.)
 
 - `mktcap_b` — market cap in **USD billions** (convert foreign, see FX below).
-- `fwd_rev_growth` / `fwd_eps_growth` — analyst **3Y** growth forecasts, %.
+- `fwd_rev_growth` / `fwd_eps_growth` — analyst growth forecasts, %. The true
+  multi-year **3Y** figure on the `/forecast/` page is `[PRO]`-paywalled, so
+  `--sync-csv` auto-sources the **nearest-FY analyst consensus average** as a
+  reproducible proxy (parsed from the page JSON `revenueGrowth`/`epsGrowth`
+  `{"<FY>":{avg:..}}` block). Hand-edit the cell if you have a real 3Y number;
+  `--overwrite` will refresh these from the live consensus (it lists them in
+  `_SYNC_OVERWRITE_FIELDS`), so curated 3Y values are only safe without
+  `--overwrite`.
 - `ttm_rev_growth` — trailing-12m rev YoY %, sourced from the `/financials/`
   page (`revenueGrowth` JSON array, index 0). Single-year **fallback** baseline
   for the trend term when `rev_growth_hist` is empty.
@@ -201,7 +216,11 @@ print('PASS')"
   averages** so they are not double-counted against SMHV itself. MU has no CSV
   row by design: stockanalysis.com's MU snapshot is source-corrupted (reports
   ~$1.37T mktcap / $90B rev / PEG 0.05 for Micron), so it scores on
-  forecast/tags only (`data = -`) rather than ingest garbage.
+  forecast/tags only (`data = -`) rather than ingest garbage. This is enforced
+  in code: `MU` is in the `--sync-csv` skip list (`_SYNC_SKIP` in
+  `score_holdings.py`, alongside `SMHV.SW`/`SRUUF`), so a sync **deliberately
+  does not add it** and prints an explicit `(!) SKIPPING MU …` warning rather
+  than silently re-ingesting the corrupted scrape each run.
 - The default Growth/8-Point quadrant is anti-momentum and mis-grades DCA
   compounders into AVOID by design — use `--by-strategy` to grade DCA on
   quality+valuation instead. See `scoring/README.md` for the rationale.

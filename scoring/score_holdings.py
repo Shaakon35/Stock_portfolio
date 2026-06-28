@@ -1426,11 +1426,59 @@ def _clean_num(s):
     return _num(s)
 
 
+def _forecast_url(ticker):
+    """stockanalysis.com /forecast/ URL for a CSV ticker (US or foreign)."""
+    if "." in ticker:
+        code, suf = ticker.rsplit(".", 1)
+        exch = _FIN_EXCH.get(suf.upper())
+        if exch:
+            return f"https://stockanalysis.com/quote/{exch[0]}/{exch[1](code)}/forecast/"
+    return f"https://stockanalysis.com/stocks/{ticker.lower()}/forecast/"
+
+
+def scrape_forecast(ticker):
+    """Scrape forward analyst growth from the /forecast/ page.
+
+    Returns (fwd_rev_growth, fwd_eps_growth) as strings (blank if unavailable).
+
+    NOTE on what is actually free: stockanalysis.com paywalls the multi-year
+    (2027/2028+) estimates as "[PRO]", so the 3-YEAR forward CAGR the CSV schema
+    nominally wants is NOT scrapable. What IS free is the NEXT-FY analyst
+    consensus average, embedded in the page JSON as
+        revenueGrowth:{"<FY-end>":{avg:<pct>,low:..,high:..}, "<next>":"[PRO]"..}
+        epsGrowth:{"<FY-end>":{avg:<pct>,...}, ...}
+    We take that nearest-FY `avg` as the forward proxy — a reasonable, fully
+    reproducible stand-in for the gated 3Y figure, and far better than blank.
+    Hand-edit the cell afterwards if you have a true 3Y number."""
+    import re
+    import urllib.request
+
+    def get(url):
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            return r.read().decode("utf-8", "ignore")
+
+    try:
+        html = get(_forecast_url(ticker))
+    except Exception as e:
+        print(f"  [sync] {ticker}: forecast fetch failed ({e})")
+        return "", ""
+
+    def first_avg(key):
+        # Match  key:{"YYYY-MM-DD":{avg:<number>  — the nearest free FY estimate.
+        m = re.search(
+            re.escape(key) + r':\{"[^"]+":\{avg:(-?\d+(?:\.\d+)?)', html)
+        return f"{float(m.group(1)):.2f}" if m else ""
+
+    return first_avg("revenueGrowth"), first_avg("epsGrowth")
+
+
 def scrape_stats(ticker):
     """Scrape the mechanically-available fundamentals for one ticker from the
-    statistics page (+ quotes price + financials FCF sign). Returns a dict of
-    CSV cells (strings; blank where unavailable). fwd_* are always blank — they
-    are not reliably scrapable and must be hand-entered."""
+    statistics page (+ quotes price + financials FCF sign + forecast growth).
+    Returns a dict of CSV cells (strings; blank where unavailable). fwd_* are
+    sourced from the /forecast/ page's nearest-FY analyst consensus (see
+    scrape_forecast for the [PRO]-paywall caveat)."""
     import re
     import urllib.request
 
@@ -1482,12 +1530,15 @@ def scrape_stats(ticker):
     except Exception:
         pass
 
+    # forward analyst growth (nearest-FY consensus avg; see scrape_forecast)
+    fwd_rev, fwd_eps = scrape_forecast(ticker)
+
     return {
         "ticker": ticker,
         "mktcap_b": mktcap_b,
-        "fwd_rev_growth": "",          # not scrapable — hand-enter
+        "fwd_rev_growth": fwd_rev,     # nearest-FY analyst consensus (proxy)
         "ttm_rev_growth": "",          # leave for --fill-ttm
-        "fwd_eps_growth": "",          # not scrapable — hand-enter
+        "fwd_eps_growth": fwd_eps,     # nearest-FY analyst consensus (proxy)
         "gross_margin": "" if gross is None else f"{gross}",
         "net_margin": "" if net is None else f"{net}",
         "fcf_positive": fcf_pos,
@@ -1505,10 +1556,13 @@ def scrape_stats(ticker):
 # Fields --overwrite is allowed to replace on an EXISTING row. Deliberately
 # excludes net_margin (may hold an operating-margin proxy), eps_beat_rate /
 # eps_beat_streak (hand-seeded), and the *_hist series (owned by --fill-ttm),
-# so re-syncing never clobbers a curated judgement cell.
+# so re-syncing never clobbers a curated judgement cell. fwd_* are refreshable:
+# they are now auto-sourced (nearest-FY consensus), so a re-sync should keep
+# them current — but a hand-entered true-3Y value will be overwritten, so omit
+# them from --overwrite if you have curated those cells.
 _SYNC_OVERWRITE_FIELDS = (
     "mktcap_b", "gross_margin", "fcf_positive", "peg", "ps_ratio",
-    "pct_above_200dma",
+    "pct_above_200dma", "fwd_rev_growth", "fwd_eps_growth",
 )
 
 
@@ -1540,10 +1594,15 @@ def sync_csv(csv_path, wanted, overwrite=False):
             continue
         rows.append({k: rec.get(k, "") for k in header})
         added.append(t)
-        fwd_todo.append(t)               # new rows always need fwd_* by hand
+        # fwd_* are now auto-sourced; only flag a row for hand entry if the
+        # forecast scrape came back empty (e.g. no analyst coverage / [PRO]).
+        if not (rec.get("fwd_rev_growth") and rec.get("fwd_eps_growth")):
+            fwd_todo.append(t)
         print(f"  [sync] +{t}: mktcap={rec['mktcap_b']} gm={rec['gross_margin']} "
               f"nm={rec['net_margin']} peg={rec['peg']} ps={rec['ps_ratio']} "
-              f"200dma%={rec['pct_above_200dma']} fcf={rec['fcf_positive']}")
+              f"200dma%={rec['pct_above_200dma']} fcf={rec['fcf_positive']} "
+              f"fwdRev={rec['fwd_rev_growth'] or '-'} "
+              f"fwdEps={rec['fwd_eps_growth'] or '-'}")
 
     if overwrite:
         by_ticker = {(r.get("ticker") or "").strip(): r for r in rows}
@@ -1567,7 +1626,7 @@ def sync_csv(csv_path, wanted, overwrite=False):
         w.writerows(rows)
     print(f"  [sync] added {len(added)}, refreshed {len(refreshed)} "
           f"-> {csv_path}")
-    return fwd_todo
+    return fwd_todo, added
 
 
 # =========================================================================
@@ -1674,9 +1733,14 @@ def main():
     ap.add_argument("--sync-csv", action="store_true",
                     help="scrape & APPEND fundamentals rows for AI-allocation names "
                          "(held + watchlist) missing from the CSV; never edits "
-                         "existing rows. fwd_rev_growth/fwd_eps_growth are left "
-                         "blank (not scrapable) and reported for hand entry. "
-                         "Run --fill-ttm afterwards to add the ttm/hist series.")
+                         "existing rows. fwd_rev_growth/fwd_eps_growth are "
+                         "auto-sourced (nearest-FY analyst consensus) and the "
+                         "ttm/hist series are auto-filled for the new rows, so "
+                         "no manual --fill-ttm step is needed. MU is skipped "
+                         "(source-corrupted feed) with a warning.")
+    ap.add_argument("--no-fill-ttm", action="store_true",
+                    help="with --sync-csv, do NOT auto-fill the ttm/hist series "
+                         "for new rows (leaves them blank for a later --fill-ttm)")
     ap.add_argument("--overwrite", action="store_true",
                     help="with --sync-csv, ALSO re-scrape existing rows, refreshing "
                          "only mechanical fields (mktcap, gross_margin, peg, "
@@ -1689,19 +1753,42 @@ def main():
     if args.sync_csv:
         if not args.csv or not Path(args.csv).exists():
             sys.exit("--sync-csv needs an existing CSV (it appends to it).")
-        # full AI-allocation universe (held baskets + watchlist), minus the
-        # no-fundamentals windfall ETF and the physical-commodity trust SRUUF
-        # (no statistics page — correctly scored on tags/forecast only).
-        targets = [t for t in port if t not in ("SMHV.SW", "SRUUF")]
-        fwd_todo = sync_csv(args.csv, targets, overwrite=args.overwrite)
+        # full AI-allocation universe (held baskets + watchlist), minus names
+        # with no usable statistics page:
+        #   SMHV.SW — the no-fundamentals windfall ETF (scored on tags only).
+        #   SRUUF   — physical-commodity trust, no company fundamentals (404).
+        #   MU      — stockanalysis.com's Micron snapshot is SOURCE-CORRUPTED
+        #             (reports ~$1.28T mktcap / PEG 0.05); ingesting it poisons
+        #             the CSV, so MU is scored on forecast/tags only (data = -).
+        #             See AGENTS.md "Notes on interpreting results".
+        _SYNC_SKIP = ("SMHV.SW", "SRUUF", "MU")
+        targets = [t for t in port if t not in _SYNC_SKIP]
+        # Warn for any skipped name actually present in the universe, so a sync
+        # run is explicit about what it deliberately did NOT scrape/add.
+        _skipped = [t for t in _SYNC_SKIP if t in port]
+        if "MU" in _skipped:
+            print("  [sync] (!) SKIPPING MU — stockanalysis.com's Micron feed is "
+                  "SOURCE-CORRUPTED (reports ~$1.28T mktcap / PEG 0.05). MU is "
+                  "scored on forecast/tags only (data = -). See AGENTS.md.")
+        for _t in _skipped:
+            if _t != "MU":
+                print(f"  [sync] (i) skipping {_t} (no usable statistics page).")
+        fwd_todo, added = sync_csv(args.csv, targets, overwrite=args.overwrite)
+        # Auto-fill the trailing series for the rows we just added, so a single
+        # --sync-csv produces fully-populated rows (no manual --fill-ttm step).
+        # Scoped to `added` only, so this stays fast (it does NOT rescan the
+        # whole watchlist). Skip with --no-fill-ttm.
+        if added and not args.no_fill_ttm:
+            print(f"\n  [sync] auto-filling ttm/hist series for {len(added)} "
+                  f"new row(s): {', '.join(added)}")
+            fill_ttm(args.csv, added)
         if fwd_todo:
-            print("\n(!) fwd_rev_growth / fwd_eps_growth NOT scrapable — enter by "
-                  f"hand for {len(fwd_todo)} new names:")
+            print("\n(!) fwd_rev_growth / fwd_eps_growth had no free analyst "
+                  f"estimate for {len(fwd_todo)} name(s) — enter by hand:")
             print("    " + ", ".join(fwd_todo))
             print("    Source: stockanalysis.com/stocks/<TICKER>/forecast/ "
-                  "(analyst 3Y revenue & EPS growth).")
-        print("\nNext: run --fill-ttm to populate ttm_rev_growth + the "
-              "rev_growth_hist / net_margin_hist series for the new rows.")
+                  "(the multi-year 3Y figure is [PRO]-gated; the nearest-FY "
+                  "consensus is auto-sourced when present).")
         return
 
     if args.fill_ttm:
