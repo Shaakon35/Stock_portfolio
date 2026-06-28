@@ -204,6 +204,29 @@ LIVE_CORRUPT = {"AMD", "ASML", "INTC", "AMAT", "LRCX", "CSCO", "ARM",
 SERIES_CORRUPT = {"MU", "KLAC"}
 
 
+def load_universe_prices():
+    """Merge the auto-sourced full-universe prices (prices_2023.py) into the
+    return dicts so --universe gets RET23 columns for all priced names. The
+    hand-curated 40-name values above take precedence on overlap."""
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "prices_2023", HERE / "prices_2023.py")
+        P = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(P)
+    except Exception:
+        return
+    for t, v in P.ANCHOR_PX.items():
+        ANCHOR_PX.setdefault(t, v)
+    for t, v in P.MAX_CLOSE.items():
+        MAX_CLOSE.setdefault(t, v)
+    for t, v in P.CURR_PX.items():
+        if v is not None:
+            CURR_PX.setdefault(t, v)
+    LIVE_CORRUPT.update(P.LIVE_CORRUPT)
+    SERIES_CORRUPT.update(P.SERIES_CORRUPT)
+
+
 def ret_now(t):
     """% from 2023 anchor to 'today'; flag when the live feed is corrupt."""
     if t in SERIES_CORRUPT:
@@ -393,6 +416,8 @@ def main():
         port, cyc, neck, deep, _ = universe_rows()
         S.CYCLE_POS, S.BOTTLENECK, S._CYCLICAL = cyc, neck, deep
         fund = dict(S.load_fundamentals(str(CSV_UNIVERSE)))
+        if args.with_returns:
+            load_universe_prices()
         if args.sync_csv:
             coverage_check(fund, list(port))
     else:

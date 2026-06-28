@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""Source realized prices for the full-universe 2023 backtest return columns.
+
+Per ticker, from stockanalysis.com:
+  ANCHOR : the FY2023 fiscal-year-end close (lastClosePrice at the 2023 column).
+  MAX    : the best close in the lastClosePrice series EXCLUDING the live (TTM,
+           index-0) column, which is corrupt in this environment for many semis
+           (reads 2-4x reality). Historical fiscal-year-end closes are
+           internally consistent, so this is the trustworthy realized-exit price.
+  NOW    : the current price from the overview API (live feed; flagged corrupt
+           when it deviates wildly from the name's own year-end series).
+
+Writes a Python module (prices_2023.py) with ANCHOR_PX / MAX_CLOSE / CURR_PX /
+LIVE_CORRUPT / SERIES_CORRUPT dicts the harness imports for --universe returns.
+
+Usage:
+    PORTFOLIO_USE=ai python3 scoring/backtest/source_prices_2023.py
+"""
+import json
+import re
+import sys
+import time
+import urllib.request
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[1]))
+
+# reuse the same exchange/url mapping as the fundamentals sourcer
+import importlib.util
+_spec = importlib.util.spec_from_file_location("src2023", HERE / "source_2023.py")
+_src = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_src)
+_base = _src._base
+
+_uspec = importlib.util.spec_from_file_location("u2023", HERE / "universe_2023.py")
+U = importlib.util.module_from_spec(_uspec)
+_uspec.loader.exec_module(U)
+
+
+def _get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return r.read().decode("utf-8", "ignore")
+
+
+def _arr(html, key):
+    m = re.search(re.escape(key) + r":\[([^\]]+)\]", html)
+    return [p.strip().strip('"') for p in m.group(1).split(",")] if m else []
+
+
+def _fy_index(fy, year="2023"):
+    for i, v in enumerate(fy):
+        if v == year:
+            return i
+    return None
+
+
+def _overview_symbol(ticker):
+    """Overview API path segment for a ticker (US: s/TICKER; foreign uses the
+    quote code)."""
+    if ticker in _src._FOREIGN_CODE:
+        ex, code = _src._FOREIGN_CODE[ticker]
+        return None  # overview API keyed differently for foreign; skip NOW
+    return "s/" + ticker.upper()
+
+
+def prices_for(ticker):
+    try:
+        h = _get(_base(ticker) + "/financials/ratios/")
+    except Exception:
+        return None
+    fy = _arr(h, "fiscalYear")
+    closes = _arr(h, "lastClosePrice")
+    idx = _fy_index(fy)
+    if idx is None or idx >= len(closes):
+        return None
+
+    def f(x):
+        try:
+            return float(x)
+        except (ValueError, TypeError):
+            return None
+
+    anchor = f(closes[idx])
+    if anchor is None or anchor == 0:
+        return None
+    # MAX over the reliable historical closes (exclude live index-0).
+    hist = [f(c) for c in closes[1:] if f(c) is not None and f(c) > 0]
+    mx = max(hist) if hist else anchor
+    live = f(closes[0])
+
+    now = None
+    sym = _overview_symbol(ticker)
+    if sym:
+        try:
+            o = json.loads(_get(
+                f"https://stockanalysis.com/api/symbol/{sym}/overview"))
+            p = o.get("data", {}).get("price")
+            now = f(p) if p not in (None, "") else None
+        except Exception:
+            now = None
+    if now is None:
+        now = live  # fall back to the live ratios close
+
+    # corruption flag: live close >2.2x the best reliable historical close.
+    series_corrupt = bool(live and mx and live > 2.2 * mx)
+    live_corrupt = bool(now and mx and (now > 1.8 * mx or now < 0.55 * anchor))
+    return {"anchor": round(anchor, 2), "max": round(mx, 2),
+            "now": round(now, 2) if now else None,
+            "live_corrupt": live_corrupt, "series_corrupt": series_corrupt}
+
+
+def main():
+    anchor, mx, now, livec, seriesc, fails = {}, {}, {}, [], [], []
+    for t in U.NEW_2023:
+        r = prices_for(t)
+        if not r:
+            fails.append(t)
+            print(f"  [px] {t}: FAILED")
+            continue
+        anchor[t], mx[t], now[t] = r["anchor"], r["max"], r["now"]
+        if r["live_corrupt"]:
+            livec.append(t)
+        if r["series_corrupt"]:
+            seriesc.append(t)
+        flag = (" SERIES-CORRUPT" if r["series_corrupt"]
+                else " live-corrupt" if r["live_corrupt"] else "")
+        print(f"  [px] {t}: anchor={r['anchor']} max={r['max']} "
+              f"now={r['now']}{flag}")
+        time.sleep(0.2)
+
+    out = HERE / "prices_2023.py"
+    with open(out, "w") as fh:
+        fh.write('"""Auto-generated realized prices for the 2023 universe '
+                 'backtest.\n\nANCHOR_PX = FY2023 fiscal-year-end close. '
+                 'MAX_CLOSE = best reliable historical\nclose (live column '
+                 'excluded). CURR_PX = current price. *_CORRUPT flag names '
+                 'whose\nlive feed is unreliable in this environment. '
+                 'Generated by\nsource_prices_2023.py; do not edit by hand."""\n')
+        fh.write(f"ANCHOR_PX = {json.dumps(anchor, indent=0)}\n")
+        fh.write(f"MAX_CLOSE = {json.dumps(mx, indent=0)}\n")
+        fh.write(f"CURR_PX = {json.dumps(now, indent=0)}\n")
+        fh.write(f"LIVE_CORRUPT = {json.dumps(sorted(livec))}\n")
+        fh.write(f"SERIES_CORRUPT = {json.dumps(sorted(seriesc))}\n")
+    print(f"\n  wrote {out.name}: {len(anchor)} priced, {len(fails)} fails, "
+          f"{len(livec)} live-corrupt, {len(seriesc)} series-corrupt")
+    if fails:
+        print("  fails:", fails)
+
+
+if __name__ == "__main__":
+    main()
