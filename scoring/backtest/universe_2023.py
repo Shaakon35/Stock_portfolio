@@ -27,7 +27,7 @@ dca / cycle / catalyst.
 SKIP_NOT_2023 = sorted(set("""
 CRCL CRWV RDDT ASTS RKLB RR SERV LUNR BKSY PL TEM AISP INFQ ACHR ARQQ
 QSI QUBT RGTI RXRX VKTX XNDU HQ BOT LAES IREN CIFR ENVX OUST SRUUF SMHV.SW
-OKLO NNE RBRK ALAB NBIS LAC GEV
+OKLO NNE RBRK ALAB NBIS LAC GEV PENG SNDK QNT
 """.split()))
 
 # ---------------------------------------------------------------------------
@@ -66,7 +66,6 @@ OVERRIDES_2023 = {
     "9880.HK": ("catalyst", "lottery class -> catalyst for the 8-point grid"),
     "AEHR": ("catalyst", "lottery class -> catalyst"),
     "QBTS": ("catalyst", "quantum lottery -> catalyst"),
-    "QNT":  ("catalyst", "quantum lottery -> catalyst"),
     "BNTX": ("catalyst", "post-COVID earnings cliff; binary oncology pipeline"),
     "NVAX": ("catalyst", "going-concern / binary in 2023"),
     "CRSP": ("catalyst", "pre-approval gene-editing biotech in 2023"),
@@ -102,11 +101,11 @@ BATCH3 = [
     "MELI", "MKSI", "MMM", "MPWR", "MRVL", "MS", "MTSI", "MYRG", "NEE", "NET",
     "NFLX", "NKE", "NOC", "NOW", "NRG", "NTAP", "NTLA", "NU", "NUE", "NVAX",
     "NVMI", "NVO", "OKTA", "ON", "ONTO", "ORCL", "OXY", "PANW", "PATH", "PDD",
-    "PENG", "PFE", "PG", "PH", "PLTR", "PNR", "POWI", "POWL", "PSTG", "PWR",
+    "PFE", "PG", "PH", "PLTR", "PNR", "POWI", "POWL", "PSTG", "PWR",
 ]
 BATCH4 = [
-    "QBTS", "QCOM", "QNT", "RIO", "ROK", "RTX", "S", "SANM", "SAP", "SBUX",
-    "SHEL", "SHOP", "SIE.DE", "SIMO", "SMCI", "SMHN.DE", "SMR", "SNDK", "SNOW",
+    "QBTS", "QCOM", "RIO", "ROK", "RTX", "S", "SANM", "SAP", "SBUX",
+    "SHEL", "SHOP", "SIE.DE", "SIMO", "SMCI", "SMHN.DE", "SMR", "SNOW",
     "SNPS", "SO", "SOFI", "SPOT", "SQM", "SRE", "STLD", "STX", "SYK", "SYM",
     "TDG", "TEAM", "TECK", "TER", "TGT", "TLN", "TMDX", "TMO", "TOST", "TSEM",
     "TSM", "TTD", "TXN", "U", "UBER", "UMC", "UNH", "UNP", "URI", "V", "VPG",
