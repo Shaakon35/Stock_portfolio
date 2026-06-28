@@ -27,7 +27,7 @@ dca / cycle / catalyst.
 SKIP_NOT_2023 = sorted(set("""
 CRCL CRWV RDDT ASTS RKLB RR SERV LUNR BKSY PL TEM AISP INFQ ACHR ARQQ
 QSI QUBT RGTI RXRX VKTX XNDU HQ BOT LAES IREN CIFR ENVX OUST SRUUF SMHV.SW
-OKLO NNE RBRK ALAB NBIS LAC
+OKLO NNE RBRK ALAB NBIS LAC GEV
 """.split()))
 
 # ---------------------------------------------------------------------------
@@ -93,7 +93,7 @@ BATCH1 = [
 BATCH2 = [
     "DDOG", "DE", "DELL", "DHR", "DIOD", "DKNG", "DOCS", "DUK", "DUOL", "ELF",
     "EME", "EMR", "ENPH", "ENTG", "ESTC", "ETN", "FCX", "FI", "FIX", "FLR",
-    "FN", "FORM", "FSLR", "FSLY", "FTNT", "GD", "GE", "GEV", "GFS", "GILD",
+    "FN", "FORM", "FSLR", "FSLY", "FTNT", "GD", "GE", "GFS", "GILD",
     "GRMN", "GS", "GTLB", "HIMS", "HON", "HOOD", "HPQ", "HUBB", "HUBS", "HWM",
     "ICHR", "INFY", "INTU", "IONQ", "ISRG", "JBL", "JPM", "KLIC", "KO", "KTOS",
 ]

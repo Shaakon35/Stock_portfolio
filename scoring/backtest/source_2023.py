@@ -40,6 +40,15 @@ _EXCH = {
     "DE": ("etr", lambda c: c),
     "SW": ("swx", lambda c: c),
 }
+# FX -> USD (AGENTS.md rates) and per-ticker reporting currency for the
+# foreign-mktcap derivation (ps x revenue x FX).
+_FX = {"KRW": 1 / 1350.0, "HKD": 1 / 7.8, "EUR": 1.08, "USD": 1.0}
+_CCY = {
+    "000660.KS": "KRW", "005930.KS": "KRW",
+    "0700.HK": "HKD", "1810.HK": "HKD", "9618.HK": "HKD", "9880.HK": "HKD",
+    "9988.HK": "HKD", "BESI.AS": "EUR", "SIE.DE": "EUR", "SMHN.DE": "EUR",
+}
+
 # explicit KRX/HK numeric codes
 _FOREIGN_CODE = {
     "000660.KS": ("krx", "000660"), "005930.KS": ("krx", "005930"),
@@ -145,10 +154,13 @@ def scrape_2023(ticker):
         mktcap = _at(rat, "marketCap", ridx)
     except Exception:
         pass
-    if (mktcap is None or ps is None) and revenue:
-        # fall back: derive PS from mktcap/revenue if one is missing
-        if mktcap and ps is None and revenue:
-            ps = round(mktcap / revenue, 2)
+    if mktcap and ps is None and revenue:
+        ps = round(mktcap / revenue, 2)
+    # Foreign / ADR pages carry no marketCap array; derive it from
+    # ps x FY2023 revenue (reporting currency) and FX-convert to USD.
+    if mktcap is None and ps and revenue:
+        fx = _FX.get(_CCY.get(ticker, "USD"), 1.0)
+        mktcap = ps * revenue * fx
 
     fcf_pos = ""
     try:
@@ -193,8 +205,41 @@ COLUMNS = ["ticker", "mktcap_b", "fwd_rev_growth", "ttm_rev_growth",
            "net_margin_hist"]
 
 
+UNIVERSE_CSV = Path(__file__).resolve().parent / "fundamentals_2023_universe.csv"
+
+
+def _append_to_csv(rows, order):
+    """Append `rows` (dict ticker->record) to the universe CSV in `order`,
+    preserving the leading '#' header and skipping tickers already present."""
+    import csv
+    raw = UNIVERSE_CSV.read_text().splitlines(keepends=True)
+    comments = [ln for ln in raw if ln.lstrip().startswith("#")]
+    data = [ln for ln in raw if not ln.lstrip().startswith("#")]
+    have = set()
+    if data:
+        for r in csv.DictReader(data):
+            have.add((r.get("ticker") or "").strip())
+    existing = list(csv.DictReader(data)) if data else []
+    added = 0
+    for t in order:
+        if t in rows and t not in have:
+            existing.append({k: rows[t].get(k, "") for k in COLUMNS})
+            added += 1
+    with open(UNIVERSE_CSV, "w", newline="") as fh:
+        fh.writelines(comments)
+        w = csv.DictWriter(fh, fieldnames=COLUMNS, lineterminator="\n")
+        w.writeheader()
+        w.writerows(existing)
+    print(f"  [csv] appended {added} rows -> {UNIVERSE_CSV.name} "
+          f"(total {len(existing)})")
+
+
 def main():
     args = sys.argv[1:]
+    append = False
+    if args and args[0] == "--append":
+        append = True
+        args = args[1:]
     if args and args[0] == "--batch":
         import importlib.util
         spec = importlib.util.spec_from_file_location(
@@ -213,7 +258,8 @@ def main():
         else:
             fails.append(t)
         time.sleep(0.3)
-    # emit JSON to stdout for the caller to assemble into the CSV
+    if append:
+        _append_to_csv(out, tickers)
     print("\n===JSON===")
     print(json.dumps({"rows": out, "fails": fails}))
 
