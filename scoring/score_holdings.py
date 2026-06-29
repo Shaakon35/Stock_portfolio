@@ -1201,6 +1201,12 @@ _FIN_EXCH = {  # foreign listings use /quote/<exch>/<code>/financials/
     "DE": ("etr", lambda code: code),       # Xetra
     "AS": ("ams", lambda code: code),       # Amsterdam
     "SW": ("swx", lambda code: code),       # SIX Swiss
+    "L":  ("lon", lambda code: code),       # London: SHEL.L -> lon/SHEL
+    "T":  ("tyo", lambda code: code),       # Tokyo:  7203.T -> tyo/7203
+    "PA": ("epa", lambda code: code),       # Paris:  MC.PA  -> epa/MC
+    "TO": ("tsx", lambda code: code),       # Toronto: RY.TO -> tsx/RY
+    "NS": ("nse", lambda code: code),       # India NSE: RELIANCE.NS -> nse/RELIANCE
+    "AX": ("asx", lambda code: code),       # Australia ASX: BHP.AX -> asx/BHP
 }
 
 
@@ -1346,13 +1352,19 @@ _FX_PER_USD = {  # local currency units per 1 USD (divide local cap by this)
     "KRW": 1350.0,  # Korea (.KS)
     "HKD": 7.8,     # Hong Kong (.HK)
     "EUR": None,    # EUR is quoted USD-per-EUR; handled specially below
-    "CHF": 0.90,    # approx CHF per USD (.SW) — placeholder, refine in header
+    "CHF": 0.90,    # approx CHF per USD (.SW)
+    "GBP": 0.79,    # UK (.L) — note: mktcap reported in GBP, not pence
+    "JPY": 157.0,   # Japan (.T)
+    "CAD": 1.37,    # Canada (.TO)
+    "INR": 83.5,    # India (.NS)
+    "AUD": 1.52,    # Australia (.AX)
 }
 _EUR_USD = 1.08     # USD per 1 EUR (.AS / .DE listings priced in EUR)
 
 # Map the CSV ticker suffix to the local currency of its market-cap figure.
 _SUFFIX_CCY = {
     "KS": "KRW", "HK": "HKD", "AS": "EUR", "DE": "EUR", "SW": "CHF",
+    "L": "GBP", "T": "JPY", "PA": "EUR", "TO": "CAD", "NS": "INR", "AX": "AUD",
 }
 
 
