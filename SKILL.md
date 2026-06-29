@@ -187,6 +187,69 @@ W4 (hyperscaler cloud — MSFT/GOOGL/AMZN/META/ORCL) is held at **0% book** (wav
 Mega-cap cloud is capped by law-of-large-numbers and already owned passively via the core ETFs.
 Names are kept in the basket at 0% for easy re-add. The freed weight was tilted into W2/W3/W5/W6.
 
+### Always Wire New Tickers Into the WATCHLIST (CSV ↔ WATCHLIST coverage)
+
+**Rule: every ticker that exists in the fundamentals CSV (`scoring/fundamentals_*.csv`)
+must be either HELD (in a wave basket / `STRATEGY`) or present in `AI_allocations.py`'s
+`WATCHLIST`. No CSV name may be left unreferenced.** This is the coverage invariant — a row
+sitting in the CSV but in neither structure is invisible to the scorer (`score_holdings.py
+--by-strategy --watchlist` only renders names the allocations module references), so the data
+is sourced but never seen.
+
+Whenever you **add new tickers** (sourcing them into the CSV, e.g. a new market or theme), the
+job is **not done** until they are also added to `WATCHLIST`. Concretely, after the CSV is
+updated:
+
+1. Source the rows into the CSV (`--sync-csv` for held/watchlisted names already referenced,
+   or a manual/scripted append for a brand-new batch — see AGENTS.md §1–3).
+2. Add a `WATCHLIST` entry for **every** new name (unless it is going straight into a basket as
+   a held position). This is what makes them render and score.
+3. Re-run the coverage check (below) — it must print `NONE`.
+
+> Note the **direction** of `--sync-csv`: it adds CSV rows for names that are *already* in the
+> allocations/watchlist but *missing* from the CSV. It does **not** invent watchlist entries.
+> So a fresh batch is a two-step dance: get them into `WATCHLIST` **and** into the CSV. If you
+> sourced the CSV first, `--sync-csv` will report `added 0` because it has nothing to back-fill
+> — that is expected, not a failure; you still owe the `WATCHLIST` entries.
+
+#### WATCHLIST entry schema (AI_allocations.py — NOT the PUMP dashboard schema)
+
+This is the **strategy-tagged monitor** dict in `portfolio/AI_allocations.py` (distinct from
+the richer PUMP-dashboard schema in `config/watchlist.py` documented later). Each entry:
+
+```python
+"AZN.L": {"strategy": "dca",   "pos": "Mid", "cagr": (6, 12),
+          "area": "Pharma (AstraZeneca) — UK",
+          "note": "Oncology/biopharma pipeline compounder. DCA-grade quality."},
+```
+
+- `strategy` — `dca | cycle | catalyst | lottery` (same vocabulary as `STRATEGY`).
+- `pos` — cycle position (`Early … Late` or `Binary`); mature blue-chips are usually `Mid`.
+- `cagr` — `(lo, hi)` CAGR band, %. **Invariant: `pos == "Binary"` ⇒ `cagr[0] < 0`** (a binary
+  must show its downside). **`strategy in {catalyst, lottery}` ⇒ `pos` should be `Binary`.**
+  Mature compounders/cyclicals (`dca`/`cycle`) keep an all- or mostly-positive band and are
+  never `Binary`, so they sail through `validate_watchlist()`.
+- `area` — short sector + company + market label.
+- `note` — one-line thesis; keep it factual.
+
+Classification shortcut for large-cap international names: **`dca`** for quality compounders
+(staples, pharma, quality tech/IT, luxury, regulated utilities), **`cycle`** for
+banks/insurers, energy, miners, and capex-driven industrials. Reserve `catalyst`/`lottery`
+(and therefore `Binary`) for genuine single-event or pre-revenue punts only.
+
+#### Coverage check (run after adding tickers, and as part of the gate)
+
+```python
+import portfolio.AI_allocations as m, scoring.score_holdings as S
+held = set().union(*[set(b.keys()) for _, b in m.ALL_BASKETS]) | set(m.STRATEGY.keys())
+csv  = set(dict(S.load_fundamentals(S.default_csv())).keys())   # newest fundamentals_*.csv
+missing = csv - set(m.WATCHLIST) - held
+print("uncovered CSV tickers:", sorted(missing) if missing else "NONE")
+```
+
+`NONE` is the pass condition. (Watchlist names *without* a CSV row are fine — those are the
+deliberate no-fundamentals monitors like MU/SRUUF.)
+
 ### Validation Gate (run ALL before any commit to AI_allocations / notebook)
 
 ```python
@@ -194,6 +257,13 @@ import portfolio.AI_allocations as a
 a.verify_allocations()                 # raises if wave/basket sums or constraints break
 assert a.validate_watchlist() == []    # watchlist schema integrity
 # every basket and TARGET_WEIGHTS must sum to 1.0 within 1e-9
+
+# CSV ↔ WATCHLIST coverage: no CSV ticker may be unreferenced (see section above)
+import scoring.score_holdings as S
+held = set().union(*[set(b.keys()) for _, b in a.ALL_BASKETS]) | set(a.STRATEGY.keys())
+csv  = set(dict(S.load_fundamentals(S.default_csv())).keys())
+assert not (csv - set(a.WATCHLIST) - held), \
+    f"uncovered CSV tickers: {sorted(csv - set(a.WATCHLIST) - held)}"
 ```
 
 Plus: `python3 -m py_compile portfolio/AI_allocations.py config/forecasts.py`, `jq empty` on

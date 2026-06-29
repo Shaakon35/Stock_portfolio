@@ -44,6 +44,17 @@ refreshing or extending the data.
   new rows (no separate `--fill-ttm` step; pass `--no-fill-ttm` to skip). It
   never edits existing rows (use `--overwrite` for that) and skips the
   source-corrupted / no-page names (`MU`/`SMHV.SW`/`SRUUF`) with a warning.
+- **Coverage invariant — always wire new tickers into the watchlist too.** A CSV
+  row is invisible to `score_holdings.py --by-strategy --watchlist` unless the
+  name is also HELD (in a wave basket / `STRATEGY`) or present in
+  `AI_allocations.py`'s `WATCHLIST`. After sourcing **any** new name into the
+  CSV, add a matching `WATCHLIST` entry (schema: `strategy`/`pos`/`cagr`/`area`/
+  `note`; `dca` for quality compounders, `cycle` for banks/energy/miners/
+  industrials; reserve `catalyst`/`lottery`+`Binary` for true single-event/
+  pre-revenue punts). Note the **direction** of `--sync-csv`: it back-fills CSV
+  rows for names *already* referenced in the allocations/watchlist — it does not
+  create watchlist entries, so a CSV-first batch will report `added 0` and still
+  owes its `WATCHLIST` entries. Verify with the coverage check below.
 
 ### 2. Column schema
 
@@ -192,15 +203,22 @@ PORTFOLIO_USE=ai python3 scoring/score_holdings.py --by-strategy --watchlist > /
 PORTFOLIO_USE=ai python3 scoring/score_holdings.py --by-strategy --watchlist > /tmp/r2.txt 2>&1
 diff /tmp/r1.txt /tmp/r2.txt   # must be empty
 
-# 3. allocation + watchlist invariants
-PORTFOLIO_USE=ai python3 -c "import portfolio.AI_allocations as m; \
+# 3. allocation + watchlist invariants + CSV<->WATCHLIST coverage
+PORTFOLIO_USE=ai python3 -c "import portfolio.AI_allocations as m, scoring.score_holdings as S; \
 assert m.verify_allocations() is None; assert m.validate_watchlist() == []; \
+held=set().union(*[set(b.keys()) for _,b in m.ALL_BASKETS])|set(m.STRATEGY.keys()); \
+csv=set(dict(S.load_fundamentals(S.default_csv())).keys()); \
+miss=csv-set(m.WATCHLIST)-held; assert not miss, f'uncovered CSV tickers: {sorted(miss)}'; \
 print('PASS')"
 ```
 
 - `verify_allocations()` (AI_allocations.py) — asserts baskets/TARGET_WEIGHTS
   sum to 1.0; returns `None` on pass.
 - `validate_watchlist()` — returns `[]` (empty list) on pass.
+- **CSV ↔ WATCHLIST coverage** — every CSV ticker must be HELD or in `WATCHLIST`;
+  the gate asserts the uncovered set is empty. A fresh batch of names is not done
+  until each has a `WATCHLIST` entry (see §1 coverage invariant). Watchlist names
+  *without* a CSV row are fine (the no-fundamentals monitors).
 - Also confirm no **unexpected** `data = -` rows remain in the output (only the
   intentional no-fundamentals trusts like SRUUF should show `-`).
 
