@@ -2433,6 +2433,11 @@ WATCHLIST = {
              "area": "Salvage-vehicle auctions (Copart)",
              "note": "Two-sided salvage-auction network; high-margin moat. "
                      "DCA-grade compounder."},
+    "KKR":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (8, 18),
+             "area": "Alternative-asset manager (KKR)",
+             "note": "PE / credit / insurance compounder; fee-related earnings "
+                     "steady but carry + balance-sheet marks track the market "
+                     "cycle. Cyclical-quality — buy dips."},
 }
 
 
