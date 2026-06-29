@@ -31,7 +31,11 @@ TARGET_WEIGHTS = {
                            #          conviction sizing (BESI trimmed off its outsized 4.27%, ADI
                            #          grown). Prior: 0.438 (SW-CUT). SMHV basket share = 0.375/0.44
                            #          = 0.85227 to keep the CHF windfall pinned at 37.5% book.
-    "W2_POWER":     0.11,  # CHANGED: 0.12808 -> 0.11 (CONV-REBAL 2026-06). Hand-set book: TLN 3%
+    "W2_POWER":     0.107, # CHANGED: 0.11 -> 0.107 (DECONC-OPT3 2026-06). TLN trimmed 5.0% -> 3.5%
+                           #          (de-concentrate the largest single bet); GEV/CCJ/HUBB each
+                           #          grown 2.0% -> 2.4% (+0.4 each). Net wave -0.3% (the 1.5% off
+                           #          TLN, less 1.2% spread within-wave, the remaining 0.3% routed
+                           #          cross-wave to W5/W7). Prior note: 0.12808 -> 0.11. Hand-set book: TLN 3%
                            #          (highest CONV in wave) + GEV/HUBB/CCJ/ETN 2% each = 11.0%.
                            #          Prior: 0.126 (SW-CUT). PWR (AVOID G4.0) and OKLO (AVOID, 30%
                            #          data [GAP], F1.2 — a blind bet) CUT. Added TLN (Talen) —
@@ -48,7 +52,11 @@ TARGET_WEIGHTS = {
                            #          most $ in the highest mean-reversion risk. VRT trimmed (AVOID
                            #          G5.8). ANET grown (QUALITY 9.6, best all-round name). FN/COHR/
                            #          ALAB kept.
-    "W4_CLOUD":     0.1349,# CHANGED: 0.10165 -> 0.1349 (CONV-REBAL 2026-06). Wave absorbs ALL the
+    "W4_CLOUD":     0.1259,# CHANGED: 0.1349 -> 0.1259 (DECONC-OPT3 2026-06). ORCL trimmed 4.49% ->
+                           #          3.59% (de-concentrate the 2nd-largest single bet, -0.90%); the
+                           #          other five W4 names unchanged in book%, so the whole -0.90% is
+                           #          routed cross-wave (GEV/CCJ/HUBB/AXON/APP/RDDT +0.4 each).
+                           #          Prior note: 0.10165 -> 0.1349 (CONV-REBAL 2026-06). Wave absorbs ALL the
                            #          book freed by trimming the rest to conviction targets — the
                            #          5 highest-CONV DCA names on the board live here. ~Equal slots
                            #          2.25% each (AMZN 2.24%, lowest CONV, shaved 0.01 to hit exactly
@@ -61,7 +69,10 @@ TARGET_WEIGHTS = {
                            #          37.5% book). Mega-cap cloud is the cheapest large-cap quality
                            #          on the board and the single best diversifier off the silicon-
                            #          heavy book the scorer points to.
-    "W5_SOFTWARE":  0.0702,# CHANGED: 0.0503 -> 0.0702 (COHR-CUT 2026-06). Grown by the ~2% freed
+    "W5_SOFTWARE":  0.0782,# CHANGED: 0.0702 -> 0.0782 (DECONC-OPT3 2026-06). AXON 2.0% -> 2.4% and
+                           #          APP 1.5% -> 1.9% (+0.4 each), funded by the TLN/ORCL trims.
+                           #          NOW/PLTR and the PANW/CRWD stubs unchanged in book%.
+                           #          Prior note: 0.0503 -> 0.0702 (COHR-CUT 2026-06). Grown by the ~2% freed
                            #          from cutting COHR (W3): PLTR promoted 0.01% -> 1.5% (highest
                            #          upside on the board, 9.6) and APP grown 1.0% -> 1.5%. Now
                            #          NOW 2% + AXON 2% + PLTR 1.5% + APP 1.5% + PANW/CRWD 0.01% stubs.
@@ -76,7 +87,9 @@ TARGET_WEIGHTS = {
                            #          RKLB (AVOID) and SYM (GAAP-unprofitable Binary) SHRUNK to 0.5%
                            #          lottery stubs; IONQ (PRIME catalyst 6.5/6.28) grown. TMDX
                            #          kept. The convex tail stays small.
-    "W7_DIVERSIFY": 0.07,  # CHANGED: 0.07685 -> 0.07 (CONV-REBAL 2026-06). Hand-set: LLY 2.5% +
+    "W7_DIVERSIFY": 0.074, # CHANGED: 0.07 -> 0.074 (DECONC-OPT3 2026-06). RDDT grown 2.0% -> 2.4%
+                           #          (+0.4), funded by the TLN/ORCL trims. LLY/NU unchanged in book%.
+                           #          Prior note: 0.07685 -> 0.07 (CONV-REBAL 2026-06). Hand-set: LLY 2.5% +
                            #          NU 2.5% + RDDT 2.0% = 7.0%. Prior: 0.0756 (SW-CUT)
                            #          diversifiers that break the book's single-factor AI-capex
                            #          bet. LLY (pharma, KEEP-DCA 9.2/0.19) + NU (fintech, PRIME
@@ -213,10 +226,13 @@ W1_SILICON_TARGETS = {
 # Kept commented for easy re-add (restore here + in STRATEGY, then renormalize to 1.0).
 #   "ABBN.SW": 0.1250,# HVDC / transformers (EU) — long-distance grid, DCA
 W2_POWER_TARGETS = {
-    "GEV":     0.1818181818,# CHANGED: 0.26667 -> 0.18182 (CONV-REBAL 2026-06) — set to 2.0% book
+    "GEV":     0.2242990654,# CHANGED: 0.18182 -> 0.22430 (DECONC-OPT3 2026-06) — grown to 2.4% book
+                      # (0.107 * 0.22430 = 0.024), +0.4% from the TLN de-concentration trim.
+                      # Prior: 0.26667 -> 0.18182 (CONV-REBAL 2026-06) — was 2.0% book
                       # (0.11 * 0.18182 = 0.02). grid/gas turbines, HOLD FOREVER (Late but DCA —
                       # keep). KEEP-DCA 7.8.
-    "CCJ":     0.1818181818,# CHANGED: 0.23333 -> 0.18182 (CONV-REBAL 2026-06) — set to 2.0% book.
+    "CCJ":     0.2242990654,# CHANGED: 0.18182 -> 0.22430 (DECONC-OPT3 2026-06) — grown to 2.4% book
+                      # (+0.4% from the TLN trim). Prior: 0.23333 -> 0.18182 (CONV-REBAL 2026-06) — was 2.0% book.
                       # uranium leader, HOLD FOREVER. KEEP-DCA 7.3.
     "CEG":     0.0000,# CHANGED: 0.12 -> 0.00 — TRIMMED: below 200d / death cross (tech sell
                       # signal overrides thesis, pt 8). Kept at 0% for easy re-add.
@@ -224,9 +240,13 @@ W2_POWER_TARGETS = {
                       # (CONV 5.22, highest risk 5.5, worst PEG 3.11) and redundant with HUBB
                       # (same electrical-equipment exposure). Its 2.0% book consolidated into TLN.
                       # transmission/electrification, DCA. KEEP-DCA 6.3.
-    "HUBB":    0.1818181818,# CHANGED: 0.16 -> 0.18182 (CONV-REBAL 2026-06) — set to 2.0% book.
+    "HUBB":    0.2242990654,# CHANGED: 0.18182 -> 0.22430 (DECONC-OPT3 2026-06) — grown to 2.4% book
+                      # (+0.4% from the TLN trim). Prior: 0.16 -> 0.18182 (CONV-REBAL 2026-06) — was 2.0% book.
                       # transformers / grid gear — 2-4yr lead-times, early-cycle, DCA.
-    "TLN":     0.4545454545,# CHANGED: 0.27273 -> 0.45455 (TLN-CONSOL 2026-06) — grown to 5.0%
+    "TLN":     0.3271028037,# CHANGED: 0.45455 -> 0.32710 (DECONC-OPT3 2026-06) — TRIMMED to 3.5%
+                      # book (0.107 * 0.32710 = 0.035) to de-concentrate the largest single bet.
+                      # The freed 1.5%: 1.2% spread within-wave (GEV/CCJ/HUBB +0.4 each), 0.3%
+                      # routed cross-wave. Prior: 0.27273 -> 0.45455 (TLN-CONSOL 2026-06) — was 5.0%
                       # book (0.11 * 0.45455 = 0.05) by absorbing ETN's freed 2.0%. CCJ kept (only
                       # rare-resource/uranium name in the book). Prior: 0.16667 -> 0.27273
                       # (CONV-REBAL 2026-06) — grown to 3.0%
@@ -323,20 +343,26 @@ W3_DCINFRA_TARGETS = {
 # operating mode and a real consumer-internet diversifier. Funded by a pro-rata
 # x0.84 trim of every other tradeable wave (SMHV held fixed at 37.5% book).
 W4_CLOUD_TARGETS = {
-    "MSFT":  0.1667902150,# Azure + OpenAI. Cloud anchor, every layer >=5.9. CONV 7.97. 2.25% book. dca.
-    "GOOG":  0.0007412898,# CHANGED: 0.16679 -> 0.00074 (ORCL-CONSOL 2026-06) — cut to the 0.01%-
-                    # book stub; its ~2.24% reallocated to ORCL (top-CONV name in the wave, 8.73).
+    "MSFT":  0.1787132645,# CHANGED: 0.16679 -> 0.17871 (DECONC-OPT3 2026-06) — sub-share up because
+                    # the wave shrank (ORCL trimmed); book UNCHANGED at 2.25%. Azure + OpenAI.
+                    # Cloud anchor, every layer >=5.9. CONV 7.97. dca.
+    "GOOG":  0.0007942812,# CHANGED: 0.00074 -> 0.00079 (DECONC-OPT3 2026-06) — sub-share up (wave
+                    # shrank); book UNCHANGED at the 0.01% stub. Prior: 0.16679 -> 0.00074
+                    # (ORCL-CONSOL 2026-06) — cut to the stub; its ~2.24% reallocated to ORCL.
                     # Kept as an easy-re-add stub, not deleted. Gemini + TPU + Cloud. CONV 7.50.
                     # Class C (non-voting) — swapped from GOOGL 2026-06: same business, cheaper share.
-    "AMZN":  0.1660489251,# AWS + retail. CONV 7.15 (lowest in wave). 2.24% book — shaved 0.01 off
-                    # the equal 2.25% so the whole book hits exactly 100.00. dca.
-    "META":  0.1667902150,# Open models + ad-AI. V 10.0 (dead cheap). CONV 8.50. 2.25% book. dca.
-    "ORCL":  0.3328391401,# CHANGED: 0.16679 -> 0.33284 (ORCL-CONSOL 2026-06) — GROWN to 4.49% book
-                    # by absorbing GOOG's freed ~2.24%. #1 DCA on the board (V 10.0, CONV 8.73,
-                    # PEG 0.69, fastest cloud growth in the wave). Cloud-capacity winner. dca.
-    "NFLX":  0.1667902150,# Streaming (Netflix) — scale + ad-tier + password monetization, FCF
-                    # inflecting up. Quality DCA at a premium multiple, CONV 8.14. The off-thesis
-                    # consumer-internet leg of the sleeve. 2.25% book. dca.
+    "AMZN":  0.1779189833,# CHANGED: 0.16605 -> 0.17792 (DECONC-OPT3 2026-06) — sub-share up (wave
+                    # shrank); book UNCHANGED at 2.24%. AWS + retail. CONV 7.15 (lowest in wave). dca.
+    "META":  0.1787132645,# CHANGED: 0.16679 -> 0.17871 (DECONC-OPT3 2026-06) — sub-share up (wave
+                    # shrank); book UNCHANGED at 2.25%. Open models + ad-AI. V 10.0 (dead cheap). CONV 8.50. dca.
+    "ORCL":  0.2851469420,# CHANGED: 0.33284 -> 0.28515 (DECONC-OPT3 2026-06) — TRIMMED to 3.59% book
+                    # (0.1259 * 0.28515) to de-concentrate the 2nd-largest single bet; the freed
+                    # ~0.90% routed cross-wave (GEV/CCJ/HUBB/AXON/APP/RDDT +0.4 each). Prior:
+                    # 0.16679 -> 0.33284 (ORCL-CONSOL 2026-06) — was 4.49% book.
+                    # #1 DCA on the board (V 10.0, CONV 8.73, PEG 0.69, fastest cloud growth). dca.
+    "NFLX":  0.1787132645,# CHANGED: 0.16679 -> 0.17871 (DECONC-OPT3 2026-06) — sub-share up (wave
+                    # shrank); book UNCHANGED at 2.25%. Streaming (Netflix) — scale + ad-tier +
+                    # password monetization, FCF inflecting up. Quality DCA, CONV 8.14. dca.
 }
 
 # --- WAVE 5: AI SOFTWARE / APPS (8.83%) ---
@@ -351,16 +377,16 @@ W5_SOFTWARE_TARGETS = {
     "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.0014245014,# CHANGED: 0.00199 -> 0.00142 (COHR-CUT 2026-06) — sub-share moved only
-                    # because the wave grew to 7.02%; book unchanged at the 0.01% stub. Security
+    "PANW":  0.0012787724,# CHANGED: 0.00142 -> 0.00128 (DECONC-OPT3 2026-06) — sub-share moved only
+                    # because the wave grew to 7.82%; book UNCHANGED at the 0.01% stub. Security
                     # platform — biggest, cheapest, steadiest, but scores RICH (RICHNESS 0.90,
                     # CONV 3.02 — lowest DCA on the board): too extended to keep real book. Easy
                     # re-add once it de-rates. DCA.
-    "CRWD":  0.0014245014,# CHANGED: 0.00199 -> 0.00142 (COHR-CUT 2026-06) — held at the 0.01%-
+    "CRWD":  0.0012787724,# CHANGED: 0.00142 -> 0.00128 (DECONC-OPT3 2026-06) — held at the 0.01%-
                     # book stub (sub-share moved only because the wave grew). AI cybersecurity.
                     # Scores RICH (RICHNESS 0.81, CONV 3.72) — same logic as PANW. Easy re-add. DCA.
-    "NOW":   0.2849002849,# CHANGED: 0.39761 -> 0.28490 (COHR-CUT 2026-06) — sub-share recomputed
-                    # for the grown 7.02% wave; book UNCHANGED at 2.00% (0.0702 * 0.28490 = 0.020).
+    "NOW":   0.2557544757,# CHANGED: 0.28490 -> 0.25575 (DECONC-OPT3 2026-06) — sub-share recomputed
+                    # for the grown 7.82% wave; book UNCHANGED at 2.00% (0.0782 * 0.25575 = 0.020).
                     # Still a co-anchor with AXON. The best-value DCA name on
                     # the board: QUALITY 8.2 with RICHNESS 0.00 (cheapest possible on the gate),
                     # 22x fwd / 0.89 PEG, down ~50% on the year. Workflow AI (Now Assist),
@@ -368,13 +394,16 @@ W5_SOFTWARE_TARGETS = {
     "ZS":    0.0000,# CHANGED: 0.1782 -> 0.00 — CUT (REBALANCE 2026-06). Zscaler scores AVOID
                     # (GROWTH 2.0) — the weakest software name held. Book rotated to NOW/AXON.
                     # 0% for easy re-add if the growth re-accelerates. CYCLE.
-    "AXON":  0.2849002849,# CHANGED: 0.39761 -> 0.28490 (COHR-CUT 2026-06) — sub-share recomputed
-                    # for the grown 7.02% wave; book UNCHANGED at 2.00%. Co-anchor with NOW. Public-safety
+    "AXON":  0.3069053708,# CHANGED: 0.28490 -> 0.30691 (DECONC-OPT3 2026-06) — GROWN to 2.4% book
+                    # (0.0782 * 0.30691 = 0.024), +0.4% from the TLN/ORCL de-concentration trims.
+                    # Co-anchor with NOW. Public-safety
                     # SaaS monopoly — 59% gross margin, sticky recurring revenue (evidence.com,
                     # Draft One AI), end-market that doesn't cycle. QUALITY 8.5, KEEP-DCA. Thin
                     # net/FCF is reinvestment by choice; hold through dips.
-    "PLTR":  0.2136752137,# CHANGED: 0.00199 -> 0.21368 (COHR-CUT 2026-06) — PROMOTED from the
-                    # 0.01% stub to a 1.5% book starter (0.0702 * 0.21368 = 0.015), funded by the
+    "PLTR":  0.1918158568,# CHANGED: 0.21368 -> 0.19182 (DECONC-OPT3 2026-06) — sub-share recomputed
+                    # for the grown 7.82% wave; book UNCHANGED at 1.5% (0.0782 * 0.19182 = 0.015).
+                    # Prior: 0.00199 -> 0.21368 (COHR-CUT 2026-06) — PROMOTED from the
+                    # 0.01% stub to a 1.5% book starter, funded by the
                     # cross-wave move of COHR's freed weight. The HIGHEST-UPSIDE name on the whole
                     # board (upside 9.6, CONV 8.25, PRIME, F 10.0 / V 8.1 / C 6.4) — the business
                     # scores elite. Sized at a STARTER (not full) on POSITION RISK the scorer can't
@@ -382,9 +411,10 @@ W5_SOFTWARE_TARGETS = {
                     # Europe/France data-sovereignty pushback capping the international TAM, and a
                     # priced-for-perfection multiple (~60x+ sales) where a single lumpy gov quarter
                     # de-rates it. Bought into weakness as planned, never chased. CYCLE — trim/add.
-    "APP":   0.2136752137,# CHANGED: 0.19881 -> 0.21368 (COHR-CUT 2026-06) — GROWN 1.0% -> 1.5%
-                    # book (0.0702 * 0.21368 = 0.015) via the cross-wave COHR move; also absorbs the
-                    # exact rounding residual so W5 subs sum to 1.0. AppLovin: AXON AI ad engine, the
+    "APP":   0.2429667519,# CHANGED: 0.21368 -> 0.24297 (DECONC-OPT3 2026-06) — GROWN 1.5% -> 1.9%
+                    # book (0.0782 * 0.24297 = 0.019), +0.4% from the TLN/ORCL trims; also absorbs the
+                    # exact rounding residual so W5 subs sum to 1.0. Prior: 0.19881 -> 0.21368
+                    # (COHR-CUT 2026-06) — was 1.5% book. AppLovin: AXON AI ad engine, the
                     # most profitable grower benchmarked against the held book (64% net margin, 35%
                     # fwd rev, PEG 0.69 — cheaper than PLTR for comparable growth). SIZED as a
                     # starter on POSITION RISK the scorer can't see: single-engine adtech (one
@@ -447,13 +477,17 @@ W6_SPEC_TARGETS = {
 #          ramp + AI data-licensing optionality. NOT a chip — an AI-economy play
 #          that diversifies the silicon-heavy book. Early, high-beta.
 W7_DIVERSIFY_TARGETS = {
-    "LLY":   0.3571428571,# CHANGED: 0.44444 -> 0.35714 (CONV-REBAL 2026-06) — set to 2.5% book
-                      # (0.07 * 0.35714 = 0.025). Eli Lilly — pharma compounder, fully
+    "LLY":   0.3378378378,# CHANGED: 0.35714 -> 0.33784 (DECONC-OPT3 2026-06) — sub-share recomputed
+                      # for the grown 7.4% wave; book UNCHANGED at 2.5% (0.074 * 0.33784 = 0.025).
+                      # Prior: 0.44444 -> 0.35714 (CONV-REBAL 2026-06). Eli Lilly — pharma compounder, fully
                       # uncorrelated to AI capex. KEEP-DCA. Watch: orforglipron Phase 3 + mfg build.
-    "NU":    0.3571428571,# CHANGED: 0.33333 -> 0.35714 (CONV-REBAL 2026-06) — set to 2.5% book
-                      # (0.07 * 0.35714 = 0.025). Nubank — LatAm digital bank. PRIME cycle, every
+    "NU":    0.3378378378,# CHANGED: 0.35714 -> 0.33784 (DECONC-OPT3 2026-06) — sub-share recomputed
+                      # for the grown 7.4% wave; book UNCHANGED at 2.5% (0.074 * 0.33784 = 0.025).
+                      # Prior: 0.33333 -> 0.35714 (CONV-REBAL 2026-06). Nubank — LatAm digital bank. PRIME cycle, every
                       # layer strong. EM-consumer/credit cyclical — buy dips, trim manias.
-    "RDDT":  0.2857142857,# CHANGED: 0.22222 -> 0.28571 (CONV-REBAL 2026-06) — 2.0% book (0.07 * 0.28571 = 0.02).
+    "RDDT":  0.3243243243,# CHANGED: 0.28571 -> 0.32432 (DECONC-OPT3 2026-06) — GROWN to 2.4% book
+                    # (0.074 * 0.32432 = 0.024), +0.4% from the TLN/ORCL de-concentration trims.
+                    # Prior: 0.22222 -> 0.28571 (CONV-REBAL 2026-06) — was 2.0% book.
                       # Reddit — social ads + AI data-licensing (selling 20y of human conversation
                       # to LLM labs). Scores CONV 7.66 (3rd-highest cycle name on the board) with
                       # NO binding layer below 8.0 (F8.2/V10.0/C8.0): cheap, not extended, good
