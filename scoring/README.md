@@ -84,6 +84,43 @@ the single best cross-name comparator.
 | **net margin** | % | Profitability (GAAP, op-margin proxy for distorted names). | Quality of earnings. |
 | **P/S** | × | Price/sales. | Crude richness; high P/S = expensive. |
 | **PEG** | × | P/E ÷ growth. < 1 = cheap for the growth. | Valuation vs growth in one number. |
+| **upside** | 0–10 | **Potential upside** = the REWARD leg of CONV (how much it can compound). | Rank reward potential alone. |
+| **risk** | 0–10 | **Risk of loss** = `10 − SAFETY` (inverted downside protection). **Higher = more dangerous.** | Rank downside alone. |
+
+### CONV / upside / risk are one consistent triple
+
+`upside` and `risk` are **not separate estimates** — they are the two halves
+CONV is already built from, surfaced so you can see *why* a name ranks where it
+does:
+
+```
+CONV = sqrt( upside * (10 - risk) )      # before two adjustments, below
+```
+
+(The identity holds exactly *before* CONV's two final adjustments: a `[PEAK?]`
+name is then cut ×0.85 — so e.g. CRDO's CONV reads a little below
+`sqrt(upside*(10-risk))` — and a sub-75%-data name is scaled by its coverage.
+`upside`/`risk` themselves are not haircut, so read them as the raw reward/risk
+and treat a peak/thin flag as the reason CONV sits below the two.)
+
+- **upside = REWARD** — `0.50·F + 0.50·GROWTH` (cycle) or `0.50·QUALITY + 0.50·F`
+  (DCA). The "how much can this compound" leg.
+- **risk  = 10 − SAFETY** — SAFETY is `0.35·V + 0.25·8PT + 0.20·C + 0.20·bind`
+  (cycle) or `0.45·V + 0.35·(1−RICHNESS) + 0.20·bind` (DCA). It is the engine's
+  downside-protection composite (valuation + cycle position + weakest layer), so
+  inverting it gives risk-of-loss. Higher risk = expensive / late-cycle / a
+  broken layer.
+
+Because CONV is the **geometric** mean of the two, a name needs *both* a high
+upside and a low risk to score well — a huge upside at huge risk (e.g. ALAB,
+PLTR) is deliberately pulled back down. This is why you read all three together:
+
+- **high upside + low risk** → the names to own at size (ORCL, NOW, CLS, BESI).
+- **high upside + high risk** → convex bets; correct to hold *small* (PLTR, ALAB,
+  APP, CRDO). The upside is real but the risk caps the size.
+- **low upside + high risk** → the cut candidates (COHR, ETN, and the parked
+  PANW/CRWD stubs at PEG ~5).
+- **low upside + low risk** → safe but capped; fine as ballast, won't "explode".
 
 ### How CONV is built (the comparator)
 
@@ -134,31 +171,55 @@ import os; os.environ["PORTFOLIO_USE"] = "ai"
 import scoring.score_holdings as S, portfolio.AI_allocations as m
 fund = dict(S.load_fundamentals(S.default_csv()))
 port = dict(S.portfolio_rows(include_watchlist=False))
+
+def triple(t, info):
+    """Return (CONV, upside, risk) — upside=REWARD, risk=10-SAFETY, the two
+    halves CONV is built from, using the rubric that matches the name's job."""
+    f = fund.get(t, {})
+    eight, _, _ = S.score_8point(t, f, info)
+    g10, _ = S.score_growth(t, f, info)
+    layers, binding = S.layer_scores(t, f, info)
+    cov = S._coverage(f)
+    F, V, C, bind = layers["FUND"], layers["VAL"], layers["CYCLE"], layers[binding]
+    if info["strategy"] == "dca":
+        q10, rich, _ = S.dca_quality(t, f)
+        upside = 0.50 * q10 + 0.50 * F
+        safety = 0.45 * V + 0.35 * (1 - rich) * 10 + 0.20 * bind
+        conv = S.dca_conviction(q10, layers, bind, rich, cov)
+    else:
+        p8 = eight / 8.0 * 10.0
+        upside = 0.50 * F + 0.50 * g10
+        safety = 0.35 * V + 0.25 * p8 + 0.20 * C + 0.20 * bind
+        conv = S.conviction(g10, eight, layers, bind, S.peak_trap(t, f, info), cov)
+    return conv, upside, 10.0 - safety            # CONV ~ sqrt(upside*(10-risk))
+
+def g(f, k, p="{:.1f}"):
+    v = f.get(k); return p.format(v) if isinstance(v, (int, float)) else "-"
+
 for wave, basket in m.ALL_BASKETS:
     held = [t for t, x in basket.items() if x > 0 and t != "SMHV.SW"]
+    if not held:
+        continue
     rows = []
     for t in held:
-        info = port[t]; f = fund.get(t, {})
-        eight, _, _ = S.score_8point(t, f, info)
-        g10, _ = S.score_growth(t, f, info)
-        layers, binding = S.layer_scores(t, f, info)
-        cov = S._coverage(f)
-        if info["strategy"] == "dca":
-            q10, rich, _ = S.dca_quality(t, f)
-            conv = S.dca_conviction(q10, layers, layers[binding], rich, cov)
-        else:
-            conv = S.conviction(g10, eight, layers, layers[binding],
-                                S.peak_trap(t, f, info), cov)
-        rows.append((conv, t, info["book_pct"], binding))
-    rows.sort(reverse=True)                       # highest CONV first
-    print(f"\n{wave}:")
-    for conv, t, book, bind in rows:
-        print(f"  {t:10s} book={book:5.2f}%  CONV={conv:4.2f}  bind={bind}")
+        info = port[t]; conv, up, risk = triple(t, info)
+        rows.append((conv, t, info["book_pct"], up, risk, fund.get(t, {})))
+    rows.sort(reverse=True)                        # highest CONV first
+    print(f"\n### {wave}  ({m.TARGET_WEIGHTS[wave]*100:.2f}% book)")
+    print("| ticker | book% | fwdRev | fwdEPS | PEG | P/S | margin | CONV | upside | risk |")
+    print("|---|---|---|---|---|---|---|---|---|---|")
+    for conv, t, book, up, risk, f in rows:
+        print(f"| {t} | {book:.2f} | {g(f,'fwd_rev_growth')}% | {g(f,'fwd_eps_growth')}% "
+              f"| {g(f,'peg','{:.2f}')} | {g(f,'ps_ratio')} | {g(f,'net_margin')}% "
+              f"| {conv:.2f} | {up:.1f} | {risk:.1f} |")
 ```
 
-The **lowest-CONV name in each wave is the first candidate to cut** — confirm it
-is genuinely redundant (same job as a higher-CONV sibling) or genuinely weak
-(`bind=FUN`), not just structurally low (peak/convex).
+**Reading the table:** sort by CONV, then cross-check upside vs risk —
+- **lowest-CONV name in each wave is the first cut candidate** (confirm it is
+  genuinely redundant or weak via `bind`, not structurally low like peak/convex);
+- **high upside + high risk** names are correct to hold *small* (the upside is
+  real but the risk caps the size — e.g. PLTR, ALAB, APP);
+- **high upside + low risk** are the own-at-size names (ORCL, NOW, CLS, BESI).
 
 ## Refreshing the data
 
