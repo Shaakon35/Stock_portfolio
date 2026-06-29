@@ -299,7 +299,8 @@ W3_DCINFRA_TARGETS = {
 # x0.84 trim of every other tradeable wave (SMHV held fixed at 37.5% book).
 W4_CLOUD_TARGETS = {
     "MSFT":  0.1667902150,# Azure + OpenAI. Cloud anchor, every layer >=5.9. CONV 7.97. 2.25% book. dca.
-    "GOOGL": 0.1667902150,# Gemini + TPU + Cloud. Search/cloud/AI. CONV 7.50. 2.25% book. dca.
+    "GOOG":  0.1667902150,# Gemini + TPU + Cloud. Search/cloud/AI. CONV 7.50. 2.25% book. dca.
+                    # Class C (non-voting) — swapped from GOOGL 2026-06: same business, cheaper share.
     "AMZN":  0.1660489251,# AWS + retail. CONV 7.15 (lowest in wave). 2.24% book — shaved 0.01 off
                     # the equal 2.25% so the whole book hits exactly 100.00. dca.
     "META":  0.1667902150,# Open models + ad-AI. V 10.0 (dead cheap). CONV 8.50. 2.25% book. dca.
@@ -498,7 +499,7 @@ STRATEGY = {
 
     # --- W4 CLOUD (purest DCA wave) ---
     "MSFT":    "dca",       # Hold forever compounder
-    "GOOGL":   "dca",       # Hold forever compounder
+    "GOOG":    "dca",       # Hold forever compounder (Class C, swapped from GOOGL 2026-06)
     "AMZN":    "dca",       # Hold forever
     "META":    "dca",       # Hold forever
     "ORCL":    "dca",       # Cloud-capacity compounder
@@ -2282,10 +2283,7 @@ WATCHLIST = {
     #     are sourced at full coverage via `score_holdings.py --sync-csv`; the
     #     cagr band here is notebook metadata only (dropped from scoring per
     #     AGENTS.md). Strategy/pos tags follow the same vocabulary as above.
-    "GOOG": {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 16),
-             "area": "Alphabet Class C (search/cloud/AI)",
-             "note": "Same business as held GOOGL (non-voting class). "
-                     "Mega-cap compounder; DCA-grade."},
+
     "PEP":  {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 8),
              "area": "Global snacks + beverages (PepsiCo)",
              "note": "Defensive staples compounder; pricing power + dividend. "
