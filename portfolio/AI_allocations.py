@@ -330,16 +330,17 @@ W5_SOFTWARE_TARGETS = {
     "CRWD":  0.0019880716,# CHANGED: 0.00194 -> 0.00199 (CONV-REBAL 2026-06) — held at the 0.01%-
                     # book stub. AI cybersecurity. Scores RICH (RICHNESS 0.81, CONV 3.72) — same
                     # logic as PANW, too extended to keep real book. Easy re-add once it de-rates. DCA.
-    "NOW":   0.4970178926,# CHANGED: 0.66279 -> 0.49702 (CONV-REBAL 2026-06) — set to 2.50% book
-                    # (0.0503 * 0.49702 = 0.025), co-anchor with AXON. The best-value DCA name on
+    "NOW":   0.3976143141,# CHANGED: 0.49702 -> 0.39761 (APP-ADD 2026-06) — trimmed 2.50% -> 2.00%
+                    # book (0.0503 * 0.39761 = 0.020) to fund APP's 1.0% starter. Still a co-anchor
+                    # with AXON. The best-value DCA name on
                     # the board: QUALITY 8.2 with RICHNESS 0.00 (cheapest possible on the gate),
                     # 22x fwd / 0.89 PEG, down ~50% on the year. Workflow AI (Now Assist),
                     # profitable. KEEP-DCA.
     "ZS":    0.0000,# CHANGED: 0.1782 -> 0.00 — CUT (REBALANCE 2026-06). Zscaler scores AVOID
                     # (GROWTH 2.0) — the weakest software name held. Book rotated to NOW/AXON.
                     # 0% for easy re-add if the growth re-accelerates. CYCLE.
-    "AXON":  0.4970178926,# CHANGED: 0.33139 -> 0.49702 (CONV-REBAL 2026-06) — GROWN to 2.50%
-                    # book, co-anchor with NOW. Public-safety
+    "AXON":  0.3976143141,# CHANGED: 0.49702 -> 0.39761 (APP-ADD 2026-06) — trimmed 2.50% -> 2.00%
+                    # book to fund APP's 1.0% starter. Still a co-anchor with NOW. Public-safety
                     # SaaS monopoly — 59% gross margin, sticky recurring revenue (evidence.com,
                     # Draft One AI), end-market that doesn't cycle. QUALITY 8.5, KEEP-DCA. Thin
                     # net/FCF is reinvestment by choice; hold through dips.
@@ -352,6 +353,14 @@ W5_SOFTWARE_TARGETS = {
                     # and a priced-for-perfection multiple (~60x+ sales) where a single lumpy gov
                     # quarter de-rates it. Grow into a SMALL starter (~1.5% book) bought on
                     # weakness, never chased. CYCLE — trim/add, not blind DCA.
+    "APP":   0.1988071570,# NEW (APP-ADD 2026-06) — 1.0% book starter (0.0503 * 0.19881 = 0.010),
+                    # funded by trimming NOW + AXON 0.5% each. AppLovin: AXON AI ad engine, the
+                    # most profitable grower benchmarked against the held book (64% net margin, 35%
+                    # fwd rev, PEG 0.69 — cheaper than PLTR for comparable growth). SIZED SMALL on
+                    # POSITION RISK the scorer can't see: single-engine adtech (one algorithm),
+                    # P/S ~24 priced-for-perfection, regulatory/privacy tail. Same convex-bet
+                    # discipline as PLTR — grow only on weakness, never chase. CYCLE — trim into
+                    # strength.
     "SNOW":  0.0000,# CHANGED: 0.1904 -> 0.00 — MOVED to CRDO (W3) on growth-max pass.
                     # Healed bubble hangover but slowest forecast of the survivors.
     "DDOG":  0.0000,# CHANGED: 0.1602 -> 0.00 — CUT (REBALANCE 2026-06). AI observability.
@@ -515,6 +524,8 @@ STRATEGY = {
                             # economics. End-market doesn't cycle -> hold through dips.
     "SNOW":    "dca",       # FCF-positive, healed bubble hangover
     "PLTR":    "cycle",     # Best business but 62x sales — trim/add, not blind DCA
+    "APP":     "cycle",     # NEW (2026-06). AppLovin AI ad engine — high momentum/beta, single-
+                            # engine adtech at ~24x sales. Trim into strength, never chase. CYCLE.
     "DDOG":    "cycle",     # Consumption model — buy dips, trim momentum spikes
 
     # --- W6 SPECULATIVE ---
@@ -1428,14 +1439,9 @@ WATCHLIST = {
         "note":     "Merchant GMV + payments; consumer-cyclical but secular SMB "
                     "e-commerce. Cycle/Mid.",
     },
-    "APP": {
-        "strategy": "cycle",
-        "pos":      "Mid",
-        "cagr":     (18, 35),
-        "area":     "Mobile ad-tech / AI engine (AppLovin)",
-        "note":     "AXON AI ad engine drove a huge re-rate. High momentum + high beta "
-                    "— cyclical, trim into strength.",
-    },
+    # APP (AppLovin) PROMOTED to held 2026-06 — moved into W5_SOFTWARE_TARGETS at
+    # 1.0% book (funded from NOW+AXON). Removed from the watchlist so it isn't
+    # double-listed; re-add here if it is ever cut back to 0%.
     "HUBS": {
         "strategy": "dca",
         "pos":      "Mid",
