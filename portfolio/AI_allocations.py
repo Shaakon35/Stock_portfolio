@@ -2275,6 +2275,164 @@ WATCHLIST = {
              "area": "mRNA oncology platform (BioNTech)",
              "note": "Cash-rich but binary on oncology readouts. Catalyst "
                      "punt — size on data, never avg down."},
+
+    # --- Nasdaq-100 quality compounders & cyclicals added 2026-06 (owner
+    #     request). These widen the watchlist into mega-cap staples, payments,
+    #     industrials, healthcare and media adjacent to the AI book. Fundamentals
+    #     are sourced at full coverage via `score_holdings.py --sync-csv`; the
+    #     cagr band here is notebook metadata only (dropped from scoring per
+    #     AGENTS.md). Strategy/pos tags follow the same vocabulary as above.
+    "GOOG": {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 16),
+             "area": "Alphabet Class C (search/cloud/AI)",
+             "note": "Same business as held GOOGL (non-voting class). "
+                     "Mega-cap compounder; DCA-grade."},
+    "PEP":  {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 8),
+             "area": "Global snacks + beverages (PepsiCo)",
+             "note": "Defensive staples compounder; pricing power + dividend. "
+                     "DCA/value yield."},
+    "TMUS": {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 9),
+             "area": "US wireless carrier (T-Mobile)",
+             "note": "Post-merger FCF inflection; buybacks. Steady compounder "
+                     "— DCA."},
+    "BKNG": {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 15),
+             "area": "Online travel (Booking Holdings)",
+             "note": "Asset-light travel platform; high FCF margin + buybacks. "
+                     "DCA-grade compounder."},
+    "MAR":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 12),
+             "area": "Asset-light hotel franchisor (Marriott)",
+             "note": "Fee-based lodging compounder; cyclical demand but "
+                     "capital-light. DCA/quality."},
+    "MNST": {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 12),
+             "area": "Energy drinks (Monster Beverage)",
+             "note": "High-margin beverage compounder; net-cash balance sheet. "
+                     "DCA/quality."},
+    "ADP":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 10),
+             "area": "Payroll / HCM outsourcing (ADP)",
+             "note": "Sticky recurring payroll franchise + float income. "
+                     "DCA-grade compounder."},
+    "CSX":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (2, 9),
+             "area": "Eastern US freight rail (CSX)",
+             "note": "Rail duopoly; volumes track the industrial cycle. "
+                     "Cyclical-quality — buy dips."},
+    "CMCSA": {"strategy": "dca",     "pos": "Mid",      "cagr": (1, 6),
+              "area": "Cable / broadband + media (Comcast)",
+              "note": "Broadband cash machine; media drag. Value/FCF — DCA on "
+                      "weakness."},
+    "MDLZ": {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 8),
+             "area": "Global snacking (Mondelez)",
+             "note": "Defensive staples compounder; pricing power. DCA/value "
+                     "yield."},
+    "ORLY": {"strategy": "dca",      "pos": "Mid",      "cagr": (6, 12),
+             "area": "Auto-parts retail (O'Reilly)",
+             "note": "Counter-cyclical retailer; relentless buybacks. "
+                     "DCA-grade compounder."},
+    "AEP":  {"strategy": "dca",      "pos": "Mid",      "cagr": (4, 8),
+             "area": "Regulated electric utility (American Electric Power)",
+             "note": "Regulated rate-base growth + datacenter load tailwind. "
+                     "DCA/yield."},
+    "NXPI": {"strategy": "cycle",    "pos": "Mid",      "cagr": (5, 13),
+             "area": "Automotive / industrial semis (NXP)",
+             "note": "Auto + industrial analog; tracks the semi cycle. "
+                     "Cyclical-quality — buy dips."},
+    "CTAS": {"strategy": "dca",      "pos": "Mid",      "cagr": (7, 12),
+             "area": "Uniform rental / facility services (Cintas)",
+             "note": "Route-density compounder; recurring B2B revenue. "
+                     "DCA-grade quality."},
+    "WBD":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (0, 10),
+             "area": "Studios + streaming (Warner Bros. Discovery)",
+             "note": "De-levering media turnaround; FCF-driven. Cyclical-value "
+                     "— buy dips, watch debt."},
+    "ROST": {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 11),
+             "area": "Off-price apparel retail (Ross Stores)",
+             "note": "Off-price compounder; resilient through downturns. "
+                     "DCA/quality."},
+    "REGN": {"strategy": "dca",      "pos": "Mid",      "cagr": (4, 12),
+             "area": "Biotech (Regeneron)",
+             "note": "Profitable biotech with deep pipeline + Eylea/Dupixent "
+                     "franchise. DCA/quality."},
+    "PCAR": {"strategy": "cycle",    "pos": "Mid",      "cagr": (2, 9),
+             "area": "Heavy-truck manufacturer (Paccar)",
+             "note": "Class-8 truck cycle; strong balance sheet + parts annuity. "
+                     "Cyclical — buy trough."},
+    "BKR":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (3, 12),
+             "area": "Oilfield services + LNG equipment (Baker Hughes)",
+             "note": "LNG/energy-tech capex cycle. Cyclical-value — buy dips."},
+    "FAST": {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 11),
+             "area": "Industrial distribution (Fastenal)",
+             "note": "Vending/onsite industrial supply compounder; high ROIC. "
+                     "DCA-grade quality."},
+    "EA":   {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 9),
+             "area": "Video-game publisher (Electronic Arts)",
+             "note": "Sports-franchise annuity + live services. Steady "
+                     "compounder — DCA."},
+    "XEL":  {"strategy": "dca",      "pos": "Mid",      "cagr": (4, 8),
+             "area": "Regulated utility (Xcel Energy)",
+             "note": "Regulated rate-base + renewables build-out. DCA/yield."},
+    "FANG": {"strategy": "cycle",    "pos": "Mid",      "cagr": (2, 14),
+             "area": "Permian E&P (Diamondback Energy)",
+             "note": "Low-cost Permian shale; FCF + variable dividend. "
+                     "Oil-price CYCLE — buy dips."},
+    "FER":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 12),
+             "area": "Toll roads + infrastructure (Ferrovial)",
+             "note": "Managed-lanes concession compounder; inflation-linked "
+                     "tolls. DCA/infrastructure."},
+    "EXC":  {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 8),
+             "area": "Regulated T&D utility (Exelon)",
+             "note": "Pure regulated wires; rate-base growth. DCA/yield."},
+    "TTWO": {"strategy": "catalyst", "pos": "Binary",   "cagr": (-20, 40),
+             "area": "Video-game publisher (Take-Two)",
+             "note": "GTA VI release is the catalyst; slips/flop are the "
+                     "downside. Event-driven — size on the launch."},
+    "KDP":  {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 8),
+             "area": "Coffee + beverages (Keurig Dr Pepper)",
+             "note": "Defensive staples compounder; dividend. DCA/value yield."},
+    "ODFL": {"strategy": "cycle",    "pos": "Mid",      "cagr": (3, 11),
+             "area": "Less-than-truckload freight (Old Dominion)",
+             "note": "Best-in-class LTL margins; freight-cycle volumes. "
+                     "Cyclical-quality — buy dips."},
+    "CCEP": {"strategy": "dca",      "pos": "Mid",      "cagr": (3, 8),
+             "area": "Coca-Cola bottler EU/APAC (CCEP)",
+             "note": "Defensive bottling franchise; steady FCF + dividend. "
+                     "DCA/value yield."},
+    "IDXX": {"strategy": "dca",      "pos": "Mid",      "cagr": (7, 13),
+             "area": "Veterinary diagnostics (Idexx)",
+             "note": "Razor/razorblade vet-diagnostics compounder; high "
+                     "recurring margin. DCA/quality."},
+    "ADSK": {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 14),
+             "area": "Design / CAD software (Autodesk)",
+             "note": "Sticky subscription CAD franchise; high FCF margin. "
+                     "DCA-grade compounder."},
+    "ALNY": {"strategy": "catalyst", "pos": "Binary",   "cagr": (-30, 60),
+             "area": "RNAi therapeutics (Alnylam)",
+             "note": "RNAi platform scaling to profitability; binary on "
+                     "label expansions/readouts. Catalyst — size on data."},
+    "TRI":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 10),
+             "area": "Legal / tax info services (Thomson Reuters)",
+             "note": "Recurring professional-information franchise + AI "
+                     "products. DCA-grade compounder."},
+    "PAYX": {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 10),
+             "area": "SMB payroll / HR (Paychex)",
+             "note": "Sticky SMB payroll + float income. DCA-grade compounder."},
+    "ROP":  {"strategy": "dca",      "pos": "Mid",      "cagr": (7, 13),
+             "area": "Vertical-market software conglomerate (Roper)",
+             "note": "Acquisitive niche-software compounder; high recurring "
+                     "FCF. DCA/quality."},
+    "GEHC": {"strategy": "dca",      "pos": "Mid",      "cagr": (4, 10),
+             "area": "Medical imaging (GE HealthCare)",
+             "note": "Imaging install-base + service annuity. Quality "
+                     "compounder — DCA."},
+    "KHC":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (0, 6),
+             "area": "Packaged food (Kraft Heinz)",
+             "note": "Cheap staples turnaround; brand-relevance risk. "
+                     "Value/DCA — buy on weakness."},
+    "DXCM": {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 16),
+             "area": "Continuous glucose monitors (Dexcom)",
+             "note": "CGM device + recurring-sensor razor/razorblade growth. "
+                     "DCA-grade quality."},
+    "CPRT": {"strategy": "dca",      "pos": "Mid",      "cagr": (7, 13),
+             "area": "Salvage-vehicle auctions (Copart)",
+             "note": "Two-sided salvage-auction network; high-margin moat. "
+                     "DCA-grade compounder."},
 }
 
 
