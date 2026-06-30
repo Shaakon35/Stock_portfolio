@@ -468,11 +468,16 @@ W6_SPEC_TARGETS = {
                       # quadrant (8PT 5.34). TOP-10 name.
     # --- AXON MOVED 2026-06 to W5 (AI Software/Apps), kept dca. It is a profitable
     #     monopoly, not a speculative punt; it never fit the convex-tail sleeve. ---
-    "IONQ":  0.5,     # CHANGED: book HALVED 2.0% -> 1.0% (PEGA/INOD-FUND 2026-06) — the wave shrank
-                      # from 4.0% to 2.0% so the 0.50 sub-share now maps to 1.0% book (0.02 * 0.5);
-                      # the biggest single contributor to funding the INOD/PEGA adds. Still the wave
+    "IONQ":  0.25,    # CHANGED: 0.50 -> 0.25 (ALNY-ADD 2026-06) — book TRIMMED 1.0% -> 0.5%
+                      # (0.02 * 0.25) to fund the ALNY add (like-for-like catalyst/Binary swap).
+                      # Prior: book HALVED 2.0% -> 1.0% (PEGA/INOD-FUND 2026-06). Still the wave
                       # anchor and best-graded punt you own: PRIME catalyst (GROWTH 6.5, 8PT 6.28,
                       # C 8.5). Quantum revenue leader; +175% mid (highest forecast). Catalyst/convex.
+    "ALNY":  0.25,    # NEW (ALNY-ADD 2026-06) — 0.5% book catalyst starter (0.02 * 0.25), funded by
+                      # the IONQ trim. Alnylam — RNAi therapeutics platform scaling to profitability;
+                      # binary on label-expansion / readout catalysts. Off-thesis vs the AI tail
+                      # (a biotech), but the same convex-bet discipline: size on data, never average
+                      # down. CATALYST / Binary.
     "RKLB":  0.005,   # CHANGED: 0.125 -> 0.005 (RKLB-CUT 2026-06) — CUT to a 0.01% book stub
                       # (0.02 * 0.005 = 0.0001) as requested. Scores AVOID (GROWTH 4.6); the
                       # asymmetric space punt is parked, not grown. Kept as an easy-re-add stub,
@@ -634,6 +639,7 @@ STRATEGY = {
     # --- W6 SPECULATIVE ---
     "TMDX":    "cycle",     # MedTech growth — momentum-sensitive
     "IONQ":    "catalyst",  # Quantum binary — size once, event-driven, no avg down
+    "ALNY":    "catalyst",  # NEW (2026-06). Alnylam RNAi — biotech binary on label-expansion/readouts; size on data, no avg down
     "RKLB":    "catalyst",  # Space — size once, milestone-driven, no avg down
     "SYM":     "catalyst",  # Symbotic — robotics, GAAP-unprofitable + lumpy; size once, no avg down
     "CRCL":    "catalyst",  # Circle — held windfall, target 0%; manage down, never avg in
