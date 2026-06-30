@@ -69,7 +69,12 @@ TARGET_WEIGHTS = {
                            #          37.5% book). Mega-cap cloud is the cheapest large-cap quality
                            #          on the board and the single best diversifier off the silicon-
                            #          heavy book the scorer points to.
-    "W5_SOFTWARE":  0.0782,# CHANGED: 0.0702 -> 0.0782 (DECONC-OPT3 2026-06). AXON 2.0% -> 2.4% and
+    "W5_SOFTWARE":  0.0882,# CHANGED: 0.0782 -> 0.0882 (PEGA-ADD 2026-06). PEGA added as a 1.0% book
+                           #          DCA starter (CONV 8.22, KEEP-DCA, RICHNESS 0.00 — the cheap
+                           #          enterprise-AI-software value counterweight to PLTR/APP). The
+                           #          other six W5 names keep their book% unchanged; the +1.0% is
+                           #          funded cross-wave from the shrunken W6 speculative tail.
+                           #          Prior note: 0.0702 -> 0.0782 (DECONC-OPT3 2026-06). AXON 2.0% -> 2.4% and
                            #          APP 1.5% -> 1.9% (+0.4 each), funded by the TLN/ORCL trims.
                            #          NOW/PLTR and the PANW/CRWD stubs unchanged in book%.
                            #          Prior note: 0.0503 -> 0.0702 (COHR-CUT 2026-06). Grown by the ~2% freed
@@ -81,13 +86,23 @@ TARGET_WEIGHTS = {
                            #          Prior: 0.0756 (SW-CUT). NOW is the wave anchor (QUALITY 8.2 /
                            #          RICHNESS 0.00, best-value DCA on the board); AXON the public-
                            #          safety SaaS monopoly (QUALITY 8.5). ZS/DDOG/S/SNOW remain at 0%.
-    "W6_SPEC":      0.04,  # CHANGED: 0.04269 -> 0.04 (CONV-REBAL 2026-06). Hand-set: IONQ 2%
+    "W6_SPEC":      0.02,  # CHANGED: 0.04 -> 0.02 (PEGA/INOD-FUND 2026-06). The speculative tail
+                           #          HALVED to fund the INOD (W7) + PEGA (W5) adds. RKLB cut to a
+                           #          0.01% stub (the requested cut); IONQ 2.0% -> 1.0%, TMDX 1.0%
+                           #          -> 0.75%, SYM 0.5% -> 0.24%. Frees exactly 2.0% book. The
+                           #          convex tail stays small — even smaller now. Prior note:
+                           #          0.04269 -> 0.04 (CONV-REBAL 2026-06). Hand-set: IONQ 2%
                            #          (top catalyst CONV) + TMDX 1% + SYM/RKLB 0.5% lottery stubs
                            #          = 4.0%. Prior: 0.042 (SW-CUT). The convex tail stays small.
                            #          RKLB (AVOID) and SYM (GAAP-unprofitable Binary) SHRUNK to 0.5%
                            #          lottery stubs; IONQ (PRIME catalyst 6.5/6.28) grown. TMDX
                            #          kept. The convex tail stays small.
-    "W7_DIVERSIFY": 0.074, # CHANGED: 0.07 -> 0.074 (DECONC-OPT3 2026-06). RDDT grown 2.0% -> 2.4%
+    "W7_DIVERSIFY": 0.084, # CHANGED: 0.074 -> 0.084 (INOD-ADD 2026-06). INOD added as a 1.0% book
+                           #          cycle starter (CONV 8.47 PRIME — profitable, net-cash AI
+                           #          data-engineering; a non-semi AI-supply-chain diversifier next
+                           #          to LLY/NU/RDDT). LLY/NU/RDDT keep their book% unchanged; the
+                           #          +1.0% is funded cross-wave from the shrunken W6 tail.
+                           #          Prior note: 0.07 -> 0.074 (DECONC-OPT3 2026-06). RDDT grown 2.0% -> 2.4%
                            #          (+0.4), funded by the TLN/ORCL trims. LLY/NU unchanged in book%.
                            #          Prior note: 0.07685 -> 0.07 (CONV-REBAL 2026-06). Hand-set: LLY 2.5% +
                            #          NU 2.5% + RDDT 2.0% = 7.0%. Prior: 0.0756 (SW-CUT)
@@ -377,16 +392,16 @@ W5_SOFTWARE_TARGETS = {
     "S":     0.0000,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.0012787724,# CHANGED: 0.00142 -> 0.00128 (DECONC-OPT3 2026-06) — sub-share moved only
-                    # because the wave grew to 7.82%; book UNCHANGED at the 0.01% stub. Security
+    "PANW":  0.0011337868,# CHANGED: 0.00128 -> 0.00113 (PEGA-ADD 2026-06) — sub-share moved only
+                    # because the wave grew to 8.82%; book UNCHANGED at the 0.01% stub. Security
                     # platform — biggest, cheapest, steadiest, but scores RICH (RICHNESS 0.90,
                     # CONV 3.02 — lowest DCA on the board): too extended to keep real book. Easy
                     # re-add once it de-rates. DCA.
-    "CRWD":  0.0012787724,# CHANGED: 0.00142 -> 0.00128 (DECONC-OPT3 2026-06) — held at the 0.01%-
+    "CRWD":  0.0011337868,# CHANGED: 0.00128 -> 0.00113 (PEGA-ADD 2026-06) — held at the 0.01%-
                     # book stub (sub-share moved only because the wave grew). AI cybersecurity.
                     # Scores RICH (RICHNESS 0.81, CONV 3.72) — same logic as PANW. Easy re-add. DCA.
-    "NOW":   0.2557544757,# CHANGED: 0.28490 -> 0.25575 (DECONC-OPT3 2026-06) — sub-share recomputed
-                    # for the grown 7.82% wave; book UNCHANGED at 2.00% (0.0782 * 0.25575 = 0.020).
+    "NOW":   0.2267573696,# CHANGED: 0.25575 -> 0.22676 (PEGA-ADD 2026-06) — sub-share recomputed
+                    # for the grown 8.82% wave; book UNCHANGED at 2.00% (0.0882 * 0.22676 = 0.020).
                     # Still a co-anchor with AXON. The best-value DCA name on
                     # the board: QUALITY 8.2 with RICHNESS 0.00 (cheapest possible on the gate),
                     # 22x fwd / 0.89 PEG, down ~50% on the year. Workflow AI (Now Assist),
@@ -394,15 +409,16 @@ W5_SOFTWARE_TARGETS = {
     "ZS":    0.0000,# CHANGED: 0.1782 -> 0.00 — CUT (REBALANCE 2026-06). Zscaler scores AVOID
                     # (GROWTH 2.0) — the weakest software name held. Book rotated to NOW/AXON.
                     # 0% for easy re-add if the growth re-accelerates. CYCLE.
-    "AXON":  0.3069053708,# CHANGED: 0.28490 -> 0.30691 (DECONC-OPT3 2026-06) — GROWN to 2.4% book
-                    # (0.0782 * 0.30691 = 0.024), +0.4% from the TLN/ORCL de-concentration trims.
+    "AXON":  0.2721088435,# CHANGED: 0.30691 -> 0.27211 (PEGA-ADD 2026-06) — sub-share recomputed for
+                    # the grown 8.82% wave; book UNCHANGED at 2.4% (0.0882 * 0.27211 = 0.024).
+                    # Prior: 0.28490 -> 0.30691 (DECONC-OPT3 2026-06) — grown to 2.4% book.
                     # Co-anchor with NOW. Public-safety
                     # SaaS monopoly — 59% gross margin, sticky recurring revenue (evidence.com,
                     # Draft One AI), end-market that doesn't cycle. QUALITY 8.5, KEEP-DCA. Thin
                     # net/FCF is reinvestment by choice; hold through dips.
-    "PLTR":  0.1918158568,# CHANGED: 0.21368 -> 0.19182 (DECONC-OPT3 2026-06) — sub-share recomputed
-                    # for the grown 7.82% wave; book UNCHANGED at 1.5% (0.0782 * 0.19182 = 0.015).
-                    # Prior: 0.00199 -> 0.21368 (COHR-CUT 2026-06) — PROMOTED from the
+    "PLTR":  0.1700680272,# CHANGED: 0.19182 -> 0.17007 (PEGA-ADD 2026-06) — sub-share recomputed
+                    # for the grown 8.82% wave; book UNCHANGED at 1.5% (0.0882 * 0.17007 = 0.015).
+                    # Prior: 0.21368 -> 0.19182 (DECONC-OPT3 2026-06). Earlier: 0.00199 -> 0.21368 (COHR-CUT 2026-06) — PROMOTED from the
                     # 0.01% stub to a 1.5% book starter, funded by the
                     # cross-wave move of COHR's freed weight. The HIGHEST-UPSIDE name on the whole
                     # board (upside 9.6, CONV 8.25, PRIME, F 10.0 / V 8.1 / C 6.4) — the business
@@ -411,10 +427,10 @@ W5_SOFTWARE_TARGETS = {
                     # Europe/France data-sovereignty pushback capping the international TAM, and a
                     # priced-for-perfection multiple (~60x+ sales) where a single lumpy gov quarter
                     # de-rates it. Bought into weakness as planned, never chased. CYCLE — trim/add.
-    "APP":   0.2429667519,# CHANGED: 0.21368 -> 0.24297 (DECONC-OPT3 2026-06) — GROWN 1.5% -> 1.9%
-                    # book (0.0782 * 0.24297 = 0.019), +0.4% from the TLN/ORCL trims; also absorbs the
-                    # exact rounding residual so W5 subs sum to 1.0. Prior: 0.19881 -> 0.21368
-                    # (COHR-CUT 2026-06) — was 1.5% book. AppLovin: AXON AI ad engine, the
+    "APP":   0.2154195011,# CHANGED: 0.24297 -> 0.21542 (PEGA-ADD 2026-06) — sub-share recomputed for
+                    # the grown 8.82% wave; book UNCHANGED at 1.9% (0.0882 * 0.21542 = 0.019).
+                    # Prior: 0.21368 -> 0.24297 (DECONC-OPT3 2026-06) — grown 1.5% -> 1.9% book.
+                    # Earlier: 0.19881 -> 0.21368 (COHR-CUT 2026-06). AppLovin: AXON AI ad engine, the
                     # most profitable grower benchmarked against the held book (64% net margin, 35%
                     # fwd rev, PEG 0.69 — cheaper than PLTR for comparable growth). SIZED as a
                     # starter on POSITION RISK the scorer can't see: single-engine adtech (one
@@ -425,6 +441,15 @@ W5_SOFTWARE_TARGETS = {
     "DDOG":  0.0000,# CHANGED: 0.1602 -> 0.00 — CUT (REBALANCE 2026-06). AI observability.
                     # Scores AVOID (GROWTH 3.7) — weakest of the observability/sw cluster. Book
                     # rotated to NOW/AXON. 0% for easy re-add. CYCLE.
+    "PEGA":  0.1133786848,# NEW (PEGA-ADD 2026-06) — 1.0% book DCA starter (0.0882 * 0.11338 = 0.010),
+                    # funded cross-wave from the halved W6 speculative tail. Pegasystems —
+                    # enterprise AI workflow/decisioning (agentic-AI on a 40yr BPM/CRM base).
+                    # Scores KEEP-DCA (CONV 8.22, QUALITY 8.1, RICHNESS 0.00 — maximally cheap on
+                    # the gate): PE 16 / fwd 10.7, P/S 3.0, elite ROE 52% / ROIC 52%, strong FCF,
+                    # de-rated ~-43% / -36% below 200DMA. The cheap-VALUE counterweight to the
+                    # expensive growth names in the wave (PLTR P/S 49, APP P/S 24) and a diversifier
+                    # off the AI-capex factor. Slower top-line (ttm rev +3.5%) is the trade-off —
+                    # sized as ballast, not a growth kicker. DCA — buy on schedule.
 }
 
 # --- WAVE 6: SPECULATIVE / SECOND-ORDER (5.5%) ---
@@ -436,20 +461,25 @@ W5_SOFTWARE_TARGETS = {
 # (+171%) real ~1.0% slots alongside TMDX 2.5% (profitable, uncorrelated).
 # These are the portfolio's convex tail — small absolute size, large payoff skew.
 W6_SPEC_TARGETS = {
-    "TMDX":  0.25,    # CHANGED: 0.50 -> 0.25 (CONV-REBAL 2026-06) — set to 1.0% book (0.04 * 0.25).
+    "TMDX":  0.375,   # CHANGED: 0.25 -> 0.375 (PEGA/INOD-FUND 2026-06) — sub-share recomputed for
+                      # the HALVED 2.0% wave; book TRIMMED 1.0% -> 0.75% (0.02 * 0.375 = 0.0075) as
+                      # part of funding the INOD/PEGA adds. Prior: 0.50 -> 0.25 (CONV-REBAL 2026-06).
                       # MedTech organ-transport, profitable, off-radar, non-AI diversifier. QUALITY
                       # quadrant (8PT 5.34). TOP-10 name.
     # --- AXON MOVED 2026-06 to W5 (AI Software/Apps), kept dca. It is a profitable
     #     monopoly, not a speculative punt; it never fit the convex-tail sleeve. ---
-    "IONQ":  0.5,     # CHANGED: 0.30 -> 0.50 (CONV-REBAL 2026-06) — GROWN to 2.0% book (0.04 * 0.5),
-                      # the wave anchor and best-graded punt you own: PRIME catalyst (GROWTH 6.5,
-                      # 8PT 6.28, C 8.5). Quantum revenue leader; +175% mid (highest forecast).
-                      # Catalyst/convex.
-    "RKLB":  0.125,   # CHANGED: 0.10 -> 0.125 (CONV-REBAL 2026-06) — 0.5% book lottery
-                      # stub. Scores AVOID (GROWTH 4.6); kept tiny as an asymmetric space punt,
-                      # not grown. Space/autonomy. Catalyst — size once, no avg down.
-    "SYM":   0.125,   # CHANGED: 0.10 -> 0.125 (CONV-REBAL 2026-06) — 0.5% book lottery
-                      # stub. Symbotic — warehouse/logistics robotics (physical-AI). QUALITY
+    "IONQ":  0.5,     # CHANGED: book HALVED 2.0% -> 1.0% (PEGA/INOD-FUND 2026-06) — the wave shrank
+                      # from 4.0% to 2.0% so the 0.50 sub-share now maps to 1.0% book (0.02 * 0.5);
+                      # the biggest single contributor to funding the INOD/PEGA adds. Still the wave
+                      # anchor and best-graded punt you own: PRIME catalyst (GROWTH 6.5, 8PT 6.28,
+                      # C 8.5). Quantum revenue leader; +175% mid (highest forecast). Catalyst/convex.
+    "RKLB":  0.005,   # CHANGED: 0.125 -> 0.005 (RKLB-CUT 2026-06) — CUT to a 0.01% book stub
+                      # (0.02 * 0.005 = 0.0001) as requested. Scores AVOID (GROWTH 4.6); the
+                      # asymmetric space punt is parked, not grown. Kept as an easy-re-add stub,
+                      # not deleted. Space/autonomy. Catalyst — size once, no avg down.
+    "SYM":   0.12,    # CHANGED: 0.125 -> 0.12 (PEGA/INOD-FUND 2026-06) — book TRIMMED 0.5% -> 0.24%
+                      # (0.02 * 0.12 = 0.0024) for the halved wave. Prior: 0.10 -> 0.125 (CONV-REBAL
+                      # 2026-06). Symbotic — warehouse/logistics robotics (physical-AI). QUALITY
                       # quadrant but GAAP-unprofitable (net -$28M TTM, fails Pt 2) + lumpy/
                       # customer-concentrated (Walmart), so it stays a tiny convex-tail bet.
                       # CATALYST / Binary — size tiny, never average down.
@@ -477,23 +507,32 @@ W6_SPEC_TARGETS = {
 #          ramp + AI data-licensing optionality. NOT a chip — an AI-economy play
 #          that diversifies the silicon-heavy book. Early, high-beta.
 W7_DIVERSIFY_TARGETS = {
-    "LLY":   0.3378378378,# CHANGED: 0.35714 -> 0.33784 (DECONC-OPT3 2026-06) — sub-share recomputed
-                      # for the grown 7.4% wave; book UNCHANGED at 2.5% (0.074 * 0.33784 = 0.025).
-                      # Prior: 0.44444 -> 0.35714 (CONV-REBAL 2026-06). Eli Lilly — pharma compounder, fully
+    "LLY":   0.2976190476,# CHANGED: 0.33784 -> 0.29762 (INOD-ADD 2026-06) — sub-share recomputed
+                      # for the grown 8.4% wave; book UNCHANGED at 2.5% (0.084 * 0.29762 = 0.025).
+                      # Prior: 0.35714 -> 0.33784 (DECONC-OPT3 2026-06). Eli Lilly — pharma compounder, fully
                       # uncorrelated to AI capex. KEEP-DCA. Watch: orforglipron Phase 3 + mfg build.
-    "NU":    0.3378378378,# CHANGED: 0.35714 -> 0.33784 (DECONC-OPT3 2026-06) — sub-share recomputed
-                      # for the grown 7.4% wave; book UNCHANGED at 2.5% (0.074 * 0.33784 = 0.025).
-                      # Prior: 0.33333 -> 0.35714 (CONV-REBAL 2026-06). Nubank — LatAm digital bank. PRIME cycle, every
+    "NU":    0.2976190476,# CHANGED: 0.33784 -> 0.29762 (INOD-ADD 2026-06) — sub-share recomputed
+                      # for the grown 8.4% wave; book UNCHANGED at 2.5% (0.084 * 0.29762 = 0.025).
+                      # Prior: 0.35714 -> 0.33784 (DECONC-OPT3 2026-06). Nubank — LatAm digital bank. PRIME cycle, every
                       # layer strong. EM-consumer/credit cyclical — buy dips, trim manias.
-    "RDDT":  0.3243243243,# CHANGED: 0.28571 -> 0.32432 (DECONC-OPT3 2026-06) — GROWN to 2.4% book
-                    # (0.074 * 0.32432 = 0.024), +0.4% from the TLN/ORCL de-concentration trims.
-                    # Prior: 0.22222 -> 0.28571 (CONV-REBAL 2026-06) — was 2.0% book.
+    "RDDT":  0.2857142857,# CHANGED: 0.32432 -> 0.28571 (INOD-ADD 2026-06) — sub-share recomputed
+                    # for the grown 8.4% wave; book UNCHANGED at 2.4% (0.084 * 0.28571 = 0.024).
+                    # Prior: 0.28571 -> 0.32432 (DECONC-OPT3 2026-06) — grown to 2.4% book.
                       # Reddit — social ads + AI data-licensing (selling 20y of human conversation
                       # to LLM labs). Scores CONV 7.66 (3rd-highest cycle name on the board) with
                       # NO binding layer below 8.0 (F8.2/V10.0/C8.0): cheap, not extended, good
                       # business — a rare triple. Funded by the SIMO cut. A non-semi AI-economy
                       # play that diversifies the silicon-heavy book. CYCLE / Early — high-beta,
                       # young public co; buy dips, trim manias.
+    "INOD":  0.1190476190,# NEW (INOD-ADD 2026-06) — 1.0% book cycle starter (0.084 * 0.11905 = 0.010),
+                      # funded cross-wave from the halved W6 speculative tail. Innodata — AI data
+                      # engineering (annotation / LLM training-data prep) selling into the labs'
+                      # capex. Scores the HIGHEST conviction of the new names (CONV 8.47, PRIME):
+                      # profitable + net-cash ($113M, D/E 0.03), high-ROIC (171%), 42% gross / 14%
+                      # net margin, FCF +$62M, margin trajectory turned -15% -> +13%. A non-semi
+                      # AI-supply-chain diversifier next to LLY/NU/RDDT. High-beta (2.83); analyst
+                      # 3Y rev a modest 11% (decel off a hypergrowth base) but Strong Buy, PT +60%.
+                      # CYCLE / Early — buy dips, trim manias.
 }
 
 # =========================================================================
@@ -586,6 +625,7 @@ STRATEGY = {
                             # sticky SaaS; thin net/FCF is reinvestment by choice, not weak
                             # economics. End-market doesn't cycle -> hold through dips.
     "SNOW":    "dca",       # FCF-positive, healed bubble hangover
+    "PEGA":    "dca",       # NEW (2026-06). Pegasystems — enterprise AI workflow/decisioning; cheap quality compounder (PE 16, ROIC 52%), buy on schedule
     "PLTR":    "cycle",     # Best business but 62x sales — trim/add, not blind DCA
     "APP":     "cycle",     # NEW (2026-06). AppLovin AI ad engine — high momentum/beta, single-
                             # engine adtech at ~24x sales. Trim into strength, never chase. CYCLE.
@@ -603,6 +643,7 @@ STRATEGY = {
     "LLY":     "dca",       # Eli Lilly — pharma compounder (tirzepatide/orforglipron), hold forever; uncorrelated to AI capex
     "NU":      "cycle",     # Nubank — LatAm digital bank; EM-consumer/credit cyclical, buy dips / trim manias
     "RDDT":    "cycle",     # Reddit — social ads + AI data-licensing; non-semi AI diversifier, Early/high-beta, buy dips / trim manias
+    "INOD":    "cycle",     # NEW (2026-06). Innodata — AI data-engineering / LLM training-data prep; non-semi AI-supply-chain diversifier, Early/high-beta, buy dips / trim manias
 }
 
 # =========================================================================
