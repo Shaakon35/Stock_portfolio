@@ -24,10 +24,18 @@
 #                       compared like-for-like to a triple-digit trailing YoY, so
 #                       names off a tiny base (ALAB, IONQ) get a reduced penalty;
 #                       genuine slowdowns off a normal base (CCJ) keep it full.
-#                       Kept OUTSIDE the numeric schema (no effect on data%).
+#                       Its DISPERSION (coeff. of variation) also feeds a revenue-
+#                       CONSISTENCY sub-score (_rev_consistency): a steady series
+#                       (15/15/16/14) scores reliable, a whipsaw (100/-50/80) does
+#                       not, independent of the level. Kept OUTSIDE the numeric
+#                       schema (no effect on data%).
 #                       Blank only for pre-revenue names with no FY history.
 #   fwd_eps_growth    : analyst 3Y forward EPS growth, %
-#   gross_margin      : gross margin %, ttm
+#   gross_margin      : gross margin %, ttm. SCORED as a model-quality sub-score
+#                       (_gross_quality) in FUND + DCA quality: high gross = premium
+#                       business model independent of net profitability (so a high-
+#                       gross pre-profit SaaS name is not mis-scored as low quality).
+#                       Correlates only ~0.21 with net margin, so it adds signal.
 #   net_margin        : GAAP profit margin %, ttm. OPERATING margin substituted
 #                       where GAAP net is distorted by one-off fair-value / tax /
 #                       pretax items: GEV, WDC, APLD, IONQ(blank), NBIS, IREN,

@@ -491,6 +491,70 @@ def _margin_trend(f):
     return 0.5 + 0.5 * norm
 
 
+# -------------------------------------------------------------------------
+# GROSS-MARGIN QUALITY (inherent business-model quality, independent of net)
+# -------------------------------------------------------------------------
+# net_margin alone cannot separate a structurally premium model under temporary
+# cost pressure from an inherently thin-margin commodity: SMCI (gross ~8%) and
+# HUBS (gross ~84%) can both print a ~5% NET margin yet are completely different
+# businesses, and a pre-profit SaaS name (SNOW ~67% gross / -24% net, RBRK ~81%
+# / -20%) is branded "bad business" by the net-margin term despite an excellent
+# model. Across the snapshot, gross and net correlate only ~0.21, so gross
+# carries large INDEPENDENT signal the engine was discarding. This reads the
+# gross_margin column (already in the CSV, scraped but previously unscored) as a
+# self-contained 0..1 model-quality sub-score, blended at modest weight into
+# FUND + DCA quality alongside the net-margin LEVEL and TRAJECTORY terms.
+#   ~30% gross -> 0.0 (commodity/box-shifter)  ~80%+ -> 1.0 (premium model)
+# Returns None when gross_margin is absent so _blend drops it (no faked neutral).
+_GROSS_LO = 30.0     # gross margin %: floor of the scoring band (commodity)
+_GROSS_HI = 80.0     # gross margin %: ceiling of the band (premium model)
+
+
+def _gross_quality(f):
+    """Score gross-margin LEVEL 0..1 (model quality), or None when absent.
+    High gross = structurally premium business model, independent of whether the
+    name is net-profitable yet — so a high-gross pre-profit compounder is not
+    mis-scored as a low-quality business by net margin alone."""
+    return _band(f.get("gross_margin"), _GROSS_LO, _GROSS_HI)
+
+
+# -------------------------------------------------------------------------
+# REVENUE CONSISTENCY (reliability of the growth series, not its level)
+# -------------------------------------------------------------------------
+# A name compounding 15/15/16/14 is a more reliable business than one printing
+# 100/-50/80 even at the same MEAN/median growth — but the trend term only reads
+# the median (level), never the DISPERSION. This scores the steadiness of the
+# rev_growth_hist series via its coefficient of variation (stdev / |mean|), so a
+# tight series scores high (safe/reliable) and a whipsaw series scores low. It
+# uses data already in the CSV, sits OUTSIDE the numeric FUND_FIELDS schema (no
+# data% impact), and feeds the FUND + DCA quality blends at low weight as a
+# RELIABILITY signal — it rewards predictability, never penalises fast growth
+# per se (a steady hypergrower still scores high).
+#   CV <= _RC_TIGHT  -> 1.0 (metronomic)   CV >= _RC_LOOSE -> 0.0 (erratic)
+# Returns None when fewer than 3 points exist (too short to judge variance).
+_RC_MIN_POINTS = 3   # need >=3 FY points before variance is meaningful
+_RC_TIGHT = 0.20     # coeff. of variation at/below this -> fully reliable (1.0)
+_RC_LOOSE = 1.20     # coeff. of variation at/above this -> fully erratic  (0.0)
+
+
+def _rev_consistency(f):
+    """Score revenue-growth CONSISTENCY 0..1 (1=steady, 0=erratic), or None when
+    the history is too short. Based on the coefficient of variation of the
+    rev_growth_hist series — dispersion, not level — so it rewards reliability
+    without penalising the SPEED of a steady compounder."""
+    hist = f.get("rev_growth_hist") or []
+    if len(hist) < _RC_MIN_POINTS:
+        return None                       # too short to judge variance -> drop
+    n = len(hist)
+    mean = sum(hist) / n
+    if abs(mean) < 1e-9:
+        return None                       # mean ~0: CV undefined -> drop
+    var = sum((x - mean) ** 2 for x in hist) / n     # population variance
+    cv = (var ** 0.5) / abs(mean)                     # coefficient of variation
+    # invert+clamp: tight CV -> 1.0, loose CV -> 0.0 (linear between the bands)
+    return _band_inv(cv, _RC_TIGHT, _RC_LOOSE)
+
+
 _MISSING_PENALTY = 0.15  # speculative bucket: a data gap IS a red flag
 
 
@@ -643,7 +707,7 @@ def _cov_cell(coverage):
 _LAYER_FOOTNOTE = (
     "  layers (0-10, higher=SAFER on that layer) decompose the score by the "
     "force that moves price:\n"
-    "    F=FUND  business quality (margins+margin-trend+growth+FCF)  wins the LONG run\n"
+    "    F=FUND  business quality (net+gross margin+margin-trend+growth+rev-consistency+FCF)  wins the LONG run\n"
     "    V=VAL   price vs the business (PEG/PS + extension) . mean-reverts (months)\n"
     "    C=CYC   cycle position + crowding (pos+neck+chart) .. drives the SHORT run / hype\n"
     "  bind = the BINDING (lowest) layer: the dominant risk you take buying here.\n"
@@ -820,8 +884,13 @@ def layer_scores(t, f, info):
         l_fcf = None                                  # nothing known -> drop
     # margin TRAJECTORY (expanding/compressing); None when no history -> dropped
     l_mtrend = _margin_trend(f)
+    # gross-margin LEVEL (model quality, independent of net) and revenue-growth
+    # CONSISTENCY (reliability of the series); both None when absent -> dropped.
+    l_gross = _gross_quality(f)
+    l_rcons = _rev_consistency(f)
     fund10, _ = _blend([(l_margin, 3.5), (l_rev, 2.5), (l_eps, 2.0),
-                        (l_fcf, 2.0), (l_mtrend, 1.5)], scale=10.0,
+                        (l_fcf, 2.0), (l_mtrend, 1.5), (l_gross, 1.5),
+                        (l_rcons, 1.0)], scale=10.0,
                        risk_penalize=spec)
 
     # --- VAL (Layer 2): how much of the business is already in the price -
@@ -1093,9 +1162,14 @@ def dca_quality(t, f):
     # margin TRAJECTORY: a DCA compounder with expanding margins is the ideal;
     # compression is an early crack. None when no history -> dropped by _blend.
     q_mtrend = _margin_trend(f)
+    # gross-margin LEVEL (model quality, independent of net) and revenue-growth
+    # CONSISTENCY (reliability) — both None when absent -> dropped by _blend.
+    q_gross = _gross_quality(f)
+    q_rcons = _rev_consistency(f)
     quality10, cov = _blend([(q_margin, 3.5), (q_growth, 2.5),
                              (q_eps, 2.0), (q_fcf, 2.0),
-                             (q_mtrend, 1.5)], scale=10.0)
+                             (q_mtrend, 1.5), (q_gross, 1.5),
+                             (q_rcons, 1.0)], scale=10.0)
 
     # --- RICHNESS (is the price ahead of the business?) 0=cheap .. 1=stretched
     # PEG used raw: eps_f already lifts the growth side of the quality score, so
