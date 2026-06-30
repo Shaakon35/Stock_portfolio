@@ -212,8 +212,14 @@ miss=csv-set(m.WATCHLIST)-held; assert not miss, f'uncovered CSV tickers: {sorte
 print('PASS')"
 ```
 
-- `verify_allocations()` (AI_allocations.py) — asserts baskets/TARGET_WEIGHTS
-  sum to 1.0; returns `None` on pass.
+- `verify_allocations()` (AI_allocations.py) — asserts the per-ticker book
+  percentages total 100% and the derived `TARGET_WEIGHTS` total 1.0; returns
+  `None` on pass. **NOTE (2026-06 model change):** baskets now hold DIRECT book
+  percentages (e.g. `"AMZN": 2.0` == 2.0% of book), and `TARGET_WEIGHTS` is
+  AUTO-DERIVED as each wave's ticker-sum / 100 — it is no longer hand-edited. To
+  change a holding's weight, edit its number in the basket; the wave total and
+  `TARGET_WEIGHTS` follow automatically. The invariant is on the GRAND total
+  across all baskets (= 100%), not on each basket summing to 1.0.
 - `validate_watchlist()` — returns `[]` (empty list) on pass.
 - **CSV ↔ WATCHLIST coverage** — every CSV ticker must be HELD or in `WATCHLIST`;
   the gate asserts the uncovered set is empty. A fresh batch of names is not done

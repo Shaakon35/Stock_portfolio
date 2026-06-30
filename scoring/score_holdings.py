@@ -59,9 +59,11 @@ from config.forecasts import WAVE_FORECASTS  # noqa: E402
 # each carries an implied book% = (its weight inside SMHV) x (SMHV's book%).
 # portfolio_rows() uses this to surface that pass-through exposure so the table
 # shows e.g. MU ~5.4% / TSM ~2.8% instead of a misleading 0.00.
+# NOTE (2026-06 model change): baskets now hold DIRECT book percentages
+# (e.g. "SMHV.SW": 37.5 == 37.5% of book), so the ETF book FRACTION is just the
+# basket value / 100 — no longer value * wave-weight.
 _ETF_BOOK = {
-    "SMHV.SW": (W1_SILICON_TARGETS.get("SMHV.SW", 0.0)
-                * TARGET_WEIGHTS.get("W1_SILICON", 0.0)),
+    "SMHV.SW": W1_SILICON_TARGETS.get("SMHV.SW", 0.0) / 100.0,
 }
 
 # =========================================================================
@@ -116,11 +118,12 @@ def portfolio_rows(include_watchlist=False):
     """
     rows = {}
     for w, wk, basket in _WAVES:
-        wv = TARGET_WEIGHTS[wk]
+        # NOTE (2026-06 model change): basket values are now DIRECT book percent,
+        # so book_pct is just the value (no longer sub-weight * wave-weight).
         for t, sw in basket.items():
             lo, hi, mid = _forecast(t)
             rows[t] = {
-                "ticker": t, "wave": w, "sub": sw, "book_pct": sw * wv * 100,
+                "ticker": t, "wave": w, "sub": sw, "book_pct": sw,
                 "strategy": STRATEGY.get(t, "?"), "held": True,
                 "cagr_lo": lo, "cagr_hi": hi, "cagr_mid": mid,
                 "wl_pos": None, "etf_pct": 0.0,
