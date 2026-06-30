@@ -2929,6 +2929,78 @@ WATCHLIST = {
              "area": "Insurer (QBE) — Australia",
              "note": "Global P&C insurer; rate-cycle + cat risk. Cyclical-value."},
 
+    # --- AI data-engineering (training-data prep for LLM labs) ---
+    "INOD": {"strategy": "cycle", "pos": "Early", "cagr": (10, 30),
+             "area": "AI data engineering (Innodata) — LLM training-data prep",
+             "note": "Profitable, net-cash ($113M, D/E 0.03), high-ROIC (171%) "
+                     "data-annotation / training-data shop selling into the LLM "
+                     "labs' capex. 42% gross / 14% net margin, FCF +$62M. "
+                     "High-beta (2.83) AI-derivative — analyst 3Y rev forecast a "
+                     "modest 11% (decel off a hypergrowth base), but Strong Buy, "
+                     "PT +60%. A non-semi AI-supply-chain diversifier. Buy dips / "
+                     "trim manias — cycle."},
+
+    # --- AI semiconductor / IP gems (small/mid-cap, not in the SMHV ETF) ---
+    "RMBS": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 25),
+             "area": "Memory-interface IP (Rambus) — HBM/DDR5 chips + IP licensing",
+             "note": "Profitable (ROE 18%, ROIC 33%), net cash, +94%/yr. Sells the "
+                     "memory-interface chips & IP that HBM/DDR5 (the AI-memory "
+                     "bottleneck) needs. Richly valued (P/S 18, PE 59) — cyclical "
+                     "with the memory cycle. Buy dips / trim peaks."},
+    "SITM": {"strategy": "cycle", "pos": "Early", "cagr": (20, 40),
+             "area": "MEMS timing / precision clocks (SiTime) — datacenter+AI",
+             "note": "Hypergrowth (+234%/yr), net cash, current ratio 12. MEMS "
+                     "silicon timing (clock chips) replacing legacy quartz in AI "
+                     "servers/networking. Marginally GAAP-unprofitable (reinvesting) "
+                     "but not pre-revenue/shrinking — Early high-beta (2.92). "
+                     "VERY rich (P/S 49). Buy deep dips only."},
+    "AMBA": {"strategy": "cycle", "pos": "Mid", "cagr": (15, 35),
+             "area": "Edge-AI vision SoCs (Ambarella) — cameras/auto/robotics",
+             "note": "Edge-AI inference chips for cameras, autonomous & robotics. "
+                     "Net cash, FCF-positive, GAAP-unprofitable (reinvesting). "
+                     "AI-inference-at-the-edge pure-play, high-beta (2.15). P/S 7. "
+                     "Cyclical recovery name — buy dips."},
+    "ALGM": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 25),
+             "area": "Magnetic/current sensors (Allegro Micro) — auto/industrial",
+             "note": "Magnetic position & current-sensor ICs for EV/auto + "
+                     "industrial automation. +94%/yr off a cyclical trough; ROIC "
+                     "positive, PEG 1.56, some net debt (D/E 0.32). Auto/industrial "
+                     "semi cycle — buy dips, trim into strength."},
+    "CRUS": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 15),
+             "area": "Audio / mixed-signal (Cirrus Logic) — the CHEAP quality name",
+             "note": "Profitable + CHEAP (PE 18.6, P/S 3.7, ROIC 27.5%), net cash, "
+                     "buying back stock. Audio/mixed-signal — Apple-concentrated, so "
+                     "cyclical with the handset cycle; expanding into laptop/AI-PC "
+                     "power. Lower-beta (1.14) value-tech. Buy dips."},
+
+    # --- AI software / applications (profitable, cheaper than the mega-SaaS) ---
+    "PEGA": {"strategy": "dca", "pos": "Mid", "cagr": (8, 20),
+             "area": "Enterprise AI workflow automation (Pegasystems)",
+             "note": "Profitable + CHEAP (PE 16, fwd 10.7, P/S 3.0), elite ROE 52% "
+                     "/ ROIC 52%, strong FCF. Agentic-AI workflow/decisioning for "
+                     "large enterprises. Low-beta (0.84) quality compounder that "
+                     "de-rated -43% — a DCA-grade value name. Buy on schedule."},
+    "DV":   {"strategy": "cycle", "pos": "Mid", "cagr": (10, 20),
+             "area": "AI ad-verification (DoubleVerify) — adtech measurement",
+             "note": "Profitable, PEG 0.63 (cheap), fwd PE 9.9, net cash, FCF+. "
+                     "AI-driven ad fraud/brand-safety measurement across CTV/social. "
+                     "De-rated -26%; growth intact. Adtech-cyclical (ad-budget "
+                     "sensitive). Buy dips / trim manias."},
+
+    # --- Pre-/near-pre-profit AI punts (Binary — size tiny or skip, never avg down) ---
+    "SOUN": {"strategy": "lottery", "pos": "Binary", "cagr": (-50, 60),
+             "area": "Voice / conversational AI (SoundHound AI)",
+             "note": "Pure-play voice AI (auto, drive-thru, call-centers). "
+                     "GAAP-unprofitable (ROE -39%), heavy dilution (+13% shares/yr), "
+                     "37% of float sold short, beta 2.74. P/S 15 on an unproven "
+                     "model — a binary high-beta punt. Tiny size or skip; never "
+                     "average down."},
+    "BBAI": {"strategy": "lottery", "pos": "Binary", "cagr": (-50, 50),
+             "area": "AI/defense analytics (BigBear.ai)",
+             "note": "AI decision-intelligence for defense/gov. GAAP-unprofitable "
+                     "(ROE -58%), severe dilution (+66% shares/yr), beta 3.08, "
+                     "29% short. Lottery ticket on a defense-AI contract ramp — "
+                     "binary outcome. Tiny size or skip; never average down."},
 }
 
 
