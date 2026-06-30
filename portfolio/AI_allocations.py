@@ -102,7 +102,7 @@ W1_SILICON_TARGETS = {
                         # for HBM4+/chiplets), western CoWoS pure-play, the assembly step (not
                         # inspection), highest quality (63% GM, 33% FCF margin). Ramp still AHEAD
                         # while DRAM is at its peak. EUR-listed. CYCLE / Early. ~5.0% of book.
-    "ADI":       2.78,# CHANGED: 0.06818 -> 0.06350 (RIGHTSIZE 2026-06) — TRIMMED to 2.78%
+    "ADI":       2.8,# ROUNDED 2026-06: 2.78 -> 2.8. CHANGED: 0.06818 -> 0.06350 (RIGHTSIZE 2026-06) — TRIMMED to 2.78%
                         # book (0.4378 * 0.06350 = 0.0278) to balance the book (absorbs the 0.22%
                         # shortfall between the new-name grows and the core trims). Prior: 0.04862
                         # -> 0.06818 (CONV-REBAL 2026-06) — was 3.0% book, a conviction-set target (the highest-
@@ -221,18 +221,18 @@ W3_DCINFRA_TARGETS = {
     # VALUES ARE DIRECT BOOK % (2026-06 model change): e.g. 2.0 == 2.0% of total book.
     # The trailing "# CHANGED: 0.x ->" notes below are HISTORICAL sub-weight values from the
     # old normalized model; the live number on each line is now a direct percent.
-    "VRT":   2.2801,# CHANGED: 0.14664 -> 0.16902 (COHR-CUT 2026-06) — renormalized after
+    "VRT":   2.3,# ROUNDED 2026-06: 2.2801 -> 2.3. CHANGED: 0.14664 -> 0.16902 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut to 0% (book ~unchanged at 2.28% since the wave shrank to 13.49%).
                     # Prior: 0.07997 -> 0.14664 (CONV-REBAL 2026-06) — GROWN to 2.27%
                     # book on the CONV gradient (CONV 6.46). Scores AVOID (GROWTH 5.8) but keeps a
                     # strong F=8.0, so trimmed not cut. Liquid cooling leader — CYCLE.
-    "ANET":  2.4509,# CHANGED: 0.15762 -> 0.18168 (COHR-CUT 2026-06) — renormalized after
+    "ANET":  2.5,# ROUNDED 2026-06: 2.4509 -> 2.5. CHANGED: 0.15762 -> 0.18168 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut (book ~unchanged at 2.45%). Prior: 0.23991 -> 0.15762
                     # (CONV-REBAL 2026-06) — TRIMMED to 2.44%
                     # book on the CONV gradient (CONV 7.06). Still the best business in the wave
                     # (QUALITY 9.6) but its DCA-CONV is mid-pack here, so sized to the gradient.
                     # Arista — DC networking monopoly. 38% margin, $4.4B FCF, software moat. DCA.
-    "CRDO":  2.019,# CHANGED: 0.12984 -> 0.14966 (COHR-CUT 2026-06) — renormalized after
+    "CRDO":  2.0,# ROUNDED 2026-06: 2.019 -> 2.0. CHANGED: 0.12984 -> 0.14966 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut (book ~unchanged at 2.02%). Prior: 0.18660 -> 0.12984
                     # (CONV-REBAL 2026-06) — TRIMMED to 2.01%
                     # book on the CONV gradient (CONV 5.54, near the bottom). It scores MOMENTUM with the
@@ -244,13 +244,13 @@ W3_DCINFRA_TARGETS = {
                     # (low upside 6.4 + high risk 5.0, CONV 5.68) and redundant with CRDO/FN/CLS
                     # in optical/interconnect. Its ~2.05% book moved cross-wave to W5 (PLTR/APP).
                     # Coherent — optical; already ran, cyclical. MOMENTUM. CYCLE.
-    "FN":    2.2199,# CHANGED: 0.14276 -> 0.16456 (COHR-CUT 2026-06) — renormalized after
+    "FN":    2.2,# ROUNDED 2026-06: 2.2199 -> 2.2. CHANGED: 0.14276 -> 0.16456 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut (book ~unchanged at 2.22%). Prior: 0.21326 -> 0.14276
                     # (CONV-REBAL 2026-06) — TRIMMED to 2.21%
                     # book on the CONV gradient (CONV 6.27).
                     # Fabrinet — optical contract mfr; cleanest growth-at-reasonable-price name
                     # (QUALITY quadrant, 8PT 5.11, net cash). CYCLE / Mid.
-    "ALAB":  2.0089,# CHANGED: 0.12920 -> 0.14892 (COHR-CUT 2026-06) — renormalized after
+    "ALAB":  2.0,# ROUNDED 2026-06: 2.0089 -> 2.0. CHANGED: 0.12920 -> 0.14892 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut (book ~unchanged at 2.01%). Prior: 0.07997 -> 0.12920
                     # (CONV-REBAL 2026-06) — set to 2.00% book,
                     # the gradient FLOOR (lowest CONV 5.52 in the wave). Mid/Late,
@@ -262,7 +262,7 @@ W3_DCINFRA_TARGETS = {
                     # CHANGED 2026-06: S (SentinelOne) MOVED OUT to W5 (it's a software/cyber
                     # name). Growth-max pass: SNOW + COHR trim folded into CRDO; 6 names
                     # renormalized to sum to 1.0.
-    "CLS":   2.5112,# CHANGED: 0.16150 -> 0.18615 (COHR-CUT 2026-06) — renormalized after
+    "CLS":   2.5,# ROUNDED 2026-06: 2.5112 -> 2.5. CHANGED: 0.16150 -> 0.18615 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut + absorbs the tiny rounding residual (book ~unchanged at 2.51%).
                     # Prior: 0.09366 -> 0.16150 (CONV-REBAL 2026-06) — GROWN to 2.50%
                     # book, the gradient CEILING (top CONV 7.27 in the wave). Celestica — EMS for
@@ -294,7 +294,7 @@ W4_CLOUD_TARGETS = {
     "MSFT":  2.0,# CHANGED: 0.17871 -> 0.18165 (RIGHTSIZE 2026-06) — set to 2.0% book
                     # (0.1101 * 0.18165 = 0.02, -0.25%). Azure + OpenAI.
                     # Cloud anchor, every layer >=5.9. CONV 7.97. dca.
-    "GOOG":  0.01,# CHANGED: 0.00079 -> 0.00091 (RIGHTSIZE 2026-06) — sub-share up (wave
+    "GOOG":  0.0,# ZEROED 2026-06: 0.01 stub -> 0.0. CHANGED: 0.00079 -> 0.00091 (RIGHTSIZE 2026-06) — sub-share up (wave
                     # shrank); book UNCHANGED at the 0.01% stub. Prior: 0.16679 -> 0.00074
                     # (ORCL-CONSOL 2026-06) — cut to the stub; its ~2.24% reallocated to ORCL.
                     # Kept as an easy-re-add stub, not deleted. Gemini + TPU + Cloud. CONV 7.50.
@@ -327,12 +327,12 @@ W5_SOFTWARE_TARGETS = {
     "S":     0.0,# CUT. Only GAAP-UNPROFITABLE top-10 name (net income -$319M TTM,
                     # never had a profitable year); FCF-positive but turnaround unproven.
                     # Kept at 0% for easy re-add if the GAAP turn completes.
-    "PANW":  0.01,# CHANGED: 0.00113 -> 0.00102 (RIGHTSIZE 2026-06) — sub-share moved only
+    "PANW":  0.0,# ZEROED 2026-06: 0.01 stub -> 0.0. CHANGED: 0.00113 -> 0.00102 (RIGHTSIZE 2026-06) — sub-share moved only
                     # because the wave grew to 9.82%; book UNCHANGED at the 0.01% stub. Security
                     # platform — biggest, cheapest, steadiest, but scores RICH (RICHNESS 0.90,
                     # CONV 3.02 — lowest DCA on the board): too extended to keep real book. Easy
                     # re-add once it de-rates. DCA.
-    "CRWD":  0.01,# CHANGED: 0.00113 -> 0.00102 (RIGHTSIZE 2026-06) — held at the 0.01%-
+    "CRWD":  0.0,# ZEROED 2026-06: 0.01 stub -> 0.0. CHANGED: 0.00113 -> 0.00102 (RIGHTSIZE 2026-06) — held at the 0.01%-
                     # book stub (sub-share moved only because the wave grew). AI cybersecurity.
                     # Scores RICH (RICHNESS 0.81, CONV 3.72) — same logic as PANW. Easy re-add. DCA.
     "NOW":   2.0,# CHANGED: 0.22676 -> 0.20367 (RIGHTSIZE 2026-06) — sub-share recomputed
@@ -400,7 +400,7 @@ W6_SPEC_TARGETS = {
     # VALUES ARE DIRECT BOOK % (2026-06 model change): e.g. 2.0 == 2.0% of total book.
     # The trailing "# CHANGED: 0.x ->" notes below are HISTORICAL sub-weight values from the
     # old normalized model; the live number on each line is now a direct percent.
-    "TMDX":  0.75,# CHANGED: 0.375 -> 0.21429 (RIGHTSIZE 2026-06) — sub-share recomputed for
+    "TMDX":  0.8,# ROUNDED 2026-06: 0.75 -> 0.8. CHANGED: 0.375 -> 0.21429 (RIGHTSIZE 2026-06) — sub-share recomputed for
                       # the grown 3.5% wave; book UNCHANGED at 0.75% (0.035 * 0.21429 = 0.0075).
                       # Prior: 0.25 -> 0.375 (PEGA/INOD-FUND 2026-06). Earlier: 0.50 -> 0.25 (CONV-REBAL 2026-06).
                       # MedTech organ-transport, profitable, off-radar, non-AI diversifier. QUALITY
@@ -419,13 +419,13 @@ W6_SPEC_TARGETS = {
                       # scaling to profitability; binary on label-expansion / readout catalysts.
                       # Off-thesis vs the AI tail (a biotech), but the same convex-bet discipline:
                       # size on data, never average down. CATALYST / Binary.
-    "RKLB":  0.01,# CHANGED: 0.005 -> 0.00286 (RIGHTSIZE 2026-06) — sub-share moved only
+    "RKLB":  0.0,# ZEROED 2026-06: 0.01 stub -> 0.0. CHANGED: 0.005 -> 0.00286 (RIGHTSIZE 2026-06) — sub-share moved only
                       # because the wave grew; book UNCHANGED at the 0.01% stub (0.035 * 0.00286 =
                       # 0.0001). Prior: 0.125 -> 0.005 (RKLB-CUT 2026-06) — CUT to a 0.01% book stub.
                       # Scores AVOID (GROWTH 4.6); the
                       # asymmetric space punt is parked, not grown. Kept as an easy-re-add stub,
                       # not deleted. Space/autonomy. Catalyst — size once, no avg down.
-    "SYM":   0.24,# CHANGED: 0.12 -> 0.06857 (RIGHTSIZE 2026-06) — sub-share recomputed for
+    "SYM":   0.2,# ROUNDED 2026-06: 0.24 -> 0.2. CHANGED: 0.12 -> 0.06857 (RIGHTSIZE 2026-06) — sub-share recomputed for
                       # the grown 3.5% wave; book UNCHANGED at 0.24% (0.035 * 0.06857 = 0.0024).
                       # Prior: 0.125 -> 0.12 (PEGA/INOD-FUND 2026-06). Earlier: 0.10 -> 0.125 (CONV-REBAL
                       # 2026-06). Symbotic — warehouse/logistics robotics (physical-AI). QUALITY
