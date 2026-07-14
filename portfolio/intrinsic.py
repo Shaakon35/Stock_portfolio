@@ -89,15 +89,26 @@ def get_single_stocks(include_etf_lookthrough=True):
     return out
 
 
-# --- DCF assumptions (override via compute_intrinsic_value kwargs) ---
+# --- Valuation assumptions (override via compute_intrinsic_value kwargs) ---
+#
+# Calibrated to track AlphaSpread's "Base Case": a 2-stage DCF blended 50/50
+# with an earnings-multiple valuation. Earlier defaults (flat 25% growth for
+# 10 years, DCF only) overvalued cyclical/peak-FCF names by ~5-6x; these are
+# deliberately conservative.
 DEFAULTS = {
     "risk_free": 0.043,        # ~10y treasury
-    "equity_premium": 0.05,    # historical equity risk premium
-    "wacc_min": 0.07,
-    "wacc_max": 0.15,
-    "terminal_growth": 0.025,  # long-run GDP-ish
-    "growth_cap": 0.25,        # cap projected FCF growth at 25%/yr
-    "projection_years": 10,
+    "equity_premium": 0.055,   # equity risk premium
+    "wacc_min": 0.08,
+    "wacc_max": 0.14,
+    "terminal_growth": 0.025,  # long-run GDP-ish (stage-2 / terminal)
+    # Stage 1: near-term growth, tempered and capped hard.
+    "growth_cap": 0.12,        # cap projected growth at 12%/yr (was 25%)
+    "stage1_years": 5,         # high-growth phase (was 10)
+    "stage2_years": 5,         # fade phase toward terminal growth
+    "growth_haircut": 0.5,     # use only half of historical CAGR (mean-revert)
+    # Multiples method.
+    "fair_pe": 18.0,           # baseline fair P/E applied to normalized EPS
+    "multiples_weight": 0.5,   # blend: 0.5 => 50% DCF + 50% multiples
 }
 
 
@@ -175,13 +186,92 @@ def is_dcf_eligible(info=None, ticker_obj=None, ticker=None):
     return True, "ok"
 
 
-def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
-    """Compute the current DCF intrinsic value per share for one ticker.
+def _estimate_growth(ticker_obj, info, cfg):
+    """Conservative near-term growth estimate for stage 1 of the DCF.
 
-    Returns a dict:
-        {eligible, reason, ticker, price, intrinsic, upside_pct,
-         wacc, growth, fcf_latest, net_debt, shares, assumptions}
-    If not eligible, intrinsic is None and reason explains why.
+    Blends historical FCF CAGR (halved to mean-revert away from cyclical
+    peaks) with analyst earnings growth when available, then hard-caps it.
+    Returns a fraction (e.g. 0.10 for 10%/yr).
+    """
+    years, vals = _fcf_series(ticker_obj)
+    hist = _cagr(list(reversed(vals))) if vals else None
+    if hist is not None:
+        hist = hist * cfg["growth_haircut"]   # temper peak-cycle CAGR
+
+    analyst = info.get("earningsGrowth")
+    if analyst is not None and analyst > 0:
+        analyst = min(float(analyst), 0.30)
+
+    candidates = [g for g in (hist, analyst) if g is not None and g > 0]
+    if candidates:
+        growth = sum(candidates) / len(candidates)
+    else:
+        rg = info.get("revenueGrowth")
+        growth = float(rg) if rg else 0.05
+
+    return float(min(max(growth, 0.0), cfg["growth_cap"]))
+
+
+def _dcf_value(fcf, growth, wacc, cfg, net_debt, shares):
+    """Two-stage DCF -> equity value per share.
+
+    Stage 1: FCF grows at `growth` for stage1_years.
+    Stage 2: growth fades linearly from `growth` to terminal growth over
+             stage2_years (captures the reality that high growth decays).
+    Terminal: Gordon growth on the final-year FCF.
+    """
+    g_term = cfg["terminal_growth"]
+    if g_term >= wacc:
+        g_term = wacc - 0.02
+
+    pv = 0.0
+    fcf_n = fcf
+    yr = 0
+    # Stage 1: constant high growth.
+    for _ in range(cfg["stage1_years"]):
+        yr += 1
+        fcf_n *= (1 + growth)
+        pv += fcf_n / (1 + wacc) ** yr
+    # Stage 2: growth fades to terminal.
+    s2 = cfg["stage2_years"]
+    for j in range(1, s2 + 1):
+        yr += 1
+        g = growth + (g_term - growth) * (j / s2)
+        fcf_n *= (1 + g)
+        pv += fcf_n / (1 + wacc) ** yr
+    # Terminal value on final-year FCF.
+    terminal = fcf_n * (1 + g_term) / (wacc - g_term)
+    pv += terminal / (1 + wacc) ** yr
+
+    equity = pv - net_debt
+    return float(equity / shares) if shares else None
+
+
+def _multiples_value(info, cfg):
+    """Earnings-multiple fair value per share: normalized EPS x fair P/E.
+
+    Uses the lower of trailing and forward EPS (conservative) times a fair
+    P/E. Returns None if EPS is missing or non-positive.
+    """
+    eps_t = info.get("trailingEps")
+    eps_f = info.get("forwardEps")
+    eps_candidates = [e for e in (eps_t, eps_f) if e is not None and e > 0]
+    if not eps_candidates:
+        return None
+    eps = min(eps_candidates)      # conservative
+    return float(eps * cfg["fair_pe"])
+
+
+def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
+    """Intrinsic value per share: 2-stage DCF blended with an earnings multiple.
+
+    Mirrors AlphaSpread's "Base Case": intrinsic = w*multiples + (1-w)*DCF,
+    with w = multiples_weight (default 0.5 => 50/50). This corrects the prior
+    DCF-only estimate that overvalued cyclical/peak-FCF names.
+
+    Returns a dict with intrinsic, dcf_value, multiples_value, upside_pct, and
+    the key inputs. If DCF is not applicable (no positive FCF), intrinsic is
+    None and reason explains why.
     """
     import yfinance as yf
     cfg = {**DEFAULTS, **overrides}
@@ -194,54 +284,53 @@ def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
             info = {}
 
     price = info.get("currentPrice") or info.get("regularMarketPrice")
-
     eligible, reason = is_dcf_eligible(info, ticker_obj, ticker)
     base = {
         "ticker": ticker, "price": price, "eligible": eligible,
         "reason": reason, "intrinsic": None, "upside_pct": None,
+        "dcf_value": None, "multiples_value": None,
     }
     if not eligible:
         return base
 
-    years, vals = _fcf_series(ticker_obj)          # newest-first
+    years, vals = _fcf_series(ticker_obj)
     fcf_latest = vals[0]
-    old_to_new = list(reversed(vals))              # oldest-first for CAGR
-    growth = _cagr(old_to_new)
-    if growth is None:
-        # fall back to revenue growth, then a modest default
-        rg = info.get("revenueGrowth")
-        growth = float(rg) if rg is not None else 0.08
-    growth = float(min(max(growth, 0.0), cfg["growth_cap"]))
-
-    beta = info.get("beta")
-    wacc = _wacc_from_beta(beta, cfg)
-    g_term = cfg["terminal_growth"]
-    # Guard: terminal growth must be below discount rate.
-    if g_term >= wacc:
-        g_term = wacc - 0.02
-
+    growth = _estimate_growth(ticker_obj, info, cfg)
+    wacc = _wacc_from_beta(info.get("beta"), cfg)
     shares = info.get("sharesOutstanding")
     net_debt = (info.get("totalDebt") or 0) - (info.get("totalCash") or 0)
 
-    intrinsic = _dcf_per_share(
-        fcf_latest, growth, wacc, g_term, cfg["projection_years"],
-        net_debt, shares)
+    dcf_v = _dcf_value(fcf_latest, growth, wacc, cfg, net_debt, shares)
+    mult_v = _multiples_value(info, cfg)
 
-    upside = ((intrinsic - price) / price * 100.0) if price else None
+    # Blend: 50/50 when both exist, else whichever is available.
+    w = cfg["multiples_weight"]
+    if dcf_v is not None and mult_v is not None:
+        intrinsic = w * mult_v + (1 - w) * dcf_v
+    elif dcf_v is not None:
+        intrinsic = dcf_v
+    elif mult_v is not None:
+        intrinsic = mult_v
+    else:
+        intrinsic = None
+
+    upside = ((intrinsic - price) / price * 100.0) if (intrinsic and price) else None
     base.update({
-        "intrinsic": intrinsic, "upside_pct": upside, "wacc": wacc,
-        "growth": growth, "fcf_latest": fcf_latest, "net_debt": net_debt,
-        "shares": shares,
+        "intrinsic": intrinsic, "upside_pct": upside,
+        "dcf_value": dcf_v, "multiples_value": mult_v,
+        "wacc": wacc, "growth": growth, "fcf_latest": fcf_latest,
+        "net_debt": net_debt, "shares": shares,
         "assumptions": {
-            "terminal_growth": g_term, "beta": beta,
-            "projection_years": cfg["projection_years"],
+            "terminal_growth": cfg["terminal_growth"], "beta": info.get("beta"),
+            "stage1_years": cfg["stage1_years"], "stage2_years": cfg["stage2_years"],
+            "fair_pe": cfg["fair_pe"], "multiples_weight": w,
         },
     })
     return base
 
 
 def _dcf_per_share(fcf, growth, wacc, g_term, n_years, net_debt, shares):
-    """Core DCF math -> intrinsic value per share."""
+    """Legacy single-stage DCF (kept for historical_intrinsic_series)."""
     pv_fcf = 0.0
     fcf_n = fcf
     for n in range(1, n_years + 1):
@@ -280,13 +369,11 @@ def historical_intrinsic_series(ticker, info=None, ticker_obj=None, **overrides)
 
     beta = info.get("beta")
     wacc = _wacc_from_beta(beta, cfg)
-    g_term = cfg["terminal_growth"]
-    if g_term >= wacc:
-        g_term = wacc - 0.02
     shares = info.get("sharesOutstanding")
     net_debt = (info.get("totalDebt") or 0) - (info.get("totalCash") or 0)
 
-    # Rolling growth estimate: CAGR of FCF up to and including each year.
+    # Rolling growth: halved CAGR of FCF up to and including each year, so the
+    # historical line uses the same tempered 2-stage DCF as the current value.
     out = []
     for i, (yr, fcf) in enumerate(pairs):
         if fcf is None or fcf <= 0 or not shares:
@@ -294,10 +381,9 @@ def historical_intrinsic_series(ticker, info=None, ticker_obj=None, **overrides)
         window = [v for (_, v) in pairs[:i + 1]]
         g = _cagr(window)
         if g is None:
-            g = 0.08
-        g = float(min(max(g, 0.0), cfg["growth_cap"]))
-        iv = _dcf_per_share(fcf, g, wacc, g_term, cfg["projection_years"],
-                            net_debt, shares)
+            g = 0.05
+        g = float(min(max(g * cfg["growth_haircut"], 0.0), cfg["growth_cap"]))
+        iv = _dcf_value(fcf, g, wacc, cfg, net_debt, shares)
         if iv is not None and np.isfinite(iv) and iv > 0:
             out.append((yr, iv))
     return out
@@ -439,20 +525,23 @@ def _print_table(results):
         return (0, -up) if (v["eligible"] and up is not None) else (1, 0)
 
     ordered = sorted(results, key=_key)
-    print(f"\n{'Ticker':<8}{'Basket':<12}{'Price':>10}{'Intrinsic':>12}"
-          f"{'Upside':>9}  Verdict")
-    print("-" * 64)
+    print(f"\n{'Ticker':<8}{'Basket':<20}{'Price':>9}{'DCF':>9}{'Mult':>9}"
+          f"{'Intrinsic':>10}{'Upside':>8}  Verdict")
+    print("-" * 88)
     for v in ordered:
         up = v.get("upside_pct")
         price = f"${v['price']:,.2f}" if v.get("price") else "-"
         if v["eligible"] and up is not None:
+            dcf = f"${v['dcf_value']:,.2f}" if v.get("dcf_value") else "-"
+            mult = f"${v['multiples_value']:,.2f}" if v.get("multiples_value") else "-"
             iv = f"${v['intrinsic']:,.2f}"
             up_s = f"{up:+.0f}%"
             verdict = "Undervalued" if up > 0 else "Overvalued"
         else:
-            iv, up_s, verdict = "-", "-", f"N/A ({v.get('reason','')})"
-        print(f"{v['ticker']:<8}{v.get('basket',''):<12}{price:>10}{iv:>12}"
-              f"{up_s:>9}  {verdict}")
+            dcf = mult = iv = up_s = "-"
+            verdict = f"N/A ({v.get('reason','')})"
+        print(f"{v['ticker']:<8}{v.get('basket',''):<20}{price:>9}{dcf:>9}"
+              f"{mult:>9}{iv:>10}{up_s:>8}  {verdict}")
 
 
 def run(by_strategy=False, save_dir=None, tickers=None, **overrides):
