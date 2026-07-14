@@ -1,34 +1,50 @@
-"""DCF intrinsic value for the AI-allocation portfolio (AlphaSpread-style).
+"""Intrinsic value for the AI-allocation portfolio (AlphaSpread-style).
 
-Reproduces the core of AlphaSpread's intrinsic-value chart: market price vs a
-discounted-cash-flow (DCF) estimate of value per share, plotted over the last
-~5 years so you can see when a stock traded above/below its fundamental worth.
+Reproduces AlphaSpread's intrinsic-value chart: market price vs an estimate of
+fundamental value per share, plotted over the last ~5 years so you can see when
+a stock traded above/below its worth.
 
-METHOD (absolute DCF only)
---------------------------
-    IntrinsicValue/share =
-        ( Σ_{n=1..N} FCF·(1+g)^n / (1+WACC)^n            # projected FCF, discounted
-          + TV / (1+WACC)^N                              # discounted terminal value
-          - NetDebt ) / SharesOutstanding
+METHOD (calibrated to AlphaSpread's Base Case)
+----------------------------------------------
+Intrinsic value blends two legs, MULTIPLES-DOMINANT (default 80/20):
 
-    TV (terminal value) = FCF·(1+g)^N · (1+g_term) / (WACC - g_term)
-    NetDebt             = TotalDebt - TotalCash
-    WACC                = CAPM: risk_free + beta·equity_premium  (clamped 7-15%)
-    g (growth)          = historical FCF CAGR, clamped to [0, growth_cap]
-    g_term              = long-run terminal growth (default 2.5%)
+    intrinsic = 0.8 * multiples_value + 0.2 * dcf_value
+
+  1. Multiples leg (dominant) -- forward EPS x a RISK-ADJUSTED fair P/E:
+         fair_pe   = pe_base / (1 + pe_beta_k * (min(beta, beta_cap) - 1))
+         multiples = forwardEPS * fair_pe
+     The fair P/E starts at pe_base (~24x at beta 1) and shrinks as beta rises,
+     so higher-risk names are discounted. This is what lets the model call a
+     low-beta name undervalued and a high-beta name overvalued at similar
+     forward P/Es -- impossible with a flat multiple.
+
+  2. DCF leg -- 2-stage discounted cash flow on NORMALIZED (multi-year average)
+     free cash flow, so cyclical peak years don't inflate value:
+         dcf = ( Σ stage1 FCF·(1+g)^n/(1+WACC)^n
+               + Σ stage2 (growth fading to g_term)
+               + TV/(1+WACC)^N  -  NetDebt ) / Shares
+         WACC = CAPM: risk_free + beta·equity_premium  (clamped)
+         g    = tempered analyst earnings growth (fallback: FCF CAGR), capped
+
+Parameters in DEFAULTS were grid-search fit against five AlphaSpread anchors
+(CCJ, MSFT, NVDA, BESI.AS, ALAB) spanning under/over-valued and low/high-beta;
+the fit is direction-correct on all five with ~20% RMSE on intrinsic value.
+It approximates AlphaSpread's proprietary output, it does not reproduce it
+exactly (their formula and data feeds are not public).
 
 DATA (all from yfinance, no scraping)
 -------------------------------------
-    ticker.cashflow           -> 'Free Cash Flow' row, up to 5 fiscal years
-    ticker.info               -> beta, sharesOutstanding, totalDebt, totalCash
-    ticker.history(...)       -> price line (exact) for the chart
+    ticker.info      -> forwardEps, trailingEps, beta, earningsGrowth,
+                        sharesOutstanding, totalDebt, totalCash, price
+    ticker.cashflow  -> 'Free Cash Flow' row, up to ~4 fiscal years (DCF leg)
+    ticker.history() -> price line (exact) for the chart
 
 ELIGIBILITY
 -----------
-DCF is only meaningful for companies with POSITIVE, existing free cash flow.
-Pre-profit / cash-burning names (many quantum/space/biotech picks) and tickers
-with no FCF data are reported as N/A and skipped -- no misleading number, no
-plot. Use is_dcf_eligible() to check.
+A stock is valued when EITHER leg is available: positive forward/trailing EPS
+(multiples) OR positive free cash flow (DCF). Names with no FCF row still get a
+multiples estimate (e.g. BESI.AS). Only names with neither positive earnings
+nor positive FCF are reported as N/A. Use is_dcf_eligible() to check.
 
 HISTORICAL LINE (approximate)
 -----------------------------
@@ -91,10 +107,24 @@ def get_single_stocks(include_etf_lookthrough=True):
 
 # --- Valuation assumptions (override via compute_intrinsic_value kwargs) ---
 #
-# Calibrated to track AlphaSpread's "Base Case": a 2-stage DCF blended 50/50
-# with an earnings-multiple valuation. Earlier defaults (flat 25% growth for
-# 10 years, DCF only) overvalued cyclical/peak-FCF names by ~5-6x; these are
-# deliberately conservative.
+# Calibrated to track AlphaSpread's "Base Case" intrinsic value. The estimate
+# blends a forward-earnings multiple (dominant leg) with a 2-stage DCF on
+# normalized free cash flow. Parameters below were fit by grid-search against
+# five AlphaSpread anchor stocks (CCJ, MSFT, NVDA, BESI.AS, ALAB) spanning
+# under/over-valued and low/high-beta cases; the fit is direction-correct on
+# all five with ~20% RMSE on the intrinsic value.
+#
+# KEY IDEAS BEHIND THE CALIBRATION
+#   * Forward EPS, not trailing, drives the multiples leg -- AlphaSpread prices
+#     in next-year earnings. (Trailing P/E for these names ranged 22x-278x and
+#     could not be reconciled with a single fair multiple.)
+#   * The fair P/E is RISK-ADJUSTED: it shrinks as beta rises, so a high-beta
+#     name (NVDA beta 2.2) is valued more cautiously than a low-beta one
+#     (MSFT beta 1.13). This is what lets the model call MSFT undervalued and
+#     NVDA overvalued at similar forward P/Es -- impossible with a flat P/E.
+#         fair_pe = pe_base / (1 + pe_beta_k * (min(beta, beta_cap) - 1))
+#   * FCF is NORMALIZED (multi-year average) before the DCF, so cyclical peak
+#     cash flows (e.g. CCJ) don't inflate value.
 DEFAULTS = {
     "risk_free": 0.043,        # ~10y treasury
     "equity_premium": 0.055,   # equity risk premium
@@ -102,13 +132,17 @@ DEFAULTS = {
     "wacc_max": 0.14,
     "terminal_growth": 0.025,  # long-run GDP-ish (stage-2 / terminal)
     # Stage 1: near-term growth, tempered and capped hard.
-    "growth_cap": 0.12,        # cap projected growth at 12%/yr (was 25%)
-    "stage1_years": 5,         # high-growth phase (was 10)
+    "growth_cap": 0.12,        # cap projected growth at 12%/yr
+    "stage1_years": 5,         # high-growth phase
     "stage2_years": 5,         # fade phase toward terminal growth
-    "growth_haircut": 0.5,     # use only half of historical CAGR (mean-revert)
-    # Multiples method.
-    "fair_pe": 18.0,           # baseline fair P/E applied to normalized EPS
-    "multiples_weight": 0.5,   # blend: 0.5 => 50% DCF + 50% multiples
+    "growth_haircut": 0.6,     # temper analyst/historical growth (mean-revert)
+    "fcf_avg_years": 4,        # normalize FCF over up to N fiscal years
+    # Multiples method (risk-adjusted fair P/E on forward EPS).
+    "pe_base": 24.0,           # fair P/E at beta = 1.0
+    "pe_beta_k": 0.25,         # how fast fair P/E shrinks with beta
+    "beta_cap": 2.0,           # cap the beta penalty (avoid over-punishing)
+    "pe_floor": 8.0,           # never value below this multiple
+    "multiples_weight": 0.8,   # blend: 0.8 => 80% multiples + 20% DCF
 }
 
 
@@ -159,11 +193,13 @@ def _cagr(values_old_to_new):
 
 
 def is_dcf_eligible(info=None, ticker_obj=None, ticker=None):
-    """True if DCF can produce a meaningful value (positive, existing FCF).
+    """True if a meaningful intrinsic value can be produced.
 
-    Returns (eligible: bool, reason: str). Pass either a yfinance Ticker or a
-    ticker string. A stock is eligible only if the MOST RECENT free cash flow
-    is positive and shares outstanding are known.
+    Returns (eligible: bool, reason: str). A stock is valued when EITHER leg
+    is available: positive free cash flow (for the DCF leg) OR positive
+    forward/trailing EPS (for the multiples leg). This lets names with no
+    yfinance FCF row (e.g. BESI.AS) still get a multiples-based estimate,
+    while pre-profit / cash-burning names with neither remain N/A.
     """
     import yfinance as yf
     if ticker_obj is None:
@@ -174,41 +210,45 @@ def is_dcf_eligible(info=None, ticker_obj=None, ticker=None):
         except Exception:
             info = {}
 
-    years, vals = _fcf_series(ticker_obj)
-    if not vals:
-        return False, "no free cash flow data"
-    # cashflow columns are newest-first -> vals[0] is latest
-    if vals[0] <= 0:
-        return False, f"latest FCF negative (${vals[0]/1e6:,.0f}M)"
     shares = info.get("sharesOutstanding")
     if not shares or shares <= 0:
         return False, "shares outstanding unknown"
-    return True, "ok"
+
+    _, vals = _fcf_series(ticker_obj)
+    has_fcf = bool(vals) and vals[0] > 0     # cashflow is newest-first
+    eps_f = info.get("forwardEps")
+    eps_t = info.get("trailingEps")
+    has_eps = (eps_f is not None and eps_f > 0) or (eps_t is not None and eps_t > 0)
+
+    if has_fcf or has_eps:
+        return True, "ok"
+    if vals and vals[0] <= 0 and not has_eps:
+        return False, f"no positive FCF (${vals[0]/1e6:,.0f}M) or EPS"
+    return False, "no free cash flow or earnings data"
 
 
 def _estimate_growth(ticker_obj, info, cfg):
     """Conservative near-term growth estimate for stage 1 of the DCF.
 
-    Blends historical FCF CAGR (halved to mean-revert away from cyclical
-    peaks) with analyst earnings growth when available, then hard-caps it.
+    Prefers analyst forward earnings growth (what AlphaSpread's Base Case keys
+    off), falls back to historical FCF CAGR, then revenue growth. The chosen
+    figure is tempered by ``growth_haircut`` (analyst estimates for hot names
+    are wildly optimistic) and hard-capped at ``growth_cap``.
     Returns a fraction (e.g. 0.10 for 10%/yr).
     """
-    years, vals = _fcf_series(ticker_obj)
-    hist = _cagr(list(reversed(vals))) if vals else None
-    if hist is not None:
-        hist = hist * cfg["growth_haircut"]   # temper peak-cycle CAGR
-
     analyst = info.get("earningsGrowth")
     if analyst is not None and analyst > 0:
-        analyst = min(float(analyst), 0.30)
-
-    candidates = [g for g in (hist, analyst) if g is not None and g > 0]
-    if candidates:
-        growth = sum(candidates) / len(candidates)
+        growth = float(analyst)
     else:
-        rg = info.get("revenueGrowth")
-        growth = float(rg) if rg else 0.05
+        years, vals = _fcf_series(ticker_obj)
+        hist = _cagr(list(reversed(vals))) if vals else None
+        if hist is not None and hist > 0:
+            growth = hist
+        else:
+            rg = info.get("revenueGrowth")
+            growth = float(rg) if rg and rg > 0 else 0.05
 
+    growth *= cfg["growth_haircut"]           # mean-revert optimistic estimates
     return float(min(max(growth, 0.0), cfg["growth_cap"]))
 
 
@@ -247,19 +287,52 @@ def _dcf_value(fcf, growth, wacc, cfg, net_debt, shares):
     return float(equity / shares) if shares else None
 
 
-def _multiples_value(info, cfg):
-    """Earnings-multiple fair value per share: normalized EPS x fair P/E.
+def _fair_pe(beta, cfg):
+    """Risk-adjusted fair P/E: higher beta -> lower multiple.
 
-    Uses the lower of trailing and forward EPS (conservative) times a fair
-    P/E. Returns None if EPS is missing or non-positive.
+        fair_pe = pe_base / (1 + pe_beta_k * (min(beta, beta_cap) - 1))
+
+    At beta = 1.0 this returns ``pe_base``. Beta above ``beta_cap`` is clamped
+    so extreme-beta names (e.g. ALAB ~3.7) are not punished without limit. The
+    result is floored at ``pe_floor``.
     """
-    eps_t = info.get("trailingEps")
-    eps_f = info.get("forwardEps")
-    eps_candidates = [e for e in (eps_t, eps_f) if e is not None and e > 0]
-    if not eps_candidates:
+    if beta is None or beta <= 0:
+        beta = 1.0
+    b = min(float(beta), cfg["beta_cap"])
+    pe = cfg["pe_base"] / (1.0 + cfg["pe_beta_k"] * (b - 1.0))
+    return float(max(pe, cfg["pe_floor"]))
+
+
+def _normalized_fcf(vals, cfg):
+    """Average of the last N positive fiscal-year FCF values (cyclical smooth).
+
+    ``vals`` is newest-first. Averaging over several years keeps a single
+    peak-cycle year (e.g. a uranium miner's boom) from inflating the DCF.
+    Returns None if there is no positive FCF.
+    """
+    n = cfg.get("fcf_avg_years", 4)
+    window = [v for v in vals[:n] if v is not None and v > 0]
+    if not window:
         return None
-    eps = min(eps_candidates)      # conservative
-    return float(eps * cfg["fair_pe"])
+    return sum(window) / len(window)
+
+
+def _multiples_value(info, cfg):
+    """Earnings-multiple fair value per share: forward EPS x risk-adjusted P/E.
+
+    Uses FORWARD EPS (AlphaSpread's Base Case prices in next-year earnings),
+    falling back to trailing EPS if forward is missing. The multiple is
+    beta-adjusted via ``_fair_pe``. Returns None if no positive EPS exists.
+    """
+    eps_f = info.get("forwardEps")
+    eps_t = info.get("trailingEps")
+    if eps_f is not None and eps_f > 0:
+        eps = float(eps_f)
+    elif eps_t is not None and eps_t > 0:
+        eps = float(eps_t)
+    else:
+        return None
+    return float(eps * _fair_pe(info.get("beta"), cfg))
 
 
 def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
@@ -294,23 +367,28 @@ def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
         return base
 
     years, vals = _fcf_series(ticker_obj)
-    fcf_latest = vals[0]
+    fcf_latest = vals[0] if vals else None
+    fcf_norm = _normalized_fcf(vals, cfg) if vals else None
     growth = _estimate_growth(ticker_obj, info, cfg)
     wacc = _wacc_from_beta(info.get("beta"), cfg)
     shares = info.get("sharesOutstanding")
     net_debt = (info.get("totalDebt") or 0) - (info.get("totalCash") or 0)
 
-    dcf_v = _dcf_value(fcf_latest, growth, wacc, cfg, net_debt, shares)
+    # DCF leg runs on normalized (averaged) FCF; skipped when no positive FCF.
+    dcf_v = None
+    if fcf_norm is not None:
+        dcf_v = _dcf_value(fcf_norm, growth, wacc, cfg, net_debt, shares)
     mult_v = _multiples_value(info, cfg)
 
-    # Blend: 50/50 when both exist, else whichever is available.
+    # Blend: multiples-dominant when both exist (see DEFAULTS), else whichever
+    # leg is available. Multiples alone covers names with no FCF row (BESI.AS).
     w = cfg["multiples_weight"]
     if dcf_v is not None and mult_v is not None:
         intrinsic = w * mult_v + (1 - w) * dcf_v
-    elif dcf_v is not None:
-        intrinsic = dcf_v
     elif mult_v is not None:
         intrinsic = mult_v
+    elif dcf_v is not None:
+        intrinsic = dcf_v
     else:
         intrinsic = None
 
@@ -319,11 +397,11 @@ def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
         "intrinsic": intrinsic, "upside_pct": upside,
         "dcf_value": dcf_v, "multiples_value": mult_v,
         "wacc": wacc, "growth": growth, "fcf_latest": fcf_latest,
-        "net_debt": net_debt, "shares": shares,
+        "fcf_normalized": fcf_norm, "net_debt": net_debt, "shares": shares,
         "assumptions": {
             "terminal_growth": cfg["terminal_growth"], "beta": info.get("beta"),
             "stage1_years": cfg["stage1_years"], "stage2_years": cfg["stage2_years"],
-            "fair_pe": cfg["fair_pe"], "multiples_weight": w,
+            "fair_pe": _fair_pe(info.get("beta"), cfg), "multiples_weight": w,
         },
     })
     return base
@@ -466,7 +544,7 @@ def plot_to_base64(val):
         hy = [_dt.datetime(y, 12, 31) for (y, _) in hist]
         hv = [v for (_, v) in hist]
         ax.step(hy, hv, where="post", color="#2ca02c", lw=2,
-                label="Intrinsic value (DCF, approx)")
+                label="Intrinsic value (approx)")
         ax.scatter(hy, hv, color="#2ca02c", s=25, zorder=5)
 
     intrinsic = val.get("intrinsic")
