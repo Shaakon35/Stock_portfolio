@@ -362,6 +362,11 @@ def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
         "ticker": ticker, "price": price, "eligible": eligible,
         "reason": reason, "intrinsic": None, "upside_pct": None,
         "dcf_value": None, "multiples_value": None,
+        # Sell-side analyst price targets (yfinance / stock-analysis feeds).
+        "analyst_low": info.get("targetLowPrice"),
+        "analyst_mean": info.get("targetMeanPrice"),
+        "analyst_high": info.get("targetHighPrice"),
+        "analyst_n": info.get("numberOfAnalystOpinions"),
     }
     if not eligible:
         return base
@@ -603,23 +608,32 @@ def _print_table(results):
         return (0, -up) if (v["eligible"] and up is not None) else (1, 0)
 
     ordered = sorted(results, key=_key)
-    print(f"\n{'Ticker':<8}{'Basket':<20}{'Price':>9}{'DCF':>9}{'Mult':>9}"
-          f"{'Intrinsic':>10}{'Upside':>8}  Verdict")
-    print("-" * 88)
+
+    def _money(x):
+        return f"${x:,.2f}" if x is not None else "-"
+
+    print(f"\n{'Ticker':<8}{'Basket':<18}{'Price':>9}{'DCF':>9}{'Mult':>9}"
+          f"{'Intrinsic':>10}{'Upside':>7}  {'AnLow':>8}{'AnMean':>8}"
+          f"{'AnHigh':>8}  Verdict")
+    print("-" * 112)
     for v in ordered:
         up = v.get("upside_pct")
-        price = f"${v['price']:,.2f}" if v.get("price") else "-"
+        price = _money(v.get("price"))
         if v["eligible"] and up is not None:
-            dcf = f"${v['dcf_value']:,.2f}" if v.get("dcf_value") else "-"
-            mult = f"${v['multiples_value']:,.2f}" if v.get("multiples_value") else "-"
-            iv = f"${v['intrinsic']:,.2f}"
+            dcf = _money(v.get("dcf_value"))
+            mult = _money(v.get("multiples_value"))
+            iv = _money(v.get("intrinsic"))
             up_s = f"{up:+.0f}%"
             verdict = "Undervalued" if up > 0 else "Overvalued"
         else:
             dcf = mult = iv = up_s = "-"
             verdict = f"N/A ({v.get('reason','')})"
-        print(f"{v['ticker']:<8}{v.get('basket',''):<20}{price:>9}{dcf:>9}"
-              f"{mult:>9}{iv:>10}{up_s:>8}  {verdict}")
+        a_lo = _money(v.get("analyst_low"))
+        a_mid = _money(v.get("analyst_mean"))
+        a_hi = _money(v.get("analyst_high"))
+        print(f"{v['ticker']:<8}{v.get('basket',''):<18}{price:>9}{dcf:>9}"
+              f"{mult:>9}{iv:>10}{up_s:>7}  {a_lo:>8}{a_mid:>8}{a_hi:>8}  "
+              f"{verdict}")
 
 
 def run(by_strategy=False, save_dir=None, tickers=None, **overrides):
