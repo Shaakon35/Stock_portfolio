@@ -941,6 +941,39 @@ WATCHLIST = {
         "note":     "SKIP — rev -29%, negative FCF (-$2.9B), crypto-dependent, weaker "
                     "than every industrial incumbent already held. Pure lottery.",
     },
+    "KEEL": {
+        "pos":      "Binary",
+        "cagr":     (-30, 40),
+        "strategy": "lottery",
+        "area":     "BTC mining pivoting to HPC/AI datacenters (Keel Infrastructure)",
+        "note":     "SKIP/lottery — same profile as CIFR: a bitcoin miner bolting on "
+                    "an HPC/AI-datacenter narrative. Deeply UNPROFITABLE (net margin "
+                    "~-121% TTM), microcap, +ve rev off a tiny base (ttm +52%) but "
+                    "erratic history. Crypto-correlated beta is new uncorrelated risk, "
+                    "not AI diversification. Binary punt — size tiny, never average down.",
+    },
+    "ONDS": {
+        "pos":      "Binary",
+        "cagr":     (-35, 45),
+        "strategy": "lottery",
+        "area":     "Autonomous drones + rail/industrial wireless (Ondas)",
+        "note":     "SKIP/lottery — pre-scale dual play (Ondas Autonomous Systems "
+                    "drones + Ondas Networks rail wireless). Explosive % rev (ttm "
+                    "+793%) is pure base effect off a microcap revenue line; still "
+                    "deeply UNPROFITABLE with lumpy, contract-dependent orders. "
+                    "All-or-nothing on defense/rail adoption — binary, size tiny.",
+    },
+    "BULL": {
+        "pos":      "Mid",
+        "cagr":     (8, 25),
+        "strategy": "cycle",
+        "area":     "Online brokerage / trading platform (Webull)",
+        "note":     "Retail-brokerage SPAC — rev +47% but margins swing around "
+                    "breakeven (net ~-3% TTM, positive in some years), so earnings "
+                    "track the retail-trading cycle, not a secular AI bottleneck. "
+                    "Off-thesis (fintech, not AI value-chain) and pre-consistent-"
+                    "profit. Cyclical: watch-only, accumulate on risk-off washouts.",
+    },
 
     # --- From the SECTOR portfolio satellites — net-new AI-thesis checks ---
     # Cross-referenced against held STRATEGY: names already in the wave book
@@ -2653,6 +2686,20 @@ WATCHLIST = {
              "area": "Autos (Honda) — Japan",
              "note": "Autos + motorcycles; auto-cyclical, EV transition. Buy dips."},
     # --- France (.PA) ---
+    "VU.PA": {"strategy": "dca", "pos": "Mid", "cagr": (10, 20),
+             "area": "Retail IoT / electronic shelf labels (Vusion, ex-SES-imagotag) — France",
+             "note": "PROFITABLE small-cap (net margin ~9.7% TTM, turned positive) "
+                     "scaling digital shelf-label / retail-IoT platforms — an edge-"
+                     "compute + data play adjacent to the AI-in-retail thesis. Rev "
+                     "+54% ttm off recurring hardware+SaaS. Quality-growth compounder "
+                     "if margins keep climbing — DCA on dips. Euronext Paris (EUR)."},
+    "ALSTI.PA": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 20),
+             "area": "Datacenter cooling / air-handling & containment (STIF) — France",
+             "note": "PROFITABLE French micro-cap (net margin ~13% TTM) in industrial "
+                     "ventilation / thermal containment — levered to datacenter cooling "
+                     "buildout (the same physical bottleneck as VRT). Rev +48% ttm, "
+                     "expanding margins, but tiny + order-lumpy, so cyclical: buy dips, "
+                     "trim manias. Euronext Paris (EUR)."},
     "MC.PA": {"strategy": "dca", "pos": "Mid", "cagr": (4, 11),
              "area": "Luxury (LVMH) — France",
              "note": "Luxury house portfolio; brand moat, demand-cyclical. DCA on dips."},
