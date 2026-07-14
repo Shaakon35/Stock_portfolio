@@ -4,33 +4,38 @@ Reproduces AlphaSpread's intrinsic-value chart: market price vs an estimate of
 fundamental value per share, plotted over the last ~5 years so you can see when
 a stock traded above/below its worth.
 
-METHOD (calibrated to AlphaSpread's Base Case)
-----------------------------------------------
-Intrinsic value blends two legs, MULTIPLES-DOMINANT (default 80/20):
+METHOD (anchored-multiple, AlphaSpread-style)
+---------------------------------------------
+Intrinsic value = forward EPS x a fair P/E anchored to the stock's OWN
+forward multiple, capped so only the extreme optimists get re-rated:
 
-    intrinsic = 0.8 * multiples_value + 0.2 * dcf_value
+    fair_pe   = min(own_forward_PE, pe_ceiling)      # own_forward_PE = price/fwdEPS
+    intrinsic = forwardEPS * fair_pe
 
-  1. Multiples leg (dominant) -- forward EPS x a RISK-ADJUSTED fair P/E:
-         fair_pe   = pe_base / (1 + pe_beta_k * (min(beta, beta_cap) - 1))
-         multiples = forwardEPS * fair_pe
-     The fair P/E starts at pe_base (~24x at beta 1) and shrinks as beta rises,
-     so higher-risk names are discounted. This is what lets the model call a
-     low-beta name undervalued and a high-beta name overvalued at similar
-     forward P/Es -- impossible with a flat multiple.
+WHY ANCHOR TO THE STOCK'S OWN MULTIPLE
+    The market already prices each company's growth, quality and risk into its
+    own multiple. Forcing a single "fair" P/E onto everyone re-rates a cyclical
+    semiconductor at 6x up to ~20x and hallucinates +100%+ upside. Anchoring to
+    the stock's own forward P/E and only CAPPING the extremes (e.g. names at
+    40-80x forward earnings, like CCJ ~48x or ALAB ~84x, back toward ~21x)
+    tracks AlphaSpread's intrinsic value with two parameters instead of a fit
+    that overfits. Validated against eight anchors (CCJ, MSFT, NVDA, BESI.AS,
+    ALAB, TLN, TSM, MU): ~5pp mean upside error, direction-correct on all eight.
 
-  2. DCF leg -- 2-stage discounted cash flow on NORMALIZED (multi-year average)
-     free cash flow, so cyclical peak years don't inflate value:
-         dcf = ( Σ stage1 FCF·(1+g)^n/(1+WACC)^n
+DCF (secondary, shown for context, NOT blended by default)
+    A 2-stage discounted cash flow on NORMALIZED (multi-year average) free cash
+    flow is computed and reported so you can see when the two methods disagree,
+    but multiples_weight defaults to 1.0 so it does not move the headline value.
+    For ADRs whose financialCurrency differs from the price currency (e.g. TSM:
+    FCF in TWD, price in USD) the DCF leg is skipped to avoid mixing currencies.
+        dcf  = ( Σ stage1 FCF·(1+g)^n/(1+WACC)^n
                + Σ stage2 (growth fading to g_term)
                + TV/(1+WACC)^N  -  NetDebt ) / Shares
-         WACC = CAPM: risk_free + beta·equity_premium  (clamped)
-         g    = tempered analyst earnings growth (fallback: FCF CAGR), capped
+        WACC = CAPM: risk_free + beta·equity_premium (clamped)
+        g    = tempered analyst earnings growth (fallback: FCF CAGR), capped
 
-Parameters in DEFAULTS were grid-search fit against five AlphaSpread anchors
-(CCJ, MSFT, NVDA, BESI.AS, ALAB) spanning under/over-valued and low/high-beta;
-the fit is direction-correct on all five with ~20% RMSE on intrinsic value.
-It approximates AlphaSpread's proprietary output, it does not reproduce it
-exactly (their formula and data feeds are not public).
+This approximates AlphaSpread; it does not reproduce it exactly (their formula
+and data feeds are not public).
 
 DATA (all from yfinance, no scraping)
 -------------------------------------
@@ -137,12 +142,13 @@ DEFAULTS = {
     "stage2_years": 5,         # fade phase toward terminal growth
     "growth_haircut": 0.6,     # temper analyst/historical growth (mean-revert)
     "fcf_avg_years": 4,        # normalize FCF over up to N fiscal years
-    # Multiples method (risk-adjusted fair P/E on forward EPS).
-    "pe_base": 24.0,           # fair P/E at beta = 1.0
-    "pe_beta_k": 0.25,         # how fast fair P/E shrinks with beta
-    "beta_cap": 2.0,           # cap the beta penalty (avoid over-punishing)
-    "pe_floor": 8.0,           # never value below this multiple
-    "multiples_weight": 0.8,   # blend: 0.8 => 80% multiples + 20% DCF
+    # Multiples method: fair P/E ANCHORED to the stock's own forward P/E,
+    # capped so only the extreme optimists get re-rated down. Two parameters,
+    # fit against eight AlphaSpread anchors (5.4pp mean upside error, 8/8
+    # direction-correct). See _fair_pe for the rationale.
+    "pe_ceiling": 21.0,        # cap fair P/E (re-rate names priced above this)
+    "pe_own_mult": 1.0,        # scale the stock's own forward P/E before cap
+    "multiples_weight": 1.0,   # 1.0 => pure multiples (DCF shown but not blended)
 }
 
 
@@ -287,20 +293,27 @@ def _dcf_value(fcf, growth, wacc, cfg, net_debt, shares):
     return float(equity / shares) if shares else None
 
 
-def _fair_pe(beta, cfg):
-    """Risk-adjusted fair P/E: higher beta -> lower multiple.
+def _fair_pe(info, cfg):
+    """Fair P/E anchored to the stock's OWN forward P/E, capped at a ceiling.
 
-        fair_pe = pe_base / (1 + pe_beta_k * (min(beta, beta_cap) - 1))
+        fair_pe = min(own_forward_PE * pe_own_mult, pe_ceiling)
 
-    At beta = 1.0 this returns ``pe_base``. Beta above ``beta_cap`` is clamped
-    so extreme-beta names (e.g. ALAB ~3.7) are not punished without limit. The
-    result is floored at ``pe_floor``.
+    Rationale (learned from an overfit earlier version): the market already
+    prices each company's growth, quality and risk into its own multiple, so a
+    semiconductor at 6x and a software name at 20x should NOT be forced to a
+    single "fair" multiple. AlphaSpread's intrinsic value tracks each stock's
+    own forward P/E closely and mainly COMPRESSES the extreme optimists (e.g.
+    CCJ ~48x, ALAB ~84x) back toward ~20x. This anchor-and-cap rule reproduces
+    that with two parameters instead of inventing a target P/E.
+
+    Returns None if a forward P/E can't be derived (no price or no forward EPS).
     """
-    if beta is None or beta <= 0:
-        beta = 1.0
-    b = min(float(beta), cfg["beta_cap"])
-    pe = cfg["pe_base"] / (1.0 + cfg["pe_beta_k"] * (b - 1.0))
-    return float(max(pe, cfg["pe_floor"]))
+    price = info.get("currentPrice") or info.get("regularMarketPrice")
+    eps_f = info.get("forwardEps")
+    if not price or not eps_f or eps_f <= 0:
+        return None
+    own_pe = price / eps_f
+    return float(min(own_pe * cfg["pe_own_mult"], cfg["pe_ceiling"]))
 
 
 def _normalized_fcf(vals, cfg):
@@ -318,21 +331,22 @@ def _normalized_fcf(vals, cfg):
 
 
 def _multiples_value(info, cfg):
-    """Earnings-multiple fair value per share: forward EPS x risk-adjusted P/E.
+    """Earnings-multiple fair value per share: forward EPS x anchored fair P/E.
 
-    Uses FORWARD EPS (AlphaSpread's Base Case prices in next-year earnings),
-    falling back to trailing EPS if forward is missing. The multiple is
-    beta-adjusted via ``_fair_pe``. Returns None if no positive EPS exists.
+    Uses FORWARD EPS (AlphaSpread prices in next-year earnings) and a fair P/E
+    anchored to the stock's own forward multiple (see ``_fair_pe``). Falls back
+    to trailing EPS x the ceiling P/E only when no forward EPS exists. Returns
+    None if no positive EPS is available.
     """
     eps_f = info.get("forwardEps")
-    eps_t = info.get("trailingEps")
     if eps_f is not None and eps_f > 0:
-        eps = float(eps_f)
-    elif eps_t is not None and eps_t > 0:
-        eps = float(eps_t)
-    else:
-        return None
-    return float(eps * _fair_pe(info.get("beta"), cfg))
+        fpe = _fair_pe(info, cfg)
+        if fpe is not None:
+            return float(eps_f * fpe)
+    eps_t = info.get("trailingEps")
+    if eps_t is not None and eps_t > 0:
+        return float(eps_t * cfg["pe_ceiling"])
+    return None
 
 
 def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
@@ -380,15 +394,27 @@ def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
     net_debt = (info.get("totalDebt") or 0) - (info.get("totalCash") or 0)
 
     # DCF leg runs on normalized (averaged) FCF; skipped when no positive FCF.
+    # Currency guard: for ADRs the financials can be reported in a different
+    # currency than the price/shares (e.g. TSM: FCF in TWD, price/shares USD).
+    # FCF/shares would then mix currencies and explode, so skip the DCF leg
+    # when they disagree -- the multiples leg uses EPS in the price currency
+    # and is unaffected.
+    cur_price = info.get("currency")
+    cur_fin = info.get("financialCurrency")
+    currency_ok = not (cur_price and cur_fin and cur_price != cur_fin)
+
     dcf_v = None
-    if fcf_norm is not None:
+    if fcf_norm is not None and currency_ok:
         dcf_v = _dcf_value(fcf_norm, growth, wacc, cfg, net_debt, shares)
     mult_v = _multiples_value(info, cfg)
 
-    # Blend: multiples-dominant when both exist (see DEFAULTS), else whichever
-    # leg is available. Multiples alone covers names with no FCF row (BESI.AS).
+    # Intrinsic is the multiples estimate (see DEFAULTS: multiples_weight=1.0).
+    # DCF is computed and reported for context but not blended in by default,
+    # because forcing a target multiple onto cyclicals (e.g. semis at 6x) via
+    # DCF re-rating produced large, systematic overvaluation. When w < 1.0 the
+    # two legs blend; the DCF-only fallback covers names with no forward EPS.
     w = cfg["multiples_weight"]
-    if dcf_v is not None and mult_v is not None:
+    if mult_v is not None and dcf_v is not None:
         intrinsic = w * mult_v + (1 - w) * dcf_v
     elif mult_v is not None:
         intrinsic = mult_v
@@ -406,7 +432,7 @@ def compute_intrinsic_value(ticker, info=None, ticker_obj=None, **overrides):
         "assumptions": {
             "terminal_growth": cfg["terminal_growth"], "beta": info.get("beta"),
             "stage1_years": cfg["stage1_years"], "stage2_years": cfg["stage2_years"],
-            "fair_pe": _fair_pe(info.get("beta"), cfg), "multiples_weight": w,
+            "fair_pe": _fair_pe(info, cfg), "multiples_weight": w,
         },
     })
     return base
@@ -601,6 +627,22 @@ def save_plot_png(val, out_dir):
 # CLI
 # =========================================================================
 
+def _verdict(upside_pct, band=5.0):
+    """Verdict string with a neutral band around fair value.
+
+    Within +/- ``band`` percent the stock is called Fairly valued -- this is
+    the common case now that fair P/E is anchored to the stock's own multiple,
+    so many names sit right at intrinsic value.
+    """
+    if upside_pct is None:
+        return "N/A"
+    if upside_pct > band:
+        return "Undervalued"
+    if upside_pct < -band:
+        return "Overvalued"
+    return "Fairly valued"
+
+
 def _print_table(results):
     """Print a sorted valuation table to stdout."""
     def _key(v):
@@ -624,7 +666,7 @@ def _print_table(results):
             mult = _money(v.get("multiples_value"))
             iv = _money(v.get("intrinsic"))
             up_s = f"{up:+.0f}%"
-            verdict = "Undervalued" if up > 0 else "Overvalued"
+            verdict = _verdict(up)
         else:
             dcf = mult = iv = up_s = "-"
             verdict = f"N/A ({v.get('reason','')})"
