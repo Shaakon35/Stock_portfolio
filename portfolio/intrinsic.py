@@ -1,4 +1,4 @@
-"""DCF intrinsic value for the AI-allocation single stocks (AlphaSpread-style).
+"""DCF intrinsic value for the AI-allocation portfolio (AlphaSpread-style).
 
 Reproduces the core of AlphaSpread's intrinsic-value chart: market price vs a
 discounted-cash-flow (DCF) estimate of value per share, plotted over the last
@@ -42,32 +42,50 @@ will not match AlphaSpread number-for-number.
 import numpy as np
 
 
-# --- Single-stock universe: the AI-allocation satellite baskets only ---
-# (ETFs and ETF look-through underlyings are intentionally excluded.)
-def get_single_stocks():
-    """Return the ordered list of single-stock tickers from the allocations.
+# Pseudo-tickers used inside ETF_LOOK_THROUGH to represent the untracked
+# remainder of an ETF's holdings. They are not real stocks -> never valued.
+_ETF_REMAINDER = {"OTHER_SEMI", "OTHER_TECH", "OTHER_AI"}
 
-    Baskets are flattened; tickers with a 0.0 target (paused / private stage)
-    are dropped so the notebook only shows live positions.
+
+def get_single_stocks(include_etf_lookthrough=True):
+    """Return the ordered [(ticker, wave)] list for the live AI portfolio.
+
+    Source of truth is ``AI_allocations.py`` (waves W1-W7), where each basket
+    holds direct book percentages. Tickers with a 0 weight (cut / paused) are
+    dropped so only live positions appear.
+
+    Any holding that is itself an ETF (has an entry in
+    ``allocations.ETF_LOOK_THROUGH``) is expanded into its underlying stocks
+    when ``include_etf_lookthrough`` is True -- so e.g. the SMHV.SW sleeve
+    becomes NVDA, AVGO, ASML, MU, AMD, ... The ETF's untracked remainder
+    (OTHER_SEMI etc.) is skipped. This is why the report shows the big-cap
+    silicon names even though they are held via the ETF, not as singles.
     """
-    from portfolio.allocations import (
-        NUCLEAR_BASKET_TARGETS, QUANTUM_BASKET_TARGETS, CYBER_BASKET_TARGETS,
-        INDUSTRIAL_BASKET_TARGETS, SPECGROWTH_BASKET_TARGETS,
-    )
-    baskets = [
-        ("Nuclear", NUCLEAR_BASKET_TARGETS),
-        ("Quantum", QUANTUM_BASKET_TARGETS),
-        ("Cyber", CYBER_BASKET_TARGETS),
-        ("Industrial", INDUSTRIAL_BASKET_TARGETS),
-        ("SpecGrowth", SPECGROWTH_BASKET_TARGETS),
-    ]
-    out = []  # list of (ticker, basket_name)
+    from portfolio.AI_allocations import ALL_BASKETS
+    try:
+        from portfolio.allocations import ETF_LOOK_THROUGH
+    except Exception:
+        ETF_LOOK_THROUGH = {}
+
+    out = []  # list of (ticker, wave_label)
     seen = set()
-    for name, targets in baskets:
+    for wave, targets in ALL_BASKETS:
+        label = wave.split("_", 1)[-1].title() if "_" in wave else wave
         for tk, w in targets.items():
-            if w and w > 0 and tk not in seen:
-                out.append((tk, name))
-                seen.add(tk)
+            if not w or w <= 0:
+                continue
+            if include_etf_lookthrough and tk in ETF_LOOK_THROUGH:
+                # Expand the ETF into its underlying holdings.
+                for u in ETF_LOOK_THROUGH[tk]:
+                    if u in _ETF_REMAINDER or u in seen:
+                        continue
+                    out.append((u, f"{label} (via {tk})"))
+                    seen.add(u)
+                continue
+            if tk in seen:
+                continue
+            out.append((tk, label))
+            seen.add(tk)
     return out
 
 
