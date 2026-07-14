@@ -394,3 +394,134 @@ def plot_to_base64(val):
     plt.close(fig)
     buf.seek(0)
     return base64.b64encode(buf.read()).decode("ascii")
+
+
+def save_plot_png(val, out_dir):
+    """Render a stock's chart to a PNG file. Returns the path, or None."""
+    import base64
+    import os
+    b64 = plot_to_base64(val)
+    if not b64:
+        return None
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, f"{val['ticker']}.png")
+    with open(path, "wb") as f:
+        f.write(base64.b64decode(b64))
+    return path
+
+
+# =========================================================================
+# CLI
+# =========================================================================
+
+def _print_table(results):
+    """Print a sorted valuation table to stdout."""
+    def _key(v):
+        up = v.get("upside_pct")
+        return (0, -up) if (v["eligible"] and up is not None) else (1, 0)
+
+    ordered = sorted(results, key=_key)
+    print(f"\n{'Ticker':<8}{'Basket':<12}{'Price':>10}{'Intrinsic':>12}"
+          f"{'Upside':>9}  Verdict")
+    print("-" * 64)
+    for v in ordered:
+        up = v.get("upside_pct")
+        price = f"${v['price']:,.2f}" if v.get("price") else "-"
+        if v["eligible"] and up is not None:
+            iv = f"${v['intrinsic']:,.2f}"
+            up_s = f"{up:+.0f}%"
+            verdict = "Undervalued" if up > 0 else "Overvalued"
+        else:
+            iv, up_s, verdict = "-", "-", f"N/A ({v.get('reason','')})"
+        print(f"{v['ticker']:<8}{v.get('basket',''):<12}{price:>10}{iv:>12}"
+              f"{up_s:>9}  {verdict}")
+
+
+def run(by_strategy=False, save_dir=None, tickers=None, **overrides):
+    """Compute intrinsic values for the single-stock universe and print them.
+
+    Args:
+        by_strategy: group the printed output by basket (strategy).
+        save_dir: if set, also write a PNG chart per stock to this directory.
+        tickers: optional explicit list of tickers (overrides the universe).
+        overrides: DCF assumption overrides (risk_free, growth_cap, ...).
+
+    Returns the list of result dicts.
+    """
+    if tickers:
+        stocks = [(t, "") for t in tickers]
+    else:
+        stocks = get_single_stocks()
+
+    print(f"Computing DCF intrinsic value for {len(stocks)} stocks...")
+    results = []
+    for tk, basket in stocks:
+        try:
+            v = analyze_ticker(tk, basket, **overrides)
+        except Exception as e:
+            v = {"ticker": tk, "basket": basket, "name": tk, "eligible": False,
+                 "reason": f"error: {e}", "price": None, "intrinsic": None,
+                 "upside_pct": None, "price_dates": [], "price_closes": [],
+                 "hist_intrinsic": []}
+        results.append(v)
+        tag = "OK " if v["eligible"] else "N/A"
+        up = f"{v['upside_pct']:+.0f}%" if v.get("upside_pct") is not None else "-"
+        print(f"  {tk:<8} {tag} {up:>8}  {v.get('reason','')}")
+        if save_dir:
+            p = save_plot_png(v, save_dir)
+            if p:
+                print(f"           chart -> {p}")
+
+    if by_strategy:
+        baskets = []
+        for v in results:
+            if v.get("basket") not in baskets:
+                baskets.append(v.get("basket"))
+        for b in baskets:
+            print(f"\n===== {b or 'Ungrouped'} =====")
+            _print_table([v for v in results if v.get("basket") == b])
+    else:
+        _print_table(results)
+
+    return results
+
+
+def _parse_args(argv=None):
+    import argparse
+    p = argparse.ArgumentParser(
+        description="DCF intrinsic value for AI-allocation single stocks.")
+    p.add_argument("--by-strategy", action="store_true",
+                   help="Group output by basket/strategy")
+    p.add_argument("--save-charts", metavar="DIR", default=None,
+                   help="Also write a PNG chart per stock to DIR "
+                        "(e.g. output/intrinsic)")
+    p.add_argument("--tickers", default=None,
+                   help="Comma-separated tickers to value instead of the "
+                        "full universe")
+    p.add_argument("--growth-cap", type=float, default=None,
+                   help="Cap projected FCF growth (e.g. 0.25 = 25%%/yr)")
+    p.add_argument("--terminal-growth", type=float, default=None,
+                   help="Long-run terminal growth rate (e.g. 0.025)")
+    p.add_argument("--risk-free", type=float, default=None,
+                   help="Risk-free rate for the CAPM discount rate")
+    return p.parse_args(argv)
+
+
+def main(argv=None):
+    args = _parse_args(argv)
+    overrides = {}
+    if args.growth_cap is not None:
+        overrides["growth_cap"] = args.growth_cap
+    if args.terminal_growth is not None:
+        overrides["terminal_growth"] = args.terminal_growth
+    if args.risk_free is not None:
+        overrides["risk_free"] = args.risk_free
+    tickers = ([t.strip().upper() for t in args.tickers.split(",")]
+               if args.tickers else None)
+    run(by_strategy=args.by_strategy, save_dir=args.save_charts,
+        tickers=tickers, **overrides)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
