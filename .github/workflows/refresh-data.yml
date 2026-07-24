@@ -1,0 +1,118 @@
+# Refresh the conviction dashboard data.
+#
+# Re-sources the fundamentals snapshot from stockanalysis.com (prices/market
+# caps, valuation multiples, 200DMA distance, and the trailing revenue / net-
+# margin series), re-scores every name, regenerates docs/conviction.json, runs
+# the AGENTS.md validation gate, and commits the result so GitHub Pages
+# republishes the site.
+#
+# Triggers:
+#   * workflow_dispatch — the manual "Run workflow" button (Actions tab).
+#   * schedule          — weekly, hands-off (Monday 06:00 UTC).
+#
+# Nothing here uses yfinance (date-corrupted in this repo). The scorer's own
+# scrapers already skip the hand-curated / source-corrupted names
+# (MU, SMHV.SW, SRUUF), so curated rows are never clobbered.
+
+name: Refresh conviction data
+
+on:
+  workflow_dispatch:
+    inputs:
+      refresh_prices:
+        description: "Refresh price-derived fields (market cap, P/S, PEG, 200DMA distance, fwd consensus). Turn OFF to preserve any hand-curated 3Y forward growth values."
+        type: boolean
+        default: true
+  schedule:
+    # Weekly, Monday 06:00 UTC. Adjust or add lines to change cadence.
+    - cron: "0 6 * * 1"
+
+# Never let two refreshes race on the same branch.
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+# The job commits and pushes the regenerated data.
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      PORTFOLIO_USE: ai
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The scorer is pure-stdlib + local modules — no pip install needed.
+
+      - name: Prepare today's snapshot
+        id: snap
+        run: |
+          set -euo pipefail
+          NEWEST=$(ls -1 scoring/fundamentals_*.csv | sort | tail -n1)
+          TODAY="scoring/fundamentals_$(date -u +%F).csv"
+          # Only ever create/refresh TODAY's file; past snapshots are immutable.
+          if [ "$NEWEST" != "$TODAY" ]; then
+            cp "$NEWEST" "$TODAY"
+            echo "Copied $NEWEST -> $TODAY"
+          else
+            echo "Refreshing existing $TODAY in place (same-day re-run)"
+          fi
+          echo "csv=$TODAY" >> "$GITHUB_OUTPUT"
+
+      - name: Refresh price-derived fields
+        if: ${{ github.event_name == 'schedule' || inputs.refresh_prices }}
+        run: |
+          set -euo pipefail
+          # --overwrite refreshes mktcap / peg / ps / 200DMA distance / fwd
+          # consensus on existing rows (curated net_margin & eps_beat preserved).
+          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --sync-csv --overwrite --no-fill-ttm
+
+      - name: Refresh trailing revenue & net-margin series
+        run: |
+          set -euo pipefail
+          # --fill-ttm re-sources ttm_rev_growth, rev_growth_hist and
+          # net_margin_hist for all held + watchlist names, in place.
+          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --fill-ttm --watchlist
+
+      - name: Regenerate dashboard JSON
+        run: |
+          set -euo pipefail
+          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --json docs/conviction.json
+
+      - name: Validation gate
+        run: |
+          set -euo pipefail
+          # 1. compiles
+          python3 -m py_compile scoring/score_holdings.py
+          # 2. deterministic — two scoring runs must be byte-identical
+          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --by-strategy --watchlist > /tmp/r1.txt 2>&1
+          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --by-strategy --watchlist > /tmp/r2.txt 2>&1
+          diff /tmp/r1.txt /tmp/r2.txt
+          # 3. allocation + watchlist invariants + CSV<->WATCHLIST coverage
+          python3 -c "import portfolio.AI_allocations as m, scoring.score_holdings as S; \
+          assert m.verify_allocations() is None; assert m.validate_watchlist() == []; \
+          held=set().union(*[set(b.keys()) for _,b in m.ALL_BASKETS])|set(m.STRATEGY.keys()); \
+          csv=set(dict(S.load_fundamentals('${{ steps.snap.outputs.csv }}')).keys()); \
+          miss=csv-set(m.WATCHLIST)-held; assert not miss, f'uncovered CSV tickers: {sorted(miss)}'; \
+          print('PASS')"
+
+      - name: Commit & push if changed
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scoring/fundamentals_*.csv docs/conviction.json
+          if git diff --cached --quiet; then
+            echo "No data changes — nothing to commit."
+            exit 0
+          fi
+          printf 'Refresh conviction data (%s)\n\nCo-authored-by: Ona <no-reply@ona.com>\n' "$(date -u +%F)" | git commit -F -
+          git push
