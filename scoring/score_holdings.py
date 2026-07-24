@@ -629,6 +629,15 @@ _UNSOURCEABLE = frozenset({
     "pct_below_52w_high", "eps_beat_rate", "eps_beat_streak",
 })
 
+# Names whose stockanalysis.com feed is SOURCE-CORRUPTED in this environment
+# (wrong security's numbers served under the ticker). Any auto-scraper —
+# --sync-csv AND --fill-ttm — must skip these so a run never overwrites a
+# hand-curated row with garbage. MU's page currently reports ~$1.1T mktcap /
+# 72% gross / 56% net / PEG 0.04 (an AI-designer profile, impossible for a
+# memory maker). Its CSV row is therefore HAND-CURATED from real peer-
+# calibrated figures; see the '# MU (hand-curated)' note in the snapshot header.
+_SOURCE_CORRUPT = frozenset({"MU"})
+
 
 def _coverage(f):
     """Fraction of OBTAINABLE fundamental fields actually present (0..1).
@@ -1937,7 +1946,7 @@ def main():
         #             (reports ~$1.28T mktcap / PEG 0.05); ingesting it poisons
         #             the CSV, so MU is scored on forecast/tags only (data = -).
         #             See AGENTS.md "Notes on interpreting results".
-        _SYNC_SKIP = ("SMHV.SW", "SRUUF", "MU")
+        _SYNC_SKIP = ("SMHV.SW", "SRUUF") + tuple(sorted(_SOURCE_CORRUPT))
         targets = [t for t in port if t not in _SYNC_SKIP]
         # Warn for any skipped name actually present in the universe, so a sync
         # run is explicit about what it deliberately did NOT scrape/add.
@@ -1971,7 +1980,14 @@ def main():
         if not args.csv or not Path(args.csv).exists():
             sys.exit("--fill-ttm needs an existing CSV (it updates in place).")
         # held book + watchlist if requested, minus the no-fundamentals windfall
-        targets = [t for t in port if t != "SMHV.SW"]
+        # and the source-corrupted names (MU) whose hand-curated series must not
+        # be clobbered by the corrupted /financials/ page.
+        targets = [t for t in port
+                   if t != "SMHV.SW" and t not in _SOURCE_CORRUPT]
+        if any(t in _SOURCE_CORRUPT for t in port):
+            print("  [ttm] (!) SKIPPING " +
+                  ", ".join(sorted(t for t in _SOURCE_CORRUPT if t in port)) +
+                  " — source-corrupted feed; hand-curated series preserved.")
         fill_ttm(args.csv, targets)
         return
 

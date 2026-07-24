@@ -237,14 +237,18 @@ print('PASS')"
   MU 14.33% × 37.5% ≈ 5.4%, TSM ≈ 2.8%). The look-through table is
   `ETF_LOOK_THROUGH["SMHV.SW"]` in `portfolio/allocations.py`; refresh it from
   the ETF fact sheet when holdings drift. `ET` rows are **excluded from the wave
-  averages** so they are not double-counted against SMHV itself. MU has no CSV
-  row by design: stockanalysis.com's MU snapshot is source-corrupted (reports
-  ~$1.37T mktcap / $90B rev / PEG 0.05 for Micron), so it scores on
-  forecast/tags only (`data = -`) rather than ingest garbage. This is enforced
-  in code: `MU` is in the `--sync-csv` skip list (`_SYNC_SKIP` in
-  `score_holdings.py`, alongside `SMHV.SW`/`SRUUF`), so a sync **deliberately
-  does not add it** and prints an explicit `(!) SKIPPING MU …` warning rather
-  than silently re-ingesting the corrupted scrape each run.
+  averages** so they are not double-counted against SMHV itself. MU has a
+  **HAND-CURATED** CSV row: stockanalysis.com's MU snapshot is source-corrupted
+  (serves an AI-designer profile — ~$1.1T mktcap / 72% gross / 56% net / $90B
+  rev / PEG 0.04, physically impossible for a memory maker), so its row is
+  populated by hand from real, peer-calibrated Micron figures (mktcap ~$130B;
+  gross ~40% / net ~24% in line with SK Hynix / WDC / STX peaks; PEG ~0.5; P/S
+  ~3.5; real FY YoY series incl. the FY23 memory crash −49.7%). See the
+  `# MU (hand-curated)` note in the snapshot header. This is enforced in code:
+  `MU` is in `_SOURCE_CORRUPT` (`score_holdings.py`), which feeds BOTH the
+  `--sync-csv` skip list AND the `--fill-ttm` exclusion, so neither scraper ever
+  overwrites the hand-curated row — each prints an explicit `SKIPPING MU …`
+  warning instead. **Update MU by hand only.**
 - The default Growth/8-Point quadrant is anti-momentum and mis-grades DCA
   compounders into AVOID by design — use `--by-strategy` to grade DCA on
   quality+valuation instead. See `scoring/README.md` for the rationale.

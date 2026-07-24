@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-07-24 09:17 UTC",
+  "generated_utc": "2026-07-24 10:00 UTC",
   "csv": "fundamentals_2026-06-29.csv",
   "count": 457,
   "held_count": 40,
@@ -3429,6 +3429,22 @@
       "has_data": true
     },
     {
+      "ticker": "MU",
+      "wave": "ET",
+      "held": true,
+      "book_pct": 5.37,
+      "strategy": "cycle",
+      "conv": 5.15,
+      "grade": "MOMENTUM",
+      "F": 7.8,
+      "V": 6.2,
+      "C": 3.0,
+      "binding": "C",
+      "coverage": 100,
+      "peak": true,
+      "has_data": true
+    },
+    {
       "ticker": "SBUX",
       "wave": "WL",
       "held": false,
@@ -5061,22 +5077,6 @@
       "has_data": true
     },
     {
-      "ticker": "SMHN.DE",
-      "wave": "W1",
-      "held": false,
-      "book_pct": 0.0,
-      "strategy": "cycle",
-      "conv": 4.47,
-      "grade": "AVOID",
-      "F": 4.5,
-      "V": 3.6,
-      "C": 7.6,
-      "binding": "V",
-      "coverage": 100,
-      "peak": false,
-      "has_data": true
-    },
-    {
       "ticker": "NOC",
       "wave": "WL",
       "held": false,
@@ -5201,6 +5201,22 @@
       "C": 5.1,
       "binding": "F",
       "coverage": 90,
+      "peak": false,
+      "has_data": true
+    },
+    {
+      "ticker": "SMHN.DE",
+      "wave": "W1",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "cycle",
+      "conv": 4.38,
+      "grade": "AVOID",
+      "F": 4.2,
+      "V": 3.6,
+      "C": 7.6,
+      "binding": "V",
+      "coverage": 100,
       "peak": false,
       "has_data": true
     },
@@ -7283,22 +7299,6 @@
       "coverage": 20,
       "peak": false,
       "has_data": true
-    },
-    {
-      "ticker": "MU",
-      "wave": "ET",
-      "held": true,
-      "book_pct": 5.37,
-      "strategy": "cycle",
-      "conv": 0.0,
-      "grade": "AVOID",
-      "F": 5.0,
-      "V": 5.0,
-      "C": 4.2,
-      "binding": "C",
-      "coverage": 0,
-      "peak": false,
-      "has_data": false
     },
     {
       "ticker": "SRUUF",
