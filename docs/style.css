@@ -212,76 +212,99 @@ a { color: var(--accent); text-decoration: none; }
 }
 #sortBy:focus { border-color: var(--accent); }
 
-/* ---------- Card grid ---------- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(258px, 1fr));
-  gap: 16px;
+/* ---------- Checkbox control ---------- */
+.check {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12.5px; color: var(--text-dim); cursor: pointer;
+  user-select: none;
 }
-.card {
+.check input {
+  width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer;
+}
+
+/* ---------- Data table ---------- */
+.tablewrap {
   background: linear-gradient(180deg, var(--panel-2), var(--panel));
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px;
   box-shadow: var(--shadow);
-  transition: transform .14s, border-color .14s;
-  position: relative;
-  overflow: hidden;
+  overflow-x: auto;
 }
-.card:hover { transform: translateY(-3px); border-color: var(--border-hi); }
-.card::before {
-  /* thin conviction-colored accent bar on the left edge */
-  content: "";
-  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--bar, var(--border-hi));
+.dt {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  min-width: 860px;
 }
 
-.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-.card-tkr { font-size: 19px; font-weight: 800; letter-spacing: -.3px; }
-.card-wave { font-size: 11px; color: var(--text-mut); font-weight: 600; margin-top: 2px; letter-spacing: .4px; }
-
-.conv-badge {
-  text-align: right;
-  min-width: 58px;
+/* header */
+.dt thead th {
+  position: sticky; top: 61px;   /* below the sticky nav */
+  z-index: 5;
+  background: var(--panel-hi);
+  color: var(--text-dim);
+  font-size: 11px; font-weight: 700; letter-spacing: .4px;
+  text-transform: uppercase;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-hi);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: color .12s, background .12s;
 }
-.conv-num { font-size: 26px; font-weight: 800; line-height: 1; letter-spacing: -.5px; }
-.conv-lab { font-size: 9.5px; color: var(--text-mut); letter-spacing: 1px; font-weight: 600; }
+.dt thead th:hover { color: var(--text); background: #22304a; }
+.dt thead th.sorted { color: var(--accent); }
+.th-left   { text-align: left; }
+.th-right  { text-align: right; }
+.th-center { text-align: center; }
+.th-arrow { margin-left: 5px; font-size: 9px; color: var(--accent); }
 
-/* badges row */
-.badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 4px; }
+/* body */
+.dt tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.dt tbody tr:hover td { background: rgba(148,163,184,.06); }
+.dt tbody tr:last-child td { border-bottom: none; }
+
+.td-num   { text-align: right; }
+.td-tkr   { font-weight: 800; letter-spacing: -.2px; }
+.td-tkr a { color: var(--text); }
+.td-tkr a:hover { color: var(--accent); }
+.td-conv b { font-size: 14.5px; font-weight: 800; }
+.td-bind  { text-align: center; font-weight: 700; color: var(--amber); }
+.mut      { color: var(--text-mut); }
+.gap      { color: var(--red); }
+
+/* F/V/C cell: a mini inline bar + the value */
+.td-layer { min-width: 74px; }
+.lcell { display: inline-flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.ltrack {
+  width: 42px; height: 6px;
+  background: var(--panel-hi); border-radius: 4px; overflow: hidden;
+}
+.lbar { display: block; height: 100%; border-radius: 4px; }
+.lf-F { background: linear-gradient(90deg, var(--indigo), var(--violet)); }
+.lf-V { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.lf-C { background: linear-gradient(90deg, var(--amber), #fb923c); }
+.lcell b { color: var(--text-dim); font-weight: 600; min-width: 24px; text-align: right; }
+
+/* badges (grade + flags) */
 .badge {
+  display: inline-block;
   font-size: 10.5px; font-weight: 600; letter-spacing: .3px;
-  padding: 4px 9px; border-radius: 999px;
+  padding: 3px 9px; border-radius: 999px;
   border: 1px solid transparent;
 }
+.td-flags .badge { margin-right: 4px; }
 .b-green { color: var(--green); background: var(--green-bg); border-color: rgba(52,211,153,.25); }
 .b-amber { color: var(--amber); background: var(--amber-bg); border-color: rgba(245,196,81,.25); }
 .b-red   { color: var(--red);   background: var(--red-bg);   border-color: rgba(248,113,113,.25); }
 .b-blue  { color: var(--blue);  background: var(--blue-bg);  border-color: rgba(96,165,250,.25); }
 .b-mut   { color: var(--text-dim); background: var(--panel-hi); border-color: var(--border); }
-
-/* F/V/C mini-bars */
-.layers { margin-top: 14px; display: grid; gap: 8px; }
-.layer-row { display: grid; grid-template-columns: 16px 1fr 30px; align-items: center; gap: 9px; }
-.layer-key { font-size: 11px; font-weight: 700; color: var(--text-mut); }
-.layer-key.bind { color: var(--amber); }
-.layer-track { height: 6px; background: var(--panel-hi); border-radius: 4px; overflow: hidden; }
-.layer-fill { height: 100%; border-radius: 4px; }
-.lf-F { background: linear-gradient(90deg, var(--indigo), var(--violet)); }
-.lf-V { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
-.lf-C { background: linear-gradient(90deg, var(--amber), #fb923c); }
-.layer-val { font-size: 11.5px; color: var(--text-dim); text-align: right; font-variant-numeric: tabular-nums; }
-
-.card-foot {
-  margin-top: 15px; padding-top: 12px;
-  border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 11.5px; color: var(--text-mut);
-}
-.card-book { color: var(--text-dim); font-weight: 600; }
-.card-book b { color: var(--text); }
-.yh { color: var(--text-mut); transition: .15s; }
-.yh:hover { color: var(--accent); }
 
 .empty { text-align: center; color: var(--text-mut); padding: 60px 0; font-size: 15px; }
 

@@ -1,18 +1,19 @@
 # Conviction dashboard
 
 A static website that shows the conviction score of every company in the AI
-allocation (held + watchlist). Dark card grid, filterable by wave and view,
-sortable by any layer. An **About** tab documents how the score is built (the
-reward × safety formula, both variants, the F/V/C layers) and carries a glossary
-of every acronym on a card. No build step, no dependencies — just static files.
+allocation (held + watchlist) in one **Stock** table — filterable by wave and a
+"held only" toggle, sortable by clicking any column header. An **About** tab
+documents how the score is built (the reward × safety formula, both variants,
+the F/V/C layers) and carries a glossary of every acronym in the table. No build
+step, no dependencies — just static files.
 
 ## Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | Page shell (nav, hero, stat bar, grid container) |
-| `style.css` | Dark theme, cards, badges, F/V/C bars |
-| `app.js` | Loads `conviction.json`, renders + filters + sorts the grid; also holds the About-tab glossary |
+| `index.html` | Page shell (nav, hero, stat bar, table container, About tab) |
+| `style.css` | Dark theme, data table, badges, inline F/V/C bars |
+| `app.js` | Loads `conviction.json`, renders + filters + sorts the table; also holds the About-tab glossary |
 | `conviction.json` | **Generated data** — one record per scored name |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is |
 
@@ -65,7 +66,11 @@ re-run the `--json` command above and push.
   risk-adjusted "is this worth owning" rank, **not** a price target.
 - **Grade** — KEEP-DCA / PRIME / MOMENTUM / QUALITY / RICH / AVOID / IMPAIRED.
 - **F / V / C** — Fundamentals / Valuation / Cycle layers (0–10, higher = safer).
-  The **binding** (lowest) layer is highlighted — it's what caps the score.
-- **Book %** — position size in the book (0 for watch-only names).
-- **via ETF** — held indirectly through SMHV.SW (look-through constituent).
-- **PEAK?** — extended/near-peak flag. **GAP** — thin data coverage (<75%).
+- **Bind** — the binding (lowest) layer — the dominant risk that caps the score.
+- **Book %** — position size in the book (— for watch-only names).
+- **Data %** — fundamentals coverage; a **GAP** flag fires below 75%.
+- **Flags** — HELD (has a position), via ETF (held through SMHV.SW look-through),
+  PEAK? (extended/near-peak), GAP (thin data).
+
+Click any column header to sort by it (click again to reverse). Use the wave
+chips and the **Held only** checkbox to filter, or the search box for a ticker.

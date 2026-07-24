@@ -20,16 +20,14 @@
       </div>
     </div>
     <nav class="nav-tabs" id="navTabs">
-      <button class="tab tab-active" data-view="held">Holdings</button>
-      <button class="tab" data-view="all">All Names</button>
-      <button class="tab" data-view="watch">Watchlist</button>
+      <button class="tab tab-active" data-view="stock">Stock</button>
       <button class="tab" data-view="about">About</button>
     </nav>
     <div class="nav-meta" id="navMeta"></div>
   </header>
 
   <main class="wrap">
-   <!-- ===== Dashboard view (Holdings / All / Watchlist) ===== -->
+   <!-- ===== Stock view (sortable/filterable data table) ===== -->
    <div id="dashboardView">
     <!-- ===== Hero ===== -->
     <section class="hero">
@@ -51,21 +49,20 @@
       <input type="search" id="search" class="search" placeholder="Search ticker…" autocomplete="off" />
       <div class="filters" id="waveFilters"></div>
       <div class="sortgroup">
-        <label for="sortBy">Sort</label>
-        <select id="sortBy">
-          <option value="conv">Conviction</option>
-          <option value="book_pct">Book %</option>
-          <option value="F">Fundamentals</option>
-          <option value="V">Valuation</option>
-          <option value="C">Cycle</option>
-          <option value="ticker">Ticker A–Z</option>
-        </select>
+        <label for="heldOnly" class="check">
+          <input type="checkbox" id="heldOnly" /> Held only
+        </label>
       </div>
     </section>
 
-    <!-- ===== Card grid ===== -->
-    <section class="grid" id="grid"></section>
-    <p class="empty" id="empty" hidden>No names match your filters.</p>
+    <!-- ===== Data table ===== -->
+    <section class="tablewrap">
+      <table class="dt" id="table">
+        <thead id="thead"></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>No names match your filters.</p>
+    </section>
 
     <footer class="foot">
       <span id="footMeta"></span>
