@@ -23,11 +23,14 @@
       <button class="tab tab-active" data-view="held">Holdings</button>
       <button class="tab" data-view="all">All Names</button>
       <button class="tab" data-view="watch">Watchlist</button>
+      <button class="tab" data-view="about">About</button>
     </nav>
     <div class="nav-meta" id="navMeta"></div>
   </header>
 
   <main class="wrap">
+   <!-- ===== Dashboard view (Holdings / All / Watchlist) ===== -->
+   <div id="dashboardView">
     <!-- ===== Hero ===== -->
     <section class="hero">
       <span class="pill">DETERMINISTIC SCORING ENGINE</span>
@@ -69,9 +72,129 @@
       <span class="foot-note">
         CONV is strategy-aware (DCA names use the quality+richness variant).
         F/V/C = Fundamentals / Valuation / Cycle layers (0–10, higher = safer).
-        A price target this is not — see the engine's methodology in the repo.
+        A price target this is not — see the <a href="#" id="footAbout">methodology</a>.
       </span>
     </footer>
+   </div><!-- /#dashboardView -->
+
+    <!-- ===== About view (methodology + glossary) ===== -->
+    <div id="aboutView" hidden>
+      <section class="hero">
+        <span class="pill">METHODOLOGY</span>
+        <h1>How the conviction score is built</h1>
+        <p class="hero-lede">
+          <strong>Conviction</strong> is a single 0–10 number answering one
+          question: <em>is this worth owning, right now, on a risk-adjusted
+          basis?</em> It is deterministic — the same dated fundamentals snapshot
+          always yields the same score — and it reads <em>all five</em> signals,
+          not just a headline growth rate.
+        </p>
+      </section>
+
+      <!-- The formula, in two flavours -->
+      <section class="about">
+        <h2 class="about-h">The core idea: reward × safety, geometric</h2>
+        <p class="about-p">
+          Every conviction score is the <strong>geometric mean</strong> of a
+          <em>reward</em> term and a <em>safety</em> term:
+        </p>
+        <div class="formula">CONV = &radic;( REWARD &times; SAFETY )</div>
+        <p class="about-p">
+          The geometric form is deliberate. With a plain average, a superb
+          business at a terrible entry price could hide its risk behind its
+          strong side. Multiplying instead means <strong>both</strong> terms
+          have to be decent — a near-zero on either axis drags the whole score
+          down. That is the mathematical way of saying <em>“the weakest layer is
+          the real risk.”</em>
+        </p>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="ac-tag ac-cycle">CYCLE / CATALYST names</div>
+            <p class="ac-desc">
+              Names you buy for a move — small, cheap, accelerating. Reward is
+              driven by growth; safety leans on the 8-point entry screen.
+            </p>
+            <div class="formula-sm">
+              REWARD = 0.50·F + 0.50·GROWTH<br />
+              SAFETY = 0.35·V + 0.25·8PT + 0.20·C + 0.20·bind
+            </div>
+            <ul class="ac-notes">
+              <li><b>bind</b> = the value of the <em>weakest</em> of F/V/C — counted a second time so the binding constraint gets extra weight.</li>
+              <li><b>[PEAK?]</b> names are cut ×0.85 (a low PEG on peak-cycle earnings is fake-cheap).</li>
+            </ul>
+          </div>
+
+          <div class="about-card">
+            <div class="ac-tag ac-dca">DCA compounders</div>
+            <p class="ac-desc">
+              Names you buy on a schedule regardless of price. Growth and the
+              8-point screen are dropped (they penalise the size and extension a
+              proven compounder is allowed to have); price discipline enters via
+              <em>richness</em> instead.
+            </p>
+            <div class="formula-sm">
+              REWARD = 0.50·QUALITY + 0.50·F<br />
+              SAFETY = 0.45·V + 0.35·(1&minus;RICHNESS) + 0.20·bind
+            </div>
+            <ul class="ac-notes">
+              <li><b>RICHNESS</b> is the DCA price gate (0 = cheap … 1 = stretched): a rich name is <em>slowed</em>, never skipped.</li>
+              <li>No <b>[PEAK?]</b> haircut — a peak-cycle flag is meaningless for a buy-forever name.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="about-p about-foot-note">
+          In both variants a name with <strong>thin data</strong> (coverage
+          &lt; 75%) has its score scaled down by its coverage — a number earned
+          on guesses is trusted less. The dashboard picks the right variant per
+          name automatically from its strategy tag.
+        </p>
+      </section>
+
+      <!-- The three layers -->
+      <section class="about">
+        <h2 class="about-h">The three layers: F / V / C</h2>
+        <p class="about-p">
+          Under the score sit three layers, each 0–10 where
+          <strong>higher = safer</strong>. They regroup the same underlying
+          fundamentals by the <em>force</em> each represents, so the layers can
+          never contradict the numbers they are built from. The
+          <span class="bind-eg">weakest</span> layer is the
+          <strong>binding constraint</strong> — the dominant risk — and is
+          highlighted on every card.
+        </p>
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="ac-tag ac-f">F · Fundamentals</div>
+            <p class="ac-desc">Business quality, momentum-neutral. Net margin, forward revenue &amp; EPS growth, free-cash-flow status, margin trajectory, gross-margin level and revenue-growth consistency — blended.</p>
+          </div>
+          <div class="about-card">
+            <div class="ac-tag ac-v">V · Valuation</div>
+            <p class="ac-desc">How much of the business is already in the price. PEG first (P/S-vs-growth as a fallback for loss-makers), plus how far the chart sits above its 200-day average — extension is paid-up optimism.</p>
+          </div>
+          <div class="about-card">
+            <div class="ac-tag ac-c">C · Cycle</div>
+            <p class="ac-desc">Position in the wave and crowding. Built from cycle tags plus how extended the chart is and whether the name sits on a real supply bottleneck — so it is never blank.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Glossary -->
+      <section class="about">
+        <h2 class="about-h">Glossary &amp; acronyms</h2>
+        <dl class="glossary" id="glossary"></dl>
+      </section>
+
+      <footer class="foot">
+        <span class="foot-note">
+          The scoring engine is <code>scoring/score_holdings.py</code>; this page
+          renders <code>conviction.json</code>, produced by
+          <code>PORTFOLIO_USE=ai python3 scoring/score_holdings.py --json</code>.
+          Deterministic by design — no live market fetches.
+        </span>
+      </footer>
+    </div><!-- /#aboutView -->
   </main>
 
   <script src="app.js"></script>

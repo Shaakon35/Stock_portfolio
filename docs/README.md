@@ -2,7 +2,9 @@
 
 A static website that shows the conviction score of every company in the AI
 allocation (held + watchlist). Dark card grid, filterable by wave and view,
-sortable by any layer. No build step, no dependencies — just static files.
+sortable by any layer. An **About** tab documents how the score is built (the
+reward × safety formula, both variants, the F/V/C layers) and carries a glossary
+of every acronym on a card. No build step, no dependencies — just static files.
 
 ## Files
 
@@ -10,7 +12,7 @@ sortable by any layer. No build step, no dependencies — just static files.
 |---|---|
 | `index.html` | Page shell (nav, hero, stat bar, grid container) |
 | `style.css` | Dark theme, cards, badges, F/V/C bars |
-| `app.js` | Loads `conviction.json`, renders + filters + sorts the grid |
+| `app.js` | Loads `conviction.json`, renders + filters + sorts the grid; also holds the About-tab glossary |
 | `conviction.json` | **Generated data** — one record per scored name |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is |
 

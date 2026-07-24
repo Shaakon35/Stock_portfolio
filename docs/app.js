@@ -17,6 +17,32 @@ const STRAT_LABEL = {
   dca: "DCA", cycle: "CYCLE", catalyst: "CATALYST", lottery: "LOTTERY", "?": "—",
 };
 
+// Glossary of every acronym / term shown on a card or in the methodology.
+// Rendered into the About tab so the abbreviations are self-explanatory.
+const GLOSSARY = [
+  ["CONV", "Conviction — the headline 0–10 score. Higher = a stronger risk-adjusted case for owning the name now. Geometric mean of a reward and a safety term."],
+  ["F", "Fundamentals layer (0–10, higher = safer). Business quality, momentum-neutral: margins, forward growth, FCF, margin trajectory and consistency."],
+  ["V", "Valuation layer (0–10, higher = cheaper/fairer). PEG first, P/S-vs-growth fallback, plus distance above the 200-day moving average."],
+  ["C", "Cycle layer (0–10, higher = earlier/less crowded). Position in the industry wave, chart extension, and whether the name sits on a supply bottleneck."],
+  ["bind", "Binding layer — the lowest of F/V/C, i.e. the dominant risk. Counted a second time inside the safety term and flagged on each card."],
+  ["8PT", "The 8-point entry screen (0–8): small + cheap + accelerating checks used for cycle/catalyst names. Rescaled to 0–10 inside the cycle conviction."],
+  ["GROWTH", "The 0–10 growth score — how much the business can compound. Drives the reward term for cycle/catalyst names."],
+  ["QUALITY", "The DCA quality score — durability of a buy-forever compounder. Replaces GROWTH in the DCA conviction variant."],
+  ["RICHNESS", "The DCA price gate (0 = cheap … 1 = stretched). A rich name is bought slower, not skipped; it enters safety as (1 − richness)."],
+  ["DCA", "Dollar-cost averaging — a proven compounder you buy on a schedule regardless of price. Graded on quality + valuation, not on being small/explosive."],
+  ["CYCLE (strategy)", "A name bought for its position in an industry cycle — graded on the two-axis quadrant (where in the cycle, how cheap)."],
+  ["CATALYST", "A name bought for a specific upcoming event; graded on whether the punt's upside is still intact."],
+  ["LOTTERY", "A pre-revenue / single-event punt (Binary). High opacity is treated as a red flag, not a neutral."],
+  ["book %", "The name's target weight in the portfolio book. Watch-only names have no book weight."],
+  ["coverage", "Share of obtainable fundamentals actually present for the name. Below 75% the score is scaled down and a GAP flag shows."],
+  ["GAP", "Coverage < 75% — the score rests on thin data and should be trusted less."],
+  ["PEAK?", "A cyclical whose low PEG is fake-cheap on peak-cycle earnings while the chart is extended (the memory/storage trap). Cuts cycle CONV ×0.85."],
+  ["wave (W1–W7)", "The AI-allocation basket: W1 Silicon, W2 Power, W3 DC-Infra, W4 Cloud, W5 Software, W6 Spec, W7 Diversify. ET = surfaced via ETF look-through."],
+  ["grade", "The strategy-aware verdict: PRIME / KEEP-DCA (buy), MOMENTUM / QUALITY (hold-ish), RICH (wait for a better price), AVOID / IMPAIRED (pass)."],
+  ["200DMA", "200-day moving average of price. Distance above it measures chart extension — a proxy for how much optimism is already paid for."],
+  ["PEG", "Price/earnings-to-growth ratio. Below ~1 looks cheap, but on a late-cycle name a sub-1 PEG is usually the peak-earnings trap (see PEAK?)."],
+];
+
 const state = {
   data: [], view: "held", wave: "ALL", q: "", sort: "conv",
 };
@@ -55,8 +81,20 @@ async function boot() {
 
   buildWaveChips();
   buildStats();
+  buildGlossary();
   wireControls();
   render();
+}
+
+// Render the acronym glossary into the About tab.
+function buildGlossary() {
+  const dl = document.getElementById("glossary");
+  if (!dl) return;
+  dl.innerHTML = GLOSSARY.map(([term, def]) =>
+    `<div class="gloss-row">
+       <dt>${term}</dt>
+       <dd>${def}</dd>
+     </div>`).join("");
 }
 
 function currentSet() {
@@ -115,6 +153,13 @@ function wireControls() {
       render();
     };
   });
+  // "methodology" link in the dashboard footer jumps to the About tab.
+  const footAbout = document.getElementById("footAbout");
+  if (footAbout) footAbout.onclick = e => {
+    e.preventDefault();
+    document.querySelector('.tab[data-view="about"]').click();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   document.getElementById("search").oninput = e => {
     state.q = e.target.value.trim().toUpperCase(); render();
   };
@@ -178,6 +223,12 @@ function card(r) {
 }
 
 function render() {
+  // Toggle between the card dashboard and the static About/methodology view.
+  const isAbout = state.view === "about";
+  document.getElementById("dashboardView").hidden = isAbout;
+  document.getElementById("aboutView").hidden = !isAbout;
+  if (isAbout) return;
+
   let rows = currentSet();
   if (state.wave !== "ALL") rows = rows.filter(r => r.wave === state.wave);
   if (state.q) rows = rows.filter(r => r.ticker.toUpperCase().includes(state.q));
