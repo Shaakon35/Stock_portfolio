@@ -455,6 +455,76 @@ function niceStep(span, maxTicks) {
   return Math.max(nice * pow, 10);  // never finer than 10%
 }
 
+const MON_ABBR = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+// Build ~10 x-axis ticks as calendar month labels (JAN25, JUN, …) landing on
+// aligned month boundaries, rather than raw data dates. The month step is
+// chosen so a wide window gets ~10 ticks (5y → semiannual: JAN & JUN each year;
+// 2y → every 2 months; 1y → monthly). The year is only shown on January ticks
+// (JAN25) so year boundaries stand out; other ticks show the month alone (JUN).
+// Short windows (≤ ~2 months) fall back to day labels ("5 JAN"). Each tick is
+// mapped to the nearest data index so it aligns with the plotted points.
+// Returns [{ i, label }] sorted by index.
+function xAxisTicks(refDates) {
+  const n = refDates.length;
+  if (n <= 1) return [{ i: 0, label: refDates[0] || "" }];
+  const rd = refDates.map(d => new Date(d + "T00:00:00Z"));
+  const first = rd[0], last = rd[n - 1];
+  const spanDays = (last - first) / 86400000;
+
+  // Nearest data index to a given timestamp (binary search + neighbour check).
+  const nearest = t => {
+    let lo = 0, hi = n - 1;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (rd[m].getTime() < t) lo = m + 1; else hi = m; }
+    if (lo > 0 && Math.abs(rd[lo - 1].getTime() - t) < Math.abs(rd[lo].getTime() - t)) lo--;
+    return lo;
+  };
+
+  // Short window: day-level labels, ~7 evenly spaced by index.
+  if (spanDays <= 62) {
+    const count = Math.min(7, n);
+    const out = [];
+    for (let k = 0; k < count; k++) {
+      const i = Math.round(k * (n - 1) / (count - 1 || 1));
+      const dt = rd[i];
+      out.push({ i, label: dt.getUTCDate() + " " + MON_ABBR[dt.getUTCMonth()] });
+    }
+    return dedupeByIndex(out);
+  }
+
+  // Longer window: aligned month-boundary ticks. Pick the smallest month step
+  // that keeps the tick count ≤ 12 (≈ 10 target).
+  const spanMonths = (last.getUTCFullYear() - first.getUTCFullYear()) * 12 +
+                     (last.getUTCMonth() - first.getUTCMonth());
+  const STEPS = [1, 2, 3, 6, 12, 24, 60];
+  let step = STEPS[STEPS.length - 1];
+  for (const s of STEPS) { if (spanMonths / s <= 10) { step = s; break; } }
+  // Which months of the year get a tick, per step (6 → JAN & JUN as requested).
+  const MOY = { 1: [0,1,2,3,4,5,6,7,8,9,10,11], 2: [0,2,4,6,8,10],
+                3: [0,3,6,9], 6: [0,5], 12: [0], 24: [0], 60: [0] };
+  const months = MOY[step] || [0];
+  const yearStep = step >= 12 ? step / 12 : 1;
+  const tol = 20 * 86400000;   // include boundaries just outside the window
+  const out = [];
+  for (let y = first.getUTCFullYear(); y <= last.getUTCFullYear(); y += yearStep) {
+    for (const m of months) {
+      const t = Date.UTC(y, m, 1);
+      if (t < first.getTime() - tol || t > last.getTime() + tol) continue;
+      out.push({ i: nearest(t),
+                 label: m === 0 ? MON_ABBR[0] + String(y).slice(-2) : MON_ABBR[m] });
+    }
+  }
+  return dedupeByIndex(out);
+}
+
+// Drop ticks that collapse onto the same data index (keep the first), sorted.
+function dedupeByIndex(ticks) {
+  const seen = new Set(), out = [];
+  ticks.sort((a, b) => a.i - b.i);
+  for (const t of ticks) { if (!seen.has(t.i)) { seen.add(t.i); out.push(t); } }
+  return out;
+}
+
 // Draw the SVG chart for the selected tickers, rebased to % change.
 function drawPlot() {
   const svg = document.getElementById("plotSvg");
@@ -521,14 +591,19 @@ function drawPlot() {
     svg.appendChild(mk("line", { x1: padL, x2: W - padR, y1: y0, y2: y0,
       stroke: "#3a4653", "stroke-width": 1.2 }));
   }
-  // X-axis date labels (start / mid / end).
+  // X-axis: ~10 calendar month-boundary ticks (JAN25, JUN, …) with faint
+  // gridlines, aligned to the plotted data points.
   if (refDates && refDates.length) {
-    const idxs = [0, Math.floor((refDates.length - 1) / 2), refDates.length - 1];
-    idxs.forEach((di, xi) => {
-      const tx = mk("text", { x: xOf(di, refDates.length), y: H - padB + 20,
-        "text-anchor": xi === 0 ? "start" : (xi === 2 ? "end" : "middle"),
+    const n = refDates.length;
+    const ticks = xAxisTicks(refDates);
+    ticks.forEach(({ i, label }) => {
+      const x = xOf(i, n);
+      svg.appendChild(mk("line", { x1: x, x2: x, y1: padT, y2: H - padB,
+        stroke: "#1a222b", "stroke-width": 1 }));
+      const anchor = x <= padL + 2 ? "start" : (x >= W - padR - 2 ? "end" : "middle");
+      const tx = mk("text", { x, y: H - padB + 20, "text-anchor": anchor,
         fill: "#8b98a5", "font-size": "11" });
-      tx.textContent = refDates[di];
+      tx.textContent = label;
       svg.appendChild(tx);
     });
   }
