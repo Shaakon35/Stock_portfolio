@@ -42,6 +42,16 @@
 
 * { box-sizing: border-box; }
 
+/* Dark scrollbars everywhere to match the theme */
+html { scrollbar-width: thin; scrollbar-color: #334155 #020617; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: #020617; }
+::-webkit-scrollbar-thumb {
+  background: #334155; border-radius: 8px; border: 3px solid #020617;
+}
+::-webkit-scrollbar-thumb:hover { background: #40506b; }
+::-webkit-scrollbar-corner { background: #020617; }
+
 html, body {
   margin: 0;
   padding: 0;
@@ -232,7 +242,20 @@ a { color: var(--accent); text-decoration: none; }
      page — avoids the nav-height mismatch that hid the first row. */
   max-height: calc(100vh - 150px);
   overflow: auto;
+  /* Dark scrollbars to match the theme (Firefox) */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hi) var(--bg);
 }
+/* Dark scrollbars to match the theme (WebKit / Chromium) */
+.tablewrap::-webkit-scrollbar { width: 12px; height: 12px; }
+.tablewrap::-webkit-scrollbar-track { background: var(--bg); }
+.tablewrap::-webkit-scrollbar-thumb {
+  background: var(--border-hi);
+  border-radius: 8px;
+  border: 3px solid var(--bg);   /* inset look */
+}
+.tablewrap::-webkit-scrollbar-thumb:hover { background: #40506b; }
+.tablewrap::-webkit-scrollbar-corner { background: var(--bg); }
 .dt {
   width: 100%;
   border-collapse: collapse;
@@ -302,7 +325,6 @@ a { color: var(--accent); text-decoration: none; }
   padding: 3px 9px; border-radius: 999px;
   border: 1px solid transparent;
 }
-.td-flags .badge { margin-right: 4px; }
 .b-green { color: var(--green); background: var(--green-bg); border-color: rgba(52,211,153,.25); }
 .b-amber { color: var(--amber); background: var(--amber-bg); border-color: rgba(245,196,81,.25); }
 .b-red   { color: var(--red);   background: var(--red-bg);   border-color: rgba(248,113,113,.25); }

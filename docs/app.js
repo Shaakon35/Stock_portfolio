@@ -57,7 +57,6 @@ const COLUMNS = [
   { key: "binding",  label: "Bind",     align: "center", num: false },
   { key: "book_pct", label: "Book %",   align: "right",  num: true  },
   { key: "coverage", label: "Data %",   align: "right",  num: true  },
-  { key: "flags",    label: "Flags",    align: "left",   num: false },
 ];
 
 const state = {
@@ -79,7 +78,7 @@ async function boot() {
     payload = await res.json();
   } catch (e) {
     document.getElementById("tbody").innerHTML =
-      '<tr><td colspan="12" class="empty">Could not load conviction.json. ' +
+      '<tr><td colspan="11" class="empty">Could not load conviction.json. ' +
       'Run <code>PORTFOLIO_USE=ai python3 scoring/score_holdings.py --json</code> first.</td></tr>';
     return;
   }
@@ -209,11 +208,6 @@ function sortRows(rows) {
 // A single table row.
 function row(r) {
   const gc = GRADE_CLASS[r.grade] || "b-mut";
-  const flags = [];
-  if (r.wave === "ET") flags.push(`<span class="badge b-mut">via ETF</span>`);
-  if (r.peak) flags.push(`<span class="badge b-amber">PEAK?</span>`);
-  if (r.coverage < 75) flags.push(`<span class="badge b-red">GAP</span>`);
-  if (r.held) flags.push(`<span class="badge b-green">HELD</span>`);
 
   const layer = (k, v) =>
     `<td class="td-num td-layer"><span class="lcell">` +
@@ -234,7 +228,6 @@ function row(r) {
     <td class="td-bind">${r.binding}</td>
     <td class="td-num">${bookStr}</td>
     <td class="td-num ${r.coverage < 75 ? "gap" : ""}">${r.coverage}</td>
-    <td class="td-flags">${flags.join("") || '<span class="mut">—</span>'}</td>
   </tr>`;
 }
 
