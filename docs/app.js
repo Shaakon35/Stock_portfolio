@@ -24,7 +24,8 @@ const GLOSSARY_CONV = [
   ["F", "Fundamentals layer (0–10, higher = safer). Business quality, momentum-neutral: margins, forward growth, FCF, margin trajectory and consistency."],
   ["V", "Valuation layer (0–10, higher = cheaper/fairer). PEG first, P/S-vs-growth fallback, plus distance above the 200-day moving average."],
   ["C", "Cycle layer (0–10, higher = earlier/less crowded). Position in the industry wave, chart extension, and whether the name sits on a supply bottleneck."],
-  ["Bind", "Binding layer — the lowest of F/V/C, i.e. the dominant risk. Counted a second time inside the safety term and shown in its own column."],
+  ["Bind", "Binding layer — the lowest of F/V/C, i.e. the dominant risk. Counted a second time inside the safety term."],
+  ["Plot", "Opens the Plot tab with this name selected — an interactive price chart you can overlay with other tickers over 1w–5y windows."],
   ["8PT", "The 8-point entry screen (0–8): small + cheap + accelerating checks used for cycle/catalyst names. Rescaled to 0–10 inside the cycle conviction."],
   ["GROWTH", "The 0–10 growth score — how much the business can compound. Drives the reward term for cycle/catalyst names."],
   ["QUALITY", "The DCA quality score — durability of a buy-forever compounder. Replaces GROWTH in the DCA conviction variant."],
@@ -70,15 +71,39 @@ const COLUMNS = [
   { key: "F",        label: "F",        align: "right",  num: true  },
   { key: "V",        label: "V",        align: "right",  num: true  },
   { key: "C",        label: "C",        align: "right",  num: true  },
-  { key: "binding",  label: "Bind",     align: "center", num: false },
   { key: "book_pct", label: "Book %",   align: "right",  num: true  },
   { key: "coverage", label: "Data %",   align: "right",  num: true  },
+  { key: "plot",     label: "Plot",     align: "center", num: false, sortable: false },
 ];
 
 const state = {
   data: [], view: "stock", wave: "ALL", q: "", heldOnly: false,
   sortKey: "conv", sortDir: -1,   // -1 = descending, 1 = ascending
 };
+
+// Price history for the Plot tab, loaded from plot_history.json:
+// { ticker: { t: [ISO dates], c: [closes] } }. Empty until loaded.
+let PLOT_HISTORY = {};
+
+// Plot-tab UI state. Series are rebased to % change so different price levels
+// compare directly; the range picks the trailing window (default 5y).
+const plotState = {
+  selected: new Set(),   // tickers currently overlaid
+  range: "5y",           // 1w | 1m | 6m | 1y | 2y | 5y | all
+  q: "",                 // ticker filter for the checkbox side panel
+};
+
+// Trailing window length per range, in days (null = all available history).
+const PLOT_RANGE_DAYS = {
+  "1w": 7, "1m": 31, "6m": 183, "1y": 366, "2y": 731, "5y": 1827, "all": null,
+};
+
+// Distinct line colours cycled across overlaid series.
+const PLOT_COLORS = [
+  "#34d399", "#7dd3fc", "#f5c451", "#f87171", "#c084fc",
+  "#fb923c", "#22d3ee", "#a3e635", "#f472b6", "#60a5fa",
+  "#facc15", "#4ade80", "#e879f9", "#38bdf8", "#fca5a5",
+];
 
 function convTextColor(c) {
   if (c >= 7.5) return "#34d399";      // strong — emerald
@@ -99,6 +124,17 @@ async function boot() {
     return;
   }
   state.data = payload.records || [];
+
+  // Price history for the Plot tab. Optional: if it fails to load the rest of
+  // the dashboard still works and plot glyphs render disabled.
+  try {
+    const pres = await fetch("plot_history.json", { cache: "no-store" });
+    const ppayload = await pres.json();
+    PLOT_HISTORY = ppayload.history || {};
+  } catch (e) {
+    PLOT_HISTORY = {};
+  }
+
   document.getElementById("navMeta").textContent =
     `${payload.count} names · ${payload.held_count} held`;
   document.getElementById("footMeta").textContent =
@@ -109,6 +145,7 @@ async function boot() {
   buildGlossary();
   buildHead();
   wireControls();
+  wirePlotControls();
   render();
 }
 
@@ -173,6 +210,8 @@ function buildHead() {
     `<span class="th-lab">${c.label}</span><span class="th-arrow"></span></th>`
   ).join("") + "</tr>";
   thead.querySelectorAll("th").forEach(th => {
+    const colDef = COLUMNS.find(c => c.key === th.dataset.key);
+    if (colDef && colDef.sortable === false) return;  // plot column: not sortable
     th.onclick = () => {
       const k = th.dataset.key;
       if (state.sortKey === k) {
@@ -245,10 +284,28 @@ function row(r) {
     <td><span class="badge ${gc}">${r.grade}</span></td>
     <td class="td-num td-conv" style="color:${convTextColor(r.conv)}"><b>${r.conv.toFixed(2)}</b></td>
     ${layer("F", r.F)}${layer("V", r.V)}${layer("C", r.C)}
-    <td class="td-bind">${r.binding}</td>
     <td class="td-num">${bookStr}</td>
     <td class="td-num ${r.coverage < 75 ? "gap" : ""}">${r.coverage}</td>
+    <td class="td-plot">${plotIconCell(r.ticker)}</td>
   </tr>`;
+}
+
+// Clickable chart glyph for a table row. Disabled (greyed) when the ticker has
+// no price history in plot_history.json. Clicking opens the Plot tab with the
+// ticker selected.
+function plotIconCell(ticker) {
+  const has = PLOT_HISTORY && PLOT_HISTORY[ticker];
+  const svg =
+    '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" ' +
+    'stroke="currentColor" stroke-width="1.4" stroke-linecap="round" ' +
+    'stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="1,15 1,1"/><polyline points="1,15 15,15"/>' +
+    '<polyline points="2,11 6,6 9,9 14,2"/></svg>';
+  if (!has) {
+    return `<span class="plot-ico plot-ico-off" title="No price history">${svg}</span>`;
+  }
+  return `<button type="button" class="plot-ico" title="Plot ${ticker}" ` +
+         `onclick="openPlotFor('${ticker}')">${svg}</button>`;
 }
 
 // Reflect the active sort key/direction in the header arrows.
@@ -262,11 +319,15 @@ function syncHead() {
 }
 
 function render() {
-  // Toggle between the data table and the static About/methodology view.
+  // Toggle between the data table, the Plot tab, and the About view.
   const isAbout = state.view === "about";
-  document.getElementById("dashboardView").hidden = isAbout;
+  const isPlot = state.view === "plot";
+  document.getElementById("dashboardView").hidden = isAbout || isPlot;
   document.getElementById("aboutView").hidden = !isAbout;
+  const plotView = document.getElementById("plotView");
+  if (plotView) plotView.hidden = !isPlot;
   if (isAbout) return;
+  if (isPlot) { renderPlot(); return; }
 
   let rows = [...state.data];
   if (state.heldOnly) rows = rows.filter(r => r.held);
@@ -279,6 +340,204 @@ function render() {
   tbody.innerHTML = rows.map(row).join("");
   empty.hidden = rows.length > 0;
   syncHead();
+}
+
+// ==========================================================================
+// PLOT TAB — interactive multi-ticker price chart (client-side SVG)
+// ==========================================================================
+
+// Called by a table row's plot glyph: switch to the Plot tab and select the
+// ticker (adding it to any existing overlay).
+function openPlotFor(ticker) {
+  if (!PLOT_HISTORY[ticker]) return;
+  plotState.selected.add(ticker);
+  const tab = document.querySelector('.tab[data-view="plot"]');
+  if (tab) tab.click();       // click() runs wireControls -> sets view + render
+  else { state.view = "plot"; render(); }
+}
+
+// Wire the Plot tab's search box and range buttons once at boot.
+function wirePlotControls() {
+  const search = document.getElementById("plotSearch");
+  if (search) search.oninput = e => {
+    plotState.q = e.target.value.trim().toUpperCase();
+    renderPlotList();
+  };
+  document.querySelectorAll(".plot-range-btn").forEach(btn => {
+    btn.onclick = () => {
+      plotState.range = btn.dataset.range;
+      syncPlotRange();
+      drawPlot();
+    };
+  });
+  const clear = document.getElementById("plotClear");
+  if (clear) clear.onclick = () => {
+    plotState.selected.clear();
+    renderPlotList();
+    drawPlot();
+  };
+  syncPlotRange();
+}
+
+function syncPlotRange() {
+  document.querySelectorAll(".plot-range-btn").forEach(btn =>
+    btn.classList.toggle("plot-range-on", btn.dataset.range === plotState.range));
+}
+
+// Full Plot-tab render: side checkbox list + chart.
+function renderPlot() {
+  renderPlotList();
+  drawPlot();
+}
+
+// The left-hand checkbox panel: every ticker with price history, filtered by
+// the plot search box, held/selected names first.
+function renderPlotList() {
+  const box = document.getElementById("plotList");
+  if (!box) return;
+  const heldSet = new Set(state.data.filter(r => r.held).map(r => r.ticker));
+  let names = Object.keys(PLOT_HISTORY);
+  if (plotState.q) names = names.filter(t => t.toUpperCase().includes(plotState.q));
+  // Sort: selected first, then held, then alphabetical.
+  names.sort((a, b) => {
+    const sa = plotState.selected.has(a), sb = plotState.selected.has(b);
+    if (sa !== sb) return sa ? -1 : 1;
+    const ha = heldSet.has(a), hb = heldSet.has(b);
+    if (ha !== hb) return ha ? -1 : 1;
+    return a.localeCompare(b);
+  });
+  box.innerHTML = names.map(t => {
+    const on = plotState.selected.has(t) ? " checked" : "";
+    const held = heldSet.has(t) ? ' <span class="plot-held">held</span>' : "";
+    return `<label class="plot-check"><input type="checkbox" value="${t}"${on}>` +
+           `<span>${t}</span>${held}</label>`;
+  }).join("") ||
+    '<div class="plot-empty">No tickers match.</div>';
+  box.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.onchange = () => {
+      if (cb.checked) plotState.selected.add(cb.value);
+      else plotState.selected.delete(cb.value);
+      updatePlotCount();
+      drawPlot();
+    };
+  });
+  updatePlotCount();
+}
+
+function updatePlotCount() {
+  const count = document.getElementById("plotCount");
+  if (count) count.textContent = `${plotState.selected.size} selected`;
+}
+
+// Slice a series to the current range window.
+function plotWindow(entry) {
+  const days = PLOT_RANGE_DAYS[plotState.range];
+  const t = entry.t, c = entry.c;
+  if (days == null) return { t: t.slice(), c: c.slice() };
+  const last = new Date(t[t.length - 1] + "T00:00:00Z").getTime();
+  const cutoff = last - days * 86400000;
+  const ot = [], oc = [];
+  for (let i = 0; i < t.length; i++) {
+    if (new Date(t[i] + "T00:00:00Z").getTime() >= cutoff) { ot.push(t[i]); oc.push(c[i]); }
+  }
+  if (!ot.length) { ot.push(t[t.length - 1]); oc.push(c[c.length - 1]); }
+  return { t: ot, c: oc };
+}
+
+// Draw the SVG chart for the selected tickers, rebased to % change.
+function drawPlot() {
+  const svg = document.getElementById("plotSvg");
+  const legend = document.getElementById("plotLegend");
+  if (!svg) return;
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  if (legend) legend.innerHTML = "";
+
+  const W = 900, H = 460, padL = 56, padR = 18, padT = 18, padB = 40;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const NS = "http://www.w3.org/2000/svg";
+  const mk = (tag, attrs) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  };
+
+  const sel = [...plotState.selected].filter(t => PLOT_HISTORY[t]);
+  if (!sel.length) {
+    const msg = mk("text", { x: W / 2, y: H / 2, "text-anchor": "middle",
+      fill: "#8b98a5", "font-size": "15" });
+    msg.textContent = "Select one or more tickers to plot.";
+    svg.appendChild(msg);
+    return;
+  }
+
+  // Build rebased (% from window start) series; track global min/max + longest.
+  const series = [];
+  let gmin = Infinity, gmax = -Infinity, refDates = null, maxLen = 0;
+  sel.forEach((tk, i) => {
+    const win = plotWindow(PLOT_HISTORY[tk]);
+    const base = win.c[0];
+    const pct = win.c.map(v => base ? (v / base - 1) * 100 : 0);
+    for (const p of pct) { if (p < gmin) gmin = p; if (p > gmax) gmax = p; }
+    if (win.t.length > maxLen) { maxLen = win.t.length; refDates = win.t; }
+    series.push({ ticker: tk, pct, color: PLOT_COLORS[i % PLOT_COLORS.length] });
+  });
+  if (!isFinite(gmin)) return;
+  if (gmin === gmax) { gmin -= 1; gmax += 1; }
+  const pad = (gmax - gmin) * 0.08; gmin -= pad; gmax += pad;
+
+  const xOf = (i, n) => padL + (n <= 1 ? 0 : (i / (n - 1)) * (W - padL - padR));
+  const yOf = v => padT + (1 - (v - gmin) / (gmax - gmin)) * (H - padT - padB);
+
+  // Horizontal gridlines + % axis labels (0% line emphasised).
+  const ticks = 5;
+  for (let g = 0; g <= ticks; g++) {
+    const val = gmin + (gmax - gmin) * g / ticks;
+    const y = yOf(val);
+    svg.appendChild(mk("line", { x1: padL, x2: W - padR, y1: y, y2: y,
+      stroke: Math.abs(val) < 1e-6 ? "#3a4653" : "#212a33", "stroke-width": 1 }));
+    const lbl = mk("text", { x: padL - 8, y: y + 4, "text-anchor": "end",
+      fill: "#8b98a5", "font-size": "11" });
+    lbl.textContent = (val >= 0 ? "+" : "") + val.toFixed(0) + "%";
+    svg.appendChild(lbl);
+  }
+  // Zero baseline for the rebase (0% at window start).
+  if (gmin <= 0 && gmax >= 0) {
+    const y0 = yOf(0);
+    svg.appendChild(mk("line", { x1: padL, x2: W - padR, y1: y0, y2: y0,
+      stroke: "#3a4653", "stroke-width": 1.2 }));
+  }
+  // X-axis date labels (start / mid / end).
+  if (refDates && refDates.length) {
+    const idxs = [0, Math.floor((refDates.length - 1) / 2), refDates.length - 1];
+    idxs.forEach((di, xi) => {
+      const tx = mk("text", { x: xOf(di, refDates.length), y: H - padB + 20,
+        "text-anchor": xi === 0 ? "start" : (xi === 2 ? "end" : "middle"),
+        fill: "#8b98a5", "font-size": "11" });
+      tx.textContent = refDates[di];
+      svg.appendChild(tx);
+    });
+  }
+
+  // Draw each series + a legend chip with its window return.
+  series.forEach(s => {
+    const n = s.pct.length;
+    let d = "";
+    for (let i = 0; i < n; i++)
+      d += (i === 0 ? "M" : "L") + xOf(i, n).toFixed(1) + "," + yOf(s.pct[i]).toFixed(1) + " ";
+    svg.appendChild(mk("path", { d: d.trim(), fill: "none",
+      stroke: s.color, "stroke-width": 1.7 }));
+    if (legend) {
+      const last = s.pct[s.pct.length - 1];
+      const chip = document.createElement("span");
+      chip.className = "plot-legend-chip";
+      chip.innerHTML =
+        `<span class="plot-swatch" style="background:${s.color}"></span>` +
+        `<b>${s.ticker}</b> ` +
+        `<span style="color:${last >= 0 ? "#34d399" : "#f87171"}">` +
+        `${last >= 0 ? "+" : ""}${last.toFixed(1)}%</span>`;
+      legend.appendChild(chip);
+    }
+  });
 }
 
 boot();

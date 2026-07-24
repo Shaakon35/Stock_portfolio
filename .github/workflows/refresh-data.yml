@@ -87,6 +87,15 @@ jobs:
           set -euo pipefail
           python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --json docs/conviction.json
 
+      - name: Refresh Plot-tab price history
+        run: |
+          set -euo pipefail
+          # Fetch ~5y weekly closes for every name in the freshly-regenerated
+          # conviction.json and write docs/plot_history.json for the Plot tab.
+          # Uses Yahoo's chart HTTP endpoint directly (not the yfinance library
+          # that is date-corrupted in the dev env); on the runner it is correct.
+          python3 scoring/export_plot_history.py
+
       - name: Validation gate
         run: |
           set -euo pipefail
@@ -109,7 +118,7 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scoring/fundamentals_*.csv docs/conviction.json
+          git add scoring/fundamentals_*.csv docs/conviction.json docs/plot_history.json
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0
