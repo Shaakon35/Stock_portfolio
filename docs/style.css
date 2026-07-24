@@ -228,7 +228,10 @@ a { color: var(--accent); text-decoration: none; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  overflow-x: auto;
+  /* Own scroll region so the sticky header pins to the TABLE top, not the
+     page — avoids the nav-height mismatch that hid the first row. */
+  max-height: calc(100vh - 150px);
+  overflow: auto;
 }
 .dt {
   width: 100%;
@@ -240,7 +243,7 @@ a { color: var(--accent); text-decoration: none; }
 
 /* header */
 .dt thead th {
-  position: sticky; top: 61px;   /* below the sticky nav */
+  position: sticky; top: 0;   /* pins to the top of .tablewrap's scroll area */
   z-index: 5;
   background: var(--panel-hi);
   color: var(--text-dim);
