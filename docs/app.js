@@ -135,6 +135,12 @@ async function boot() {
     PLOT_HISTORY = {};
   }
 
+  // Default the Plot tab to every held name that has price history, so the
+  // chart opens pre-populated with the active book instead of empty.
+  for (const r of state.data) {
+    if (r.held && PLOT_HISTORY[r.ticker]) plotState.selected.add(r.ticker);
+  }
+
   document.getElementById("navMeta").textContent =
     `${payload.count} names · ${payload.held_count} held`;
   document.getElementById("footMeta").textContent =
