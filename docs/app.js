@@ -444,6 +444,17 @@ function plotWindow(entry) {
   return { t: ot, c: oc };
 }
 
+// Pick a "nice" gridline step covering `span` in at most `maxTicks` steps.
+// Rounds up to the nearest 1/2/5 × 10ⁿ, floored at 10 so the axis is always in
+// clean 10%+ increments (0,10,20,… / 0,20,40,… / 0,50,100,…).
+function niceStep(span, maxTicks) {
+  const raw = Math.max(span, 1) / Math.max(maxTicks, 1);
+  const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+  const norm = raw / pow;           // 1..10
+  const nice = norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10;
+  return Math.max(nice * pow, 10);  // never finer than 10%
+}
+
 // Draw the SVG chart for the selected tickers, rebased to % change.
 function drawPlot() {
   const svg = document.getElementById("plotSvg");
@@ -483,21 +494,25 @@ function drawPlot() {
   });
   if (!isFinite(gmin)) return;
   if (gmin === gmax) { gmin -= 1; gmax += 1; }
-  const pad = (gmax - gmin) * 0.08; gmin -= pad; gmax += pad;
+
+  // Snap the axis to a "nice" round step (1/2/5 × 10ⁿ, min 10%) so gridlines
+  // land on tidy multiples — e.g. 0..40 → 0,10,20,30,40; 0..100 → 0,20,…,100 —
+  // instead of arbitrary values. Bounds are rounded out to whole steps.
+  const step = niceStep(gmax - gmin, 6);
+  gmin = Math.floor(gmin / step) * step;
+  gmax = Math.ceil(gmax / step) * step;
 
   const xOf = (i, n) => padL + (n <= 1 ? 0 : (i / (n - 1)) * (W - padL - padR));
   const yOf = v => padT + (1 - (v - gmin) / (gmax - gmin)) * (H - padT - padB);
 
-  // Horizontal gridlines + % axis labels (0% line emphasised).
-  const ticks = 5;
-  for (let g = 0; g <= ticks; g++) {
-    const val = gmin + (gmax - gmin) * g / ticks;
+  // Horizontal gridlines + % axis labels at each nice step (0% line emphasised).
+  for (let val = gmin; val <= gmax + step * 1e-6; val += step) {
     const y = yOf(val);
     svg.appendChild(mk("line", { x1: padL, x2: W - padR, y1: y, y2: y,
       stroke: Math.abs(val) < 1e-6 ? "#3a4653" : "#212a33", "stroke-width": 1 }));
     const lbl = mk("text", { x: padL - 8, y: y + 4, "text-anchor": "end",
       fill: "#8b98a5", "font-size": "11" });
-    lbl.textContent = (val >= 0 ? "+" : "") + val.toFixed(0) + "%";
+    lbl.textContent = (val > 0 ? "+" : "") + Math.round(val) + "%";
     svg.appendChild(lbl);
   }
   // Zero baseline for the rebase (0% at window start).

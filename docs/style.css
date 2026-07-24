@@ -517,9 +517,11 @@ a { color: var(--accent); text-decoration: none; }
 }
 .plot-check:hover { background: var(--panel-hi); color: var(--text); }
 .plot-check input { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; }
-.plot-check span { flex: 1; }
+/* Only the ticker-name span grows; the held badge stays its own width. */
+.plot-check span:first-of-type { flex: 1; }
 .plot-held {
-  flex: none; font-size: 10px; font-weight: 700; letter-spacing: .4px;
+  flex: 0 0 auto; align-self: center;
+  font-size: 10px; font-weight: 700; letter-spacing: .4px; line-height: 1.4;
   color: var(--accent); background: var(--green-bg);
   padding: 1px 6px; border-radius: 6px;
 }
@@ -541,14 +543,20 @@ a { color: var(--accent); text-decoration: none; }
   color: #04140d; border-color: transparent;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
 }
+/* Chart + legend side by side; legend column on the right. */
+.plot-body {
+  display: flex; align-items: stretch; gap: 14px;
+}
 .plot-chart {
+  flex: 1 1 auto; min-width: 0;
   background: var(--bg-2); border: 1px solid var(--border);
   border-radius: var(--radius-sm); padding: 6px;
 }
 #plotSvg { width: 100%; height: 460px; display: block; }
 .plot-legend {
-  display: flex; flex-wrap: wrap; gap: 6px 18px;
-  margin-top: 12px;
+  flex: 0 0 150px;
+  display: flex; flex-direction: column; gap: 8px;
+  padding-top: 4px; overflow-y: auto; max-height: 472px;
 }
 .plot-legend-chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -556,6 +564,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 .plot-legend-chip b { color: var(--text); }
 .plot-swatch {
+  flex: 0 0 auto;
   width: 12px; height: 12px; border-radius: 3px; display: inline-block;
 }
 
@@ -563,4 +572,10 @@ a { color: var(--accent); text-decoration: none; }
   .plot-layout { grid-template-columns: 1fr; }
   .plot-side { position: static; }
   .plot-list { max-height: 40vh; }
+  /* Stack legend under the chart on narrow screens. */
+  .plot-body { flex-direction: column; }
+  .plot-legend {
+    flex: 0 0 auto; flex-direction: row; flex-wrap: wrap;
+    gap: 6px 18px; max-height: none;
+  }
 }
