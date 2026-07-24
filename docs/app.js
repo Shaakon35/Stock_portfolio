@@ -17,14 +17,14 @@ const STRAT_LABEL = {
   dca: "DCA", cycle: "CYCLE", catalyst: "CATALYST", lottery: "LOTTERY", "?": "—",
 };
 
-// Glossary of every acronym / term shown in the table or the methodology.
-// Rendered into the About tab so the abbreviations are self-explanatory.
-const GLOSSARY = [
+// Glossary, split in two: the engine's own vocabulary, and the standard
+// finance metrics the layers are built from. Rendered into the About tab.
+const GLOSSARY_CONV = [
   ["CONV", "Conviction — the headline 0–10 score. Higher = a stronger risk-adjusted case for owning the name now. Geometric mean of a reward and a safety term."],
   ["F", "Fundamentals layer (0–10, higher = safer). Business quality, momentum-neutral: margins, forward growth, FCF, margin trajectory and consistency."],
   ["V", "Valuation layer (0–10, higher = cheaper/fairer). PEG first, P/S-vs-growth fallback, plus distance above the 200-day moving average."],
   ["C", "Cycle layer (0–10, higher = earlier/less crowded). Position in the industry wave, chart extension, and whether the name sits on a supply bottleneck."],
-  ["bind", "Binding layer — the lowest of F/V/C, i.e. the dominant risk. Counted a second time inside the safety term and flagged in the table."],
+  ["Bind", "Binding layer — the lowest of F/V/C, i.e. the dominant risk. Counted a second time inside the safety term and shown in its own column."],
   ["8PT", "The 8-point entry screen (0–8): small + cheap + accelerating checks used for cycle/catalyst names. Rescaled to 0–10 inside the cycle conviction."],
   ["GROWTH", "The 0–10 growth score — how much the business can compound. Drives the reward term for cycle/catalyst names."],
   ["QUALITY", "The DCA quality score — durability of a buy-forever compounder. Replaces GROWTH in the DCA conviction variant."],
@@ -33,15 +33,31 @@ const GLOSSARY = [
   ["CYCLE (strategy)", "A name bought for its position in an industry cycle — graded on the two-axis quadrant (where in the cycle, how cheap)."],
   ["CATALYST", "A name bought for a specific upcoming event; graded on whether the punt's upside is still intact."],
   ["LOTTERY", "A pre-revenue / single-event punt (Binary). High opacity is treated as a red flag, not a neutral."],
-  ["book %", "The name's target weight in the portfolio book. Watch-only names have no book weight."],
-  ["coverage / Data %", "Share of obtainable fundamentals actually present for the name. Below 75% the score is scaled down and a GAP flag shows."],
+  ["Book %", "The name's target weight in the portfolio book. Watch-only names have no book weight."],
+  ["Data % (coverage)", "Share of obtainable fundamentals actually present for the name. Below 75% the score is scaled down (a GAP) and the cell turns red."],
   ["GAP", "Coverage < 75% — the score rests on thin data and should be trusted less."],
   ["PEAK?", "A cyclical whose low PEG is fake-cheap on peak-cycle earnings while the chart is extended (the memory/storage trap). Cuts cycle CONV ×0.85."],
-  ["HELD", "The name currently has a position in the book (book % > 0). Names without the flag are watch-only."],
-  ["wave (W1–W7)", "The AI-allocation basket: W1 Silicon, W2 Power, W3 DC-Infra, W4 Cloud, W5 Software, W6 Spec, W7 Diversify. ET = surfaced via ETF look-through."],
-  ["grade", "The strategy-aware verdict: PRIME / KEEP-DCA (buy), MOMENTUM / QUALITY (hold-ish), RICH (wait for a better price), AVOID / IMPAIRED (pass)."],
-  ["200DMA", "200-day moving average of price. Distance above it measures chart extension — a proxy for how much optimism is already paid for."],
-  ["PEG", "Price/earnings-to-growth ratio. Below ~1 looks cheap, but on a late-cycle name a sub-1 PEG is usually the peak-earnings trap (see PEAK?)."],
+  ["Held only", "Filter toggle: show just the names with a live position (Book % > 0), hiding watch-only candidates."],
+  ["Wave (W1–W7)", "The AI-allocation basket: W1 Silicon, W2 Power, W3 DC-Infra, W4 Cloud, W5 Software, W6 Spec, W7 Diversify. ET = surfaced via ETF look-through."],
+  ["Grade", "The strategy-aware verdict: PRIME / KEEP-DCA (buy), MOMENTUM / QUALITY (hold-ish), RICH (wait for a better price), AVOID / IMPAIRED (pass)."],
+];
+
+const GLOSSARY_FIN = [
+  ["Market cap", "Market capitalisation — share price × shares outstanding, i.e. the total equity value of the company. Used here to gauge size (small caps can re-rate faster)."],
+  ["Revenue growth", "Year-over-year change in sales. 'Forward' = analyst forecast for the next period(s); 'TTM' = trailing twelve months already reported."],
+  ["EPS", "Earnings per share — net profit divided by shares outstanding. 'EPS growth' is its year-over-year change; the cleanest per-share read on profitability."],
+  ["Net margin", "Net profit ÷ revenue, as a %. What's left after all costs, interest and tax — the bottom-line profitability of every sales dollar."],
+  ["Gross margin", "(Revenue − cost of goods sold) ÷ revenue, as a %. Measures the raw profitability of the product before overhead — a proxy for pricing power / model quality."],
+  ["Operating margin", "Operating profit ÷ revenue, as a %. Profitability from core operations before interest and tax; used in place of net margin when one-off items distort the bottom line."],
+  ["Margin trajectory", "The direction margins are moving over time (expanding vs compressing), not just the level. A rising margin signals improving economics."],
+  ["FCF (free cash flow)", "Operating cash flow minus capital expenditure — the actual cash a business generates after funding itself. 'FCF-positive' means it self-funds rather than burning cash."],
+  ["P/E", "Price-to-earnings ratio — share price ÷ EPS. How many dollars you pay per dollar of annual earnings; the classic valuation yardstick."],
+  ["PEG", "P/E-to-Growth — the P/E ratio divided by the earnings growth rate. Below ~1 looks cheap for the growth, but on a late-cycle name a sub-1 PEG is usually the peak-earnings trap."],
+  ["P/S (ps_ratio)", "Price-to-sales ratio — market cap ÷ revenue. A valuation fallback for loss-makers and pre-profit names that have no meaningful P/E or PEG."],
+  ["200DMA", "200-day moving average of the price. Distance above it measures how extended the chart is — a proxy for how much optimism is already paid for."],
+  ["Chart extension", "How far the price sits above its 200DMA. A large gap means the move is stretched and more of the upside is already priced in."],
+  ["Cyclical", "A business whose earnings swing with an industry cycle (memory, energy, mining). Its multiples look cheapest at the peak, which is exactly the danger."],
+  ["Bottleneck", "A genuine supply constraint the company sits on (e.g. leading-edge foundry, HBM, power). Scarce capacity supports pricing and defends the cycle position."],
 ];
 
 // Column definitions: key into a record, header label, alignment, numeric flag.
@@ -96,15 +112,19 @@ async function boot() {
   render();
 }
 
-// Render the acronym glossary into the About tab.
+// Render the two glossary lists into the About tab.
 function buildGlossary() {
-  const dl = document.getElementById("glossary");
-  if (!dl) return;
-  dl.innerHTML = GLOSSARY.map(([term, def]) =>
-    `<div class="gloss-row">
-       <dt>${term}</dt>
-       <dd>${def}</dd>
-     </div>`).join("");
+  const fill = (id, rows) => {
+    const dl = document.getElementById(id);
+    if (!dl) return;
+    dl.innerHTML = rows.map(([term, def]) =>
+      `<div class="gloss-row">
+         <dt>${term}</dt>
+         <dd>${def}</dd>
+       </div>`).join("");
+  };
+  fill("glossaryConv", GLOSSARY_CONV);
+  fill("glossaryFin", GLOSSARY_FIN);
 }
 
 function buildWaveChips() {

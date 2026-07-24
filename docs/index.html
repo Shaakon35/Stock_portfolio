@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
   <!-- ===== Top nav ===== -->
@@ -159,7 +159,7 @@
           never contradict the numbers they are built from. The
           <span class="bind-eg">weakest</span> layer is the
           <strong>binding constraint</strong> — the dominant risk — and is
-          highlighted on every card.
+          shown in its own <em>Bind</em> column in the table.
         </p>
         <div class="about-grid">
           <div class="about-card">
@@ -180,7 +180,16 @@
       <!-- Glossary -->
       <section class="about">
         <h2 class="about-h">Glossary &amp; acronyms</h2>
-        <dl class="glossary" id="glossary"></dl>
+
+        <h3 class="about-sub">Conviction &amp; scoring terms</h3>
+        <p class="about-p">The vocabulary this engine uses — the score, its
+          layers, the strategy modes and the flags.</p>
+        <dl class="glossary" id="glossaryConv"></dl>
+
+        <h3 class="about-sub">Financial terms</h3>
+        <p class="about-p">The standard finance metrics the layers are built
+          from — what each one measures and why it matters here.</p>
+        <dl class="glossary" id="glossaryFin"></dl>
       </section>
 
       <footer class="foot">
@@ -194,6 +203,6 @@
     </div><!-- /#aboutView -->
   </main>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
