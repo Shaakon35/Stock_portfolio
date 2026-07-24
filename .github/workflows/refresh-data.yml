@@ -139,16 +139,27 @@ jobs:
           fi
           printf 'Refresh conviction data (%s)\n\nCo-authored-by: Ona <no-reply@ona.com>\n' "$(date -u +%F)" | git commit -F -
           # Push with rebase-and-retry: main can advance during the ~6 min run
-          # (a merged PR, another push), which rejects a plain push. We only
-          # touch generated data files, so rebasing our commit on top of the
-          # new tip is always safe.
+          # (a merged PR, another refresh) and reject a plain push. Our commit
+          # only rewrites generated data files, so we rebase it onto the new
+          # tip. If a concurrent commit touched one of those same generated
+          # files, the rebase conflicts — our freshly-regenerated version always
+          # wins (--theirs = the commit being replayed during a rebase), so the
+          # loop resolves it and retries instead of aborting under `set -e`.
+          export GIT_EDITOR=true
+          GEN="scoring/fundamentals_*.csv docs/conviction.json docs/plot_history.json"
           for attempt in 1 2 3 4 5; do
             if git push; then
               echo "Pushed on attempt $attempt."
               exit 0
             fi
             echo "Push rejected (attempt $attempt) — rebasing on latest main and retrying."
-            git pull --rebase origin main
+            git fetch origin main
+            if ! git rebase origin/main; then
+              echo "Rebase conflict on generated files — keeping our regenerated versions."
+              git checkout --theirs $GEN 2>/dev/null || true
+              git add $GEN
+              git rebase --continue
+            fi
           done
           echo "::error::Failed to push after 5 attempts."
           exit 1
