@@ -94,7 +94,21 @@ jobs:
           # conviction.json and write docs/plot_history.json for the Plot tab.
           # Uses Yahoo's chart HTTP endpoint directly (not the yfinance library
           # that is date-corrupted in the dev env); on the runner it is correct.
-          python3 scoring/export_plot_history.py
+          # Write to a temp file first so a rate-limited run can't clobber the
+          # committed plot_history.json with a mostly-empty payload.
+          python3 scoring/export_plot_history.py --out docs/plot_history.new.json
+          # Guard: require at least 80% of names to have a series, else abort and
+          # keep the existing plot_history.json (do not publish a broken plot
+          # from a rate-limited run).
+          python3 -c "import json,sys; \
+          new=json.load(open('docs/plot_history.new.json')); \
+          conv=json.load(open('docs/conviction.json')); \
+          want=len({r['ticker'] for r in conv.get('records',[]) if r.get('ticker')}); \
+          got=new.get('count',0); ratio=got/want if want else 0; \
+          print(f'plot history coverage: {got}/{want} = {ratio:.0%}'); \
+          sys.exit(0 if ratio>=0.80 else 1)" \
+            || { echo '::error::Plot history coverage below 80% — likely rate-limited. Keeping previous plot_history.json.'; rm -f docs/plot_history.new.json; exit 1; }
+          mv docs/plot_history.new.json docs/plot_history.json
 
       - name: Validation gate
         run: |
@@ -124,4 +138,17 @@ jobs:
             exit 0
           fi
           printf 'Refresh conviction data (%s)\n\nCo-authored-by: Ona <no-reply@ona.com>\n' "$(date -u +%F)" | git commit -F -
-          git push
+          # Push with rebase-and-retry: main can advance during the ~6 min run
+          # (a merged PR, another push), which rejects a plain push. We only
+          # touch generated data files, so rebasing our commit on top of the
+          # new tip is always safe.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing on latest main and retrying."
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after 5 attempts."
+          exit 1
