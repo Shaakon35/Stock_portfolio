@@ -42,14 +42,14 @@
 
 * { box-sizing: border-box; }
 
-/* Dark scrollbars everywhere to match the theme */
-html { scrollbar-width: thin; scrollbar-color: #334155 #020617; }
+/* Black scrollbars to match the dark theme */
+html { scrollbar-width: thin; scrollbar-color: #0f172a #020617; }
 ::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track { background: #020617; }
 ::-webkit-scrollbar-thumb {
-  background: #334155; border-radius: 8px; border: 3px solid #020617;
+  background: #0f172a; border-radius: 8px; border: 3px solid #020617;
 }
-::-webkit-scrollbar-thumb:hover { background: #40506b; }
+::-webkit-scrollbar-thumb:hover { background: #1e293b; }
 ::-webkit-scrollbar-corner { background: #020617; }
 
 html, body {
@@ -242,19 +242,19 @@ a { color: var(--accent); text-decoration: none; }
      page — avoids the nav-height mismatch that hid the first row. */
   max-height: calc(100vh - 150px);
   overflow: auto;
-  /* Dark scrollbars to match the theme (Firefox) */
+  /* Black scrollbars to match the theme (Firefox) */
   scrollbar-width: thin;
-  scrollbar-color: var(--border-hi) var(--bg);
+  scrollbar-color: #0f172a var(--bg);
 }
-/* Dark scrollbars to match the theme (WebKit / Chromium) */
+/* Black scrollbars to match the theme (WebKit / Chromium) */
 .tablewrap::-webkit-scrollbar { width: 12px; height: 12px; }
 .tablewrap::-webkit-scrollbar-track { background: var(--bg); }
 .tablewrap::-webkit-scrollbar-thumb {
-  background: var(--border-hi);
+  background: #0f172a;
   border-radius: 8px;
   border: 3px solid var(--bg);   /* inset look */
 }
-.tablewrap::-webkit-scrollbar-thumb:hover { background: #40506b; }
+.tablewrap::-webkit-scrollbar-thumb:hover { background: var(--panel-hi); }
 .tablewrap::-webkit-scrollbar-corner { background: var(--bg); }
 .dt {
   width: 100%;
