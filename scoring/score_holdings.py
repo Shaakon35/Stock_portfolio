@@ -37,6 +37,8 @@
 
 import argparse
 import csv
+import datetime as _dt
+import json
 import os
 import sys
 from pathlib import Path
@@ -1795,6 +1797,80 @@ def render_by_strategy(results, fund, args):
     print(_LAYER_FOOTNOTE)
 
 
+def build_results(csv_path):
+    """Score the full held+watchlist universe and return the list of per-name
+    result dicts (the same structure main() builds), sorted by unified
+    conviction descending. Factored out of main() so the JSON exporter and any
+    other consumer score every name identically to the CLI table.
+    """
+    port = portfolio_rows(include_watchlist=True)
+    fund = load_fundamentals(csv_path)
+    results = []
+    for t, info in port.items():
+        if t == "SMHV.SW":
+            continue  # fixed windfall, excluded per owner instruction
+        f = fund.get(t, {})
+        eight, parts8, eps_f = score_8point(t, f, info)
+        g10, partsg = score_growth(t, f, info)
+        layers, binding = layer_scores(t, f, info)
+        cov = _coverage(f)
+        peak = peak_trap(t, f, info)
+        conv = conviction(g10, eight, layers, layers[binding], peak, cov)
+        q10, rich, _ = dca_quality(t, f)
+        conv_dca = dca_conviction(q10, layers, layers[binding], rich, cov)
+        conv_unified = conv_dca if info.get("strategy") == "dca" else conv
+        grade, _prim, _rich = strategy_grade(
+            {**info, "quad": quadrant(eight, g10), "growth10": g10}, f)
+        results.append({**info, "eight": eight, "growth10": g10,
+                        "quad": quadrant(eight, g10), "eps_f": eps_f,
+                        "has_data": t in fund, "coverage": cov,
+                        "conviction": conv, "conviction_dca": conv_dca,
+                        "conviction_unified": conv_unified, "grade": grade,
+                        "layers": layers, "binding": binding, "peak": peak})
+    results.sort(key=lambda r: -r["conviction_unified"])
+    return results
+
+
+def export_json(csv_path, out_path):
+    """Write conviction.json for the web dashboard. One record per scored name
+    with the fields the card grid renders: ticker, wave, book%, strategy,
+    held, CONV, grade, F/V/C layers, binding layer, coverage, peak flag.
+    """
+    results = build_results(csv_path)
+    _LAYER_KEY = {"FUND": "F", "VAL": "V", "CYCLE": "C"}
+    records = []
+    for r in results:
+        records.append({
+            "ticker": r["ticker"],
+            "wave": r["wave"],
+            "held": bool(r["held"]) and r["book_pct"] > 0,
+            "book_pct": round(r["book_pct"], 2),
+            "strategy": r["strategy"],
+            "conv": round(r["conviction_unified"], 2),
+            "grade": r["grade"],
+            "F": round(r["layers"]["FUND"], 1),
+            "V": round(r["layers"]["VAL"], 1),
+            "C": round(r["layers"]["CYCLE"], 1),
+            "binding": _LAYER_KEY.get(r["binding"], r["binding"]),
+            "coverage": round(r["coverage"] * 100),
+            "peak": bool(r["peak"]),
+            "has_data": bool(r["has_data"]),
+        })
+    payload = {
+        "generated_utc": _dt.datetime.now(_dt.timezone.utc)
+                            .strftime("%Y-%m-%d %H:%M UTC"),
+        "csv": Path(csv_path).name,
+        "count": len(records),
+        "held_count": sum(1 for x in records if x["held"]),
+        "records": records,
+    }
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w") as fh:
+        json.dump(payload, fh, indent=2)
+    print(f"wrote {out_path}  ({len(records)} names, "
+          f"{payload['held_count']} held)  from {payload['csv']}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", default=default_csv(), help="fundamentals snapshot CSV")
@@ -1815,6 +1891,11 @@ def main():
     ap.add_argument("--by-strategy", action="store_true",
                     help="group output by strategy mode and grade each on its OWN "
                          "rubric (DCA judged on quality+price, not small/explosive)")
+    ap.add_argument("--json", nargs="?", const="docs/conviction.json",
+                    metavar="PATH", default=None,
+                    help="export the full held+watchlist scoring to JSON for the "
+                         "web dashboard (default path: docs/conviction.json) and "
+                         "exit")
     ap.add_argument("--fill-ttm", action="store_true",
                     help="scrape ttm_rev_growth from stockanalysis.com /financials/ "
                          "and write it into the CSV in place (powers the "
@@ -1836,6 +1917,12 @@ def main():
                          "ps_ratio, fcf, 200dma%%) while PRESERVING curated cells "
                          "(net_margin proxies, seeded eps_beat_*)")
     args = ap.parse_args()
+
+    if args.json is not None:
+        if not args.csv or not Path(args.csv).exists():
+            sys.exit("--json needs an existing fundamentals CSV.")
+        export_json(args.csv, args.json)
+        return
 
     port = portfolio_rows(include_watchlist=True if args.sync_csv else args.watchlist)
 

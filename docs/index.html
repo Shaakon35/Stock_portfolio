@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Allocation — Conviction Scores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ===== Top nav ===== -->
+  <header class="nav">
+    <div class="nav-brand">
+      <span class="nav-logo">◈</span>
+      <div>
+        <div class="nav-title">AI Allocation</div>
+        <div class="nav-sub">CONVICTION DASHBOARD</div>
+      </div>
+    </div>
+    <nav class="nav-tabs" id="navTabs">
+      <button class="tab tab-active" data-view="held">Holdings</button>
+      <button class="tab" data-view="all">All Names</button>
+      <button class="tab" data-view="watch">Watchlist</button>
+    </nav>
+    <div class="nav-meta" id="navMeta"></div>
+  </header>
+
+  <main class="wrap">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <span class="pill">DETERMINISTIC SCORING ENGINE</span>
+      <h1>How much conviction does each name earn?</h1>
+      <p class="hero-lede">
+        Every company in the AI allocation, scored on a single
+        <strong>conviction</strong> value — a geometric blend of business quality,
+        valuation, and cycle safety. Not a price target: a risk-adjusted answer to
+        "is this worth owning, right now?"
+      </p>
+    </section>
+
+    <!-- ===== Summary stats ===== -->
+    <section class="stats" id="statBar"></section>
+
+    <!-- ===== Controls ===== -->
+    <section class="controls">
+      <input type="search" id="search" class="search" placeholder="Search ticker…" autocomplete="off" />
+      <div class="filters" id="waveFilters"></div>
+      <div class="sortgroup">
+        <label for="sortBy">Sort</label>
+        <select id="sortBy">
+          <option value="conv">Conviction</option>
+          <option value="book_pct">Book %</option>
+          <option value="F">Fundamentals</option>
+          <option value="V">Valuation</option>
+          <option value="C">Cycle</option>
+          <option value="ticker">Ticker A–Z</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- ===== Card grid ===== -->
+    <section class="grid" id="grid"></section>
+    <p class="empty" id="empty" hidden>No names match your filters.</p>
+
+    <footer class="foot">
+      <span id="footMeta"></span>
+      <span class="foot-note">
+        CONV is strategy-aware (DCA names use the quality+richness variant).
+        F/V/C = Fundamentals / Valuation / Cycle layers (0–10, higher = safer).
+        A price target this is not — see the engine's methodology in the repo.
+      </span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
