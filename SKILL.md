@@ -549,6 +549,46 @@ These are real bugs encountered during development. Check for them proactively.
 **Cause**: Using pure 200-SMA as buy target anchor. In sustained uptrends, 200-SMA lags 30-50% behind price, creating unreachable buy targets.
 **Fix**: Cycle stocks use blended `avg(50-SMA, 200-SMA)` instead of pure 200-SMA. This brings targets ~15-25% below price (reachable on a normal pullback) instead of 30-50% below (only reachable in a crash). Catalyst stocks keep pure 200-SMA since they need deeper margin of safety.
 
+### 10. Reporting Inflated Conviction Scores (eyeballing instead of scoring)
+
+**Symptom**: A stock is announced to the user as "super high conviction" (e.g.
+"~9.0"), but when actually scored through the engine it lands far lower (ARGX
+headline ~8.3 → real 6.76; a name eyeballed as high-8 came back mid-5). The
+user is misled and has to ask for a QC pass.
+
+**Cause**: Estimating a conviction score from raw fundamentals (high gross
+margin, low PEG, big revenue growth) **before** running the name through
+`score_holdings.py`. This skips every guardrail the engine exists to apply:
+- **Base-effect / turnaround illusion** — a biotech or cyclical off a tiny or
+  negative base prints huge growth% and a trough PEG. The engine damps these
+  (base-effect damping, trough-PEG damping, the `[MARG?]` margin-direction
+  flag); a human eyeball does not. ARGX's `margin_hist [37|-23|-159|-76]` and
+  185% base-effect revenue are exactly what fooled the headline read.
+- **Binding-layer geometry** — `CONV = sqrt(REWARD × SAFETY)` and the layer
+  `min` mean one weak layer (VAL too rich, CYCLE at a peak, thin `data%`) caps
+  the whole score. You cannot infer the binding layer by looking at fundamentals.
+- **Tag effects** — a `catalyst`/`Binary` tag deliberately cuts the CYCLE layer;
+  the same raw numbers score very differently once tagged correctly.
+- **Transcription errors** — headline numbers copied from a page are error-prone;
+  the scraped CSV row is the source of truth.
+
+**Fix — QC-before-report, ALWAYS:**
+1. **Never quote a conviction number you have not produced from the engine.**
+   Source the row (`--sync-csv` / scrapers), then run
+   `PORTFOLIO_USE=ai python3 scoring/score_holdings.py --by-strategy --watchlist`
+   and read the actual `conv` column.
+2. **QC every score ≥ ~8.0 before presenting it.** Open the CSV row and check for
+   the illusion signatures: negative/sign-flipping `net_margin_hist`, a
+   revenue-growth base year >100% (base effect), a trough PEG paired with
+   `fwd_eps_growth` >100%, `data%` < 75% (`[GAP]`), or a `[MARG?]` flag. If any
+   are present, the high score is suspect — say so explicitly.
+3. **Report the binding layer, not just the headline.** State which of
+   FUND/VAL/CYCLE is the `min` so the user sees what the score actually rests on.
+4. **Bake the caveat into the WATCHLIST `note`** for any name whose score is
+   flattered by an illusion signature, so the caveat travels with the ticker.
+5. If you must give a number before scoring, label it clearly as a rough
+   pre-score guess — never as "the conviction score".
+
 ---
 
 ## Sector Exploration Philosophy
@@ -1027,6 +1067,11 @@ The ranking is fully automated via `ranking.py` + `ranking.ipynb`. To update:
 2. Run all cells — it fetches live data from Yahoo Finance
 3. The table auto-sorts by composite score
 4. New candidates can be added to `RANKING_UNIVERSE` dict in `ranking.py`
+
+**When hunting for high-conviction names, never eyeball the score** — always run
+each candidate through `scoring/score_holdings.py` and QC any result ≥ ~8.0 for
+the base-effect / turnaround illusion before reporting it. See Common Pitfalls
+§10 for the full QC-before-report checklist.
 
 ---
 

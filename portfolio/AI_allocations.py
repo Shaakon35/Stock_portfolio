@@ -3329,6 +3329,134 @@ WATCHLIST = {
              "note": "QC: clean data, honest MID score (CONV ~5.5). PEG ~4 "
                      "(expensive) + decelerating revenue. Correctly not exciting — "
                      "quality franchise, unattractive entry."},
+
+    # ===================================================================
+    # 2026-08 third hunt — scored through score_holdings.py, NOT eyeballed.
+    # Every CONV below is the ACTUAL engine output (binding layer noted).
+    # Reality check baked in: this anti-momentum engine caps mature quality
+    # names ~7.2-7.6; the only 8+ are high-growth SaaS turnarounds that carry
+    # a NEG-MARGIN-HIST signal (the base-effect/turnaround illusion — see
+    # SKILL.md Common Pitfalls §10). NONE is a clean, durable 8+.
+    # -------------------------------------------------------------------
+    # --- clean quality compounders (no illusion signal; CONV mid-7s) ---
+    "AJG":  {"strategy": "dca", "pos": "Mid", "cagr": (8, 15),
+             "area": "Insurance brokerage (Arthur J. Gallagher, US)",
+             "note": "QC: CLEAN, top of the hunt. CONV 7.58 (CYC binding), "
+                     "100% cov, no illusion signal. Roll-up broker annuity; "
+                     "CYC caps it because it's richly valued, not troubled."},
+    "ICE":  {"strategy": "dca", "pos": "Mid", "cagr": (7, 13),
+             "area": "Exchanges + mortgage data (Intercontinental Exch, US)",
+             "note": "QC: CLEAN. CONV 7.23 (CYC binding), 100% cov. Exchange "
+                     "+ data annuity; honest score, no turnaround flag."},
+    "ZTS":  {"strategy": "dca", "pos": "Mid", "cagr": (7, 13),
+             "area": "Animal health / vaccines (Zoetis, US)",
+             "note": "QC: CLEAN. CONV 7.18 (CYC binding), 100% cov. Durable "
+                     "franchise; capped by rich valuation, not data gaps."},
+    "PGR":  {"strategy": "dca", "pos": "Mid", "cagr": (6, 14),
+             "area": "Auto/P&C insurance (Progressive, US)",
+             "note": "QC: CLEAN-ish. CONV 7.17 (FUN binding) at 80% cov "
+                     "(insurer margins partly blank). Best-in-class underwriter."},
+    "PAYC": {"strategy": "dca", "pos": "Mid", "cagr": (8, 16),
+             "area": "Cloud payroll/HCM (Paycom, US)",
+             "note": "QC: CLEAN. CONV 7.17 (CYC binding), 100% cov, no NEG "
+                     "flag — genuinely profitable SaaS. Honest quality score."},
+    "HSY":  {"strategy": "dca", "pos": "Mid", "cagr": (4, 10),
+             "area": "Confectionery (Hershey, US)",
+             "note": "QC: CLEAN. CONV 7.04 (FUN binding), 100% cov. Staple "
+                     "compounder; low growth caps the FUND layer, no illusion."},
+    "VRSK": {"strategy": "dca", "pos": "Mid", "cagr": (6, 12),
+             "area": "Insurance data/analytics (Verisk, US)",
+             "note": "QC: CLEAN. CONV 6.59 (FUN binding), 100% cov. Data "
+                     "annuity; honest mid score, richly valued."},
+    "CME":  {"strategy": "dca", "pos": "Mid", "cagr": (5, 11),
+             "area": "Derivatives exchange (CME Group, US)",
+             "note": "QC: CLEAN. CONV 6.52 (CYC binding), 100% cov. Rate-"
+                     "volatility annuity; honest, no turnaround flag."},
+    "AON":  {"strategy": "dca", "pos": "Mid", "cagr": (7, 13),
+             "area": "Insurance brokerage/consulting (Aon, US)",
+             "note": "QC: CLEAN. CONV 6.49 (FUN binding), 100% cov. Broker "
+                     "peer of AJG; honest mid-high score."},
+    "YUM":  {"strategy": "dca", "pos": "Mid", "cagr": (6, 12),
+             "area": "QSR franchising (Yum! Brands, US)",
+             "note": "QC: CLEAN. CONV 6.49 (FUN binding), 100% cov. Asset-"
+                     "light franchise royalty; honest, no illusion."},
+    # --- profitable-but-pricey / honest MID names (kept for coverage) ---
+    "ABBV": {"strategy": "dca", "pos": "Mid", "cagr": (5, 11),
+             "area": "Biopharma (AbbVie, US)",
+             "note": "QC: CLEAN. CONV 6.88 (FUN binding), 100% cov. Post-"
+                     "Humira pipeline; honest score, patent-cliff risk in note."},
+
+    # --- high-growth SaaS: 8+ ONLY because of a turnaround base effect ---
+    #     Each has NEG-MARGIN-HIST (just flipped profitable). Treat the score
+    #     as the base-effect illusion SKILL.md §10 warns about — NOT durable.
+    "PD":   {"strategy": "dca", "pos": "Mid", "cagr": (5, 20),
+             "area": "Incident/ops automation (PagerDuty, US)",
+             "note": "QC: DO NOT TRUST THE 8. CONV 8.18 is the HIGHEST in the "
+                     "hunt but rests entirely on a NEG-MARGIN-HIST turnaround "
+                     "(just flipped profitable) + a base-effect FUND spike. "
+                     "CYC binding 5.5. This is the illusion SKILL.md §10 flags — "
+                     "durable score is mid-6 at best. Small/monitor only."},
+    "BRZE": {"strategy": "dca", "pos": "Mid", "cagr": (10, 25),
+             "area": "Customer-engagement SaaS (Braze, US)",
+             "note": "QC: CONV 7.96 (CYC binding) but NEG-MARGIN-HIST — barely "
+                     "profitable, score flattered by the turnaround base effect. "
+                     "Real growth is there (~25%) but the 8 is not durable yet."},
+    "AFRM": {"strategy": "catalyst", "pos": "Binary", "cagr": (-15, 40),
+             "area": "Buy-now-pay-later (Affirm, US)",
+             "note": "QC: CONV 7.88 (CYC binding) is a NEG-MARGIN-HIST credit-"
+                     "cycle turnaround — BNPL P&L swings with charge-offs and "
+                     "rates. Tagged catalyst/Binary (downside is real). The 8 is "
+                     "an illusion; treat as a binary macro bet."},
+    "PINS": {"strategy": "dca", "pos": "Mid", "cagr": (8, 20),
+             "area": "Visual-discovery ad platform (Pinterest, US)",
+             "note": "QC: CONV 7.80 (CYC binding), NEG-MARGIN-HIST (recent "
+                     "GAAP-profit flip). Ad-cyclical; score flattered by the "
+                     "turnaround base. Durable score mid-6s."},
+    "APPF": {"strategy": "dca", "pos": "Mid", "cagr": (10, 22),
+             "area": "Property-management SaaS (AppFolio, US)",
+             "note": "QC: CONV 7.75 (CYC binding), NEG-MARGIN-HIST. Real "
+                     "vertical-SaaS growth but the 7.8 leans on the profit-flip "
+                     "base effect. Monitor; not a clean durable 8."},
+    "DOCU": {"strategy": "dca", "pos": "Mid", "cagr": (6, 14),
+             "area": "E-signature / agreements (DocuSign, US)",
+             "note": "QC: CONV 7.71 (CYC binding), NEG-MARGIN-HIST + very rich "
+                     "VAL 9.9. Post-COVID normaliser that just turned GAAP-"
+                     "profitable; score flattered by the base effect."},
+    "ASAN": {"strategy": "dca", "pos": "Mid", "cagr": (8, 18),
+             "area": "Work-management SaaS (Asana, US)",
+             "note": "QC: CONV 7.58 (CYC binding), NEG-MARGIN-HIST, 90% cov. "
+                     "Still burning on GAAP; the score is the turnaround "
+                     "illusion. Founder-led but unproven durability."},
+    "FRSH": {"strategy": "dca", "pos": "Mid", "cagr": (10, 20),
+             "area": "CX/ITSM SaaS (Freshworks, US)",
+             "note": "QC: CONV 7.54 (CYC binding), NEG-MARGIN-HIST. Recent "
+                     "profit flip inflates the score; real ~18% growth. Durable "
+                     "read is mid-6s. Monitor."},
+    "SNAP": {"strategy": "catalyst", "pos": "Binary", "cagr": (-20, 35),
+             "area": "Social/AR ad platform (Snap, US)",
+             "note": "QC: CONV 7.34 (FUN binding), NEG-MARGIN-HIST — chronically "
+                     "unprofitable, ad-cyclical, heavy dilution. Tagged "
+                     "catalyst/Binary: the score is a turnaround HOPE, downside "
+                     "is real. Do not trust as a quality name."},
+    "WIX":  {"strategy": "dca", "pos": "Mid", "cagr": (10, 18),
+             "area": "Website-building SaaS (Wix, Israel)",
+             "note": "QC: CONV 7.05 (FUN binding), NEG-MARGIN-HIST. Just turned "
+                     "FCF/GAAP positive; score flattered by the flip. Honest "
+                     "durable read mid-6s."},
+    "NCNO": {"strategy": "dca", "pos": "Mid", "cagr": (8, 18),
+             "area": "Cloud banking software (nCino, US)",
+             "note": "QC: CONV 7.04 (FUN binding), NEG-MARGIN-HIST, 90% cov. "
+                     "Vertical SaaS turnaround; the 7 is the base-effect illusion."},
+    "RBLX": {"strategy": "catalyst", "pos": "Binary", "cagr": (-15, 35),
+             "area": "UGC gaming platform (Roblox, US)",
+             "note": "QC: CONV 6.77 (FUN binding), NEG-MARGIN-HIST, 90% cov. "
+                     "Persistently unprofitable on GAAP, bookings-driven. Tagged "
+                     "catalyst/Binary — the score is a growth bet, not quality."},
+    "DLO":  {"strategy": "cycle", "pos": "Mid", "cagr": (10, 25),
+             "area": "Emerging-markets payments (DLocal, Uruguay)",
+             "note": "QC: CONV 6.77 (CYC binding), 90% cov, no NEG flag but "
+                     "EM-FX/regulatory cyclical (take-rate compresses). Tagged "
+                     "cycle. Honest mid score; real growth, real EM risk."},
 }
 
 
