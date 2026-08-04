@@ -3407,11 +3407,12 @@ WATCHLIST = {
     #     as the base-effect illusion SKILL.md §10 warns about — NOT durable.
     "PD":   {"strategy": "dca", "pos": "Mid", "cagr": (5, 20),
              "area": "Incident/ops automation (PagerDuty, US)",
-             "note": "QC: DO NOT TRUST THE 8. CONV 8.18 is the HIGHEST in the "
-                     "hunt but rests entirely on a NEG-MARGIN-HIST turnaround "
-                     "(just flipped profitable) + a base-effect FUND spike. "
-                     "CYC binding 5.5. This is the illusion SKILL.md §10 flags — "
-                     "durable score is mid-6 at best. Small/monitor only."},
+             "note": "QC: turnaround-illusion name. Pre-fix it printed CONV 8.2 "
+                     "on -13.6% net margins (rewarded for improving losses, not "
+                     "real profit). The margin-trend profitability gate now damps "
+                     "that: CONV 7.87 (was 8.20), still-negative margins no longer "
+                     "earn full expansion credit. Even so, treat as monitor-only — "
+                     "unproven micro-cap that just squeaked toward breakeven."},
     "BRZE": {"strategy": "dca", "pos": "Mid", "cagr": (10, 25),
              "area": "Customer-engagement SaaS (Braze, US)",
              "note": "QC: CONV 7.96 (CYC binding) but NEG-MARGIN-HIST — barely "

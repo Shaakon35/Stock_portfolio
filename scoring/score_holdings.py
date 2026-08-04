@@ -475,11 +475,29 @@ def _trend_adjust(score, fwd, f):
 _MARGIN_DEADBAND = 1.0    # pts of margin: ignore drift smaller than this (noise)
 _MARGIN_FULL = 8.0        # pts: drift at/above this maps to the 0 or 1 extreme
 
+# PROFITABILITY GATE (turnaround-illusion guard) — expansion reward only.
+# The drift term alone rewards the SHAPE of the margin line, so a name going
+# from -38% -> -14% net margin earns full "expanding" credit while it is STILL
+# losing money. That is the base-effect / turnaround illusion (see SKILL.md
+# Common Pitfalls Sec.10; it is why PD printed CONV 8.2 on -13.6% net margins).
+# We gate the reward ABOVE 0.5 by the newer-half margin LEVEL: at/below
+# _MARGIN_GATE_LO the expansion bonus is fully damped to neutral, ramping to
+# full credit at/above _MARGIN_GATE_HI. Only the UPSIDE is gated — the
+# compression penalty (drift<0) is left intact, exactly like _decel_damping
+# only softens the downside of the revenue-trend term. A profitable expander
+# (ANET 38%, DOCU 19%) is unaffected; a still-bleeding one (PD, AFRM, ASAN) is
+# no longer flattered.
+_MARGIN_GATE_LO = 0.0     # newer-half margin % at/below this: expansion reward -> 0
+_MARGIN_GATE_HI = 8.0     # newer-half margin % at/above this: full expansion reward
+
 
 def _margin_trend(f):
     """Score net-margin TRAJECTORY 0..1 (1=expanding, .5=flat, 0=compressing),
     or None when there is no usable history. Compares the mean of the newer half
-    of net_margin_hist to the mean of the older half, in margin POINTS."""
+    of net_margin_hist to the mean of the older half, in margin POINTS. The
+    expansion (drift>0) reward is gated by the newer-half margin LEVEL so a
+    still-unprofitable turnaround does not earn full marks (see the
+    PROFITABILITY GATE note above)."""
     hist = f.get("net_margin_hist") or []
     if len(hist) < 2:
         return None                       # no trajectory -> let _blend drop it
@@ -488,12 +506,20 @@ def _margin_trend(f):
     half = len(hist) // 2
     newer = hist[:half]
     older = hist[-half:]
-    drift = (sum(newer) / len(newer)) - (sum(older) / len(older))  # +expand/-compress
+    newer_mean = sum(newer) / len(newer)
+    drift = newer_mean - (sum(older) / len(older))  # +expand / -compress
     if abs(drift) <= _MARGIN_DEADBAND:
         return 0.5                        # essentially flat -> neutral
     # map drift in [-_MARGIN_FULL, +_MARGIN_FULL] onto [0, 1] around 0.5
     norm = max(-1.0, min(1.0, drift / _MARGIN_FULL))
-    return 0.5 + 0.5 * norm
+    raw = 0.5 + 0.5 * norm
+    if drift > 0:
+        # Gate the expansion bonus by how profitable the business ACTUALLY is
+        # now — improving losses is not the same as expanding profits.
+        gate = _band(newer_mean, _MARGIN_GATE_LO, _MARGIN_GATE_HI)
+        gate = 0.0 if gate is None else gate
+        return 0.5 + (raw - 0.5) * gate
+    return raw                            # compression penalty untouched
 
 
 # -------------------------------------------------------------------------

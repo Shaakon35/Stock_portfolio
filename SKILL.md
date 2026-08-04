@@ -589,6 +589,21 @@ margin, low PEG, big revenue growth) **before** running the name through
 5. If you must give a number before scoring, label it clearly as a rough
    pre-score guess — never as "the conviction score".
 
+**Engine guard (2026-08): margin-trend profitability gate.** The root cause of
+the PD 8.2 illusion was a scorer defect, not just a reporting slip: `_margin_trend`
+scored the *drift* of the net-margin series, so a name going from -38% -> -14%
+earned FULL "expanding" credit while still losing money (52 of the universe's
+names were mis-rewarded this way). Fixed by gating the expansion reward (drift>0
+only) by the newer-half margin LEVEL — `_MARGIN_GATE_LO`/`_MARGIN_GATE_HI` in
+`score_holdings.py`: at/below 0% margin the expansion bonus is fully damped to
+neutral, ramping to full credit by +8%. The compression penalty (drift<0) is
+left intact, mirroring how `_decel_damping` only softens the downside of the
+revenue-trend term. Effect: PD 8.20->7.87, BRZE 7.95->7.65, ASAN 7.58->7.23,
+FRSH 7.52->7.22, NCNO 7.04->6.66; genuinely-profitable expanders (ANET 38%,
+DOCU 19%, APPF 13%) and clean names (AJG, ZTS, HSY) are unchanged. This narrows
+but does NOT eliminate the illusion — a name at +1% margin still reads as a
+turnaround; the QC checklist above still applies.
+
 ---
 
 ## Sector Exploration Philosophy
