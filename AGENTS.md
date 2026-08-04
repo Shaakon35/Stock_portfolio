@@ -14,6 +14,13 @@ the patterns below.
   market fetches for reproducible output — use the committed dated snapshot
   (see below). Source fresh numbers from stockanalysis.com.
 - Commits go to `main`. Add `Co-authored-by: Ona <no-reply@ona.com>`.
+- **Branch protection (deliberate).** `main` is protected against **force-push**
+  and **deletion** only. It intentionally does **NOT** require pull requests,
+  because the data-refresh automation (the recurring `Refresh conviction data`
+  commits) pushes straight to `main` — a PR requirement would break it. Do not
+  enable "require a pull request before merging" on `main` unless the refresh bot
+  is first given a bypass or routed through PRs. Feature branches may still be
+  force-pushed (e.g. rebasing a PR branch); only `main` blocks it.
 
 ## Fundamentals-refresh workflow (scoring engine)
 
