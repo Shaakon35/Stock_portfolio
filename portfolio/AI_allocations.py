@@ -91,7 +91,9 @@ W1_SILICON_TARGETS = {
                         # keeps the better, non-redundant leg (BESI, the bonding/assembly step,
                         # higher quality) and drops the duplicate metrology bet. 0% for easy
                         # re-add on a fresh trough. Its book funded the ANET/NOW growth.
-    "BESI.AS":   3.5,# CHANGED: 0.07955 -> 0.07995 (RIGHTSIZE 2026-06) — basket share rose
+    "BESI.AS":   2.5,# CHANGED: 3.5 -> 2.5 (FICO-ADD 2026-08) — TRIMMED 1.0% to help fund
+                        # the new FICO W7 diversifier. Prior: 0.07955 -> 0.07995 (RIGHTSIZE
+                        # 2026-06) — basket share rose
                         # to keep book UNCHANGED at 3.5% as the W1 wave shrank (0.4378 * 0.07995 =
                         # 0.035). Prior: 0.09724 -> 0.07955 (CONV-REBAL 2026-06) — TRIMMED to
                         # 3.5% book, off its outsized 4.27% to a conviction-
@@ -186,7 +188,8 @@ W2_POWER_TARGETS = {
                       # (-0.4%) to fund the new-name grows. Prior: 0.18182 -> 0.22430 (DECONC-OPT3
                       # 2026-06) — was 2.4% book.
                       # transformers / grid gear — 2-4yr lead-times, early-cycle, DCA.
-    "TLN":     3.5,# CHANGED: 0.32710 -> 0.36842 (RIGHTSIZE 2026-06) — sub-share recomputed
+    "TLN":     3.0,# CHANGED: 3.5 -> 3.0 (FICO-ADD 2026-08) — TRIMMED 0.5% to help fund
+                      # the new FICO W7 diversifier. Prior: 0.32710 -> 0.36842 (RIGHTSIZE 2026-06) — sub-share recomputed
                       # for the shrunken 9.5% wave; book UNCHANGED at 3.5% (0.095 * 0.36842 = 0.035).
                       # Prior: 0.45455 -> 0.32710 (DECONC-OPT3 2026-06) — was 5.0%
                       # book (0.11 * 0.45455 = 0.05) by absorbing ETN's freed 2.0%. CCJ kept (only
@@ -476,7 +479,8 @@ W7_DIVERSIFY_TARGETS = {
                       # business — a rare triple. Funded by the SIMO cut. A non-semi AI-economy
                       # play that diversifies the silicon-heavy book. CYCLE / Early — high-beta,
                       # young public co; buy dips, trim manias.
-    "INOD":  2.0,# CHANGED: 0.11905 -> 0.22472 (RIGHTSIZE 2026-06) — GROWN 1.0% -> 2.0% book
+    "INOD":  1.5,# CHANGED: 2.0 -> 1.5 (FICO-ADD 2026-08) — TRIMMED 0.5% to help fund
+                      # the new FICO W7 diversifier (net-zero within W7). Prior: 0.11905 -> 0.22472 (RIGHTSIZE 2026-06) — GROWN 1.0% -> 2.0% book
                       # (0.089 * 0.22472 = 0.02), the conviction-set target (CONV 7.25 PRIME).
                       # Prior: NEW (INOD-ADD 2026-06) — 1.0% book cycle starter,
                       # funded cross-wave from the halved W6 speculative tail. Innodata — AI data
@@ -487,6 +491,17 @@ W7_DIVERSIFY_TARGETS = {
                       # AI-supply-chain diversifier next to LLY/NU/RDDT. High-beta (2.83); analyst
                       # 3Y rev a modest 11% (decel off a hypergrowth base) but Strong Buy, PT +60%.
                       # CYCLE / Early — buy dips, trim manias.
+    "FICO":  2.0,# NEW (FICO-ADD 2026-08) — 2.0% book, funded 1.0% from BESI.AS (W1),
+                      # 0.5% from TLN (W2), 0.5% from INOD (W7). Fair Isaac — credit-scoring
+                      # near-monopoly (the FICO score is embedded in ~90% of US lending
+                      # decisions) + ML-native fraud/decision analytics (Falcon, bank-specific
+                      # AI models). Off the AI-capex value chain: revenue tracks lending
+                      # volumes + score pricing, NOT the GPU buildout — a structural hedge for
+                      # the silicon-heavy book, like LLY/NU. Scores the HIGHEST conviction on
+                      # the board (CONV 8.98): F 8.5 / V 9.6 / q10 9.3, 85% gross / 34% net,
+                      # accelerating revenue, screened CHEAP (PEG 0.75, ~24% below 200DMA).
+                      # DCA / hold-forever. RISK: single-product concentration + regulatory /
+                      # VantageScore overhang on mortgage-score pricing (the reason it's cheap).
 }
 
 # =========================================================================
@@ -599,6 +614,7 @@ STRATEGY = {
     "NU":      "cycle",     # Nubank — LatAm digital bank; EM-consumer/credit cyclical, buy dips / trim manias
     "RDDT":    "cycle",     # Reddit — social ads + AI data-licensing; non-semi AI diversifier, Early/high-beta, buy dips / trim manias
     "INOD":    "cycle",     # NEW (2026-06). Innodata — AI data-engineering / LLM training-data prep; non-semi AI-supply-chain diversifier, Early/high-beta, buy dips / trim manias
+    "FICO":    "dca",       # NEW (2026-08). Fair Isaac — credit-scoring near-monopoly; off the AI-capex value chain, hold-forever quality compounder, a drop is a discount
 }
 
 # =========================================================================
