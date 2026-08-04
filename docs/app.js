@@ -17,6 +17,24 @@ const STRAT_LABEL = {
   dca: "DCA", cycle: "CYCLE", catalyst: "CATALYST", lottery: "LOTTERY", "?": "—",
 };
 
+// Verdict -> badge colour class, for the Intrinsic tab.
+const VERDICT_CLASS = {
+  "Undervalued": "b-green", "Fairly valued": "b-blue",
+  "Overvalued": "b-red", "N/A": "b-mut",
+};
+
+// Column definitions for the Intrinsic (fair-value) table.
+const IV_COLUMNS = [
+  { key: "ticker",     label: "Ticker",    align: "left",  num: false },
+  { key: "price",      label: "Price",     align: "right", num: true  },
+  { key: "intrinsic",  label: "Intrinsic", align: "right", num: true  },
+  { key: "upside_pct", label: "Upside %",  align: "right", num: true  },
+  { key: "verdict",    label: "Verdict",   align: "left",  num: false },
+  { key: "fair_pe",    label: "Fair P/E",  align: "right", num: true  },
+  { key: "dcf_value",  label: "DCF",       align: "right", num: true  },
+  { key: "analyst_mean", label: "An. Mean", align: "right", num: true },
+];
+
 // Glossary, split in two: the engine's own vocabulary, and the standard
 // finance metrics the layers are built from. Rendered into the About tab.
 const GLOSSARY_CONV = [
@@ -40,7 +58,7 @@ const GLOSSARY_CONV = [
   ["PEAK?", "A cyclical whose low PEG is fake-cheap on peak-cycle earnings while the chart is extended (the memory/storage trap). Cuts cycle CONV ×0.85."],
   ["Held only", "Filter toggle: show just the names with a live position (Book % > 0), hiding watch-only candidates."],
   ["Wave (W1–W7)", "The AI-allocation basket: W1 Silicon, W2 Power, W3 DC-Infra, W4 Cloud, W5 Software, W6 Spec, W7 Diversify. ET = surfaced via ETF look-through."],
-  ["Grade", "The strategy-aware verdict: PRIME / KEEP-DCA (buy), MOMENTUM / QUALITY (hold-ish), RICH (wait for a better price), AVOID / IMPAIRED (pass)."],
+  ["Grade", "The strategy-aware verdict: PRIME / KEEP-DCA (buy), MOMENTUM / QUALITY (hold-ish), RICH (wait for a better price), AVOID / IMPAIRED (pass). N/A = no fundamentals page exists for the name (e.g. a physical-commodity trust), so it cannot be scored — not a negative verdict."],
 ];
 
 const GLOSSARY_FIN = [
@@ -79,6 +97,14 @@ const COLUMNS = [
 const state = {
   data: [], view: "stock", wave: "ALL", q: "", heldOnly: false,
   sortKey: "conv", sortDir: -1,   // -1 = descending, 1 = ascending
+};
+
+// Intrinsic-value tab state and data (loaded from intrinsic.json).
+let IV_DATA = [];
+let IV_META = {};
+const ivState = {
+  q: "", verdict: "ALL",
+  sortKey: "upside_pct", sortDir: -1,   // most-undervalued first
 };
 
 // Price history for the Plot tab, loaded from plot_history.json:
@@ -135,6 +161,18 @@ async function boot() {
     PLOT_HISTORY = {};
   }
 
+  // Intrinsic-value data for the Intrinsic tab. Optional: if it fails to load
+  // the rest of the dashboard still works and the tab shows a friendly notice.
+  try {
+    const ires = await fetch("intrinsic.json", { cache: "no-store" });
+    const ipayload = await ires.json();
+    IV_DATA = ipayload.records || [];
+    IV_META = ipayload;
+  } catch (e) {
+    IV_DATA = [];
+    IV_META = {};
+  }
+
   // Default the Plot tab to every held name that has price history, so the
   // chart opens pre-populated with the active book instead of empty.
   for (const r of state.data) {
@@ -150,7 +188,10 @@ async function boot() {
   buildStats();
   buildGlossary();
   buildHead();
+  buildIvHead();
+  buildIvVerdictChips();
   wireControls();
+  wireIvControls();
   wirePlotControls();
   render();
 }
@@ -272,23 +313,36 @@ function sortRows(rows) {
 
 // A single table row.
 function row(r) {
-  const gc = GRADE_CLASS[r.grade] || "b-mut";
+  // No-fundamentals names (has_data=false, e.g. SRUUF — a physical-commodity
+  // trust with no company financials page) have no meaningful score. Render
+  // them as N/A rather than a misleading AVOID / 0.00, which would imply a
+  // negative fundamental verdict on a name that simply cannot be scored.
+  const noData = r.has_data === false;
+  const gc = noData ? "b-mut" : (GRADE_CLASS[r.grade] || "b-mut");
 
   const layer = (k, v) =>
-    `<td class="td-num td-layer"><span class="lcell">` +
-    `<span class="ltrack"><span class="lbar lf-${k}" style="width:${v * 10}%"></span></span>` +
-    `<b>${v.toFixed(1)}</b></span></td>`;
+    noData
+      ? `<td class="td-num td-layer mut">—</td>`
+      : `<td class="td-num td-layer"><span class="lcell">` +
+        `<span class="ltrack"><span class="lbar lf-${k}" style="width:${v * 10}%"></span></span>` +
+        `<b>${v.toFixed(1)}</b></span></td>`;
 
   const bookStr = r.held
     ? `${r.book_pct.toFixed(2)}`
     : `<span class="mut">—</span>`;
 
+  const gradeCell = noData ? "N/A" : r.grade;
+  const convCell = noData
+    ? `<span class="mut">—</span>`
+    : `<b>${r.conv.toFixed(2)}</b>`;
+  const convStyle = noData ? "" : `style="color:${convTextColor(r.conv)}"`;
+
   return `<tr>
     <td class="td-tkr"><a href="https://finance.yahoo.com/quote/${r.ticker}" target="_blank" rel="noopener">${r.ticker}</a></td>
     <td class="mut">${r.wave}</td>
     <td>${STRAT_LABEL[r.strategy] || r.strategy}</td>
-    <td><span class="badge ${gc}">${r.grade}</span></td>
-    <td class="td-num td-conv" style="color:${convTextColor(r.conv)}"><b>${r.conv.toFixed(2)}</b></td>
+    <td><span class="badge ${gc}">${gradeCell}</span></td>
+    <td class="td-num td-conv" ${convStyle}>${convCell}</td>
     ${layer("F", r.F)}${layer("V", r.V)}${layer("C", r.C)}
     <td class="td-num">${bookStr}</td>
     <td class="td-num ${r.coverage < 75 ? "gap" : ""}">${r.coverage}</td>
@@ -325,14 +379,18 @@ function syncHead() {
 }
 
 function render() {
-  // Toggle between the data table, the Plot tab, and the About view.
+  // Toggle between the data table, the Intrinsic tab, the Plot tab, and About.
   const isAbout = state.view === "about";
   const isPlot = state.view === "plot";
-  document.getElementById("dashboardView").hidden = isAbout || isPlot;
+  const isIv = state.view === "intrinsic";
+  document.getElementById("dashboardView").hidden = isAbout || isPlot || isIv;
   document.getElementById("aboutView").hidden = !isAbout;
+  const ivView = document.getElementById("intrinsicView");
+  if (ivView) ivView.hidden = !isIv;
   const plotView = document.getElementById("plotView");
   if (plotView) plotView.hidden = !isPlot;
   if (isAbout) return;
+  if (isIv) { renderIntrinsic(); return; }
   if (isPlot) { renderPlot(); return; }
 
   let rows = [...state.data];
@@ -346,6 +404,177 @@ function render() {
   tbody.innerHTML = rows.map(row).join("");
   empty.hidden = rows.length > 0;
   syncHead();
+}
+
+// ==========================================================================
+// INTRINSIC TAB — anchored-multiple fair value vs market price
+// ==========================================================================
+
+// Colour the upside % cell: green = undervalued, red = overvalued, dim near 0.
+function upsideColor(u) {
+  if (u === null || u === undefined) return "var(--text-mut)";
+  if (u > 5) return "#34d399";     // undervalued — emerald
+  if (u < -5) return "#f87171";    // overvalued — red
+  return "#94a3b8";                // fairly valued — dim
+}
+
+// Build the sortable header row for the Intrinsic table once.
+function buildIvHead() {
+  const thead = document.getElementById("ivThead");
+  if (!thead) return;
+  thead.innerHTML = "<tr>" + IV_COLUMNS.map(c =>
+    `<th data-key="${c.key}" class="th-${c.align}${c.num ? " th-num" : ""}">` +
+    `<span class="th-lab">${c.label}</span><span class="th-arrow"></span></th>`
+  ).join("") + "</tr>";
+  thead.querySelectorAll("th").forEach(th => {
+    th.onclick = () => {
+      const k = th.dataset.key;
+      if (ivState.sortKey === k) {
+        ivState.sortDir *= -1;
+      } else {
+        ivState.sortKey = k;
+        const col = IV_COLUMNS.find(c => c.key === k);
+        ivState.sortDir = col && col.num ? -1 : 1;
+      }
+      renderIntrinsic();
+    };
+  });
+}
+
+// Verdict filter chips (All / Undervalued / Fairly valued / Overvalued / N/A).
+function buildIvVerdictChips() {
+  const wrap = document.getElementById("ivVerdictFilters");
+  if (!wrap) return;
+  const verdicts = ["ALL", "Undervalued", "Fairly valued", "Overvalued", "N/A"];
+  wrap.innerHTML = "";
+  verdicts.forEach(v => {
+    const b = document.createElement("button");
+    b.className = "chip" + (v === ivState.verdict ? " chip-on" : "");
+    b.textContent = v === "ALL" ? "All verdicts" : v;
+    b.dataset.verdict = v;
+    b.onclick = () => {
+      ivState.verdict = v;
+      wrap.querySelectorAll(".chip").forEach(c =>
+        c.classList.toggle("chip-on", c.dataset.verdict === ivState.verdict));
+      renderIntrinsic();
+    };
+    wrap.appendChild(b);
+  });
+}
+
+function wireIvControls() {
+  const search = document.getElementById("ivSearch");
+  if (search) search.oninput = e => {
+    ivState.q = e.target.value.trim().toUpperCase();
+    renderIntrinsic();
+  };
+}
+
+// Summary stat bar for the Intrinsic tab.
+function buildIvStats() {
+  const bar = document.getElementById("ivStatBar");
+  if (!bar) return;
+  const valued = IV_DATA.filter(r => r.eligible && r.upside_pct !== null);
+  const under = valued.filter(r => r.upside_pct > 5).length;
+  const over = valued.filter(r => r.upside_pct < -5).length;
+  const fair = valued.length - under - over;
+  const avg = valued.length
+    ? valued.reduce((s, r) => s + r.upside_pct, 0) / valued.length : 0;
+  const stats = [
+    ["Valued names", valued.length],
+    ["Undervalued", under],
+    ["Fairly valued", fair],
+    ["Overvalued", over],
+    ["Avg upside", (avg >= 0 ? "+" : "") + avg.toFixed(0) + "%"],
+  ];
+  bar.innerHTML = stats.map(([l, v]) =>
+    `<div class="stat"><div class="stat-val">${v}</div>` +
+    `<div class="stat-lab">${l}</div></div>`).join("");
+}
+
+function sortIvRows(rows) {
+  const k = ivState.sortKey, dir = ivState.sortDir;
+  const col = IV_COLUMNS.find(c => c.key === k);
+  const num = col && col.num;
+  return rows.sort((a, b) => {
+    let av = a[k], bv = b[k];
+    if (num) {
+      // Push null/N/A values to the bottom regardless of sort direction.
+      const an = av === null || av === undefined;
+      const bn = bv === null || bv === undefined;
+      if (an && bn) return 0;
+      if (an) return 1;
+      if (bn) return -1;
+      return (av - bv) * dir;
+    }
+    av = String(av ?? ""); bv = String(bv ?? "");
+    return av.localeCompare(bv) * dir;
+  });
+}
+
+// A single Intrinsic-table row.
+function ivRow(r) {
+  const money = x => (x === null || x === undefined)
+    ? '<span class="mut">—</span>' : `$${x.toFixed(2)}`;
+  const vc = VERDICT_CLASS[r.verdict] || "b-mut";
+  const up = r.upside_pct;
+  const upStr = (up === null || up === undefined)
+    ? '<span class="mut">—</span>'
+    : `<b>${up >= 0 ? "+" : ""}${up.toFixed(1)}%</b>`;
+  const pe = (r.fair_pe === null || r.fair_pe === undefined)
+    ? '<span class="mut">—</span>' : r.fair_pe.toFixed(1);
+
+  return `<tr>
+    <td class="td-tkr"><a href="https://finance.yahoo.com/quote/${r.ticker}" target="_blank" rel="noopener" title="${r.name || r.ticker}">${r.ticker}</a></td>
+    <td class="td-num">${money(r.price)}</td>
+    <td class="td-num">${money(r.intrinsic)}</td>
+    <td class="td-num" style="color:${upsideColor(up)}">${upStr}</td>
+    <td><span class="badge ${vc}">${r.verdict}</span></td>
+    <td class="td-num">${pe}</td>
+    <td class="td-num">${money(r.dcf_value)}</td>
+    <td class="td-num">${money(r.analyst_mean)}</td>
+  </tr>`;
+}
+
+// Reflect the active sort key/direction in the Intrinsic header arrows.
+function syncIvHead() {
+  document.querySelectorAll("#ivThead th").forEach(th => {
+    const on = th.dataset.key === ivState.sortKey;
+    th.classList.toggle("sorted", on);
+    const arrow = th.querySelector(".th-arrow");
+    arrow.textContent = on ? (ivState.sortDir === -1 ? "▼" : "▲") : "";
+  });
+}
+
+function renderIntrinsic() {
+  const tbody = document.getElementById("ivTbody");
+  const empty = document.getElementById("ivEmpty");
+  if (!tbody) return;
+
+  // No data loaded — show a friendly notice instead of an empty grid.
+  if (!IV_DATA.length) {
+    tbody.innerHTML =
+      '<tr><td colspan="8" class="empty">Could not load intrinsic.json. ' +
+      'Run <code>PORTFOLIO_USE=ai python3 scoring/export_intrinsic.py</code> first.</td></tr>';
+    if (empty) empty.hidden = true;
+    return;
+  }
+
+  buildIvStats();
+  document.getElementById("ivFootMeta").textContent = IV_META.generated_utc
+    ? `Generated ${IV_META.generated_utc} · ${IV_META.eligible}/${IV_META.count} valued · fair P/E cap ${IV_META.pe_ceiling}×`
+    : "";
+
+  let rows = [...IV_DATA];
+  if (ivState.verdict !== "ALL")
+    rows = rows.filter(r => r.verdict === ivState.verdict);
+  if (ivState.q)
+    rows = rows.filter(r => r.ticker.toUpperCase().includes(ivState.q));
+  rows = sortIvRows(rows);
+
+  tbody.innerHTML = rows.map(ivRow).join("");
+  if (empty) empty.hidden = rows.length > 0;
+  syncIvHead();
 }
 
 // ==========================================================================

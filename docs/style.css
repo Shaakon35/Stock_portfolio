@@ -333,6 +333,10 @@ a { color: var(--accent); text-decoration: none; }
 
 .empty { text-align: center; color: var(--text-mut); padding: 60px 0; font-size: 15px; }
 
+/* Intrinsic table: same look as the Stock table, fewer/narrower columns. */
+#ivTable { min-width: 720px; }
+#ivTable .td-conv b { font-size: 13px; }
+
 /* ---------- Footer ---------- */
 .foot {
   margin-top: 40px; padding-top: 20px;
