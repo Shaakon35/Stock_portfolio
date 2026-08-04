@@ -3285,6 +3285,50 @@ WATCHLIST = {
              "note": "Premium brand, high gross margin, strong ROIC. Screened "
                      "cheap after a de-rating (V 9.4). Monitor — apparel is "
                      "fashion-cyclical and US growth has matured."},
+
+    # --- Second hunt batch (2026-08, QC'd). Tags reflect the QC findings:
+    #     gold-royalty names are CYCLE (revenue tracks the metal, not durable
+    #     growth); the rest DCA. Notes carry each name's QC caveat verbatim. ---
+    "NDAQ": {"strategy": "dca", "pos": "Mid", "cagr": (7, 15),
+             "area": "Exchange + market data/tech (Nasdaq, US)",
+             "note": "QC: CLEAN — 100% coverage, real PEG, stable margins. "
+                     "Exchange + recurring data/tech revenue. Honestly-scored "
+                     "quality at a fair price (CONV ~7.4). One of the two most "
+                     "trustworthy finds of the batch."},
+    "VEEV": {"strategy": "dca", "pos": "Mid", "cagr": (10, 18),
+             "area": "Life-sciences cloud / vertical SaaS (Veeva, US)",
+             "note": "QC: CLEAN — 100% coverage, no flags. Near-monopoly vertical "
+                     "SaaS for pharma. Durable-growth compounder (CONV ~7.8). The "
+                     "other most trustworthy find of the batch."},
+    "GMAB": {"strategy": "dca", "pos": "Mid", "cagr": (6, 14),
+             "area": "Antibody therapeutics (Genmab, Denmark)",
+             "note": "QC: mostly clean (90% cov) but fwd_eps ~-33% (earnings "
+                     "expected to FALL) and no PEG, so the high V leans on a low "
+                     "P/S. Verify the EPS trajectory before trusting CONV ~7.5."},
+    "WPM":  {"strategy": "cycle", "pos": "Mid", "cagr": (5, 20),
+             "area": "Precious-metals streaming (Wheaton, Canada)",
+             "note": "QC: real capital-light model (85%+ gross, 65% net) BUT "
+                     "revenue tracks the GOLD PRICE, not durable growth (rev_hist "
+                     "goes negative in prior years; ttm is a rally spike). Tagged "
+                     "CYCLE, not dca — treat the score as commodity-cyclical."},
+    "ARGX": {"strategy": "catalyst", "pos": "Binary", "cagr": (-10, 40),
+             "area": "Immunology / FcRn antibodies (argenx, Belgium)",
+             "note": "QC: DO NOT TRUST THE SCORE. Biotech that JUST flipped "
+                     "profitable — margin_hist [37|-23|-159|-76], rev_hist off a "
+                     "tiny base (185%!), no PEG (P/S fallback). The high CONV ~8.3 "
+                     "is the base-effect / turnaround ILLUSION the engine warns "
+                     "about. Tagged catalyst; investigate, do not size on the number."},
+    "VRSN": {"strategy": "dca", "pos": "Mid", "cagr": (5, 11),
+             "area": ".com/.net domain registry (Verisign, US)",
+             "note": "QC: the HONEST one. Real monopoly (88% gross/50% net, full "
+                     "history) scored MID (CONV ~5.6) because it's fully/richly "
+                     "valued (+15% above 200DMA) and only grows ~6%. Correctly "
+                     "un-fooled — a great business is not a great BUY at this price."},
+    "MKTX": {"strategy": "dca", "pos": "Mid", "cagr": (6, 14),
+             "area": "Electronic bond trading (MarketAxess, US)",
+             "note": "QC: clean data, honest MID score (CONV ~5.5). PEG ~4 "
+                     "(expensive) + decelerating revenue. Correctly not exciting — "
+                     "quality franchise, unattractive entry."},
 }
 
 
