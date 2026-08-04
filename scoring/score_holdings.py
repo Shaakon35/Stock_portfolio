@@ -560,6 +560,124 @@ def _rev_consistency(f):
     return _band_inv(cv, _RC_TIGHT, _RC_LOOSE)
 
 
+# -------------------------------------------------------------------------
+# VALUATION CHEAPNESS — PEG (trough-damped) + ABSOLUTE P/S co-signal
+# -------------------------------------------------------------------------
+# The VAL layer and the 8-Point P6 point both answer "how much of the business
+# is already in the price?". Historically both were PEG-FIRST with a P/S-vs-
+# growth FALLBACK — i.e. when a PEG existed, P/S was never consulted. Two blind
+# spots followed, both visible on BESI.AS (Aug-2026 snapshot):
+#
+#   1. ABSOLUTE price ignored. PEG = P/E / growth, so a name at 22x SALES can
+#      still screen "cheap" purely because a big growth number shrinks its PEG.
+#      P/S never registered. FIX: blend an ABSOLUTE, growth-independent P/S term
+#      (_abs_ps_cheapness) in as a CO-SIGNAL alongside PEG, so a rich sales
+#      multiple always pulls VAL down even when the PEG looks generous.
+#
+#   2. TROUGH PEGs flatter cyclicals. A cyclical's forward EPS growth spikes off
+#      a depressed trough (BESI fwd EPS growth 161%), which mechanically crushes
+#      its PEG toward zero and screens it "dirt cheap" exactly when earnings are
+#      most depressed and the rebound is already consensus — the mirror image of
+#      the peak-PEG trap. FIX: DAMP the PEG's cheapness toward neutral when a
+#      CYCLICAL name's forward EPS growth is extreme (_trough_peg_damping),
+#      mirroring the base-effect damping already applied to the trend penalty.
+#
+# Both terms use columns ALREADY in every CSV row (ps_ratio, gross_margin, peg,
+# fwd_eps_growth) — no new sourcing, deterministic, auto-applies to all tickers.
+# _val_cheapness() is the single shared computation both P6 and VAL now call, so
+# they can never drift apart.
+
+# --- absolute P/S co-signal (margin-normalized) ---
+# Raw P/S is not comparable across business models: a 90%-gross software name
+# legitimately earns a higher sales multiple than a 40%-gross hardware name. So
+# the P/S is NORMALIZED by gross margin (a stable, through-cycle proxy for model
+# quality — NOT growth, which is the trough-inflated number that caused the bug)
+# before scoring. Bands are calibrated to the book's own distribution of the
+# normalized ratio: ~p25 -> cheap (1.0), ~p90 -> expensive (0.0).
+_ABSPS_GROSS_BASE = 50.0   # gross-margin baseline the P/S is normalized to
+_ABSPS_LO = 3.0            # margin-normalized P/S at/below this -> cheap (1.0)
+_ABSPS_HI = 20.0           # margin-normalized P/S at/above this -> expensive (0.0)
+
+
+def _abs_ps_cheapness(f):
+    """Absolute, growth-independent P/S cheapness 0..1 (1=cheap), or None when
+    P/S is absent. P/S is gross-margin-normalized so premium models are allowed
+    a higher multiple; the result is the co-signal that makes a rich SALES
+    multiple register in VAL even when the PEG looks cheap."""
+    ps = f.get("ps_ratio")
+    if ps is None or ps <= 0:
+        return None
+    gm = f.get("gross_margin")
+    if gm is not None and gm > 5:          # normalize by model quality
+        ps = ps / (gm / _ABSPS_GROSS_BASE)  # high-gross names earn a higher P/S
+    return _band_inv(ps, _ABSPS_LO, _ABSPS_HI)
+
+
+# --- trough-PEG damping (mirror of the trend base-effect damping) ---
+# A cyclical whose forward EPS growth is extreme is rebounding off a trough, so
+# its low PEG is fake-cheap. The damping pulls that PEG cheapness toward neutral,
+# fading from no-damping at _TROUGH_EPS_HOT to a floor as growth climbs
+# _TROUGH_EPS_FADE points beyond it. Applies to CYCLICALS only (a stable-growth
+# name at 100%+ EPS growth is a genuine hypergrower, not a trough rebound) and to
+# the DOWNWARD (cheapness-reducing) direction only, exactly like _decel_damping.
+_TROUGH_EPS_HOT = 100.0    # fwd EPS growth above this on a cyclical = trough snap
+_TROUGH_EPS_FADE = 100.0   # pts beyond _HOT over which damping reaches its floor
+_TROUGH_PEG_FLOOR = 0.2    # strongest damping: keep >=20% of the cheapness signal
+
+
+def _trough_peg_damping(t, f):
+    """0..1 multiplier applied to a cyclical's PEG cheapness (as pull-to-neutral
+    strength). 1.0 = no damping. Only cyclicals with extreme forward EPS growth
+    (a trough rebound) are damped; everything else is untouched."""
+    if t not in _CYCLICAL:
+        return 1.0
+    g = f.get("fwd_eps_growth")
+    if g is None or g <= _TROUGH_EPS_HOT:
+        return 1.0
+    frac = min(1.0, (g - _TROUGH_EPS_HOT) / _TROUGH_EPS_FADE)
+    return 1.0 - frac * (1.0 - _TROUGH_PEG_FLOOR)
+
+
+# cyclical multiples mislead at cycle extremes -> pull the whole cheapness score
+# toward neutral (the softening that was previously inline in P6 and VAL).
+_CYCLICAL_SOFTEN = 0.6
+_VAL_PEG_W = 1.6      # weight of the PEG/PS-vs-growth leg in cheapness
+_VAL_ABSPS_W = 1.0    # weight of the absolute margin-normalized P/S co-signal
+
+
+def _val_cheapness(t, f):
+    """Shared VAL/P6 cheapness 0..1 (1=cheap), or None when neither a PEG/PS-vs-
+    growth leg nor an absolute P/S leg is available. Combines:
+      * PEG-first (P/S-vs-growth fallback) leg, trough-damped for cyclicals, and
+      * an absolute, margin-normalized P/S co-signal (always consulted),
+    then softens the whole score toward neutral for cyclicals. This is the single
+    source of truth both the 8-Point P6 and the VAL layer call."""
+    peg = f.get("peg")
+    if peg is not None:
+        peg_leg = _band_inv(peg, 0.8, 3.5)
+        damp = _trough_peg_damping(t, f)      # trough rebound -> pull to neutral
+        if peg_leg is not None and damp < 1.0:
+            peg_leg = 0.5 + (peg_leg - 0.5) * damp
+    else:
+        # Fallback: price/sales judged against forward growth (crude PEG-on-sales).
+        ps = f.get("ps_ratio")
+        if ps is None:
+            peg_leg = None
+        else:
+            g = f.get("fwd_rev_growth")
+            denom = max(g, 10.0) if g is not None else 25.0
+            peg_leg = _band_inv(ps / (denom / 10.0), 1.0, 15.0)
+    abs_leg = _abs_ps_cheapness(f)            # absolute P/S co-signal
+    present = [(v, w) for v, w in ((peg_leg, _VAL_PEG_W), (abs_leg, _VAL_ABSPS_W))
+               if v is not None]
+    if not present:
+        return None                           # nothing to score -> let caller drop
+    cheap = sum(v * w for v, w in present) / sum(w for _, w in present)
+    if t in _CYCLICAL:
+        cheap = 0.5 + (cheap - 0.5) * _CYCLICAL_SOFTEN   # cycle-extreme softening
+    return cheap
+
+
 _MISSING_PENALTY = 0.15  # speculative bucket: a data gap IS a red flag
 
 
@@ -722,11 +840,16 @@ _LAYER_FOOTNOTE = (
     "  layers (0-10, higher=SAFER on that layer) decompose the score by the "
     "force that moves price:\n"
     "    F=FUND  business quality (net+gross margin+margin-trend+growth+rev-consistency+FCF)  wins the LONG run\n"
-    "    V=VAL   price vs the business (PEG/PS + extension) . mean-reverts (months)\n"
+    "    V=VAL   price vs the business (PEG + absolute P/S + extension) . mean-reverts (months)\n"
     "    C=CYC   cycle position + crowding (pos+neck+chart) .. drives the SHORT run / hype\n"
     "  bind = the BINDING (lowest) layer: the dominant risk you take buying here.\n"
     "  [PEAK?] = a cyclical/late name's low PEG is fake-cheap (peak earnings) on an\n"
-    "          extended chart — the SK Hynix / Micron trap. Treat its VAL as a warning."
+    "          extended chart — the SK Hynix / Micron trap. Treat its VAL as a warning.\n"
+    "  [MARG?] = an EARLY-cycle name whose net margin is COMPRESSING — tag and data\n"
+    "          disagree (thesis unwinding or stale tag). VAL now blends an ABSOLUTE,\n"
+    "          margin-normalized P/S so a rich SALES multiple registers even when the\n"
+    "          PEG looks cheap, and a cyclical's TROUGH-inflated PEG is damped toward\n"
+    "          neutral (mirror of the peak trap)."
 )
 
 
@@ -765,31 +888,14 @@ def score_8point(t, f, info):
     p4 = BOTTLENECK.get(t, 0.3)
     # P5 secular & early (cycle position).
     p5 = _CYCLE_P5.get(cycle_of(t, info), 0.5)
-    # P6 not priced for perfection. PEG first; when PEG is absent (loss-makers,
-    #    pre-revenue) fall back to P/S-vs-growth so valuation discipline still
-    #    applies instead of dropping the point. Cyclicals get a softer penalty
-    #    (snapshot multiples mislead at cycle extremes). NB: the EPS-surprise
-    #    factor is intentionally NOT applied here — it already lifts the growth
-    #    inputs (P3), and PEG embeds EPS, so correcting both double-counts a
-    #    single signal.
-    peg = f.get("peg")
-    if peg is not None:
-        p6 = _band_inv(peg, 0.8, 3.5)
-    else:
-        # Fallback: price/sales judged against forward growth. A high P/S is only
-        # "priced for perfection" if growth doesn't justify it, so scale the P/S
-        # bands by the growth rate (ps/growth ~ a crude PEG-on-sales). Returns
-        # None (point dropped/penalised by _blend) only when P/S is also absent.
-        ps = f.get("ps_ratio")
-        if ps is None:
-            p6 = None
-        else:
-            g = f.get("fwd_rev_growth")
-            denom = max(g, 10.0) if g is not None else 25.0
-            ps_to_growth = ps / (denom / 10.0)        # normalise: 10% growth -> raw P/S
-            p6 = _band_inv(ps_to_growth, 1.0, 15.0)   # cheap on sales -> high score
-    if p6 is not None and t in _CYCLICAL:
-        p6 = 0.5 + (p6 - 0.5) * 0.6                   # pull toward neutral
+    # P6 not priced for perfection. Shared cheapness (_val_cheapness): PEG-first
+    #    (trough-damped for cyclicals) BLENDED with an absolute margin-normalized
+    #    P/S co-signal, then softened toward neutral for cyclicals; falls back to
+    #    P/S-vs-growth when no PEG so valuation discipline still applies instead
+    #    of dropping the point. NB: the EPS-surprise factor is intentionally NOT
+    #    applied here — it already lifts the growth inputs (P3), and PEG embeds
+    #    EPS, so correcting both double-counts a single signal.
+    p6 = _val_cheapness(t, f)
     # P7 fresh catalyst.
     p7 = 1.0 if info["strategy"] == "catalyst" else (0.4 if info["strategy"] == "cycle" else 0.2)
     # P8 confirm trend / not extended: penalise far above 200dma; reward
@@ -908,22 +1014,13 @@ def layer_scores(t, f, info):
                        risk_penalize=spec)
 
     # --- VAL (Layer 2): how much of the business is already in the price -
-    #     Higher = cheaper / fairer. PEG first (P/S-vs-growth fallback), plus
-    #     distance above the 200DMA — extension IS paid-up optimism. Cyclical
-    #     PEG is softened toward neutral (the peak/trough trap; see peak_trap).
-    peg = f.get("peg")
-    if peg is not None:
-        v_peg = _band_inv(peg, 0.8, 3.5)
-    else:
-        ps = f.get("ps_ratio")
-        if ps is None:
-            v_peg = None
-        else:
-            g = f.get("fwd_rev_growth")
-            denom = max(g, 10.0) if g is not None else 25.0
-            v_peg = _band_inv(ps / (denom / 10.0), 1.0, 15.0)
-    if v_peg is not None and t in _CYCLICAL:
-        v_peg = 0.5 + (v_peg - 0.5) * 0.6
+    #     Higher = cheaper / fairer. Shared cheapness (_val_cheapness): PEG-first
+    #     (trough-damped for cyclicals) BLENDED with an absolute margin-normalized
+    #     P/S co-signal so a rich SALES multiple always registers (P/S-vs-growth
+    #     fallback when no PEG), softened toward neutral for cyclicals (the
+    #     peak/trough trap; see peak_trap). Plus distance above the 200DMA —
+    #     extension IS paid-up optimism.
+    v_peg = _val_cheapness(t, f)
     v_ext = _band_inv(f.get("pct_above_200dma"), 0, 80)
     val10, _ = _blend([(v_peg, 1.6), (v_ext, 1.0)], scale=10.0)
 
@@ -981,6 +1078,34 @@ def peak_trap(t, f, info):
     if peg <= _PEAK_LOW_PEG and ext >= _PEAK_LOW_EXT:
         return True
     return False
+
+
+# =========================================================================
+# 4d. MARGIN-vs-CYCLE CONFLICT — an "Early" cyclical with FALLING margins.
+# =========================================================================
+# A name tagged EARLY in its cycle should have margins rising off the trough. A
+# cyclical carrying an Early/Early-Mid tag while its net-margin trajectory is
+# COMPRESSING is internally contradictory: either the tag is stale or the "early"
+# thesis is already unwinding. BESI.AS is the case in point — tagged Early, yet
+# net margin fell 37.7 -> 33.3 -> 30.6 -> 30.0 over the window. Like peak_trap,
+# this ONLY annotates (adds a [MARG?] flag); it changes no score. It reuses the
+# margin-trajectory signal the engine already computes (_margin_trend) and the
+# cycle tag, so it needs no new data and applies uniformly to every ticker.
+_MARGIN_FLAG_MAX = 0.4   # _margin_trend at/below this = clearly compressing
+_MARGIN_FLAG_CYCLES = ("Early", "Early/Mid")   # tags that imply RISING margins
+
+
+def margin_flag(t, f, info):
+    """True when a name tagged EARLY in the cycle has a COMPRESSING net-margin
+    trajectory — the tag and the data disagree. Annotation only (no score
+    change); returns False when there is no margin history or the name is not
+    an early-cycle cyclical."""
+    if t not in _CYCLICAL and cycle_of(t, info) not in _MARGIN_FLAG_CYCLES:
+        return False
+    if cycle_of(t, info) not in _MARGIN_FLAG_CYCLES:
+        return False
+    mt = _margin_trend(f)
+    return mt is not None and mt <= _MARGIN_FLAG_MAX
 
 
 # =========================================================================
@@ -1853,12 +1978,12 @@ def render_by_strategy(results, fund, args):
           f"{'QUALITY':>7s} {'RICHNESS':>8s} {'grade':9s} {'F':>4s} {'V':>4s} "
           f"{'C':>4s} {'bind':5s} {'data%':>5s}")
     for r, q10, rich, grade, dconv in dca_scored:
-        peak = " [PEAK?]" if r["peak"] else ""
+        flags = (" [PEAK?]" if r["peak"] else "") + (" [MARG?]" if r["marg"] else "")
         print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
               f"{dconv:5.2f} "
               f"{q10:7.1f} {rich:8.2f} {grade:9s} {_layer_cell(r['layers'])} "
               f"{_LAYER_ABBR[r['binding']]:5s} "
-              f"{_cov_cell(r['coverage'])}{peak}")
+              f"{_cov_cell(r['coverage'])}{flags}")
     for grade, desc in [("KEEP-DCA", "durable + reasonably priced -> keep buying"),
                         ("RICH", "quality intact but price extended -> slow buys"),
                         ("IMPAIRED", "business cracking -> pause / reduce")]:
@@ -1884,13 +2009,13 @@ def render_by_strategy(results, fund, args):
               f"{'GROWTH':>6s} {'8PT':>4s} {'quadrant':10s} {'F':>4s} {'V':>4s} "
               f"{'C':>4s} {'bind':5s} {'data%':>5s}")
         for r in grp:
-            peak = " [PEAK?]" if r["peak"] else ""
+            flags = (" [PEAK?]" if r["peak"] else "") + (" [MARG?]" if r["marg"] else "")
             print(f"   {r['ticker']:10s} {r['wave']:3s} {r['book_pct']:5.2f} "
                   f"{r['conviction']:5.2f} "
                   f"{r['growth10']:6.1f} {r['eight']:4.2f} {r['quad']:10s} "
                   f"{_layer_cell(r['layers'])} "
                   f"{_LAYER_ABBR[r['binding']]:5s} "
-                  f"{_cov_cell(r['coverage'])}{peak}")
+                  f"{_cov_cell(r['coverage'])}{flags}")
 
     print()
     print(_GROWTH_8PT_FOOTNOTE)
@@ -1917,6 +2042,7 @@ def build_results(csv_path):
         layers, binding = layer_scores(t, f, info)
         cov = _coverage(f)
         peak = peak_trap(t, f, info)
+        marg = margin_flag(t, f, info)
         conv = conviction(g10, eight, layers, layers[binding], peak, cov)
         q10, rich, _ = dca_quality(t, f)
         conv_dca = dca_conviction(q10, layers, layers[binding], rich, cov)
@@ -1928,7 +2054,8 @@ def build_results(csv_path):
                         "has_data": t in fund, "coverage": cov,
                         "conviction": conv, "conviction_dca": conv_dca,
                         "conviction_unified": conv_unified, "grade": grade,
-                        "layers": layers, "binding": binding, "peak": peak})
+                        "layers": layers, "binding": binding, "peak": peak,
+                        "marg": marg})
     results.sort(key=lambda r: -r["conviction_unified"])
     return results
 
@@ -1956,6 +2083,7 @@ def export_json(csv_path, out_path):
             "binding": _LAYER_KEY.get(r["binding"], r["binding"]),
             "coverage": round(r["coverage"] * 100),
             "peak": bool(r["peak"]),
+            "marg": bool(r["marg"]),
             "has_data": bool(r["has_data"]),
         })
     payload = {
@@ -2110,6 +2238,7 @@ def main():
         layers, binding = layer_scores(t, f, info)
         cov = _coverage(f)
         peak = peak_trap(t, f, info)
+        marg = margin_flag(t, f, info)
         conv = conviction(g10, eight, layers, layers[binding], peak, cov)
         # DCA names get the schedule-appropriate variant; the unified conviction
         # routes each name to the rubric that matches its job so a single column
@@ -2124,7 +2253,7 @@ def main():
                         "conviction_dca": conv_dca,
                         "conviction_unified": conv_unified,
                         "layers": layers, "binding": binding,
-                        "peak": peak})
+                        "peak": peak, "marg": marg})
 
     keyf = {"growth": lambda r: -r["growth10"],
             "eight": lambda r: -r["eight"],
@@ -2158,10 +2287,10 @@ def main():
                f"{r['eps_f']:5.2f}"
         if args.blend:
             line += f" {r['blend']:5.2f}"
-        peak = " [PEAK?]" if r["peak"] else ""
+        flags = (" [PEAK?]" if r["peak"] else "") + (" [MARG?]" if r["marg"] else "")
         line += f" {_layer_cell(r['layers'])} " \
                 f"{_LAYER_ABBR[r['binding']]:5s} " \
-                f"{_cov_cell(r['coverage'])}{peak}"
+                f"{_cov_cell(r['coverage'])}{flags}"
         print(line)
     print()
     print("  CONV column: a trailing 'd' marks a DCA name scored with the DCA "
