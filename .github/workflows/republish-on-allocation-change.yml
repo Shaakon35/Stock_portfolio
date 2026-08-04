@@ -1,0 +1,107 @@
+# Auto-republish the dashboard when an ALLOCATION changes.
+#
+# This is the "I edited a book %" path. Unlike refresh-data.yml (which re-sources
+# prices from stockanalysis.com weekly), this workflow does NO scraping: it just
+# re-runs the deterministic scorer against the committed CSV snapshot to
+# regenerate docs/conviction.json, runs the validation gate, and commits the
+# result so GitHub Pages republishes the site.
+#
+# So the loop for changing a weight is now just:
+#   1. edit a number in portfolio/AI_allocations.py
+#   2. commit & push to main
+#   3. this workflow regenerates + publishes the dashboard automatically
+#
+# Trigger: any push to main that touches the allocations module (or the scorer
+# itself). Skips its own generated-data commits via the commit-message guard so
+# it can never loop on itself.
+
+name: Republish on allocation change
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "portfolio/AI_allocations.py"
+      - "scoring/score_holdings.py"
+
+concurrency:
+  group: republish-dashboard
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  republish:
+    runs-on: ubuntu-latest
+    # Guard against self-trigger: this job commits the regenerated JSON, and that
+    # commit does NOT touch the watched paths, so it will not re-trigger. The
+    # extra message check is belt-and-suspenders in case of future path changes.
+    if: ${{ !contains(github.event.head_commit.message, '[skip republish]') }}
+    env:
+      PORTFOLIO_USE: ai
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The scorer is pure-stdlib + local modules — no pip install needed.
+
+      - name: Regenerate dashboard JSON from the committed snapshot
+        run: |
+          set -euo pipefail
+          # Auto-picks the newest scoring/fundamentals_*.csv. No scraping — the
+          # scores change only because the allocation weights changed.
+          python3 scoring/score_holdings.py --json docs/conviction.json
+
+      - name: Validation gate
+        run: |
+          set -euo pipefail
+          # 1. compiles
+          python3 -m py_compile scoring/score_holdings.py portfolio/AI_allocations.py
+          # 2. deterministic — two scoring runs must be byte-identical
+          python3 scoring/score_holdings.py --by-strategy --watchlist > /tmp/r1.txt 2>&1
+          python3 scoring/score_holdings.py --by-strategy --watchlist > /tmp/r2.txt 2>&1
+          diff /tmp/r1.txt /tmp/r2.txt
+          # 3. allocation + watchlist invariants + CSV<->WATCHLIST coverage
+          python3 -c "import portfolio.AI_allocations as m, scoring.score_holdings as S; \
+          assert m.verify_allocations() is None; assert m.validate_watchlist() == []; \
+          held=set().union(*[set(b.keys()) for _,b in m.ALL_BASKETS])|set(m.STRATEGY.keys()); \
+          csv=set(dict(S.load_fundamentals(S.default_csv())).keys()); \
+          miss=csv-set(m.WATCHLIST)-held; assert not miss, f'uncovered CSV tickers: {sorted(miss)}'; \
+          print('PASS')"
+
+      - name: Commit & push if changed
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/conviction.json
+          if git diff --cached --quiet; then
+            echo "conviction.json already up to date — nothing to publish."
+            exit 0
+          fi
+          printf 'Republish dashboard after allocation change [skip republish]\n\nCo-authored-by: Ona <no-reply@ona.com>\n' | git commit -F -
+          # Rebase-and-retry: main can advance while this runs. Our commit only
+          # rewrites the generated JSON, so on conflict our fresh version wins.
+          export GIT_EDITOR=true
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing on latest main and retrying."
+            git fetch origin main
+            if ! git rebase origin/main; then
+              echo "Rebase conflict on conviction.json — keeping our regenerated version."
+              git checkout --theirs docs/conviction.json 2>/dev/null || true
+              git add docs/conviction.json
+              git rebase --continue
+            fi
+          done
+          echo "::error::Failed to push after 5 attempts."
+          exit 1

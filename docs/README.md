@@ -19,22 +19,46 @@ step, no dependencies — just static files.
 
 ## Refreshing the data
 
-`conviction.json` is produced by the scorer. Regenerate it whenever the
-fundamentals CSV or the allocation changes:
+`conviction.json` is produced by the scorer. There are two automated paths and
+one manual fallback.
+
+### Changing an allocation weight (automatic)
+
+To change a holding's book %, just edit its number in
+`portfolio/AI_allocations.py` and push to `main`:
 
 ```bash
-PORTFOLIO_USE=ai python3 scoring/score_holdings.py --json
+# edit e.g. "TLN": 3.5 -> 3.0 in portfolio/AI_allocations.py
+git add portfolio/AI_allocations.py
+git commit -m "Trim TLN to 3.0%"
+git push
 ```
 
-This writes `docs/conviction.json` (pass a path to override, e.g.
-`--json docs/conviction.json`). The export reuses the exact same scoring loop as
-the CLI table, so the web numbers always match `--by-strategy --watchlist`.
+The **`republish-on-allocation-change`** workflow (`.github/workflows/`) fires on
+any push to `main` that touches `AI_allocations.py` (or the scorer). It
+regenerates `docs/conviction.json` from the committed CSV snapshot (no price
+scraping), runs the validation gate, and commits the result — so the site
+updates on its own within a minute or two. **You do not need to regenerate or
+commit the JSON yourself.**
 
-Commit the regenerated JSON to publish it:
+### Refreshing prices / fundamentals (automatic, weekly)
+
+The **`refresh-data`** workflow re-sources the fundamentals snapshot from
+stockanalysis.com (market caps, multiples, 200DMA distance, trailing series),
+re-scores, and republishes. It runs weekly (Mon 06:00 UTC) and on the manual
+"Run workflow" button in the Actions tab.
+
+### Manual regeneration (fallback)
+
+If you ever need to regenerate locally (e.g. testing before a push):
 
 ```bash
+PORTFOLIO_USE=ai python3 scoring/score_holdings.py --json docs/conviction.json
 git add docs/conviction.json && git commit -m "Refresh conviction data" && git push
 ```
+
+The export reuses the exact same scoring loop as the CLI table, so the web
+numbers always match `--by-strategy --watchlist`.
 
 ## Viewing locally
 
