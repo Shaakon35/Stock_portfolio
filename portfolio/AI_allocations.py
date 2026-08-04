@@ -2993,6 +2993,192 @@ WATCHLIST = {
              "area": "Insurer (QBE) — Australia",
              "note": "Global P&C insurer; rate-cycle + cat risk. Cyclical-value."},
 
+    # =====================================================================
+    # WORLD TOP-MARKETS BATCH (added 2026-08-04) — 41 large-caps filling the
+    # gaps for the world's #2..#20 stock markets by total cap that were thin
+    # or absent above: China (mainland + HK + ADRs), Germany (Xetra),
+    # Netherlands (Amsterdam), Taiwan (TWSE), Spain (BME), Brazil (ADRs),
+    # Sweden (Stockholm), South Africa (JSE), Saudi Arabia (Tadawul), plus
+    # Korea depth. Watch-only monitors OUTSIDE the wave baskets (no weight
+    # effect); sourced into the fundamentals CSV via --sync-csv. Mature
+    # blue-chips -> dca (quality compounders) or cycle (banks/energy/miners/
+    # autos/industrials); none are catalyst/lottery. De-duplicated against the
+    # names already present above (e.g. Alibaba is 9988.HK, ASML/SAP/Adyen
+    # already listed, so their ADRs are intentionally omitted).
+    # =====================================================================
+    # --- China (US-listed ADRs) ---
+    "BABA": {"strategy": "cycle", "pos": "Mid", "cagr": (2, 15),
+             "area": "E-commerce/cloud (Alibaba ADR) — China",
+             "note": "Taobao/Tmall + Alibaba Cloud; AI-cloud reaccel vs China-macro "
+                     "+ ADR/regulatory risk. Also trades as 9988.HK. Cyclical-value."},
+    "JD": {"strategy": "cycle", "pos": "Mid", "cagr": (2, 12),
+             "area": "E-commerce/logistics (JD.com ADR) — China",
+             "note": "Self-op retail + logistics; thin-margin, China-consumer "
+                     "cyclical. ADR/regulatory risk. Cyclical-value."},
+    "BIDU": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 12),
+             "area": "Search/AI/cloud (Baidu ADR) — China",
+             "note": "Search + Ernie LLM + Apollo autonomous; AI optionality vs "
+                     "ad-cycle + ADR risk. Cyclical-value."},
+    "NTES": {"strategy": "dca", "pos": "Mid", "cagr": (4, 12),
+             "area": "Games (NetEase ADR) — China",
+             "note": "PC/mobile games portfolio; cash-rich, high-margin. Hit-cycle "
+                     "but quality. DCA-grade (China/ADR risk noted)."},
+    "LI": {"strategy": "cycle", "pos": "Early", "cagr": (5, 25),
+             "area": "EV maker (Li Auto ADR) — China",
+             "note": "EREV/EV SUVs; profitable among China EV pack but price-war "
+                     "cyclical + ADR risk. Cyclical growth."},
+    "TCOM": {"strategy": "cycle", "pos": "Mid", "cagr": (8, 18),
+             "area": "Online travel (Trip.com ADR) — China",
+             "note": "China + outbound travel-recovery leader; consumer-cyclical + "
+                     "ADR risk. Cyclical growth."},
+    "YUMC": {"strategy": "dca", "pos": "Mid", "cagr": (6, 12),
+             "area": "Restaurants (Yum China ADR) — KFC/Pizza Hut China",
+             "note": "KFC/Pizza Hut China operator; store-count compounder, "
+                     "cash-generative. DCA-grade (China/ADR risk noted)."},
+    # --- China / HK-native (.HK) ---
+    "3690.HK": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 20),
+             "area": "Local services/delivery (Meituan) — China",
+             "note": "Food delivery + local commerce super-app; margin vs "
+                     "competition, China-consumer cyclical. Cyclical growth."},
+    "1211.HK": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 25),
+             "area": "EV + batteries (BYD) — China",
+             "note": "World EV-volume leader + battery vertical integration; "
+                     "price-war cyclical. Cyclical growth."},
+    "2015.HK": {"strategy": "cycle", "pos": "Early", "cagr": (5, 25),
+             "area": "EV maker (Li Auto H-share) — China",
+             "note": "H-share line of Li Auto (also LI ADR); China EV price-war "
+                     "cyclical. Cyclical growth."},
+    # --- Germany (Xetra, .DE) ---
+    "ALV.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (4, 9),
+             "area": "Insurer/asset mgr (Allianz) — Germany",
+             "note": "Global insurer + PIMCO asset mgmt; rate/market-cyclical. "
+                     "Cyclical-quality."},
+    "DTE.DE": {"strategy": "dca", "pos": "Mid", "cagr": (3, 8),
+             "area": "Telecom (Deutsche Telekom) — Germany",
+             "note": "T-Mobile US stake + European telecom; steady cash. "
+                     "DCA-grade defensive."},
+    "IFX.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 15),
+             "area": "Semiconductors (Infineon) — Germany",
+             "note": "Auto + power/industrial chips; EV/electrification secular vs "
+                     "auto-inventory cycle. Cyclical growth."},
+    "MBG.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 8),
+             "area": "Autos (Mercedes-Benz) — Germany",
+             "note": "Premium autos; margin vs China + EV-transition cyclical. "
+                     "Cyclical-value."},
+    "BMW.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 8),
+             "area": "Autos (BMW) — Germany",
+             "note": "Premium autos; EV ramp vs auto-demand cycle. Cyclical-value."},
+    "RHM.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 25),
+             "area": "Defense (Rheinmetall) — Germany",
+             "note": "European rearmament leader; multi-year defense-capex backlog. "
+                     "Cyclical growth."},
+    "MUV2.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (3, 9),
+             "area": "Reinsurance (Munich Re) — Germany",
+             "note": "Global reinsurer; rate-cycle + cat exposure. Cyclical-quality."},
+    "BAS.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 8),
+             "area": "Chemicals (BASF) — Germany",
+             "note": "Diversified chemicals; deep industrial/energy-cost cycle. "
+                     "Cyclical-value."},
+    # --- Netherlands (Amsterdam, .AS) ---
+    "ASM.AS": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 25),
+             "area": "Semicap/ALD (ASM International) — Netherlands",
+             "note": "Atomic-layer-deposition leader; rides the leading-edge "
+                     "chip-capex cycle. Cyclical growth."},
+    "PRX.AS": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 15),
+             "area": "Tech holding (Prosus) — Netherlands",
+             "note": "Tencent stake + global consumer-internet holding; NAV/market-"
+                     "cyclical + China exposure. Cyclical-value."},
+    "INGA.AS": {"strategy": "cycle", "pos": "Mid", "cagr": (2, 8),
+             "area": "Bank (ING) — Netherlands",
+             "note": "European retail/commercial lender; rate/credit-cycle. "
+                     "Cyclical-value."},
+    "HEIA.AS": {"strategy": "dca", "pos": "Mid", "cagr": (3, 8),
+             "area": "Brewer (Heineken) — Netherlands",
+             "note": "Global beer brand portfolio; defensive staple. DCA-grade."},
+    "WKL.AS": {"strategy": "dca", "pos": "Mid", "cagr": (5, 10),
+             "area": "Info services (Wolters Kluwer) — Netherlands",
+             "note": "Professional info + software subscriptions; recurring-revenue "
+                     "compounder. DCA-grade quality."},
+    # --- Taiwan (TWSE, .TW) ---
+    "2454.TW": {"strategy": "cycle", "pos": "Mid", "cagr": (8, 20),
+             "area": "Fabless SoC (MediaTek) — Taiwan",
+             "note": "Smartphone/edge-AI SoCs; rides handset + AI-edge cycle. "
+                     "Cyclical growth."},
+    "2317.TW": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 15),
+             "area": "Electronics contract mfg (Foxconn/Hon Hai) — Taiwan",
+             "note": "Apple assembler pivoting to AI-server ODM; thin-margin, "
+                     "capex/demand cyclical. Cyclical-value."},
+    # --- Spain (BME, .MC) ---
+    "ITX.MC": {"strategy": "dca", "pos": "Mid", "cagr": (5, 11),
+             "area": "Apparel retail (Inditex/Zara) — Spain",
+             "note": "Zara fast-fashion global compounder; high-margin, net-cash. "
+                     "DCA-grade quality."},
+    "IBE.MC": {"strategy": "dca", "pos": "Mid", "cagr": (4, 9),
+             "area": "Utility (Iberdrola) — Spain",
+             "note": "Regulated networks + renewables; rate-base growth. Defensive "
+                     "DCA-grade."},
+    "SAN": {"strategy": "cycle", "pos": "Mid", "cagr": (2, 9),
+             "area": "Bank (Banco Santander ADR) — Spain",
+             "note": "Euro + LatAm retail lender; rate/credit-cycle + FX. "
+                     "Cyclical-value."},
+    "BBVA": {"strategy": "cycle", "pos": "Mid", "cagr": (2, 9),
+             "area": "Bank (BBVA ADR) — Spain",
+             "note": "Spain + Mexico/LatAm lender; rate/EM-credit cycle. "
+                     "Cyclical-value."},
+    # --- Brazil (US-listed ADRs) ---
+    "VALE": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 12),
+             "area": "Iron ore/nickel miner (Vale ADR) — Brazil",
+             "note": "Iron ore + base metals; deep China-demand commodity cycle. "
+                     "Buy dips, trim peak."},
+    "ITUB": {"strategy": "cycle", "pos": "Mid", "cagr": (3, 10),
+             "area": "Bank (Itaú Unibanco ADR) — Brazil",
+             "note": "Largest LatAm private bank; Brazil rate/credit cycle + FX. "
+                     "Cyclical-value."},
+    "PBR": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 10),
+             "area": "Integrated oil (Petrobras ADR) — Brazil",
+             "note": "State-influenced oil major; high yield, commodity + policy "
+                     "cyclical. Cyclical-value."},
+    "ABEV": {"strategy": "dca", "pos": "Mid", "cagr": (2, 7),
+             "area": "Brewer (Ambev ADR) — Brazil",
+             "note": "AB InBev LatAm brewer; defensive staple + FX. DCA-grade."},
+    # --- Sweden (Stockholm, .ST) ---
+    "SAND.ST": {"strategy": "cycle", "pos": "Mid", "cagr": (4, 10),
+             "area": "Mining/cutting tools (Sandvik) — Sweden",
+             "note": "Mining equipment + tooling; industrial + mining-capex cycle. "
+                     "Cyclical-quality."},
+    # --- Sweden (US-listed ADR) ---
+    "ERIC": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 8),
+             "area": "Telecom equipment (Ericsson ADR) — Sweden",
+             "note": "5G RAN gear; carrier-capex cyclical, thin margins. "
+                     "Cyclical-value/turnaround."},
+    # --- South Africa (JSE, .JO) ---
+    "NPN.JO": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 15),
+             "area": "Tech holding (Naspers) — South Africa",
+             "note": "Tencent stake + Prosus parent; NAV/discount + China exposure. "
+                     "Cyclical-value."},
+    # --- Saudi Arabia (Tadawul, .SR) ---
+    "2222.SR": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 8),
+             "area": "Integrated oil (Saudi Aramco) — Saudi Arabia",
+             "note": "World's largest oil producer; high dividend, oil-price + OPEC "
+                     "policy cyclical. Cyclical-value."},
+    # --- Korea (KRX, .KS) — depth beyond Samsung/SK Hynix ---
+    "005380.KS": {"strategy": "cycle", "pos": "Mid", "cagr": (2, 8),
+             "area": "Autos (Hyundai Motor) — South Korea",
+             "note": "Global automaker; EV push vs auto-demand cycle + FX. "
+                     "Cyclical-value."},
+    "051910.KS": {"strategy": "cycle", "pos": "Mid", "cagr": (3, 12),
+             "area": "Chemicals/EV batteries (LG Chem) — South Korea",
+             "note": "Petrochemicals + LG Energy Solution battery stake; EV-battery "
+                     "+ chemical cycle. Cyclical growth."},
+    "035420.KS": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 15),
+             "area": "Internet/search (Naver) — South Korea",
+             "note": "Korea search + commerce + webtoon; ad-cycle + AI optionality. "
+                     "Cyclical growth."},
+    "000270.KS": {"strategy": "cycle", "pos": "Mid", "cagr": (2, 8),
+             "area": "Autos (Kia) — South Korea",
+             "note": "Hyundai-affiliate automaker; EV ramp vs auto cycle + FX. "
+                     "Cyclical-value."},
+
     # --- AI data-engineering (training-data prep for LLM labs) ---
     "INOD": {"strategy": "cycle", "pos": "Early", "cagr": (10, 30),
              "area": "AI data engineering (Innodata) — LLM training-data prep",

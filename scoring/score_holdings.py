@@ -1295,6 +1295,11 @@ _FIN_EXCH = {  # foreign listings use /quote/<exch>/<code>/financials/
     "TO": ("tsx", lambda code: code),       # Toronto: RY.TO -> tsx/RY
     "NS": ("nse", lambda code: code),       # India NSE: RELIANCE.NS -> nse/RELIANCE
     "AX": ("asx", lambda code: code),       # Australia ASX: BHP.AX -> asx/BHP
+    "TW": ("tpe", lambda code: code),       # Taiwan TWSE: 2330.TW -> tpe/2330
+    "MC": ("bme", lambda code: code),       # Spain BME (Madrid): ITX.MC -> bme/ITX
+    "ST": ("sto", lambda code: code),       # Sweden Stockholm: SAND.ST -> sto/SAND
+    "JO": ("jse", lambda code: code),       # South Africa JSE: NPN.JO -> jse/NPN
+    "SR": ("tadawul", lambda code: code),   # Saudi Tadawul: 2222.SR -> tadawul/2222
 }
 
 
@@ -1322,7 +1327,44 @@ def ttm_growth_for(ticker):
             html = r.read().decode("utf-8", "ignore")
     except Exception:
         return None, []
-    return _parse_series(html, "revenueGrowth")
+    ttm, hist = _parse_series(html, "revenueGrowth")
+    # FALLBACK (2026-08 site drift): stockanalysis.com's /financials/ page no
+    # longer embeds the pre-computed `revenueGrowth:[..]` array (only the raw
+    # `revenue:[..]` figures remain). When it is absent, derive the YoY series
+    # ourselves from the raw annual revenue array so newly-synced rows still get
+    # a trend baseline. Existing CSV rows are untouched (fill_ttm only rewrites
+    # the targeted names), so this changes no previously-stored value.
+    if ttm is None and not hist:
+        ttm, hist = _revenue_yoy(html)
+    return ttm, hist
+
+
+def _revenue_yoy(html):
+    """Derive (ttm_proxy, [FY YoY %]) from the raw annual `revenue:[..]` array on
+    a /financials/ page. The first `revenue:[..]` match is the income-statement
+    annual series, most-recent first. YoY_i = (r_i - r_{i+1}) / r_{i+1} * 100.
+    Returns (None, []) if the array is missing or too short. The most-recent FY
+    YoY doubles as the `ttm` single-year fallback baseline (see CSV schema note).
+    """
+    import re
+    m = re.search(r"(?<![\w])revenue:\[([-.0-9,]+)\]", html)
+    if not m:
+        return None, []
+    vals = []
+    for part in m.group(1).split(","):
+        v = _num(part.strip())
+        if v is not None:
+            vals.append(v)
+    if len(vals) < 2:
+        return None, []
+    yoy = []
+    for i in range(len(vals) - 1):
+        prev = vals[i + 1]
+        if prev:
+            yoy.append(round((vals[i] - prev) / abs(prev) * 100, 2))
+    if not yoy:
+        return None, []
+    return yoy[0], yoy
 
 
 def _parse_series(html, key):
@@ -1446,13 +1488,18 @@ _FX_PER_USD = {  # local currency units per 1 USD (divide local cap by this)
     "CAD": 1.37,    # Canada (.TO)
     "INR": 83.5,    # India (.NS)
     "AUD": 1.52,    # Australia (.AX)
+    "TWD": 32.5,    # Taiwan (.TW)
+    "SEK": 10.6,    # Sweden (.ST)
+    "ZAR": 18.2,    # South Africa (.JO)
+    "SAR": 3.75,    # Saudi Arabia (.SR) — riyal is USD-pegged at 3.75
 }
-_EUR_USD = 1.08     # USD per 1 EUR (.AS / .DE listings priced in EUR)
+_EUR_USD = 1.08     # USD per 1 EUR (.AS / .DE / .MC listings priced in EUR)
 
 # Map the CSV ticker suffix to the local currency of its market-cap figure.
 _SUFFIX_CCY = {
     "KS": "KRW", "HK": "HKD", "AS": "EUR", "DE": "EUR", "SW": "CHF",
     "L": "GBP", "T": "JPY", "PA": "EUR", "TO": "CAD", "NS": "INR", "AX": "AUD",
+    "TW": "TWD", "MC": "EUR", "ST": "SEK", "JO": "ZAR", "SR": "SAR",
 }
 
 
