@@ -195,7 +195,10 @@ function buildStats() {
   const held = state.data.filter(r => r.held);
   const avg = held.length
     ? (held.reduce((s, r) => s + r.conv, 0) / held.length) : 0;
-  const top = held.reduce((a, r) => r.conv > a.conv ? r : a, { conv: -1 });
+  // "Top" is the highest-conviction name across the WHOLE universe (held +
+  // watchlist), not just held — otherwise a watchlist leader like FICO is
+  // hidden behind the top held name.
+  const top = state.data.reduce((a, r) => r.conv > a.conv ? r : a, { conv: -1 });
   const book = held.reduce((s, r) => s + r.book_pct, 0);
   const stats = [
     ["Held names", held.length],
