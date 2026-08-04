@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=10" />
 </head>
 <body>
   <!-- ===== Top nav ===== -->
@@ -21,6 +21,7 @@
     </div>
     <nav class="nav-tabs" id="navTabs">
       <button class="tab tab-active" data-view="stock">Stock</button>
+      <button class="tab" data-view="intrinsic">Intrinsic</button>
       <button class="tab" data-view="plot">Plot</button>
       <button class="tab" data-view="about">About</button>
     </nav>
@@ -74,6 +75,120 @@
       </span>
     </footer>
    </div><!-- /#dashboardView -->
+
+    <!-- ===== Intrinsic view (fair-value table + formula) ===== -->
+    <div id="intrinsicView" hidden>
+      <!-- ===== Hero ===== -->
+      <section class="hero">
+        <span class="pill">ANCHORED-MULTIPLE FAIR VALUE</span>
+        <h1>What is each name actually worth?</h1>
+        <p class="hero-lede">
+          An AlphaSpread-style <strong>intrinsic value</strong> per share for
+          every name — forward earnings times a fair multiple anchored to the
+          stock's own forward P/E, capped so only the extreme optimists get
+          re-rated. Compared against today's market price to flag names trading
+          <strong>above</strong> or <strong>below</strong> their worth.
+        </p>
+      </section>
+
+      <!-- ===== Summary stats ===== -->
+      <section class="stats" id="ivStatBar"></section>
+
+      <!-- ===== Controls ===== -->
+      <section class="controls">
+        <input type="search" id="ivSearch" class="search" placeholder="Search ticker…" autocomplete="off" />
+        <div class="filters" id="ivVerdictFilters"></div>
+      </section>
+
+      <!-- ===== Data table ===== -->
+      <section class="tablewrap">
+        <table class="dt" id="ivTable">
+          <thead id="ivThead"></thead>
+          <tbody id="ivTbody"></tbody>
+        </table>
+        <p class="empty" id="ivEmpty" hidden>No names match your filters.</p>
+      </section>
+
+      <!-- ===== Formula explanation (below the table) ===== -->
+      <section class="about" style="margin-top:24px">
+        <h2 class="about-h">How the intrinsic value is computed</h2>
+        <p class="about-p">
+          The headline number is an <strong>anchored-multiple</strong> estimate:
+          each company is valued on its own forward earnings and its own forward
+          multiple, with only the extreme optimists compressed back toward a
+          ceiling. A cyclical semiconductor at 6&times; and a software name at
+          20&times; are therefore each valued on their own terms.
+        </p>
+        <div class="formula">
+          intrinsic = forward&nbsp;EPS &times; fair&nbsp;P/E
+        </div>
+        <div class="formula-sm">
+          fair_pe&nbsp;&nbsp;&nbsp;= min( own_forward_PE, 21 )&nbsp;&nbsp;&nbsp;# own_forward_PE = price / forward_EPS<br />
+          intrinsic = forward_EPS &times; fair_pe
+        </div>
+        <p class="about-p">
+          <strong>Why anchor to the stock's own multiple?</strong> The market
+          already prices each company's growth, quality and risk into its
+          multiple. Forcing a single "fair" P/E onto everyone would re-rate a
+          6&times; cyclical up to ~20&times; and hallucinate +100% upside.
+          Anchoring to the stock's own forward P/E and only
+          <strong>capping the extremes</strong> (names at 40&ndash;80&times;
+          forward earnings, back toward ~21&times;) tracks AlphaSpread's
+          intrinsic value with two parameters instead of an overfit target
+          multiple. Validated against eight anchors (CCJ, MSFT, NVDA, BESI.AS,
+          ALAB, TLN, TSM, MU): ~5pp mean upside error, direction-correct on all
+          eight.
+        </p>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="ac-tag ac-v">Upside &amp; verdict</div>
+            <p class="ac-desc">
+              <b>Upside %</b> = (intrinsic &minus; price) / price. A
+              <b>&plusmn;5%</b> band around fair value keeps the common case
+              honest:
+            </p>
+            <div class="formula-sm">
+              upside &gt; +5%&nbsp;&nbsp;&rarr; <b>Undervalued</b><br />
+              &minus;5% … +5%&nbsp;&rarr; <b>Fairly valued</b><br />
+              upside &lt; &minus;5%&nbsp;&rarr; <b>Overvalued</b>
+            </div>
+          </div>
+          <div class="about-card">
+            <div class="ac-tag ac-f">DCF (context only)</div>
+            <p class="ac-desc">
+              A 2-stage <b>discounted cash flow</b> on normalized (multi-year
+              average) free cash flow is computed and shown for context, but is
+              <b>not</b> blended into the headline value — forcing a target
+              multiple onto cyclicals via DCF re-rating produced large,
+              systematic overvaluation. Blank when a name has no positive FCF or
+              its financials are reported in a different currency than its price
+              (e.g. an ADR).
+            </p>
+          </div>
+        </div>
+
+        <p class="about-p about-foot-note">
+          <strong>Eligibility.</strong> A name is valued when it has either
+          positive forward/trailing EPS (the multiples leg) or positive free
+          cash flow (the DCF leg). Pre-revenue / cash-burning names with neither
+          are shown as <strong>N/A</strong>. The <strong>analyst</strong>
+          columns are the sell-side low / mean / high price targets, shown
+          alongside for reference — they are not part of the model. Not
+          investment advice.
+        </p>
+      </section>
+
+      <footer class="foot">
+        <span id="ivFootMeta"></span>
+        <span class="foot-note">
+          Intrinsic values are a periodic snapshot, refreshed by
+          <code>PORTFOLIO_USE=ai python3 scoring/export_intrinsic.py</code>.
+          Model lives in <code>portfolio/intrinsic.py</code>; see
+          <code>intrinsic.ipynb</code> for the full write-up.
+        </span>
+      </footer>
+    </div><!-- /#intrinsicView -->
 
     <!-- ===== Plot view (interactive multi-ticker price chart) ===== -->
     <div id="plotView" hidden>
@@ -260,6 +375,6 @@
     </div><!-- /#aboutView -->
   </main>
 
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>

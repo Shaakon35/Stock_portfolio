@@ -1308,6 +1308,32 @@ def _fin_url(ticker):
     return f"https://stockanalysis.com/stocks/{ticker.lower()}/financials/"
 
 
+_CSV_DATE_RE = __import__("re").compile(r"fundamentals_(\d{4}-\d{2}-\d{2})\.csv$")
+
+
+def _restamp_header_date(comments, csv_path):
+    """Return `comments` with the 'prices/close <Mon DD YYYY>' date rewritten to
+    match the snapshot's own filename date. The refresh workflow copies the
+    newest CSV to a new dated file and updates the numbers, but the leading
+    comment line kept a stale close date; this keeps the snapshot self-
+    describing. No-op if the filename carries no date or the line is absent.
+    """
+    import re
+    m = _CSV_DATE_RE.search(str(csv_path))
+    if not m:
+        return comments
+    try:
+        d = _dt.date.fromisoformat(m.group(1))
+    except ValueError:
+        return comments
+    stamp = d.strftime("%b %-d %Y")   # e.g. "Aug 3 2026"
+    out = []
+    for ln in comments:
+        out.append(re.sub(r"(prices/close )([A-Z][a-z]{2} \d{1,2} \d{4})",
+                          lambda mm: mm.group(1) + stamp, ln))
+    return out
+
+
 def ttm_growth_for(ticker):
     """Return (ttm, hist) for a ticker, or (None, []) on any failure.
     Parses financialData.revenueGrowth: index 0 is TTM YoY (the `ttm` scalar);
@@ -1407,6 +1433,7 @@ def fill_ttm(csv_path, tickers):
     # literally, flipping every line in the diff. Setting lineterminator="\n"
     # AND opening with newline="" (so Python does no extra translation) keeps
     # the file pure-LF, matching the hand-edited snapshot.
+    comments = _restamp_header_date(comments, csv_path)
     with open(csv_path, "w", newline="") as fh:
         fh.writelines(comments)
         w = csv.DictWriter(fh, fieldnames=header, lineterminator="\n")
@@ -1454,6 +1481,13 @@ _SUFFIX_CCY = {
     "KS": "KRW", "HK": "HKD", "AS": "EUR", "DE": "EUR", "SW": "CHF",
     "L": "GBP", "T": "JPY", "PA": "EUR", "TO": "CAD", "NS": "INR", "AX": "AUD",
 }
+
+# DMA200-GUARD: max plausible |price − 200DMA| / 200DMA, in %. A real chart is
+# at most a few hundred % above its 200-day average; a six-figure reading means
+# the feed served price and 200DMA in mismatched scales/units (seen on some KRX
+# names, e.g. 000660.KS). scrape_stats() rejects anything past this and leaves
+# the cell blank so the scorer drops the sub-point instead of clamping junk.
+_DMA200_SANE = 1000.0
 
 
 def _stats_url(ticker):
@@ -1616,7 +1650,18 @@ def scrape_stats(ticker):
     pct_200 = ""
     price = _quote_price(ticker)
     if price is not None and dma200:
-        pct_200 = f"{(price - dma200) / dma200 * 100:.1f}"
+        pct = (price - dma200) / dma200 * 100
+        # Sanity guard: some foreign feeds (e.g. KRX 000660.KS) serve the price
+        # and the 200DMA in mismatched scales/units, yielding an absurd distance
+        # (six-figure %). A real chart is at most a few hundred % above its
+        # 200DMA, so reject anything past _DMA200_SANE and leave the cell blank —
+        # _band() then drops the sub-point and redistributes its weight rather
+        # than clamping a junk value to the floor. See the DMA200-GUARD note.
+        if abs(pct) <= _DMA200_SANE:
+            pct_200 = f"{pct:.1f}"
+        else:
+            print(f"  [sync] {ticker}: 200DMA distance {pct:.0f}% implausible "
+                  f"(price/200DMA scale mismatch?) — leaving blank")
 
     # FCF sign from the financials page fcf[] array (index 0 = TTM/latest)
     fcf_pos = ""
@@ -1719,6 +1764,7 @@ def sync_csv(csv_path, wanted, overwrite=False):
                   f"(curated net_margin/eps_beat preserved)")
 
     # Force LF (same rationale as fill_ttm — avoid CRLF flipping the whole diff).
+    comments = _restamp_header_date(comments, csv_path)
     with open(csv_path, "w", newline="") as fh:
         fh.writelines(comments)
         w = csv.DictWriter(fh, fieldnames=header, lineterminator="\n")

@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-08-03 09:08 UTC",
+  "generated_utc": "2026-08-04 08:09 UTC",
   "csv": "fundamentals_2026-08-03.csv",
   "count": 457,
   "held_count": 40,
@@ -1265,6 +1265,22 @@
       "C": 5.9,
       "binding": "C",
       "coverage": 100,
+      "peak": false,
+      "has_data": true
+    },
+    {
+      "ticker": "000660.KS",
+      "wave": "W1",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "cycle",
+      "conv": 7.05,
+      "grade": "MOMENTUM",
+      "F": 8.6,
+      "V": 8.0,
+      "C": 3.5,
+      "binding": "C",
+      "coverage": 90,
       "peak": false,
       "has_data": true
     },
@@ -4306,22 +4322,6 @@
       "binding": "F",
       "coverage": 100,
       "peak": false,
-      "has_data": true
-    },
-    {
-      "ticker": "000660.KS",
-      "wave": "W1",
-      "held": false,
-      "book_pct": 0.0,
-      "strategy": "cycle",
-      "conv": 5.04,
-      "grade": "MOMENTUM",
-      "F": 8.6,
-      "V": 4.9,
-      "C": 2.5,
-      "binding": "C",
-      "coverage": 100,
-      "peak": true,
       "has_data": true
     },
     {
