@@ -1047,18 +1047,6 @@ WATCHLIST = {
         "note":     "Pre-revenue. Binary on first commercial reactor. One-and-done "
                     "catalyst bet — size tiny, NEVER average down.",
     },
-    "SRUUF": {
-        "pos":      "Binary",
-        "cagr":     (-5, 18),
-        "strategy": "cycle",
-        "area":     "Uranium commodity trust (Sprott Physical Uranium)",
-        "note":     "OFF-STRATEGY mechanically — a COMMODITY trust tracking U3O8 "
-                    "price, not an equity, so the CAGR band is a COMMODITY price "
-                    "scenario (symmetric, real negative low end), not an earnings "
-                    "forecast. Proxy for the nuclear thesis but behaves like the "
-                    "metal. Separate sleeve if at all.",
-    },
-
     # Quantum pile-on — one catalyst ticket (IONQ) is already held
     "RGTI": {
         "pos":      "Binary",
@@ -3251,6 +3239,52 @@ WATCHLIST = {
                      "(ROE -58%), severe dilution (+66% shares/yr), beta 3.08, "
                      "29% short. Lottery ticket on a defense-AI contract ramp — "
                      "binary outcome. Tiny size or skip; never average down."},
+
+    # --- Global quality-compounder monitors (2026-08 conviction hunt) ---
+    #     Sourced live from stockanalysis.com and scored via the DCA rubric; NOT
+    #     held, added so their conviction renders on the dashboard. Quality/growth
+    #     businesses (non-Binary) across several markets outside the AI-semi core.
+    "FICO": {"strategy": "dca", "pos": "Mid", "cagr": (12, 22),
+             "area": "Credit scoring / decision analytics (Fair Isaac, US)",
+             "note": "Credit-scoring near-monopoly: the FICO score is embedded in "
+                     "US lending. 34% net margin, high-quality recurring revenue, "
+                     "and screened CHEAP on valuation (V 9.6) — the rare elite "
+                     "business not priced for perfection. Top conviction of the hunt."},
+    "MSCI": {"strategy": "dca", "pos": "Mid", "cagr": (8, 16),
+             "area": "Index licensing / ESG+analytics (MSCI, US)",
+             "note": "Index-licensing toll-road (41% net margin). Recurring, "
+                     "price-inelastic fees on assets tracking its indices. "
+                     "Quality compounder; valuation full but not extreme."},
+    "SPGI": {"strategy": "dca", "pos": "Mid", "cagr": (7, 15),
+             "area": "Ratings + market data (S&P Global, US)",
+             "note": "Ratings duopoly (with MCO) + Market Intelligence data. "
+                     "31% net margin, wide moat. Great business at a fair-to-rich "
+                     "price — DCA-grade, not a deep-value entry."},
+    "SE":   {"strategy": "dca", "pos": "Early/Mid", "cagr": (12, 28),
+             "area": "SE-Asia e-commerce / gaming / fintech (Sea Ltd, Singapore)",
+             "note": "Shopee + Garena + SeaMoney across Southeast Asia. Turned "
+                     "profitable after the growth-at-all-costs era; screens cheap "
+                     "on valuation. Higher EM/execution risk — monitor, size small."},
+    "GLBE": {"strategy": "dca", "pos": "Early/Mid", "cagr": (18, 32),
+             "area": "Cross-border e-commerce enablement (Global-E, Israel)",
+             "note": "Picks-and-shovels for international D2C checkout (Shopify "
+                     "partner). High quality (Q 8.5), durable growth. Smaller-cap "
+                     "monitor — coverage ~80%, watch the trend series."},
+    "MNDY": {"strategy": "dca", "pos": "Early/Mid", "cagr": (18, 30),
+             "area": "Work-management SaaS (Monday.com, Israel)",
+             "note": "Horizontal work-OS SaaS, now GAAP-profitable with strong "
+                     "net retention. Durable-growth compounder screening cheap on "
+                     "valuation. Monitor — SaaS competition is fierce."},
+    "NTES": {"strategy": "dca", "pos": "Mid", "cagr": (8, 16),
+             "area": "Games / online services (NetEase, China)",
+             "note": "China's #2 games publisher (30% net margin), strong cash "
+                     "generation. Cheap on China discount. Monitor — ADR/VIE + "
+                     "China regulatory overhang; size accordingly."},
+    "LULU": {"strategy": "dca", "pos": "Mid", "cagr": (8, 16),
+             "area": "Premium athletic apparel (Lululemon, US/Canada)",
+             "note": "Premium brand, high gross margin, strong ROIC. Screened "
+                     "cheap after a de-rating (V 9.4). Monitor — apparel is "
+                     "fashion-cyclical and US growth has matured."},
 }
 
 

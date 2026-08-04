@@ -123,9 +123,16 @@ outside the numeric schema.)
   redistributed — score unchanged for that name).
 - `net_margin` — GAAP profit margin %, ttm. See operating-margin proxy rule.
 - `fcf_positive` — `1` if trailing FCF > 0 else `0`.
-- `peg` — blank if n/a. When blank, P6 falls back to `ps_ratio` vs growth.
-- `ps_ratio` — price/sales, ttm. Valuation fallback for P6 so loss-makers /
-  pre-revenue names (no PEG) still get a valuation score instead of neutral.
+- `peg` — blank if n/a. When blank, the cheapness leg falls back to `ps_ratio`
+  vs growth. On **cyclicals**, an extreme `fwd_eps_growth` (>100%) is treated as
+  a trough rebound and the PEG's cheapness is **damped toward neutral** — see the
+  VAL cheapness model note below.
+- `ps_ratio` — price/sales, ttm. **Two roles** (both in `_val_cheapness`): (1)
+  the growth-relative fallback when `peg` is absent, AND (2) an **absolute,
+  gross-margin-normalized P/S co-signal** that is *always* blended into the
+  cheapness score even when a PEG exists — so a rich SALES multiple (e.g. BESI
+  at ~22x) registers instead of being hidden by a low PEG. See the VAL cheapness
+  model note below.
 - `pct_above_200dma` — `(price − 200DMA) / 200DMA × 100`; compute from the real
   price and 200-day MA (do **not** cap; the scoring bands clamp internally).
   Blank for names too recently listed to have a 200DMA.
@@ -225,10 +232,41 @@ print('PASS')"
   the gate asserts the uncovered set is empty. A fresh batch of names is not done
   until each has a `WATCHLIST` entry (see §1 coverage invariant). Watchlist names
   *without* a CSV row are fine (the no-fundamentals monitors).
-- Also confirm no **unexpected** `data = -` rows remain in the output (only the
-  intentional no-fundamentals trusts like SRUUF should show `-`).
+- Also confirm no **unexpected** `data = -` rows remain in the output (only
+  intentional no-fundamentals names — a physical-commodity trust with no company
+  financials page — should show `-`).
 
 ### 7. Notes on interpreting results
+
+- **VAL cheapness model (`_val_cheapness` in `score_holdings.py`).** The VAL
+  layer and the 8-Point P6 share ONE cheapness computation so they can never
+  drift. It combines two legs, then softens the result for cyclicals:
+  1. **PEG-first leg** (P/S-vs-growth fallback when no PEG). On a **cyclical**,
+     an extreme `fwd_eps_growth` (>`_TROUGH_EPS_HOT`=100%) is a trough rebound
+     that mechanically crushes PEG toward zero, so `_trough_peg_damping` pulls
+     that PEG cheapness toward neutral (fades to a `_TROUGH_PEG_FLOOR`=0.2
+     multiplier by +`_TROUGH_EPS_FADE`=100pts). This mirrors the trend-term
+     base-effect damping; the DOWNSIDE (cheapness-reducing) direction only, and
+     never non-cyclicals (a stable name at 100%+ EPS growth is a real
+     hypergrower, not a trough).
+  2. **Absolute P/S co-signal** (`_abs_ps_cheapness`) — ALWAYS blended in (weight
+     `_VAL_ABSPS_W`=1.0 vs `_VAL_PEG_W`=1.6 for the PEG leg), so a rich SALES
+     multiple registers even when the PEG looks cheap. P/S is **normalized by
+     gross margin** (`_ABSPS_GROSS_BASE`=50) — a stable through-cycle proxy, NOT
+     growth — so a 90%-gross SaaS name is fairly allowed a higher multiple than a
+     40%-gross hardware name. Bands (`_ABSPS_LO`=3 → cheap, `_ABSPS_HI`=20 →
+     expensive) are calibrated to the book's own distribution of the normalized
+     ratio.
+  Cyclicals then get the whole score softened toward neutral (`_CYCLICAL_SOFTEN`
+  =0.6). Motivation: BESI screened VAL 8.8 / #1-conviction on a PEG of 0.54 that
+  existed only because of 161% trough-rebound EPS growth, while trading at ~22x
+  sales — the P/S co-signal + trough damping drop it to a realistic VAL ~7.0.
+- **`[MARG?]` flag (`margin_flag`).** Annotation only (changes no score, like
+  `[PEAK?]`). Fires when an **Early / Early-Mid** cycle name has a **compressing**
+  net-margin trajectory (`_margin_trend` ≤ `_MARGIN_FLAG_MAX`=0.4) — the cycle
+  tag and the margin data disagree (thesis unwinding or a stale tag). Reuses the
+  margin series already in the CSV, so it needs no new data. Shown in both
+  by-strategy tables, the main table, and `docs/conviction.json` (`marg` field).
 
 - **SMHV.SW is excluded** from scoring throughout (fixed windfall, semi index).
   Its **constituents** are surfaced via ETF look-through instead: each top-10

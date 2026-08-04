@@ -38,6 +38,7 @@ const GLOSSARY_CONV = [
   ["Data % (coverage)", "Share of obtainable fundamentals actually present for the name. Below 75% the score is scaled down (a GAP) and the cell turns red."],
   ["GAP", "Coverage < 75% — the score rests on thin data and should be trusted less."],
   ["PEAK?", "A cyclical whose low PEG is fake-cheap on peak-cycle earnings while the chart is extended (the memory/storage trap). Cuts cycle CONV ×0.85."],
+  ["MARG?", "An early-cycle name whose net margin is compressing — the cycle tag and the margin data disagree (thesis unwinding or a stale tag). Annotation only; treat its VAL with caution."],
   ["Held only", "Filter toggle: show just the names with a live position (Book % > 0), hiding watch-only candidates."],
   ["Wave (W1–W7)", "The AI-allocation basket: W1 Silicon, W2 Power, W3 DC-Infra, W4 Cloud, W5 Software, W6 Spec, W7 Diversify. ET = surfaced via ETF look-through."],
   ["Grade", "The strategy-aware verdict: PRIME / KEEP-DCA (buy), MOMENTUM / QUALITY (hold-ish), RICH (wait for a better price), AVOID / IMPAIRED (pass). N/A = no fundamentals page exists for the name (e.g. a physical-commodity trust), so it cannot be scored — not a negative verdict."],
