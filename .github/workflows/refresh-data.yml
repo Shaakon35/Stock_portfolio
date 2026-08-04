@@ -110,36 +110,6 @@ jobs:
             || { echo '::error::Plot history coverage below 80% — likely rate-limited. Keeping previous plot_history.json.'; rm -f docs/plot_history.new.json; exit 1; }
           mv docs/plot_history.new.json docs/plot_history.json
 
-      - name: Install yfinance (Intrinsic tab only)
-        run: |
-          set -euo pipefail
-          # The scorer is pure-stdlib, but the intrinsic-value model
-          # (portfolio/intrinsic.py) reads per-share fundamentals via yfinance.
-          # Its `.info` scalars (forwardEps, price, shares, beta) are correct on
-          # the runner even though the dev-container price feed is date-corrupted.
-          python3 -m pip install --quiet yfinance
-
-      - name: Refresh Intrinsic-tab fair values
-        run: |
-          set -euo pipefail
-          # Compute the anchored-multiple intrinsic value for every name in the
-          # freshly-regenerated conviction.json and write docs/intrinsic.json.
-          # Write to a temp file first so a rate-limited run can't clobber the
-          # committed intrinsic.json with a mostly-empty payload.
-          PORTFOLIO_USE=ai python3 scoring/export_intrinsic.py --out docs/intrinsic.new.json
-          # Guard: require at least 70% of names to be valued, else abort and
-          # keep the existing intrinsic.json. (Pre-revenue names are legitimately
-          # N/A, so the bar is a touch lower than the plot guard.)
-          python3 -c "import json,sys; \
-          new=json.load(open('docs/intrinsic.new.json')); \
-          conv=json.load(open('docs/conviction.json')); \
-          want=len({r['ticker'] for r in conv.get('records',[]) if r.get('ticker')}); \
-          got=new.get('eligible',0); ratio=got/want if want else 0; \
-          print(f'intrinsic coverage: {got}/{want} = {ratio:.0%}'); \
-          sys.exit(0 if ratio>=0.70 else 1)" \
-            || { echo '::error::Intrinsic coverage below 70% — likely rate-limited. Keeping previous intrinsic.json.'; rm -f docs/intrinsic.new.json; exit 1; }
-          mv docs/intrinsic.new.json docs/intrinsic.json
-
       - name: Validation gate
         run: |
           set -euo pipefail
@@ -162,7 +132,7 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scoring/fundamentals_*.csv docs/conviction.json docs/plot_history.json docs/intrinsic.json
+          git add scoring/fundamentals_*.csv docs/conviction.json docs/plot_history.json
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0
