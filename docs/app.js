@@ -203,7 +203,7 @@ function buildStats() {
   const stats = [
     ["Held names", held.length],
     ["Avg conviction", avg.toFixed(2)],
-    ["Top", top.ticker ? `${top.ticker} ${top.conv.toFixed(1)}` : "—"],
+    ["Top", top.ticker ? `${top.ticker} ${top.conv.toFixed(2)}` : "—"],
     ["Book covered", book.toFixed(0) + "%"],
     ["Total names", state.data.length],
   ];
