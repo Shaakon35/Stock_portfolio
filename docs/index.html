@@ -85,7 +85,9 @@
           Lines are <strong>rebased to % change</strong> from the start of the
           chosen window, so names at very different price levels compare
           directly. Click a <strong>chart icon</strong> in the Stock table to
-          jump here with that name selected.
+          jump here with that name selected. Select a
+          <strong>single ticker</strong> to shade its
+          <strong>buy zone</strong> — the accumulation band to buy into.
         </p>
       </section>
 
@@ -126,7 +128,8 @@
         <span class="foot-note">
           Price history is a periodic snapshot (weekly closes, ~5 years),
           refreshed by <code>python3 scoring/export_plot_history.py</code>.
-          Rebased to % change from each window's start.
+          Rebased to % change from each window's start. Buy zones from
+          <code>scoring/export_buy_zones.py</code>.
         </span>
       </footer>
     </div><!-- /#plotView -->

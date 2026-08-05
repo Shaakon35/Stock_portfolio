@@ -13,8 +13,10 @@ step, no dependencies — just static files.
 |---|---|
 | `index.html` | Page shell (nav, hero, stat bar, table container, About tab) |
 | `style.css` | Dark theme, data table, badges, inline F/V/C bars |
-| `app.js` | Loads `conviction.json`, renders + filters + sorts the table; also holds the About-tab glossary |
+| `app.js` | Loads `conviction.json`, renders + filters + sorts the table; draws the Plot tab (price overlay + buy-zone band); also holds the About-tab glossary |
 | `conviction.json` | **Generated data** — one record per scored name |
+| `plot_history.json` | **Generated data** — weekly price history for the Plot tab |
+| `buy_zones.json` | **Generated data** — buy zone (accumulation band) per held single stock |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is |
 
 ## Refreshing the data
@@ -60,6 +62,29 @@ git add docs/conviction.json && git commit -m "Refresh conviction data" && git p
 The export reuses the exact same scoring loop as the CLI table, so the web
 numbers always match `--by-strategy --watchlist`.
 
+### Refreshing buy zones (Plot tab)
+
+The Plot tab shades a **buy zone** — the price band to accumulate into — when a
+**single** ticker is selected. Zones come from `docs/buy_zones.json`, which is
+regenerated (no live feed — it reads the committed `plot_history.json`) by:
+
+```bash
+PORTFOLIO_USE=ai python3 scoring/export_buy_zones.py
+git add docs/buy_zones.json && git commit -m "Refresh buy zones" && git push
+```
+
+Two sources of truth (see `portfolio/buy_zones.py`):
+
+- **Manual zones** — hand-set bands in `MANUAL_ZONES` (currently ORCL 120–140,
+  NOW 70–110, FICO 950–1100). These always win. **To change a zone, edit that
+  dict** and re-run the exporter.
+- **Auto zones** — for every other held single, the nearest confirmed support
+  shelf (a low retested ≥ 2× in the recent regime). Names that ran without
+  retesting a shelf get **no zone** (nothing is shaded) — by design.
+
+New book names need a price series in `plot_history.json` before a zone can be
+drawn; run `scoring/export_plot_history.py` first if a name is missing.
+
 ## Viewing locally
 
 ```bash
@@ -98,3 +123,12 @@ re-run the `--json` command above and push.
 
 Click any column header to sort by it (click again to reverse). Use the wave
 chips and the **Held only** checkbox to filter, or the search box for a ticker.
+
+## Plot tab — price history + buy zones
+
+Overlay any names' price paths, rebased to % change from the window's start so
+different price levels compare directly. Select a **single** ticker to shade its
+**buy zone** (green band) — the accumulation range to buy into. The absolute
+band is converted to % of the chosen window's base and the y-axis widens so the
+band is always visible. Manual zones show the raw range; auto-derived zones are
+tagged `(auto)`. Refresh via `scoring/export_buy_zones.py` (see above).

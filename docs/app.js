@@ -86,6 +86,11 @@ const state = {
 // { ticker: { t: [ISO dates], c: [closes] } }. Empty until loaded.
 let PLOT_HISTORY = {};
 
+// Buy zones (accumulation bands) loaded from buy_zones.json:
+// { ticker: { low, high, source, note } }. Absolute prices; shaded on the Plot
+// tab only when a SINGLE ticker is selected. Empty until loaded.
+let BUY_ZONES = {};
+
 // Plot-tab UI state. Series are rebased to % change so different price levels
 // compare directly; the range picks the trailing window (default 5y).
 const plotState = {
@@ -134,6 +139,16 @@ async function boot() {
     PLOT_HISTORY = ppayload.history || {};
   } catch (e) {
     PLOT_HISTORY = {};
+  }
+
+  // Buy zones for the Plot tab. Optional: if it fails to load the chart still
+  // works, just without the shaded accumulation band.
+  try {
+    const zres = await fetch("buy_zones.json", { cache: "no-store" });
+    const zpayload = await zres.json();
+    BUY_ZONES = zpayload.zones || {};
+  } catch (e) {
+    BUY_ZONES = {};
   }
 
   // Default the Plot tab to every held name that has price history, so the
@@ -586,6 +601,28 @@ function drawPlot() {
     series.push({ ticker: tk, pct, color: PLOT_COLORS[i % PLOT_COLORS.length] });
   });
   if (!isFinite(gmin)) return;
+
+  // Buy zone: only shown when EXACTLY ONE ticker is selected (a band is an
+  // absolute price range, meaningless overlaid across rebased multi-name %).
+  // Convert the absolute low/high to % of THIS series' window base (matching
+  // the chart's rebase) and widen the axis so the band is always visible.
+  let bandPct = null;
+  if (sel.length === 1) {
+    const tk = sel[0];
+    const z = BUY_ZONES[tk];
+    if (z && isFinite(z.low) && isFinite(z.high)) {
+      const base = plotWindow(PLOT_HISTORY[tk]).c[0];
+      if (base) {
+        const lo = (z.low / base - 1) * 100;
+        const hi = (z.high / base - 1) * 100;
+        bandPct = { lo: Math.min(lo, hi), hi: Math.max(lo, hi),
+                    source: z.source, low: z.low, high: z.high };
+        if (bandPct.lo < gmin) gmin = bandPct.lo;
+        if (bandPct.hi > gmax) gmax = bandPct.hi;
+      }
+    }
+  }
+
   if (gmin === gmax) { gmin -= 1; gmax += 1; }
 
   // Snap the axis to a "nice" round step (1/2/5 × 10ⁿ, min 10%) so gridlines
@@ -597,6 +634,28 @@ function drawPlot() {
 
   const xOf = (i, n) => padL + (n <= 1 ? 0 : (i / (n - 1)) * (W - padL - padR));
   const yOf = v => padT + (1 - (v - gmin) / (gmax - gmin)) * (H - padT - padB);
+
+  // Buy-zone shaded band (drawn FIRST so gridlines + the price line sit on top).
+  // Green rectangle spanning the full plot width between the low/high % levels,
+  // with a subtle top/bottom edge and a corner label naming the price range.
+  if (bandPct) {
+    const yHi = yOf(bandPct.hi);      // top edge (higher price = higher on chart)
+    const yLo = yOf(bandPct.lo);      // bottom edge
+    const bx = padL, bw = W - padL - padR;
+    svg.appendChild(mk("rect", { x: bx, y: yHi, width: bw,
+      height: Math.max(yLo - yHi, 1), fill: "#34d399", "fill-opacity": "0.12" }));
+    svg.appendChild(mk("line", { x1: bx, x2: bx + bw, y1: yHi, y2: yHi,
+      stroke: "#34d399", "stroke-width": 1, "stroke-opacity": "0.55" }));
+    svg.appendChild(mk("line", { x1: bx, x2: bx + bw, y1: yLo, y2: yLo,
+      stroke: "#34d399", "stroke-width": 1, "stroke-opacity": "0.55" }));
+    const lbl = mk("text", { x: bx + bw - 6, y: yHi + 14, "text-anchor": "end",
+      fill: "#34d399", "font-size": "11", "font-weight": "600" });
+    const fmt = v => v >= 1000 ? v.toLocaleString("en-US", { maximumFractionDigits: 0 })
+                               : (v >= 100 ? Math.round(v) : v);
+    lbl.textContent = `BUY ZONE ${fmt(bandPct.low)}–${fmt(bandPct.high)}` +
+      (bandPct.source === "manual" ? "" : " (auto)");
+    svg.appendChild(lbl);
+  }
 
   // Horizontal gridlines + % axis labels at each nice step (0% line emphasised).
   for (let val = gmin; val <= gmax + step * 1e-6; val += step) {
