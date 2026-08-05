@@ -42,6 +42,12 @@ _CHART_URL = ("https://query1.finance.yahoo.com/v8/finance/chart/"
 # A browser UA is required — the endpoint 429s bare/script agents.
 _HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; plot-history-exporter)"}
 
+# Conviction ticker -> Yahoo chart symbol, for names whose feed symbol differs
+# from the ticker used in the scorer/watchlist. Zomato relisted as "ETERNAL" on
+# the NSE, so its conviction-side "ZOMATO.NS" key must be fetched via
+# "ETERNAL.NS" (the old symbol 404s on the chart endpoint).
+_YAHOO_ALIASES = {"ZOMATO.NS": "ETERNAL.NS"}
+
 
 def _tickers_from_conviction(path):
     """Ticker universe = every record in conviction.json (deduped, ordered)."""
@@ -58,7 +64,8 @@ def _tickers_from_conviction(path):
 def _fetch_history(ticker, rng, interval, retries=3, delay=1.0):
     """(dates, closes) parallel lists for a ticker, or ([], []) on failure.
     Rows with a null close (holiday gaps) are dropped so the series is clean."""
-    url = _CHART_URL.format(ticker=ticker, range=rng, interval=interval)
+    symbol = _YAHOO_ALIASES.get(ticker, ticker)
+    url = _CHART_URL.format(ticker=symbol, range=rng, interval=interval)
     for attempt in range(retries):
         try:
             req = urllib.request.Request(url, headers=_HEADERS)
