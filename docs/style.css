@@ -532,14 +532,20 @@ a { color: var(--accent); text-decoration: none; }
   background: var(--panel); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 16px;
 }
-.plot-ranges { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.plot-range-btn {
+/* Range picker + y-axis mode toggle on one row (mode toggle pushed right). */
+.plot-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+}
+.plot-ranges { display: flex; gap: 6px; flex-wrap: wrap; }
+.plot-modes { display: flex; gap: 6px; flex-wrap: wrap; }
+.plot-range-btn, .plot-mode-btn {
   background: transparent; border: 1px solid var(--border-hi);
   color: var(--text-dim); font: inherit; font-size: 12.5px; font-weight: 600;
   padding: 6px 13px; border-radius: 8px; cursor: pointer; transition: .15s;
 }
-.plot-range-btn:hover { color: var(--text); background: var(--panel-hi); }
-.plot-range-on {
+.plot-range-btn:hover, .plot-mode-btn:hover { color: var(--text); background: var(--panel-hi); }
+.plot-range-on, .plot-mode-on {
   color: #04140d; border-color: transparent;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
 }
@@ -563,6 +569,7 @@ a { color: var(--accent); text-decoration: none; }
   font-size: 12.5px; color: var(--text-dim);
 }
 .plot-legend-chip b { color: var(--text); }
+.plot-legend-price { color: var(--text); font-variant-numeric: tabular-nums; }
 .plot-swatch {
   flex: 0 0 auto;
   width: 12px; height: 12px; border-radius: 3px; display: inline-block;
