@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-08-05 06:49 UTC",
+  "generated_utc": "2026-08-05 07:28 UTC",
   "csv": "fundamentals_2026-08-04.csv",
-  "count": 626,
+  "count": 628,
   "held_count": 41,
   "records": [
     {
@@ -1632,6 +1632,23 @@
       "C": 5.9,
       "binding": "F",
       "coverage": 100,
+      "peak": false,
+      "marg": false,
+      "has_data": true
+    },
+    {
+      "ticker": "CLOV",
+      "wave": "WL",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "cycle",
+      "conv": 6.9,
+      "grade": "PRIME",
+      "F": 6.2,
+      "V": 7.8,
+      "C": 4.6,
+      "binding": "C",
+      "coverage": 90,
       "peak": false,
       "marg": false,
       "has_data": true
@@ -4102,6 +4119,23 @@
       "has_data": true
     },
     {
+      "ticker": "ZETA",
+      "wave": "WL",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "cycle",
+      "conv": 5.83,
+      "grade": "QUALITY",
+      "F": 5.8,
+      "V": 9.0,
+      "C": 5.3,
+      "binding": "C",
+      "coverage": 100,
+      "peak": false,
+      "marg": false,
+      "has_data": true
+    },
+    {
       "ticker": "TITAN.NS",
       "wave": "WL",
       "held": false,
@@ -4646,6 +4680,23 @@
       "has_data": true
     },
     {
+      "ticker": "UNH",
+      "wave": "WL",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "dca",
+      "conv": 5.63,
+      "grade": "KEEP-DCA",
+      "F": 4.4,
+      "V": 8.0,
+      "C": 5.3,
+      "binding": "F",
+      "coverage": 100,
+      "peak": false,
+      "marg": false,
+      "has_data": true
+    },
+    {
       "ticker": "NXPI",
       "wave": "WL",
       "held": false,
@@ -4964,23 +5015,6 @@
       "C": 5.7,
       "binding": "F",
       "coverage": 90,
-      "peak": false,
-      "marg": false,
-      "has_data": true
-    },
-    {
-      "ticker": "UNH",
-      "wave": "WL",
-      "held": false,
-      "book_pct": 0.0,
-      "strategy": "dca",
-      "conv": 5.47,
-      "grade": "KEEP-DCA",
-      "F": 4.4,
-      "V": 7.6,
-      "C": 5.2,
-      "binding": "F",
-      "coverage": 100,
       "peak": false,
       "marg": false,
       "has_data": true
