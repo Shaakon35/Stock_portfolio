@@ -1675,6 +1675,17 @@ WATCHLIST = {
         "note":     "Integrated insurer + Optum; de-rated on regulatory/cost fears — "
                     "cheap-but-quality value. DCA.",
     },
+    "CLOV": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 25),
+        "area":     "Medicare Advantage insurer (Clover Health) — small-cap",
+        "note":     "MA insurer turnaround: rev ~$2.2B, FCF+ ($55M ttm), net cash, "
+                    "no debt — but GAAP-unprofitable (-2.6% net = op margin, no "
+                    "distortion) and high-beta (2.42). Cheap on sales (P/S 1.0) with "
+                    "fwd rev ~24% / EPS ramp; margin trajectory improving. Speculative "
+                    "small-cap, ad/MCR-cycle sensitive — buy dips, size small.",
+    },
     "TMO": {
         "strategy": "dca",
         "pos":      "Mid",
@@ -3240,6 +3251,15 @@ WATCHLIST = {
                      "AI-driven ad fraud/brand-safety measurement across CTV/social. "
                      "De-rated -26%; growth intact. Adtech-cyclical (ad-budget "
                      "sensitive). Buy dips / trim manias."},
+    "ZETA": {"strategy": "cycle", "pos": "Mid", "cagr": (15, 25),
+             "area": "AI marketing cloud / CDP (Zeta Global) — adtech",
+             "note": "AI-driven marketing cloud + CDP (data-driven customer "
+                     "acquisition). FCF+ ($200M ttm, 14% FCF margin) and net cash, "
+                     "op margin +2.2%, but slightly GAAP-negative (-1.6% net) after "
+                     "interest, on heavy dilution (+15.7% shares/yr). PEG 0.73, "
+                     "P/S 3.9, fwd rev +22%. Margin trajectory sharply improving "
+                     "(-54%->-7% net over 4y). Adtech-cyclical (ad-budget sensitive), "
+                     "beta 1.37, 13% short. Buy dips / trim manias; watch dilution."},
 
     # --- Pre-/near-pre-profit AI punts (Binary — size tiny or skip, never avg down) ---
     "SOUN": {"strategy": "lottery", "pos": "Binary", "cagr": (-50, 60),
