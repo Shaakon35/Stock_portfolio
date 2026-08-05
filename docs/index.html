@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=10" />
+  <link rel="stylesheet" href="style.css?v=11" />
 </head>
 <body>
   <!-- ===== Top nav ===== -->
@@ -84,7 +84,8 @@
           Pick one or more tickers on the left to overlay their price paths.
           Lines are <strong>rebased to % change</strong> from the start of the
           chosen window, so names at very different price levels compare
-          directly. Click a <strong>chart icon</strong> in the Stock table to
+          directly — or switch the y-axis to <strong>Value</strong> for absolute
+          prices. Click a <strong>chart icon</strong> in the Stock table to
           jump here with that name selected. Select a
           <strong>single ticker</strong> to shade its
           <strong>buy zone</strong> — the accumulation band to buy into.
@@ -105,14 +106,21 @@
 
         <!-- Main panel: range buttons + SVG chart + legend -->
         <div class="plot-main">
-          <div class="plot-ranges">
-            <button type="button" class="plot-range-btn" data-range="1w">1W</button>
-            <button type="button" class="plot-range-btn" data-range="1m">1M</button>
-            <button type="button" class="plot-range-btn" data-range="6m">6M</button>
-            <button type="button" class="plot-range-btn" data-range="1y">1Y</button>
-            <button type="button" class="plot-range-btn" data-range="2y">2Y</button>
-            <button type="button" class="plot-range-btn" data-range="5y">5Y</button>
-            <button type="button" class="plot-range-btn" data-range="all">All</button>
+          <div class="plot-controls">
+            <div class="plot-ranges">
+              <button type="button" class="plot-range-btn" data-range="1w">1W</button>
+              <button type="button" class="plot-range-btn" data-range="1m">1M</button>
+              <button type="button" class="plot-range-btn" data-range="6m">6M</button>
+              <button type="button" class="plot-range-btn" data-range="1y">1Y</button>
+              <button type="button" class="plot-range-btn" data-range="2y">2Y</button>
+              <button type="button" class="plot-range-btn" data-range="5y">5Y</button>
+              <button type="button" class="plot-range-btn" data-range="all">All</button>
+            </div>
+            <!-- Y-axis mode: rebased % change vs absolute price/value. -->
+            <div class="plot-modes">
+              <button type="button" class="plot-mode-btn" data-mode="pct">%</button>
+              <button type="button" class="plot-mode-btn" data-mode="value">Value</button>
+            </div>
           </div>
           <div class="plot-body">
             <div class="plot-chart">
@@ -263,6 +271,6 @@
     </div><!-- /#aboutView -->
   </main>
 
-  <script src="app.js?v=10"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>

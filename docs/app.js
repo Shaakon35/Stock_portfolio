@@ -96,6 +96,7 @@ let BUY_ZONES = {};
 const plotState = {
   selected: new Set(),   // tickers currently overlaid
   range: "5y",           // 1w | 1m | 6m | 1y | 2y | 5y | all
+  mode: "pct",           // pct (rebased % change) | value (absolute price)
   q: "",                 // ticker filter for the checkbox side panel
 };
 
@@ -408,6 +409,13 @@ function wirePlotControls() {
       drawPlot();
     };
   });
+  document.querySelectorAll(".plot-mode-btn").forEach(btn => {
+    btn.onclick = () => {
+      plotState.mode = btn.dataset.mode;
+      syncPlotMode();
+      drawPlot();
+    };
+  });
   const clear = document.getElementById("plotClear");
   if (clear) clear.onclick = () => {
     plotState.selected.clear();
@@ -415,11 +423,17 @@ function wirePlotControls() {
     drawPlot();
   };
   syncPlotRange();
+  syncPlotMode();
 }
 
 function syncPlotRange() {
   document.querySelectorAll(".plot-range-btn").forEach(btn =>
     btn.classList.toggle("plot-range-on", btn.dataset.range === plotState.range));
+}
+
+function syncPlotMode() {
+  document.querySelectorAll(".plot-mode-btn").forEach(btn =>
+    btn.classList.toggle("plot-mode-on", btn.dataset.mode === plotState.mode));
 }
 
 // Full Plot-tab render: side checkbox list + chart.
@@ -483,14 +497,15 @@ function plotWindow(entry) {
 }
 
 // Pick a "nice" gridline step covering `span` in at most `maxTicks` steps.
-// Rounds up to the nearest 1/2/5 × 10ⁿ, floored at 10 so the axis is always in
-// clean 10%+ increments (0,10,20,… / 0,20,40,… / 0,50,100,…).
-function niceStep(span, maxTicks) {
-  const raw = Math.max(span, 1) / Math.max(maxTicks, 1);
+// Rounds up to the nearest 1/2/5 × 10ⁿ. `floor` sets the finest allowed step:
+// 10 for the % axis (clean 10%+ increments 0,10,20,… / 0,20,40,…), but a small
+// value (≈0) for the absolute-price axis so low-priced names still get gridlines.
+function niceStep(span, maxTicks, floor = 10) {
+  const raw = Math.max(span, Number.MIN_VALUE) / Math.max(maxTicks, 1);
   const pow = Math.pow(10, Math.floor(Math.log10(raw)));
   const norm = raw / pow;           // 1..10
   const nice = norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10;
-  return Math.max(nice * pow, 10);  // never finer than 10%
+  return Math.max(nice * pow, floor);
 }
 
 const MON_ABBR = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
@@ -589,23 +604,32 @@ function drawPlot() {
     return;
   }
 
-  // Build rebased (% from window start) series; track global min/max + longest.
+  // Y-axis mode: rebased % change (compare names at different price levels) or
+  // absolute price/value (each name's real quote). Value mode is only useful for
+  // a single name, since overlaying different price levels is meaningless.
+  const valueMode = plotState.mode === "value";
+
+  // Build the plotted series; track global min/max + the longest for the x-axis.
+  // `vals` holds what is actually plotted (% in pct mode, price in value mode);
+  // `ret` always holds the window % return for the legend.
   const series = [];
   let gmin = Infinity, gmax = -Infinity, refDates = null, maxLen = 0;
   sel.forEach((tk, i) => {
     const win = plotWindow(PLOT_HISTORY[tk]);
     const base = win.c[0];
-    const pct = win.c.map(v => base ? (v / base - 1) * 100 : 0);
-    for (const p of pct) { if (p < gmin) gmin = p; if (p > gmax) gmax = p; }
+    const ret = win.c.map(v => base ? (v / base - 1) * 100 : 0);
+    const vals = valueMode ? win.c.slice() : ret;
+    for (const v of vals) { if (v < gmin) gmin = v; if (v > gmax) gmax = v; }
     if (win.t.length > maxLen) { maxLen = win.t.length; refDates = win.t; }
-    series.push({ ticker: tk, pct, color: PLOT_COLORS[i % PLOT_COLORS.length] });
+    series.push({ ticker: tk, vals, ret, color: PLOT_COLORS[i % PLOT_COLORS.length] });
   });
   if (!isFinite(gmin)) return;
 
   // Buy zone: only shown when EXACTLY ONE ticker is selected (a band is an
   // absolute price range, meaningless overlaid across rebased multi-name %).
-  // Convert the absolute low/high to % of THIS series' window base (matching
-  // the chart's rebase) and widen the axis so the band is always visible.
+  // In value mode the band's low/high are plotted as-is (absolute price); in
+  // pct mode they are converted to % of THIS series' window base (matching the
+  // chart's rebase). Either way the axis is widened so the band stays visible.
   let bandPct = null;
   if (sel.length === 1) {
     const tk = sel[0];
@@ -613,8 +637,8 @@ function drawPlot() {
     if (z && isFinite(z.low) && isFinite(z.high)) {
       const base = plotWindow(PLOT_HISTORY[tk]).c[0];
       if (base) {
-        const lo = (z.low / base - 1) * 100;
-        const hi = (z.high / base - 1) * 100;
+        const lo = valueMode ? z.low  : (z.low  / base - 1) * 100;
+        const hi = valueMode ? z.high : (z.high / base - 1) * 100;
         bandPct = { lo: Math.min(lo, hi), hi: Math.max(lo, hi),
                     source: z.source, low: z.low, high: z.high };
         if (bandPct.lo < gmin) gmin = bandPct.lo;
@@ -625,10 +649,11 @@ function drawPlot() {
 
   if (gmin === gmax) { gmin -= 1; gmax += 1; }
 
-  // Snap the axis to a "nice" round step (1/2/5 × 10ⁿ, min 10%) so gridlines
-  // land on tidy multiples — e.g. 0..40 → 0,10,20,30,40; 0..100 → 0,20,…,100 —
-  // instead of arbitrary values. Bounds are rounded out to whole steps.
-  const step = niceStep(gmax - gmin, 6);
+  // Snap the axis to a "nice" round step (1/2/5 × 10ⁿ) so gridlines land on tidy
+  // multiples instead of arbitrary values. The % axis is floored at 10 (clean
+  // 10%+ increments); the value axis has no floor so low-priced names still get
+  // gridlines. Bounds are rounded out to whole steps.
+  const step = niceStep(gmax - gmin, 6, valueMode ? 0 : 10);
   gmin = Math.floor(gmin / step) * step;
   gmax = Math.ceil(gmax / step) * step;
 
@@ -657,18 +682,28 @@ function drawPlot() {
     svg.appendChild(lbl);
   }
 
-  // Horizontal gridlines + % axis labels at each nice step (0% line emphasised).
+  // Format an axis tick: signed "+12%" in pct mode, a plain price in value mode
+  // (with enough decimals for sub-$1 steps, thousands-separated for large ones).
+  const axisLabel = val => {
+    if (!valueMode) return (val > 0 ? "+" : "") + Math.round(val) + "%";
+    const dp = step >= 10 ? 0 : step >= 1 ? 1 : 2;
+    return val.toLocaleString("en-US",
+      { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  };
+
+  // Horizontal gridlines + axis labels at each nice step (0/baseline emphasised).
   for (let val = gmin; val <= gmax + step * 1e-6; val += step) {
     const y = yOf(val);
     svg.appendChild(mk("line", { x1: padL, x2: W - padR, y1: y, y2: y,
       stroke: Math.abs(val) < 1e-6 ? "#3a4653" : "#212a33", "stroke-width": 1 }));
     const lbl = mk("text", { x: padL - 8, y: y + 4, "text-anchor": "end",
       fill: "#8b98a5", "font-size": "11" });
-    lbl.textContent = (val > 0 ? "+" : "") + Math.round(val) + "%";
+    lbl.textContent = axisLabel(val);
     svg.appendChild(lbl);
   }
-  // Zero baseline for the rebase (0% at window start).
-  if (gmin <= 0 && gmax >= 0) {
+  // Zero baseline for the rebase (0% at window start). Only meaningful in pct
+  // mode — in value mode 0 is off-scale (prices are positive) so it is skipped.
+  if (!valueMode && gmin <= 0 && gmax >= 0) {
     const y0 = yOf(0);
     svg.appendChild(mk("line", { x1: padL, x2: W - padR, y1: y0, y2: y0,
       stroke: "#3a4653", "stroke-width": 1.2 }));
@@ -692,19 +727,27 @@ function drawPlot() {
 
   // Draw each series + a legend chip with its window return.
   series.forEach(s => {
-    const n = s.pct.length;
+    const n = s.vals.length;
     let d = "";
     for (let i = 0; i < n; i++)
-      d += (i === 0 ? "M" : "L") + xOf(i, n).toFixed(1) + "," + yOf(s.pct[i]).toFixed(1) + " ";
+      d += (i === 0 ? "M" : "L") + xOf(i, n).toFixed(1) + "," + yOf(s.vals[i]).toFixed(1) + " ";
     svg.appendChild(mk("path", { d: d.trim(), fill: "none",
       stroke: s.color, "stroke-width": 1.7 }));
     if (legend) {
-      const last = s.pct[s.pct.length - 1];
+      const last = s.ret[s.ret.length - 1];
+      // In value mode, prefix the current price before the window return.
+      let price = "";
+      if (valueMode) {
+        const p = s.vals[s.vals.length - 1];
+        const dp = p >= 100 ? 0 : p >= 1 ? 2 : 3;
+        price = `<span class="plot-legend-price">` +
+          `${p.toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp })}</span> `;
+      }
       const chip = document.createElement("span");
       chip.className = "plot-legend-chip";
       chip.innerHTML =
         `<span class="plot-swatch" style="background:${s.color}"></span>` +
-        `<b>${s.ticker}</b> ` +
+        `<b>${s.ticker}</b> ` + price +
         `<span style="color:${last >= 0 ? "#34d399" : "#f87171"}">` +
         `${last >= 0 ? "+" : ""}${last.toFixed(1)}%</span>`;
       legend.appendChild(chip);
