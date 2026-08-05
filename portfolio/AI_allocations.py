@@ -65,10 +65,14 @@ W1_SILICON_TARGETS = {
     # VALUES ARE DIRECT BOOK % (2026-06 model change): e.g. 2.0 == 2.0% of total book.
     # The trailing "# CHANGED: 0.x ->" notes below are HISTORICAL sub-weight values from the
     # old normalized model; the live number on each line is now a direct percent.
-    "SMHV.SW":   37.5,# CHANGED: 0.85227 -> 0.85656 (RIGHTSIZE 2026-06) — basket share rose
-                        # again to keep book PINNED at 37.5% as the W1 wave shrank (ADI trim 3.0% ->
-                        # 2.78%); book UNCHANGED. The 90k CHF windfall (899 shares) held FIXED at
-                        # exactly 37.5% of book (0.4378 * 0.85656 = 0.375). NB: SMHV tracks a
+    "SMHV.SW":   32.5,# CHANGED: 37.5 -> 32.5 (RESHAPE-TRIM 2026-08) — trimmed 5.0% off the
+                        # oversized ETF anchor to fund three genuine new diversifier LEGS
+                        # (PODD health-care, WPM commodity/gold, AJG financials) in W7 — none
+                        # of which the tech-heavy book had any exposure to. Reduces single-
+                        # position concentration (the ETF still dominates at ~1/3 of book) and
+                        # lowers correlation to the AI-capex cycle every other wave rides. This
+                        # trims the fixed 90k CHF windfall's book WEIGHT, not the share count.
+                        # Prior: 0.85227 -> 0.85656 (RIGHTSIZE 2026-06). NB: SMHV tracks a
                         # US-LISTED semi index, so it holds ZERO Samsung/SK Hynix — genuine new
                         # exposure, not a dup.
     # --- REMOVED 2026-06: NVDA/AVGO/ASML/TSM/MU/AMD dropped from the basket.
@@ -524,6 +528,24 @@ W7_DIVERSIFY_TARGETS = {
                       # lower margin (~7% net, defense manufacturing) but a genuine new risk
                       # factor instead of a 6th AI-connectivity name. CYCLE / Mid — the cycle
                       # here is a structural spending super-cycle, so buy dips, trim manias.
+    "PODD":  2.0,# NEW (RESHAPE-TRIM 2026-08) — 2.0% book, funded by the SMHV.SW trim
+                      # (37.5->32.5%). Insulet (Omnipod) — the tubeless-insulin-pump half of a
+                      # new HEALTH-CARE leg (pairs with the diabetes/GLP-1 tailwind behind LLY).
+                      # CONV 8.50: steady ~20-30% revenue, net margin inflecting up hard
+                      # (0->10->20%), and trading ~28% BELOW its 200-day (a growing, margin-
+                      # expanding business on a pullback). Off the AI-capex chain. DCA.
+    "WPM":   1.5,# NEW (RESHAPE-TRIM 2026-08) — 1.5% book, funded by the SMHV.SW trim.
+                      # Wheaton Precious Metals — gold/silver STREAMING (royalty model, not a
+                      # miner: ~65% net margin, no operating/dev risk). The book's ONLY
+                      # precious-metals exposure — a commodity hedge uncorrelated to tech, with
+                      # gold as its own risk driver. CONV 7.84. NB commodity-cyclical: revenue
+                      # swings with the metal price (history -11..+80%), so this is a hedge/
+                      # diversifier, not a smooth compounder. CYCLE — buy dips, trim manias.
+    "AJG":   1.5,# NEW (RESHAPE-TRIM 2026-08) — 1.5% book, funded by the SMHV.SW trim.
+                      # Arthur J. Gallagher — insurance BROKER (fee-based, not underwriting).
+                      # The defensive FINANCIALS leg the book lacked: recession-resistant mid-
+                      # teens compounding, zero correlation to the AI-capex cycle. CONV 7.57.
+                      # A ballast holding — low drama, steady reward. DCA — hold-forever.
 }
 
 # =========================================================================
@@ -640,6 +662,9 @@ STRATEGY = {
     "FICO":    "dca",       # NEW (2026-08). Fair Isaac — credit-scoring near-monopoly; off the AI-capex value chain, hold-forever quality compounder, a drop is a discount
     "NBIX":    "dca",       # NEW (RESHAPE 2026-08). Neurocrine — Ingrezza-led neuroscience pharma; off the AI-capex value chain, profitable + cheap (PEG 0.35), hold-forever compounder, a drop is a discount
     "RHM.DE":  "cycle",     # NEW (RESHAPE 2026-08). Rheinmetall — European defense; tech-uncorrelated, rides a structural rearmament super-cycle, buy dips / trim manias
+    "PODD":    "dca",       # NEW (RESHAPE-TRIM 2026-08). Insulet (Omnipod) — insulin pumps; new health-care leg, ~25% growth + expanding margins, hold-forever compounder, a drop is a discount
+    "WPM":     "cycle",     # NEW (RESHAPE-TRIM 2026-08). Wheaton — gold/silver streaming; the book's only precious-metals hedge, commodity-cyclical, buy dips / trim manias
+    "AJG":     "dca",       # NEW (RESHAPE-TRIM 2026-08). Arthur J. Gallagher — insurance broker; defensive financials ballast, recession-resistant mid-teens compounder, a drop is a discount
 }
 
 # =========================================================================
@@ -3359,12 +3384,9 @@ WATCHLIST = {
              "note": "QC: mostly clean (90% cov) but fwd_eps ~-33% (earnings "
                      "expected to FALL) and no PEG, so the high V leans on a low "
                      "P/S. Verify the EPS trajectory before trusting CONV ~7.5."},
-    "WPM":  {"strategy": "cycle", "pos": "Mid", "cagr": (5, 20),
-             "area": "Precious-metals streaming (Wheaton, Canada)",
-             "note": "QC: real capital-light model (85%+ gross, 65% net) BUT "
-                     "revenue tracks the GOLD PRICE, not durable growth (rev_hist "
-                     "goes negative in prior years; ttm is a rally spike). Tagged "
-                     "CYCLE, not dca — treat the score as commodity-cyclical."},
+    # WPM PROMOTED (RESHAPE-TRIM 2026-08) to W7_DIVERSIFY_TARGETS at 1.5% book
+    #     (funded by the SMHV.SW trim) — the book's only precious-metals/commodity
+    #     hedge. Removed from WATCHLIST; re-add here if it is ever cut to 0%.
     "ARGX": {"strategy": "catalyst", "pos": "Binary", "cagr": (-10, 40),
              "area": "Immunology / FcRn antibodies (argenx, Belgium)",
              "note": "QC: DO NOT TRUST THE SCORE. Biotech that JUST flipped "
@@ -3393,11 +3415,9 @@ WATCHLIST = {
     # SKILL.md Common Pitfalls §10). NONE is a clean, durable 8+.
     # -------------------------------------------------------------------
     # --- clean quality compounders (no illusion signal; CONV mid-7s) ---
-    "AJG":  {"strategy": "dca", "pos": "Mid", "cagr": (8, 15),
-             "area": "Insurance brokerage (Arthur J. Gallagher, US)",
-             "note": "QC: CLEAN, top of the hunt. CONV 7.58 (CYC binding), "
-                     "100% cov, no illusion signal. Roll-up broker annuity; "
-                     "CYC caps it because it's richly valued, not troubled."},
+    # AJG PROMOTED (RESHAPE-TRIM 2026-08) to W7_DIVERSIFY_TARGETS at 1.5% book
+    #     (funded by the SMHV.SW trim) — the defensive financials-broker ballast
+    #     leg the book lacked. Removed from WATCHLIST; re-add here if cut to 0%.
     "ICE":  {"strategy": "dca", "pos": "Mid", "cagr": (7, 13),
              "area": "Exchanges + mortgage data (Intercontinental Exch, US)",
              "note": "QC: CLEAN. CONV 7.23 (CYC binding), 100% cov. Exchange "
@@ -3838,13 +3858,9 @@ WATCHLIST = {
     #     by the SYM cut + part of the ALAB cut) — highest-CONV non-held name on the
     #     board (8.61), adds a neuroscience-pharma diversifier off the AI-capex chain.
     #     Removed from WATCHLIST; re-add here if it is ever cut to 0%.
-    "PODD": {
-        "pos":      "Mid",
-        "cagr":     (14, 24),
-        "strategy": "dca",
-        "area":     'Medtech / insulin pumps (Insulet)',
-        "note":     'Omnipod diabetes device; genuine margin expansion (1->20% net), ~30% rev, FCF+. Clean quality compounder.',
-    },
+    # PODD PROMOTED (RESHAPE-TRIM 2026-08) to W7_DIVERSIFY_TARGETS at 2.0% book
+    #     (funded by the SMHV.SW trim) — anchors a new health-care leg (Omnipod
+    #     insulin pumps). Removed from WATCHLIST; re-add here if cut to 0%.
     "ONON": {
         "pos":      "Mid",
         "cagr":     (15, 25),
