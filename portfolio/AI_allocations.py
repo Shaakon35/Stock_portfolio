@@ -142,6 +142,15 @@ W1_SILICON_TARGETS = {
                         # BESI.AS, so it was a DUPLICATE leg. Scores AVOID (GROWTH 3.4). The book
                         # keeps BESI (the higher-quality bonding name) and drops the redundant
                         # one. Frankfurt-listed (EUR). 0% for easy re-add.
+    "SNPS":      1.5,# NEW (RESHAPE 2026-08) — 1.5% book, funded by the CRDO cut (W3).
+                        # Synopsys — the OTHER half of the EDA chip-design duopoly (with the
+                        # now-cut CDNS). This CLOSES the design-layer gap the CDNS removal note
+                        # flagged as "UNCOVERED in the book": the silicon wave holds the whole
+                        # supply chain (hardware, packaging, analog) but no chip-DESIGN software.
+                        # Lowest-volatility name in the wave: metronomic ~15% revenue every year
+                        # (recurring/subscription EDA), the opposite risk profile to the cyclical
+                        # CRDO it replaces. Scores CONV 7.91 (well above ADI 6.67 / CRDO 5.02).
+                        # 83% gross, absorbed ANSYS (ANSS). DCA — hold forever.
 }
 
 # --- WAVE 2: POWER & ENERGY (18%) ---
@@ -235,14 +244,13 @@ W3_DCINFRA_TARGETS = {
                     # book on the CONV gradient (CONV 7.06). Still the best business in the wave
                     # (QUALITY 9.6) but its DCA-CONV is mid-pack here, so sized to the gradient.
                     # Arista — DC networking monopoly. 38% margin, $4.4B FCF, software moat. DCA.
-    "CRDO":  2.0,# ROUNDED 2026-06: 2.019 -> 2.0. CHANGED: 0.12984 -> 0.14966 (COHR-CUT 2026-06) — renormalized after
-                    # COHR cut (book ~unchanged at 2.02%). Prior: 0.18660 -> 0.12984
-                    # (CONV-REBAL 2026-06) — TRIMMED to 2.01%
-                    # book on the CONV gradient (CONV 5.54, near the bottom). It scores MOMENTUM with the
-                    # [PEAK?] flag: low PEG is FAKE-CHEAP on peak earnings + an extended chart —
-                    # the SK-Hynix/Micron trap. Having the MOST money in the highest mean-
-                    # reversion risk was backwards; the gain is banked into ANET/NOW. Still a
-                    # real hypergrowth business — trim, don't cut. CYCLE — sell when growth <30%.
+    "CRDO":  0.0,# CHANGED: 2.0 -> 0.0 (RESHAPE 2026-08) — CUT. Lowest-CONV name in W3
+                    # (CONV 5.02, MOMENTUM) and carries the [PEAK?] flag: its low PEG is
+                    # FAKE-CHEAP on peak earnings + an extended chart (the SK-Hynix/Micron
+                    # trap). Its ~2.0% book funds SNPS (W1), the higher-conviction EDA name
+                    # that also fills the silicon wave's missing chip-design-software leg.
+                    # Kept as a 0% stub with its STRATEGY tag for easy re-add if the
+                    # hypergrowth thesis re-accelerates off a normal base. CYCLE.
     "COHR":  0.0,# CHANGED: 0.13243 -> 0.00 (COHR-CUT 2026-06) — CUT. Weakest blend in W3
                     # (low upside 6.4 + high risk 5.0, CONV 5.68) and redundant with CRDO/FN/CLS
                     # in optical/interconnect. Its ~2.05% book moved cross-wave to W5 (PLTR/APP).
@@ -253,18 +261,15 @@ W3_DCINFRA_TARGETS = {
                     # book on the CONV gradient (CONV 6.27).
                     # Fabrinet — optical contract mfr; cleanest growth-at-reasonable-price name
                     # (QUALITY quadrant, 8PT 5.11, net cash). CYCLE / Mid.
-    "ALAB":  2.0,# ROUNDED 2026-06: 2.0089 -> 2.0. CHANGED: 0.12920 -> 0.14892 (COHR-CUT 2026-06) — renormalized after
-                    # COHR cut (book ~unchanged at 2.01%). Prior: 0.07997 -> 0.12920
-                    # (CONV-REBAL 2026-06) — set to 2.00% book,
-                    # the gradient FLOOR (lowest CONV 5.52 in the wave). Mid/Late,
-                    # 118x fwd P/E, analysts -36%: most stretched name held, fails 8-Point #6
-                    # (priced for perfection). Book rotated to ZS (W5). Astera Labs —
-                    # AI connectivity pure-play (CXL/PCIe retimers),
-                    # highest-beta name in the sleeve. CYCLE / Mid — bottleneck is young
-                    # but the stock already ran +500%/2y, so remaining runway = Mid.
-                    # CHANGED 2026-06: S (SentinelOne) MOVED OUT to W5 (it's a software/cyber
-                    # name). Growth-max pass: SNOW + COHR trim folded into CRDO; 6 names
-                    # renormalized to sum to 1.0.
+    "ALAB":  0.0,# CHANGED: 2.0 -> 0.0 (RESHAPE 2026-08) — CUT. Second-lowest CONV in W3
+                    # (CONV 5.12, MOMENTUM) with the binding risk on VALUATION (V 2.2): most
+                    # stretched name held, ~118x fwd P/E, fails 8-Point #6 (priced for
+                    # perfection). It is also redundant — the book already holds 5+ AI-
+                    # connectivity/interconnect names in this wave. Its ~2.0% book rotates
+                    # cross-wave to the RHM.DE defense diversifier (W7), swapping an
+                    # expensive momentum semi for a tech-uncorrelated sector. Kept as a 0%
+                    # stub with its STRATEGY tag for easy re-add. Astera Labs — CXL/PCIe
+                    # retimers, highest-beta name in the sleeve. CYCLE / Mid.
     "CLS":   2.5,# ROUNDED 2026-06: 2.5112 -> 2.5. CHANGED: 0.16150 -> 0.18615 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut + absorbs the tiny rounding residual (book ~unchanged at 2.51%).
                     # Prior: 0.09366 -> 0.16150 (CONV-REBAL 2026-06) — GROWN to 2.50%
@@ -428,13 +433,12 @@ W6_SPEC_TARGETS = {
                       # Scores AVOID (GROWTH 4.6); the
                       # asymmetric space punt is parked, not grown. Kept as an easy-re-add stub,
                       # not deleted. Space/autonomy. Catalyst — size once, no avg down.
-    "SYM":   0.2,# ROUNDED 2026-06: 0.24 -> 0.2. CHANGED: 0.12 -> 0.06857 (RIGHTSIZE 2026-06) — sub-share recomputed for
-                      # the grown 3.5% wave; book UNCHANGED at 0.24% (0.035 * 0.06857 = 0.0024).
-                      # Prior: 0.125 -> 0.12 (PEGA/INOD-FUND 2026-06). Earlier: 0.10 -> 0.125 (CONV-REBAL
-                      # 2026-06). Symbotic — warehouse/logistics robotics (physical-AI). QUALITY
-                      # quadrant but GAAP-unprofitable (net -$28M TTM, fails Pt 2) + lumpy/
-                      # customer-concentrated (Walmart), so it stays a tiny convex-tail bet.
-                      # CATALYST / Binary — size tiny, never average down.
+    "SYM":   0.0,# CHANGED: 0.2 -> 0.0 (RESHAPE 2026-08) — CUT. Lowest-CONV holding on the
+                      # entire board (CONV 3.85, AVOID): GAAP-unprofitable (net -$28M TTM,
+                      # fails 8-Point #2) + lumpy/customer-concentrated (Walmart). Its tiny
+                      # 0.24% book helps fund the new NBIX diversifier (W7). Kept as a 0%
+                      # stub with its STRATEGY tag for easy re-add if it turns profitable.
+                      # Symbotic — warehouse/logistics robotics (physical-AI). CATALYST / Binary.
     "CRCL":  0.0,  # Circle (USDC) — held windfall (147 shares), TARGET 0%. Parked to
                       # track/manage down, NOT to add to. Catalyst.
     "LEU":   0.0,  # Centrus Energy — HALEU/uranium enrichment for advanced reactors
@@ -502,6 +506,24 @@ W7_DIVERSIFY_TARGETS = {
                       # accelerating revenue, screened CHEAP (PEG 0.75, ~24% below 200DMA).
                       # DCA / hold-forever. RISK: single-product concentration + regulatory /
                       # VantageScore overhang on mortgage-score pricing (the reason it's cheap).
+    "NBIX":  1.5,# NEW (RESHAPE 2026-08) — 1.5% book, funded by the SYM cut (W6) + part of
+                      # the ALAB cut (W3). Neurocrine — Ingrezza-led neuroscience pharma. The
+                      # HIGHEST-CONV non-held name on the whole board (CONV 8.61, beaten only
+                      # by FICO among held names): steady ~20-30% revenue, net margin expanding
+                      # 8->21%, a dirt-cheap 0.35 PEG, already profitable. A NEW therapeutic
+                      # area (CNS/neuroscience) the book has zero exposure to, and a far LESS
+                      # binary pharma name than the W6 catalyst punts (a real earnings stream,
+                      # not a readout lottery). Off the AI-capex value chain — a structural
+                      # diversifier like LLY/FICO. DCA — hold-forever quality compounder.
+    "RHM.DE": 1.2,# NEW (RESHAPE 2026-08) — 1.2% book, funded by the rest of the ALAB cut
+                      # (W3). Rheinmetall — European defense leader. Adds a whole TECH-
+                      # UNCORRELATED sector the book lacks: revenue tracks multi-year gov't
+                      # rearmament backlogs, not the GPU/AI-capex cycle every other wave rides.
+                      # ACCELERATING (trailing rev 13->29%, forecasts toward 40%+) at a cheap
+                      # 0.7 PEG; CONV 7.82 PRIME. The trade-off vs the ALAB semi it replaces:
+                      # lower margin (~7% net, defense manufacturing) but a genuine new risk
+                      # factor instead of a 6th AI-connectivity name. CYCLE / Mid — the cycle
+                      # here is a structural spending super-cycle, so buy dips, trim manias.
 }
 
 # =========================================================================
@@ -549,6 +571,7 @@ STRATEGY = {
     "ONTO":      "cycle",   # Onto — metrology/inspection, high-beta WFE; Mid-cycle, buy dips, trim at peak
     "SMHN.DE":   "cycle",   # SUSS MicroTec — packaging/bonding equipment, high-beta; trim near peak
     "ADI":       "dca",     # Analog Devices — analog/industrial silicon, quality compounder; hold forever (NB: cyclical, a drop is a discount)
+    "SNPS":      "dca",     # NEW (RESHAPE 2026-08). Synopsys — EDA chip-design duopoly (w/ CDNS); recurring/subscription, metronomic ~15% growth, hold forever. Closes the design-layer gap left by the CDNS cut.
 
     # --- W2 POWER ---
     "GEV":     "dca",       # Grid supercycle — hold forever
@@ -615,6 +638,8 @@ STRATEGY = {
     "RDDT":    "cycle",     # Reddit — social ads + AI data-licensing; non-semi AI diversifier, Early/high-beta, buy dips / trim manias
     "INOD":    "cycle",     # NEW (2026-06). Innodata — AI data-engineering / LLM training-data prep; non-semi AI-supply-chain diversifier, Early/high-beta, buy dips / trim manias
     "FICO":    "dca",       # NEW (2026-08). Fair Isaac — credit-scoring near-monopoly; off the AI-capex value chain, hold-forever quality compounder, a drop is a discount
+    "NBIX":    "dca",       # NEW (RESHAPE 2026-08). Neurocrine — Ingrezza-led neuroscience pharma; off the AI-capex value chain, profitable + cheap (PEG 0.35), hold-forever compounder, a drop is a discount
+    "RHM.DE":  "cycle",     # NEW (RESHAPE 2026-08). Rheinmetall — European defense; tech-uncorrelated, rides a structural rearmament super-cycle, buy dips / trim manias
 }
 
 # =========================================================================
@@ -898,15 +923,9 @@ WATCHLIST = {
                     "moat NOT in your book or the ETF. 86% gross, 21% net, $1.5B FCF. "
                     "Cadence/Synopsys are the EDA duopoly; ~41x P/E so not cheap.",
     },
-    "SNPS": {
-        "pos":      "Mid",
-        "cagr":     (9.9, 18.1),
-        "strategy": "dca",
-        "area":     "Chip-design software (EDA)",
-        "note":     "DCA-grade. Other half of the EDA duopoly. 83% gross, 42% rev, "
-                    "$3.5B FCF, ~26x fwd P/E. NB it absorbed ANSYS (ANSS) — the "
-                    "ANSS ticker is gone, exposure now lives here.",
-    },
+    # SNPS PROMOTED (RESHAPE 2026-08) to W1_SILICON_TARGETS at 1.5% book (funded
+    #     by the CRDO cut) — it closes the chip-design (EDA) gap the CDNS removal
+    #     left uncovered. Removed from WATCHLIST; re-add here if it is ever cut to 0%.
     "TER": {
         "pos":      "Mid",
         "cagr":     (7, 16),
@@ -3083,10 +3102,9 @@ WATCHLIST = {
     "BMW.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (0, 8),
              "area": "Autos (BMW) — Germany",
              "note": "Premium autos; EV ramp vs auto-demand cycle. Cyclical-value."},
-    "RHM.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 25),
-             "area": "Defense (Rheinmetall) — Germany",
-             "note": "European rearmament leader; multi-year defense-capex backlog. "
-                     "Cyclical growth."},
+    # RHM.DE PROMOTED (RESHAPE 2026-08) to W7_DIVERSIFY_TARGETS at 1.2% book
+    #     (funded by the ALAB cut) — adds a tech-uncorrelated defense sleeve the
+    #     book lacked. Removed from WATCHLIST; re-add here if it is ever cut to 0%.
     "MUV2.DE": {"strategy": "cycle", "pos": "Mid", "cagr": (3, 9),
              "area": "Reinsurance (Munich Re) — Germany",
              "note": "Global reinsurer; rate-cycle + cat exposure. Cyclical-quality."},
@@ -3816,13 +3834,10 @@ WATCHLIST = {
     # cyclicals (miners/energy) tagged 'cycle'; quality compounders 'dca'.
     # Notes carry the illusion caveat for any trough-PEG / margin-flip name.
     # =====================================================================
-    "NBIX": {
-        "pos":      "Mid",
-        "cagr":     (12, 22),
-        "strategy": "dca",
-        "area":     'Biotech / neuroscience (Neurocrine)',
-        "note":     'Ingrezza-led neuro pharma; margins expanding 8->14%, ~25% rev, PEG 0.35. Clean high-CONV — no illusion signal.',
-    },
+    # NBIX PROMOTED (RESHAPE 2026-08) to W7_DIVERSIFY_TARGETS at 1.5% book (funded
+    #     by the SYM cut + part of the ALAB cut) — highest-CONV non-held name on the
+    #     board (8.61), adds a neuroscience-pharma diversifier off the AI-capex chain.
+    #     Removed from WATCHLIST; re-add here if it is ever cut to 0%.
     "PODD": {
         "pos":      "Mid",
         "cagr":     (14, 24),
