@@ -490,6 +490,111 @@ _MARGIN_FULL = 8.0        # pts: drift at/above this maps to the 0 or 1 extreme
 _MARGIN_GATE_LO = 0.0     # newer-half margin % at/below this: expansion reward -> 0
 _MARGIN_GATE_HI = 8.0     # newer-half margin % at/above this: full expansion reward
 
+# --- WINDFALL-MARGIN GUARD (one-off net-margin spike distortion) -------------
+# net_margin is GAAP, so a single-year, non-operating event — a deferred-tax-
+# asset release, a large pretax gain, a fair-value swing — can print a net
+# margin that has nothing to do with the business's real earning power. The
+# engine got double-fooled by these: the spike scored a perfect margin LEVEL
+# *and*, because it towers over the prior years, a perfect margin TREND
+# ("expansion"). DOCU is the canonical case: a ~$800M DTA release printed FY25
+# net margin of 35.9% (real operating margin ~8%) against a prior series of
+# 2.7 / -3.9 / -3.3 — the engine scored QUALITY 9.75 and CONV 9.37 on a flat-
+# growth, mid-margin business. AGENTS.md sec.5 already mandates using the
+# operating margin by HAND for exactly this (IONQ/NBIS/WDC/APLD); this makes the
+# guard automatic so historical/back-dated snapshots (which are built
+# mechanically, with no hand-curation) are corrected too.
+#
+# Detection. The single most reliable signal is the TRAILING margin: a genuine
+# one-off shows up as a full-fiscal-year (FY0) net margin that then REVERTS in
+# the trailing-twelve-months figure back toward the old baseline, because the
+# non-operating item does not recur. A real turnaround does the opposite — the
+# TTM SUSTAINS or exceeds the FY0 level, because the improvement is operational.
+# The CSV gives us both: `net_margin_hist[0]` is FY0 and `net_margin` is the
+# TTM. So the guard requires an isolated FY0 spike AND a TTM that has fallen well
+# back below it. That distinction is what separates the windfalls from the
+# turnarounds it must NOT touch (verified against the book):
+#   * WINDFALL (flag):   DOCU  FY0 35.9 -> TTM 9.6   (DTA release, reverts)
+#                        PANW  FY0 32.1 -> TTM 8.0   (one-off tax benefit)
+#                        MPWR/PINS/APPF/FER/TLN — same revert signature.
+#   * REAL RAMP (leave): APP   FY0 49.3 -> TTM 64.3  (sustains/climbs)
+#                        SOFI  FY0 18.9 -> TTM 14.8   HOOD 47.8 -> 41.1
+#                        CRDO  FY0 12.0 -> TTM 35.4   ARGX 37.0 -> 32.3
+#                        PLTR (gradual ramp) / WDC (cyclical) — never isolated.
+# Conditions (all must hold):
+#   1. POSITIVE FY0 net margin (windfalls inflate; losses handled elsewhere by
+#      the operating-margin proxy rule / profitability gate),
+#   2. FY0 exceeds the MAX of every OTHER FY by > _WINDFALL_SPIKE_PTS pts
+#      (isolated one-year discontinuity, not a ramp or a cyclical oscillation),
+#   3. that best sustained prior FY (max of the rest) is modest
+#      (< _WINDFALL_BASE_MAX), AND
+#   4. the TTM (`net_margin`) has REVERTED > _WINDFALL_REVERT_PTS pts below FY0
+#      — i.e. the boost did not recur. (Skipped only when TTM is unavailable, in
+#      which case the isolated-spike + modest-base test stands alone.)
+# When flagged, the FY0 year is capped (for scoring only) at that best sustained
+# prior FY, and the reported LEVEL is capped there too. The guard ONLY ever
+# LOWERS a score. A hard net<=gross cap is also applied (a net margin above gross
+# is definitionally non-operating).
+_WINDFALL_SPIKE_PTS  = 20.0  # pts FY0 must exceed the best prior FY by
+_WINDFALL_BASE_MAX   = 25.0  # best prior FY must be below this to flag
+_WINDFALL_REVERT_PTS = 10.0  # pts the TTM must have fallen back below FY0
+
+
+def _windfall_adjust(f):
+    """Return (corrected_net_margin, corrected_net_margin_hist) with any one-off
+    net-margin windfall damped to the name's own sustainable baseline.
+
+    Pure function of the CSV cells (`net_margin`, `net_margin_hist`,
+    `gross_margin`); deterministic; only ever lowers. When nothing is flagged it
+    returns the inputs unchanged, so every non-windfall name is byte-identical to
+    before. See the WINDFALL-MARGIN GUARD note above for the detection rule.
+    """
+    nm = f.get("net_margin")
+    hist = f.get("net_margin_hist") or []
+    gross = f.get("gross_margin")
+
+    corrected_nm = nm
+    corrected_hist = list(hist)
+
+    # Baseline = the best SUSTAINED prior year = max of the history EXCLUDING its
+    # newest (possibly-windfall) FY0 point. Using the max (not the median) means
+    # FY0 must be an ISOLATED spike above every other year to flag — a gradual
+    # turnaround or a cyclical oscillation, whose prior years include a nearby or
+    # positive value, is left alone. Needs >= 3 years to be meaningful.
+    #
+    # The DECIDING gate, though, is the TTM-revert test: a genuine one-off shows
+    # up as an FY0 spike whose boost then vanishes in the trailing (`net_margin`)
+    # figure, so the TTM has fallen well back below FY0. A real ramp does the
+    # opposite (TTM sustains/exceeds FY0), so it is never flagged even if FY0
+    # happened to clear the isolated-spike bar. The revert test is skipped only
+    # when the TTM is unavailable, leaving the spike+modest-base test to stand.
+    baseline = None
+    if len(hist) >= 3:
+        newest, tail = hist[0], hist[1:]
+        cand = max(tail)
+        reverted = (nm is None) or ((newest - nm) > _WINDFALL_REVERT_PTS)
+        if (newest > 0
+                and (newest - cand) > _WINDFALL_SPIKE_PTS
+                and cand < _WINDFALL_BASE_MAX
+                and reverted):
+            baseline = cand
+            corrected_hist[0] = min(newest, cand)   # damp the series spike
+
+    # Damp the reported LEVEL whenever it ITSELF sits a spike above the baseline.
+    # Tested directly against the baseline (not by exact-matching the newest hist
+    # cell) because net_margin and net_margin_hist[0] can differ by rounding —
+    # the mismatch that would otherwise let a windfall LEVEL through.
+    if (baseline is not None and corrected_nm is not None
+            and corrected_nm > 0
+            and (corrected_nm - baseline) > _WINDFALL_SPIKE_PTS):
+        corrected_nm = min(corrected_nm, baseline)  # only ever lower
+
+    # --- hard cap: a net margin above gross is a non-operating windfall ---
+    if (corrected_nm is not None and gross is not None
+            and corrected_nm > gross):
+        corrected_nm = gross
+
+    return corrected_nm, corrected_hist
+
 
 def _margin_trend(f):
     """Score net-margin TRAJECTORY 0..1 (1=expanding, .5=flat, 0=compressing),
@@ -498,7 +603,10 @@ def _margin_trend(f):
     expansion (drift>0) reward is gated by the newer-half margin LEVEL so a
     still-unprofitable turnaround does not earn full marks (see the
     PROFITABILITY GATE note above)."""
-    hist = f.get("net_margin_hist") or []
+    # Damp any one-off net-margin windfall to the name's sustainable baseline
+    # first, so a non-operating spike (DOCU's DTA release) is not read as
+    # genuine "expansion" (see the WINDFALL-MARGIN GUARD note above).
+    _, hist = _windfall_adjust(f)
     if len(hist) < 2:
         return None                       # no trajectory -> let _blend drop it
     # series is newest-first; split into newer vs older halves (odd length: the
@@ -1007,7 +1115,10 @@ def layer_scores(t, f, info):
     spec = _is_speculative(t, info)
 
     # --- FUND (Layer 1): business quality, momentum-neutral --------------
-    nm = f.get("net_margin")
+    # Damp any one-off net-margin windfall before scoring the margin LEVEL, so a
+    # non-operating spike (e.g. DOCU's DTA release) can't earn a perfect margin
+    # score (see the WINDFALL-MARGIN GUARD note).
+    nm, _ = _windfall_adjust(f)
     fcf = f.get("fcf_positive")
     if nm is None:
         l_margin = None
@@ -1302,7 +1413,10 @@ def dca_quality(t, f):
     # --- QUALITY (is it still a great business?) ---
     #     Missing inputs propagate as None and are dropped by _blend (their
     #     weight is redistributed), instead of being faked to a neutral 0.5.
-    nm = f.get("net_margin")
+    # Damp any one-off net-margin windfall first so the margin LEVEL, the FCF
+    # inference and the trajectory all use the sustainable figure, not the spike
+    # (see the WINDFALL-MARGIN GUARD note).
+    nm, _ = _windfall_adjust(f)
     fcf = f.get("fcf_positive")
     if nm is None:
         q_margin = None
