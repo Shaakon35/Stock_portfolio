@@ -189,6 +189,11 @@ CYCLE_POS = {
     #   TLN  IPP power on datacenter-demand run, extended (cf CEG/GEV)   -> Late
     "APP": "Mid/Late", "CLS": "Mid", "INOD": "Early/Mid",
     "NU": "Early/Mid", "RDDT": "Early/Mid", "TLN": "Late",
+    # Promoted from WATCHLIST to held cycle legs in the 2026-08 reshape (#14);
+    # tagged to match the 'pos' they carried as watchlist entries:
+    #   RHM.DE defense rearmament super-cycle (multi-year backlog) -> Mid
+    #   WPM    gold/silver streaming, commodity-cyclical           -> Mid
+    "RHM.DE": "Mid", "WPM": "Mid",
 }
 # Point 5 score: earlier in the secular wave = better for forward growth.
 _CYCLE_P5 = {"Early": 1.0, "Early/Mid": 0.75, "Mid": 0.5,
