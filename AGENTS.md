@@ -298,6 +298,20 @@ print('PASS')"
   compounders into AVOID by design — use `--by-strategy` to grade DCA on
   quality+valuation instead. See `scoring/README.md` for the rationale.
 
+- **Cycle tags (`CYCLE_POS`) must be explicit for every held `cycle`-strategy
+  name.** `cycle_of()` resolves a name's wave position from `CYCLE_POS` first,
+  then a watchlist `pos`, then falls back to `"Mid"`. For a **`cycle`** trade the
+  wave position IS the thesis, so a silent `"Mid"` default makes its CYCLE layer
+  (`C`) and 8-Point P5 meaningless — and can hide a genuinely **Late/extended**
+  name. Held names always have `wl_pos=None`, so their only source of a real tag
+  is `CYCLE_POS`. `untagged_cycle_holdings()` returns any held `cycle` name
+  missing from `CYCLE_POS`, and `build_results` prints a stderr `WARNING:` when
+  that set is non-empty — keep it empty. Held **`dca`/`catalyst`** names are
+  intentionally allowed to default to `"Mid"` (cycle position is not a meaningful
+  axis for a buy-forever compounder; this is why the top DCA cohort clusters at
+  `C≈5.9`). When adding a new `cycle` holding, add a deliberate
+  Early/Early-Mid/Mid/Mid-Late/Late tag to `CYCLE_POS` in the same change.
+
 ## Colab usage
 
 After `git pull`, call `importlib.reload()` on `config.*` and `portfolio.*` —

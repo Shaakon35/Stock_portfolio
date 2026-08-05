@@ -179,6 +179,16 @@ CYCLE_POS = {
     "CRWD": "Mid", "PANW": "Mid", "S": "Early", "SNOW": "Mid",
     "TMDX": "Early/Mid", "SYM": "Binary", "CRCL": "Binary",
     "AXON": "Mid", "IONQ": "Early", "RKLB": "Early", "LEU": "Early",
+    # Cycle-strategy holdings that were silently defaulting to "Mid" — tagged
+    # deliberately so the CYCLE layer / 8-Point P5 reflect real wave position:
+    #   APP  adtech software, extended multi-year run, growth maturing -> Mid/Late
+    #   CLS  AI-hardware ODM riding datacenter capex, mid of buildout   -> Mid
+    #   INOD small-cap AI data-prep services, ramp just beginning       -> Early/Mid
+    #   NU   LatAm neobank still expanding (low penetration)            -> Early/Mid
+    #   RDDT newly public, ad-monetization ramp early                   -> Early/Mid
+    #   TLN  IPP power on datacenter-demand run, extended (cf CEG/GEV)   -> Late
+    "APP": "Mid/Late", "CLS": "Mid", "INOD": "Early/Mid",
+    "NU": "Early/Mid", "RDDT": "Early/Mid", "TLN": "Late",
 }
 # Point 5 score: earlier in the secular wave = better for forward growth.
 _CYCLE_P5 = {"Early": 1.0, "Early/Mid": 0.75, "Mid": 0.5,
@@ -206,6 +216,24 @@ def cycle_of(t, info):
     """Resolve a name's cycle position: explicit CYCLE_POS first, then the
     watchlist's own 'pos' tag, then 'Mid' as neutral default."""
     return CYCLE_POS.get(t) or info.get("wl_pos") or "Mid"
+
+
+def untagged_cycle_holdings():
+    """Return held cycle-strategy tickers with NO explicit CYCLE_POS tag.
+
+    For a `cycle` name the wave position IS the thesis, so silently defaulting
+    to "Mid" (via cycle_of) makes its CYCLE layer and 8-Point P5 meaningless.
+    A held name always has wl_pos=None, so its only source of a real tag is
+    CYCLE_POS — hence the check is CYCLE_POS membership, not cycle_of. Held
+    `dca`/`catalyst` compounders are intentionally allowed to default (cycle
+    position is not a meaningful axis for them), so they are NOT flagged.
+    Returns a sorted list; empty == all cycle holdings deliberately tagged.
+    """
+    port = portfolio_rows(include_watchlist=False)  # held names only
+    return sorted(
+        t for t, info in port.items()
+        if info.get("strategy") == "cycle" and t not in CYCLE_POS
+    )
 
 
 # =========================================================================
@@ -2058,6 +2086,15 @@ def build_results(csv_path):
     """
     port = portfolio_rows(include_watchlist=True)
     fund = load_fundamentals(csv_path)
+    # Guard: a held cycle-strategy name with no explicit CYCLE_POS tag silently
+    # defaults to "Mid", making its CYCLE layer / 8-Point P5 uninformative — the
+    # opposite of what a cycle trade needs. Warn so the gap can't reappear
+    # unnoticed (dca/catalyst holdings are allowed to default; see the function).
+    _untagged = untagged_cycle_holdings()
+    if _untagged:
+        print("WARNING: held cycle-strategy names missing an explicit CYCLE_POS "
+              f"tag (defaulting to 'Mid'): {', '.join(_untagged)}",
+              file=sys.stderr)
     results = []
     for t, info in port.items():
         if t == "SMHV.SW":
