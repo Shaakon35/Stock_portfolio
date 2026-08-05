@@ -65,13 +65,14 @@ W1_SILICON_TARGETS = {
     # VALUES ARE DIRECT BOOK % (2026-06 model change): e.g. 2.0 == 2.0% of total book.
     # The trailing "# CHANGED: 0.x ->" notes below are HISTORICAL sub-weight values from the
     # old normalized model; the live number on each line is now a direct percent.
-    "SMHV.SW":   32.5,# CHANGED: 37.5 -> 32.5 (RESHAPE-TRIM 2026-08) — trimmed 5.0% off the
-                        # oversized ETF anchor to fund three genuine new diversifier LEGS
-                        # (PODD health-care, WPM commodity/gold, AJG financials) in W7 — none
-                        # of which the tech-heavy book had any exposure to. Reduces single-
-                        # position concentration (the ETF still dominates at ~1/3 of book) and
-                        # lowers correlation to the AI-capex cycle every other wave rides. This
-                        # trims the fixed 90k CHF windfall's book WEIGHT, not the share count.
+    "SMHV.SW":   31.0,# CHANGED: 37.5 -> 32.5 -> 31.0 (RESHAPE-TRIM 2026-08) — trimmed a total
+                        # of 6.5% off the oversized ETF anchor to fund four genuine new
+                        # diversifier LEGS: PODD (health-care), WPM (commodity/gold), AJG
+                        # (financials) and ONON (consumer brand) in W7 — none of which the
+                        # tech-heavy book had any exposure to. Reduces single-position
+                        # concentration (the ETF still dominates at ~1/3 of book) and lowers
+                        # correlation to the AI-capex cycle every other wave rides. This trims
+                        # the fixed 90k CHF windfall's book WEIGHT, not the share count.
                         # Prior: 0.85227 -> 0.85656 (RIGHTSIZE 2026-06). NB: SMHV tracks a
                         # US-LISTED semi index, so it holds ZERO Samsung/SK Hynix — genuine new
                         # exposure, not a dup.
@@ -546,6 +547,12 @@ W7_DIVERSIFY_TARGETS = {
                       # The defensive FINANCIALS leg the book lacked: recession-resistant mid-
                       # teens compounding, zero correlation to the AI-capex cycle. CONV 7.57.
                       # A ballast holding — low drama, steady reward. DCA — hold-forever.
+    "ONON":  1.5,# NEW (RESHAPE-TRIM 2026-08) — 1.5% book, funded by a further SMHV.SW
+                      # trim (32.5 -> 31.0%). On Holding — premium running shoes/apparel. The
+                      # book's ONLY consumer-brand / discretionary name — maximum diversification
+                      # value (a whole new demand driver, uncorrelated to tech/AI-capex). CONV
+                      # 8.24 AND a genuinely CHEAP entry: V 10.0 on PEG 0.81 / P/S 3.2, trading
+                      # ~7% BELOW its 200-day. ~30% revenue growth, FCF+. DCA — hold-forever.
 }
 
 # =========================================================================
@@ -665,6 +672,7 @@ STRATEGY = {
     "PODD":    "dca",       # NEW (RESHAPE-TRIM 2026-08). Insulet (Omnipod) — insulin pumps; new health-care leg, ~25% growth + expanding margins, hold-forever compounder, a drop is a discount
     "WPM":     "cycle",     # NEW (RESHAPE-TRIM 2026-08). Wheaton — gold/silver streaming; the book's only precious-metals hedge, commodity-cyclical, buy dips / trim manias
     "AJG":     "dca",       # NEW (RESHAPE-TRIM 2026-08). Arthur J. Gallagher — insurance broker; defensive financials ballast, recession-resistant mid-teens compounder, a drop is a discount
+    "ONON":    "dca",       # NEW (RESHAPE-TRIM 2026-08). On Holding — premium footwear/apparel; the book's only consumer-brand leg, ~30% growth, cheap entry (V 10.0), hold-forever compounder, a drop is a discount
 }
 
 # =========================================================================
@@ -3861,13 +3869,9 @@ WATCHLIST = {
     # PODD PROMOTED (RESHAPE-TRIM 2026-08) to W7_DIVERSIFY_TARGETS at 2.0% book
     #     (funded by the SMHV.SW trim) — anchors a new health-care leg (Omnipod
     #     insulin pumps). Removed from WATCHLIST; re-add here if cut to 0%.
-    "ONON": {
-        "pos":      "Mid",
-        "cagr":     (15, 25),
-        "strategy": "dca",
-        "area":     'Consumer / premium footwear (On Holding)',
-        "note":     'Swiss running brand; ~30% rev, 8% net. margin_hist oldest -23% is the 2021 IPO charge, newer margins real — mild base-effect, not a turnaround.',
-    },
+    # ONON PROMOTED (RESHAPE-TRIM 2026-08) to W7_DIVERSIFY_TARGETS at 1.5% book
+    #     (funded by a further SMHV.SW trim) — the book's only consumer-brand leg.
+    #     Removed from WATCHLIST; re-add here if it is ever cut to 0%.
     "CARS": {
         "pos":      "Mid",
         "cagr":     (8, 16),
