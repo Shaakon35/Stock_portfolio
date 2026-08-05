@@ -31,7 +31,7 @@
 #
 # USAGE:
 #   PORTFOLIO_USE=ai python3 scoring/score_holdings.py
-#   PORTFOLIO_USE=ai python3 scoring/score_holdings.py --csv scoring/fundamentals_2026-06-25.csv
+#   PORTFOLIO_USE=ai python3 scoring/score_holdings.py --csv scoring/fundamentals_2026-08-04.csv
 #   PORTFOLIO_USE=ai python3 scoring/score_holdings.py --blend growth --sort blend  # growth-weighted composite
 # =========================================================================
 
