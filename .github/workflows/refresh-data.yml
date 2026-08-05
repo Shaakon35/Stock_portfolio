@@ -2,7 +2,8 @@
 #
 # Re-sources the fundamentals snapshot from stockanalysis.com (prices/market
 # caps, valuation multiples, 200DMA distance, and the trailing revenue / net-
-# margin series), re-scores every name, regenerates docs/conviction.json, runs
+# margin series), re-scores every name, regenerates docs/conviction.json,
+# appends this run's CONV to the docs/conviction_history.json time-series, runs
 # the AGENTS.md validation gate, and commits the result so GitHub Pages
 # republishes the site.
 #
@@ -87,6 +88,15 @@ jobs:
           set -euo pipefail
           python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --json docs/conviction.json
 
+      - name: Append conviction history
+        run: |
+          set -euo pipefail
+          # Accumulate this snapshot's CONV into the long-lived time-series
+          # (docs/conviction_history.json). The snapshot date is derived from
+          # the CSV filename and the append is idempotent per date, so a same-day
+          # re-run overwrites its own entry instead of duplicating it.
+          python3 scoring/append_conviction_history.py --csv "${{ steps.snap.outputs.csv }}"
+
       - name: Refresh Plot-tab price history
         run: |
           set -euo pipefail
@@ -132,7 +142,7 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scoring/fundamentals_*.csv docs/conviction.json docs/plot_history.json
+          git add scoring/fundamentals_*.csv docs/conviction.json docs/conviction_history.json docs/plot_history.json
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0
@@ -146,7 +156,7 @@ jobs:
           # wins (--theirs = the commit being replayed during a rebase), so the
           # loop resolves it and retries instead of aborting under `set -e`.
           export GIT_EDITOR=true
-          GEN="scoring/fundamentals_*.csv docs/conviction.json docs/plot_history.json"
+          GEN="scoring/fundamentals_*.csv docs/conviction.json docs/conviction_history.json docs/plot_history.json"
           for attempt in 1 2 3 4 5; do
             if git push; then
               echo "Pushed on attempt $attempt."
