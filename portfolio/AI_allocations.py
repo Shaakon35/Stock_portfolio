@@ -3805,7 +3805,7 @@ WATCHLIST = {
                  "area": "Value retail (Avenue Supermarts/DMart, India)",
                  "note": "Hypermarket compounder; India-consumption secular, rich."},
     "ETERNAL.NS": {"strategy": "cycle", "pos": "Early", "cagr": (15, 40),
-                   "area": "Food delivery / quick-commerce (Eternal/Zomato)",
+                   "area": "Food delivery / quick-commerce (Eternal)",
                    "note": "India food-delivery + Blinkit q-commerce; hypergrowth, "
                            "profitability young — watch q-commerce burn."},
     "HAL.NS": {"strategy": "dca", "pos": "Mid", "cagr": (8, 20),
