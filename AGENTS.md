@@ -312,6 +312,37 @@ print('PASS')"
   `C≈5.9`). When adding a new `cycle` holding, add a deliberate
   Early/Early-Mid/Mid/Mid-Late/Late tag to `CYCLE_POS` in the same change.
 
+## Weekly conviction-movers email
+
+The weekly refresh (`.github/workflows/refresh-data.yml`) emails a themed HTML
+report of what moved in the `conv` score since the previous weekly run. Built by
+`scoring/report_conviction_movers.py` (pure stdlib), which diffs the freshly
+committed `docs/conviction.json` against the previous `Refresh conviction data`
+commit (auto-resolved from git history — no separate datastore).
+
+- **Inclusion**: held names are reported even on small drift (`>7` bar 0.15);
+  non-held names only when they move a lot (bar 0.40); any flag flip
+  (peak/marg/grade/binding) is always reported. Thresholds are constants at the
+  top of the script. The top-`N` `>7` movers get a layer-attribution "zoom".
+- **Theme**: the report inlines the dashboard's `:root` CSS tokens, parsed from
+  `docs/style.css` at build time, so it tracks the site's look (single source of
+  truth). The file is fully self-contained (no external `<link>`/fonts), sent as
+  the email **attachment**; a trimmed inline body makes it phone-readable.
+- **Cadence**: sends only on the weekly `schedule` and manual `workflow_dispatch`
+  runs — never on the allocation-edit republish workflow. The send step is
+  `continue-on-error`, so an SMTP failure never fails the data refresh.
+- **Required repo secrets** (Settings → Secrets and variables → Actions):
+  - `MAIL_USERNAME` — the Gmail address that both sends and receives the report.
+  - `MAIL_PASSWORD` — a Gmail **App Password** for that account (2-Step
+    Verification must be on; a normal password will not work).
+
+  If the secrets are absent the send step simply fails soft (skipped/errored)
+  without affecting the committed data.
+- **Local preview**: `python3 scoring/report_conviction_movers.py --selftest`
+  diffs two committed snapshots and writes `/tmp/movers_selftest.html`. To render
+  a specific pair: `--current <file> --previous <(git show <sha>:docs/conviction.json)
+  --out-file /tmp/report.html`.
+
 ## Colab usage
 
 After `git pull`, call `importlib.reload()` on `config.*` and `portfolio.*` —

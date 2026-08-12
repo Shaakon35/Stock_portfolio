@@ -163,3 +163,50 @@ jobs:
           done
           echo "::error::Failed to push after 5 attempts."
           exit 1
+
+      # ------------------------------------------------------------------
+      # Weekly conviction-movers email.
+      #
+      # Diffs the freshly-committed docs/conviction.json against the previous
+      # weekly refresh commit (auto-resolved from git history) and emails a
+      # themed HTML report to the owner. Held names are reported even on small
+      # drift; non-held names only when they move a lot; the top >7 movers get a
+      # layer-attribution "zoom". See docs/email_report_strategy.md.
+      #
+      # Requires two repo secrets (Settings -> Secrets and variables -> Actions):
+      #   MAIL_USERNAME  the Gmail address that sends AND receives the report
+      #   MAIL_PASSWORD  a Gmail APP PASSWORD for that account (needs 2FA on)
+      # The recipient is that same address. If the secrets are absent the send
+      # step is skipped (the data refresh above still succeeds).
+      - name: Build movers report
+        id: report
+        run: |
+          set -euo pipefail
+          OUT="/tmp/conviction_movers_$(date -u +%F).html"
+          python3 scoring/report_conviction_movers.py \
+            --current docs/conviction.json \
+            --previous - \
+            --scope held-plus-big \
+            --out-file "$OUT" \
+            --out-inline /tmp/inline.html \
+            --subject-out /tmp/subject.txt
+          echo "subject=$(cat /tmp/subject.txt)" >> "$GITHUB_OUTPUT"
+          echo "attach=$OUT" >> "$GITHUB_OUTPUT"
+
+      - name: Email the report
+        # Weekly cadence only (schedule) or a manual run for testing. Never on
+        # the allocation-edit republish path (that is a different workflow).
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        continue-on-error: true   # a send failure must not fail the data refresh
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: ${{ steps.report.outputs.subject }}
+          to: ${{ secrets.MAIL_USERNAME }}
+          from: "Conviction Bot <${{ secrets.MAIL_USERNAME }}>"
+          html_body: file:///tmp/inline.html
+          attachments: ${{ steps.report.outputs.attach }}
