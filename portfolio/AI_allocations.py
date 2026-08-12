@@ -766,14 +766,17 @@ def tickers_by_strategy(mode):
 WATCHLIST = {
     # --- Memory / storage (HBM + NAND/HDD) — the deepest-cyclical corner ---
     "MU": {
-        "pos":      "Mid",
+        "pos":      "Mid/Late",   # 2026-08-12 tag audit: fired [PEAK?] at +99%
+                                  # above its 200DMA on a 0.5 PEG — fake-cheap
+                                  # peak-cycle memory earnings, same signal as SK
+                                  # Hynix. Demoted Mid -> Mid/Late.
         "cagr":     (10, 30),
         "strategy": "cycle",
         "area":     "Memory / DRAM+HBM (Micron) — LARGE",
         "note":     "Held INDIRECTLY — SMHV's #1 holding (~14.3% of the ETF, "
                     "~5.4% of book). HBM/DRAM supercycle leader; same memory "
-                    "cycle as SK Hynix. Deep-cyclical commodity — buy dips, trim "
-                    "near peak. Listed here so the look-through book% renders.",
+                    "cycle as SK Hynix. Deep-cyclical commodity peaking (extended "
+                    "chart) — buy dips, trim near peak. Look-through book% renders.",
     },
     "SNDK": {
         "pos":      "Late",
@@ -1072,7 +1075,10 @@ WATCHLIST = {
                     "average down. Wide band includes a real negative low end.",
     },
     "BWXT": {
-        "pos":      "Early",
+        "pos":      "Mid",   # 2026-08-12 tag audit: was Early, but net margins are
+                             # compressing off a PROFITABLE base (14.4->10.4) with no
+                             # revenue trough — a mature compounder, not early-cycle.
+                             # [MARG?] cleared by the demote.
         "cagr":     (8, 15),
         "strategy": "dca",
         "area":     "Power / nuclear components (naval reactors + SMR parts)",
@@ -1377,7 +1383,9 @@ WATCHLIST = {
     # --- Physical AI / robotics ('next boom' — mostly speculative) ---
     "VPG": {
         "strategy": "cycle",
-        "pos":      "Early",
+        "pos":      "Mid",   # 2026-08-12 tag audit: was Early, but margins compress
+                             # off a profitable base (6.4->3.2) with flat revenue — a
+                             # mid-cycle industrial, not early. [MARG?] cleared.
         "cagr":     (6, 18),
         "area":     "Robotics / semi sensors (Vishay Precision Group)",
         "note":     "UNDER-RADAR and PROFITABLE precision-sensor maker (robotics/semi). "
@@ -2344,9 +2352,12 @@ WATCHLIST = {
              "area": "Electrical/mechanical construction (EMCOR)",
              "note": "DC + electrification contractor; backlog-driven cyclical. "
                      "Buy dips."},
-    "MYRG": {"strategy": "cycle",    "pos": "Early/Mid","cagr": (8, 20),
+    "MYRG": {"strategy": "cycle",    "pos": "Mid","cagr": (8, 20),
+             # 2026-08-12 tag audit: was Early/Mid, but margins slide off a
+             # profitable base (4.7->1.4) with no revenue trough — mid-cycle,
+             # not early-build. [MARG?] cleared by the demote.
              "area": "Transmission-line contractor (MYR Group)",
-             "note": "Specialized grid T&D contractor; early-cycle build. "
+             "note": "Specialized grid T&D contractor; mid-cycle build. "
                      "High-beta — buy dips."},
     "FLR":  {"strategy": "cycle",    "pos": "Mid",      "cagr": (6, 18),
              "area": "Engineering / infra constructor (Fluor)",
@@ -2390,6 +2401,11 @@ WATCHLIST = {
              "area": "Diversified pharma (Pfizer)",
              "note": "Depressed post-COVID value, high yield, pipeline doubts. "
                      "DCA/value."},
+    "SDZ.SW": {"strategy": "dca",    "pos": "Mid",      "cagr": (5, 10),
+             "area": "Generics + biosimilars (Sandoz, SIX Swiss)",
+             "note": "Novartis generics/biosimilars spin-off. Defensive volume "
+                     "compounder; biosimilar pipeline is the growth leg. "
+                     "DCA-grade — cheap fwd PE vs a steady mid-single-digit ramp."},
     "SYK":  {"strategy": "dca",      "pos": "Mid",      "cagr": (8, 13),
              "area": "Orthopedics / hospital tech (Stryker)",
              "note": "Dominant ortho + hospital ecosystem. DCA-grade "
@@ -3612,9 +3628,13 @@ WATCHLIST = {
     "3008.TW": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 16),
                 "area": "Smartphone optics (Largan, Taiwan)",
                 "note": "High-end phone lens leader; handset-cycle, rich margin."},
-    "3711.TW": {"strategy": "cycle", "pos": "Mid", "cagr": (6, 18),
+    "3711.TW": {"strategy": "cycle", "pos": "Mid/Late", "cagr": (6, 18),
+                # 2026-08-12 tag audit: fired [PEAK?] at +57% above its 200DMA on
+                # a 0.39 PEG — fake-cheap peak-cycle OSAT earnings. Demoted
+                # Mid -> Mid/Late so the CYCLE layer reflects the late-cycle risk.
                 "area": "OSAT packaging/test (ASE, Taiwan)",
-                "note": "Largest OSAT; advanced-packaging (CoWoS) cyclical."},
+                "note": "Largest OSAT; advanced-packaging (CoWoS) cyclical. "
+                        "Late-cycle/extended — trim into strength."},
     "2891.TW": {"strategy": "cycle", "pos": "Mid", "cagr": (4, 12),
                 "area": "Bank / financial (CTBC, Taiwan)",
                 "note": "Large TW financial holding; rate/credit cyclical."},
