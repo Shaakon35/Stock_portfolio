@@ -3804,10 +3804,10 @@ WATCHLIST = {
     "DMART.NS": {"strategy": "dca", "pos": "Mid", "cagr": (12, 22),
                  "area": "Value retail (Avenue Supermarts/DMart, India)",
                  "note": "Hypermarket compounder; India-consumption secular, rich."},
-    "ZOMATO.NS": {"strategy": "cycle", "pos": "Early", "cagr": (15, 40),
-                  "area": "Food delivery / quick-commerce (Eternal/Zomato)",
-                  "note": "India food-delivery + Blinkit q-commerce; hypergrowth, "
-                          "profitability young — watch q-commerce burn."},
+    "ETERNAL.NS": {"strategy": "cycle", "pos": "Early", "cagr": (15, 40),
+                   "area": "Food delivery / quick-commerce (Eternal/Zomato)",
+                   "note": "India food-delivery + Blinkit q-commerce; hypergrowth, "
+                           "profitability young — watch q-commerce burn."},
     "HAL.NS": {"strategy": "dca", "pos": "Mid", "cagr": (8, 20),
                "area": "Defense aerospace (Hindustan Aeronautics, India)",
                "note": "India military-aircraft monopoly; indigenization order book."},

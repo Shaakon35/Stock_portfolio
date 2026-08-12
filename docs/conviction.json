@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-08-12 07:35 UTC",
+  "generated_utc": "2026-08-12 07:50 UTC",
   "csv": "fundamentals_2026-08-10.csv",
   "count": 750,
   "held_count": 45,
@@ -841,7 +841,7 @@
       "has_data": true
     },
     {
-      "ticker": "ZOMATO.NS",
+      "ticker": "ETERNAL.NS",
       "wave": "WL",
       "held": false,
       "book_pct": 0.0,
