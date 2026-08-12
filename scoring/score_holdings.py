@@ -168,8 +168,17 @@ def portfolio_rows(include_watchlist=False):
 #    mirrored from the notebook's _CYCLE_POS so the two stay consistent.
 # =========================================================================
 CYCLE_POS = {
-    "BESI.AS": "Early", "SMHN.DE": "Early", "SIMO": "Early/Mid",
-    "CAMT": "Mid/Late", "000660.KS": "Mid/Late", "CDNS": "Mid",
+    # 2026-08-12 tag audit: BESI/LEU/SIMO were tagged EARLY but the engine's own
+    # [MARG?] check showed their net margins COMPRESSING off a HIGH, PROFITABLE
+    # base (not a trough) — the Early thesis is stale. Demoted to Mid / Mid-Late.
+    # 000660.KS (SK Hynix) fired [PEAK?] at +171% above its 200DMA on a 0.04 PEG
+    # (fake-cheap peak-cycle memory earnings) — demoted Mid/Late -> Late.
+    #   BESI.AS  margins 37.7->30.0, rev flat/neg (no rev collapse) -> Mid
+    #   LEU      margins 58.7->16.6 off a peak (catalyst enricher)  -> Mid
+    #   SIMO     profitable, but +51% ext + 0.34 PEG = peak signal   -> Mid/Late
+    #   000660.KS memory cycle peaking, extreme extension            -> Late
+    "BESI.AS": "Mid", "SMHN.DE": "Early", "SIMO": "Mid/Late",
+    "CAMT": "Mid/Late", "000660.KS": "Late", "CDNS": "Mid",
     "ONTO": "Mid", "SMHV.SW": "Mid",
     "GEV": "Late", "CEG": "Late", "CCJ": "Mid", "OKLO": "Binary",
     "ETN": "Early", "PWR": "Early", "HUBB": "Early",
@@ -178,7 +187,7 @@ CYCLE_POS = {
     "DDOG": "Mid", "ZS": "Mid", "PLTR": "Mid", "NOW": "Mid",
     "CRWD": "Mid", "PANW": "Mid", "S": "Early", "SNOW": "Mid",
     "TMDX": "Early/Mid", "SYM": "Binary", "CRCL": "Binary",
-    "AXON": "Mid", "IONQ": "Early", "RKLB": "Early", "LEU": "Early",
+    "AXON": "Mid", "IONQ": "Early", "RKLB": "Early", "LEU": "Mid",
     # Cycle-strategy holdings that were silently defaulting to "Mid" — tagged
     # deliberately so the CYCLE layer / 8-Point P5 reflect real wave position:
     #   APP  adtech software, extended multi-year run, growth maturing -> Mid/Late
@@ -1152,16 +1161,41 @@ def peak_trap(t, f, info):
 # cycle tag, so it needs no new data and applies uniformly to every ticker.
 _MARGIN_FLAG_MAX = 0.4   # _margin_trend at/below this = clearly compressing
 _MARGIN_FLAG_CYCLES = ("Early", "Early/Mid")   # tags that imply RISING margins
+_TROUGH_REV_DROP = -20.0  # a YoY of this or worse anywhere in the FY window = a
+                          #   genuine revenue collapse -> the name really IS at a
+                          #   cyclical bottom, so an Early tag is VALIDATED not stale
+
+
+def _at_trough(f):
+    """True when the name is at a genuine cyclical BOTTOM: either loss-making on
+    the newest trailing net margin, OR its trailing FY revenue series shows a
+    real collapse (a YoY <= _TROUGH_REV_DROP). At a true trough, depressed /
+    compressing margins ARE the bottom, so an 'Early' (early-in-recovery) tag is
+    consistent with the data, not contradicted by it. Both series are newest-
+    first; returns False when neither is available."""
+    nmh = f.get("net_margin_hist") or []
+    if nmh and nmh[0] < 0:                       # loss-making right now
+        return True
+    rgh = f.get("rev_growth_hist") or []
+    if rgh and min(rgh) <= _TROUGH_REV_DROP:     # a real revenue collapse in view
+        return True
+    return False
 
 
 def margin_flag(t, f, info):
     """True when a name tagged EARLY in the cycle has a COMPRESSING net-margin
-    trajectory — the tag and the data disagree. Annotation only (no score
-    change); returns False when there is no margin history or the name is not
-    an early-cycle cyclical."""
+    trajectory *and is NOT at a genuine trough* — i.e. the Early tag is stale,
+    the margins are falling off a healthy profitable base rather than sitting at
+    a cyclical bottom. Annotation only (no score change); returns False when
+    there is no margin history, the name is not early-cycle, or the name is
+    genuinely at a trough (where an Early tag is validated by the data)."""
     if t not in _CYCLICAL and cycle_of(t, info) not in _MARGIN_FLAG_CYCLES:
         return False
     if cycle_of(t, info) not in _MARGIN_FLAG_CYCLES:
+        return False
+    if _at_trough(f):
+        # Loss-making / post-revenue-collapse: an Early (recovery) tag agrees
+        # with the data — depressed margins are the trough, not a stale thesis.
         return False
     mt = _margin_trend(f)
     return mt is not None and mt <= _MARGIN_FLAG_MAX
