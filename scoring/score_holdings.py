@@ -1410,6 +1410,105 @@ def strategy_grade(r, f):
 
 
 # =========================================================================
+# 5c. STOCK ID CARD — deterministic archetype + watchlist action
+# =========================================================================
+# DataBourse-style scanners are useful when they do NOT replace the score but
+# label the setup the score is looking at: compounder, cyclical rebound, late
+# momentum, binary punt, etc. This turns the existing F/V/C layers, strategy tag,
+# cycle tag and flags into a compact "ID card" and a mechanical watchlist action.
+# The action is deliberately conservative: it is a triage instruction for names
+# not yet owned, not a price target or an order generator.
+def stock_archetype(r, f):
+    """Classify the stock setup from already-computed deterministic signals."""
+    t = r["ticker"]
+    strat = r.get("strategy")
+    F = r["layers"]["FUND"]
+    V = r["layers"]["VAL"]
+    C = r["layers"]["CYCLE"]
+    growth = r["growth10"]
+    pos = cycle_of(t, r)
+
+    if not r.get("has_data"):
+        return "Binary/no-data monitor" if pos == "Binary" else "No-fundamentals monitor"
+    if r["coverage"] < _GAP_THRESHOLD:
+        return "Thin-data punt"
+    if r["peak"]:
+        return "Peak-cycle trap"
+    if r["marg"]:
+        return "Cycle/margin conflict"
+
+    if strat == "dca":
+        q10, rich, _ = dca_quality(t, f)
+        if rich >= 0.6:
+            return "Rich compounder"
+        if q10 >= 7.0:
+            return "Quality compounder"
+        if F < 4.5:
+            return "Impaired compounder"
+        return "DCA candidate"
+
+    if strat == "cycle":
+        if C <= 4.0 and V <= 5.0:
+            return "Late momentum"
+        if pos in ("Early", "Early/Mid") and F >= 6.0 and V >= 6.0:
+            return "Early-cycle setup"
+        if V >= 7.0 and growth >= 6.0:
+            return "Cyclical rebound"
+        if growth >= 7.0 and BOTTLENECK.get(t, 0.0) >= 0.5:
+            return "Bottleneck grower"
+        return "Cycle watch"
+
+    if strat in ("catalyst", "lottery"):
+        if pos == "Binary":
+            return "Binary catalyst"
+        if growth >= 7.0 and V >= 5.0:
+            return "Catalyst setup"
+        return "Speculative watch"
+
+    return "Unclassified"
+
+
+def watchlist_action(r):
+    """Mechanical action for watch-only candidates.
+
+    ADD means the setup clears score + entry gates. STARTER means the stock is
+    eligible for a small position / deeper human thesis work. WAIT means the
+    thesis can be right but the entry or cycle flag is wrong today. RESEARCH
+    means data coverage is too thin to trust the rank. PASS means the current
+    score does not justify watchlist attention.
+    """
+    if r.get("held") and r.get("book_pct", 0.0) > 0:
+        return "HOLD"
+    if not r.get("has_data") or r["coverage"] < _GAP_THRESHOLD:
+        return "RESEARCH"
+    if r["peak"] or r["marg"]:
+        return "WAIT"
+
+    grade = r["grade"]
+    conv = r["conviction_unified"]
+    F = r["layers"]["FUND"]
+    V = r["layers"]["VAL"]
+    C = r["layers"]["CYCLE"]
+
+    if r.get("strategy") == "dca":
+        if grade == "KEEP-DCA" and conv >= 8.0 and F >= 7.0 and V >= 7.0:
+            return "ADD"
+        if grade == "KEEP-DCA" and conv >= 7.2 and F >= 6.0 and V >= 6.0:
+            return "STARTER"
+        if grade == "RICH":
+            return "WAIT"
+        return "PASS"
+
+    if grade == "PRIME" and conv >= 7.6 and F >= 6.0 and V >= 7.0 and C >= 5.0:
+        return "ADD"
+    if grade in ("PRIME", "MOMENTUM", "QUALITY") and conv >= 7.0:
+        return "STARTER"
+    if V < 4.0 or C < 4.0:
+        return "WAIT"
+    return "PASS"
+
+
+# =========================================================================
 # 6. LIVE REFRESH (optional) — fetch from stockanalysis.com and write a CSV
 # =========================================================================
 # Off by default. The committed CSV is the reproducible cache; --live overwrites
@@ -2015,6 +2114,40 @@ def default_csv():
     return str(cands[-1]) if cands else None
 
 
+def _clip(s, n):
+    """Fixed-width CLI cell with a visible ellipsis when text is too long."""
+    s = str(s)
+    if len(s) <= n:
+        return s
+    return s[:max(0, n - 1)] + "…"
+
+
+def render_watchlist_actions(results):
+    """Print watch-only / re-add candidates with their deterministic action."""
+    watch = [
+        r for r in results
+        if not (r.get("held") and r.get("book_pct", 0.0) > 0)
+    ]
+    if not watch:
+        return
+
+    priority = {"ADD": 0, "STARTER": 1, "WAIT": 2, "RESEARCH": 3, "PASS": 4}
+    watch.sort(key=lambda r: (priority.get(r["watch_action"], 9),
+                              -r["conviction_unified"]))
+    print("\n-- WATCHLIST ACTIONS (scanner triage) "
+          "--------------------------------")
+    print(f"   {'ticker':10s} {'strategy':8s} {'action':8s} {'CONV':>5s} "
+          f"{'grade':9s} {'archetype':24s} {'F':>4s} {'V':>4s} "
+          f"{'C':>4s} {'bind':5s} {'data%':>5s}")
+    for r in watch:
+        flags = (" [PEAK?]" if r["peak"] else "") + (" [MARG?]" if r["marg"] else "")
+        print(f"   {r['ticker']:10s} {r['strategy']:8s} "
+              f"{r['watch_action']:8s} {r['conviction_unified']:5.2f} "
+              f"{r['grade']:9s} {_clip(r['archetype'], 24):24s} "
+              f"{_layer_cell(r['layers'])} {_LAYER_ABBR[r['binding']]:5s} "
+              f"{_cov_cell(r['coverage'])}{flags}")
+
+
 def render_by_strategy(results, fund, args):
     """Output grouped by strategy mode, each judged on its own rubric."""
     print(f"\n=== RATING BY STRATEGY  (csv={Path(args.csv).name}) ===")
@@ -2076,6 +2209,8 @@ def render_by_strategy(results, fund, args):
                   f"{_LAYER_ABBR[r['binding']]:5s} "
                   f"{_cov_cell(r['coverage'])}{flags}")
 
+    render_watchlist_actions(results)
+
     print()
     print(_GROWTH_8PT_FOOTNOTE)
     print(_CONV_FOOTNOTE)
@@ -2117,13 +2252,16 @@ def build_results(csv_path):
         conv_unified = conv_dca if info.get("strategy") == "dca" else conv
         grade, _prim, _rich = strategy_grade(
             {**info, "quad": quadrant(eight, g10), "growth10": g10}, f)
-        results.append({**info, "eight": eight, "growth10": g10,
-                        "quad": quadrant(eight, g10), "eps_f": eps_f,
-                        "has_data": t in fund, "coverage": cov,
-                        "conviction": conv, "conviction_dca": conv_dca,
-                        "conviction_unified": conv_unified, "grade": grade,
-                        "layers": layers, "binding": binding, "peak": peak,
-                        "marg": marg})
+        rec = {**info, "eight": eight, "growth10": g10,
+               "quad": quadrant(eight, g10), "eps_f": eps_f,
+               "has_data": t in fund, "coverage": cov,
+               "conviction": conv, "conviction_dca": conv_dca,
+               "conviction_unified": conv_unified, "grade": grade,
+               "layers": layers, "binding": binding, "peak": peak,
+               "marg": marg}
+        rec["archetype"] = stock_archetype(rec, f)
+        rec["watch_action"] = watchlist_action(rec)
+        results.append(rec)
     results.sort(key=lambda r: -r["conviction_unified"])
     return results
 
@@ -2152,6 +2290,8 @@ def export_json(csv_path, out_path):
             "coverage": round(r["coverage"] * 100),
             "peak": bool(r["peak"]),
             "marg": bool(r["marg"]),
+            "archetype": r["archetype"],
+            "watch_action": r["watch_action"],
             "has_data": bool(r["has_data"]),
         })
     payload = {
@@ -2314,14 +2454,19 @@ def main():
         q10, rich, _ = dca_quality(t, f)
         conv_dca = dca_conviction(q10, layers, layers[binding], rich, cov)
         conv_unified = conv_dca if info.get("strategy") == "dca" else conv
-        results.append({**info, "eight": eight, "growth10": g10, "blend": blend,
-                        "quad": quadrant(eight, g10), "eps_f": eps_f,
-                        "p8": parts8, "pg": partsg, "has_data": t in fund,
-                        "coverage": cov, "conviction": conv,
-                        "conviction_dca": conv_dca,
-                        "conviction_unified": conv_unified,
-                        "layers": layers, "binding": binding,
-                        "peak": peak, "marg": marg})
+        rec = {**info, "eight": eight, "growth10": g10, "blend": blend,
+               "quad": quadrant(eight, g10), "eps_f": eps_f,
+               "p8": parts8, "pg": partsg, "has_data": t in fund,
+               "coverage": cov, "conviction": conv,
+               "conviction_dca": conv_dca,
+               "conviction_unified": conv_unified,
+               "layers": layers, "binding": binding,
+               "peak": peak, "marg": marg}
+        grade, _prim, _rich = strategy_grade(rec, f)
+        rec["grade"] = grade
+        rec["archetype"] = stock_archetype(rec, f)
+        rec["watch_action"] = watchlist_action(rec)
+        results.append(rec)
 
     keyf = {"growth": lambda r: -r["growth10"],
             "eight": lambda r: -r["eight"],
