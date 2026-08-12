@@ -43,8 +43,10 @@ _CHART_URL = ("https://query1.finance.yahoo.com/v8/finance/chart/"
 _HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; plot-history-exporter)"}
 
 # Conviction ticker -> Yahoo chart symbol, for names whose feed symbol differs
-# from the ticker used in the scorer/watchlist.
-_YAHOO_ALIASES = {}
+# from the ticker used in the scorer/watchlist. Zomato relisted as "ETERNAL" on
+# the NSE, so its conviction-side "ZOMATO.NS" key must be fetched via
+# "ETERNAL.NS" (the old symbol 404s on the chart endpoint).
+_YAHOO_ALIASES = {"ZOMATO.NS": "ETERNAL.NS"}
 
 
 def _tickers_from_conviction(path):

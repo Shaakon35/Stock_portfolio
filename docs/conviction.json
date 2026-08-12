@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-08-12 07:57 UTC",
+  "generated_utc": "2026-08-12 07:37 UTC",
   "csv": "fundamentals_2026-08-10.csv",
   "count": 751,
   "held_count": 45,
@@ -19,8 +19,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -38,8 +36,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -57,8 +53,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -76,8 +70,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -95,8 +87,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -114,8 +104,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -133,8 +121,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -152,8 +138,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -171,8 +155,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -190,8 +172,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -209,8 +189,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Catalyst setup",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -228,8 +206,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -247,8 +223,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -266,8 +240,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -285,8 +257,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -304,8 +274,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -323,8 +291,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -342,8 +308,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -361,8 +325,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -380,8 +342,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -399,8 +359,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -418,8 +376,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -437,8 +393,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -456,8 +410,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -475,8 +427,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -494,8 +444,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -513,8 +461,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -532,8 +478,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -551,8 +495,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -570,8 +512,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -589,8 +529,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -608,8 +546,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -627,8 +563,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -646,8 +580,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -665,8 +597,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -684,8 +614,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -703,8 +631,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -722,8 +648,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -741,8 +665,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -760,8 +682,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -779,8 +699,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -798,8 +716,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -817,12 +733,10 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
-      "ticker": "ETERNAL.NS",
+      "ticker": "ZOMATO.NS",
       "wave": "WL",
       "held": false,
       "book_pct": 0.0,
@@ -836,8 +750,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -855,8 +767,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Bottleneck grower",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -874,8 +784,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -893,8 +801,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -912,8 +818,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -931,8 +835,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -950,8 +852,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -969,8 +869,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -988,8 +886,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -1007,8 +903,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "ADD",
       "has_data": true
     },
     {
@@ -1026,8 +920,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1045,8 +937,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1064,8 +954,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1083,8 +971,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1102,8 +988,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Bottleneck grower",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -1121,8 +1005,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1140,8 +1022,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -1159,8 +1039,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1178,8 +1056,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -1197,8 +1073,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -1216,8 +1090,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1235,8 +1107,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1254,8 +1124,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1273,8 +1141,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1292,8 +1158,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1311,8 +1175,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1330,8 +1192,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -1349,8 +1209,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1368,8 +1226,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1387,8 +1243,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1406,8 +1260,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1425,8 +1277,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1444,8 +1294,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1463,8 +1311,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1482,8 +1328,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1501,8 +1345,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -1520,8 +1362,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1539,8 +1379,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -1558,8 +1396,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1577,8 +1413,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1596,8 +1430,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1615,8 +1447,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1634,8 +1464,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1653,8 +1481,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1672,8 +1498,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1691,8 +1515,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1710,8 +1532,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -1729,8 +1549,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1748,8 +1566,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -1767,8 +1583,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1786,8 +1600,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1805,8 +1617,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1824,8 +1634,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1843,8 +1651,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -1862,8 +1668,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1881,8 +1685,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1900,8 +1702,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1919,8 +1719,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1938,8 +1736,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1957,8 +1753,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1976,8 +1770,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -1995,8 +1787,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2014,8 +1804,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2033,8 +1821,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2052,8 +1838,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2071,8 +1855,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2090,8 +1872,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2109,8 +1889,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2128,8 +1906,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2147,8 +1923,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2166,8 +1940,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2185,8 +1957,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2204,8 +1974,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2223,8 +1991,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2242,8 +2008,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2261,8 +2025,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2280,8 +2042,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -2299,8 +2059,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -2318,8 +2076,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2337,8 +2093,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2356,8 +2110,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2375,8 +2127,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -2394,8 +2144,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2413,8 +2161,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2432,8 +2178,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2451,8 +2195,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2470,8 +2212,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2489,8 +2229,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2508,8 +2246,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2527,8 +2263,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2546,8 +2280,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2565,8 +2297,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2584,8 +2314,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2603,8 +2331,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2622,8 +2348,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2641,8 +2365,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2660,8 +2382,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2679,8 +2399,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2698,8 +2416,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "STARTER",
       "has_data": true
     },
     {
@@ -2717,8 +2433,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2736,8 +2450,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2755,8 +2467,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2774,8 +2484,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2793,8 +2501,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2812,8 +2518,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2831,8 +2535,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2850,8 +2552,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2869,8 +2569,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2888,8 +2586,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2907,8 +2603,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2926,8 +2620,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2945,8 +2637,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2964,8 +2654,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -2983,8 +2671,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3002,8 +2688,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3021,8 +2705,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3040,8 +2722,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -3059,8 +2739,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3078,8 +2756,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3097,8 +2773,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3116,8 +2790,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3135,8 +2807,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3154,8 +2824,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3173,8 +2841,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3192,8 +2858,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3211,8 +2875,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3230,8 +2892,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3249,8 +2909,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3268,8 +2926,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3287,8 +2943,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3306,8 +2960,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3325,8 +2977,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -3344,8 +2994,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3363,8 +3011,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3382,8 +3028,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3401,8 +3045,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3420,8 +3062,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3439,8 +3079,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3458,8 +3096,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3477,8 +3113,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Bottleneck grower",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3496,8 +3130,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3515,8 +3147,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3534,8 +3164,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3553,8 +3181,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3572,8 +3198,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3591,8 +3215,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3610,8 +3232,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3629,8 +3249,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3648,8 +3266,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3667,8 +3283,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3686,8 +3300,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3705,8 +3317,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -3724,8 +3334,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3743,8 +3351,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3762,8 +3368,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3781,8 +3385,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3800,8 +3402,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3819,8 +3419,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3838,8 +3436,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -3857,8 +3453,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3876,8 +3470,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3895,8 +3487,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3914,8 +3504,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3933,8 +3521,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3952,8 +3538,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3971,8 +3555,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -3990,8 +3572,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4009,8 +3589,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4028,8 +3606,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4047,8 +3623,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4066,8 +3640,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -4085,8 +3657,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4104,8 +3674,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4123,8 +3691,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4142,8 +3708,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4161,8 +3725,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4180,8 +3742,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4199,8 +3759,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -4218,8 +3776,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4237,8 +3793,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4256,8 +3810,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4275,8 +3827,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4294,8 +3844,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4313,8 +3861,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Bottleneck grower",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4332,8 +3878,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4351,8 +3895,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4370,8 +3912,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4389,8 +3929,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4408,8 +3946,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4427,8 +3963,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4446,8 +3980,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -4465,8 +3997,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4484,8 +4014,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4503,8 +4031,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4522,8 +4048,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4541,8 +4065,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4560,8 +4082,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4579,8 +4099,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4598,8 +4116,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4617,8 +4133,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4636,8 +4150,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4655,8 +4167,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Speculative watch",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -4674,8 +4184,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4693,8 +4201,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4712,8 +4218,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4731,8 +4235,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4750,8 +4252,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4769,8 +4269,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4788,8 +4286,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4807,8 +4303,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4826,8 +4320,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4845,8 +4337,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4864,8 +4354,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4883,8 +4371,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4902,8 +4388,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4921,8 +4405,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4940,8 +4422,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -4959,8 +4439,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4978,8 +4456,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -4997,8 +4473,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5016,8 +4490,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5035,8 +4507,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5054,8 +4524,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5073,8 +4541,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5092,8 +4558,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Bottleneck grower",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5111,8 +4575,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5130,8 +4592,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -5149,8 +4609,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5168,8 +4626,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -5187,8 +4643,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5206,8 +4660,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -5225,8 +4677,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5244,8 +4694,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5263,8 +4711,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5282,8 +4728,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5301,8 +4745,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5320,8 +4762,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5339,8 +4779,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5358,8 +4796,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5377,8 +4813,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Early-cycle setup",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5396,8 +4830,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5415,8 +4847,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5434,8 +4864,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5453,8 +4881,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -5472,8 +4898,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5491,8 +4915,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5510,8 +4932,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5529,8 +4949,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5548,8 +4966,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5567,8 +4983,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5586,8 +5000,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5605,8 +5017,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5624,8 +5034,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5643,8 +5051,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5662,8 +5068,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5681,8 +5085,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5700,8 +5102,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5719,8 +5119,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5738,8 +5136,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5757,8 +5153,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5776,8 +5170,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5795,8 +5187,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5814,8 +5204,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5833,8 +5221,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5852,8 +5238,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -5871,8 +5255,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5890,8 +5272,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5909,8 +5289,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5928,8 +5306,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5947,8 +5323,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5966,8 +5340,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -5985,8 +5357,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6004,8 +5374,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6023,8 +5391,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6042,8 +5408,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6061,8 +5425,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6080,8 +5442,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6099,8 +5459,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6118,8 +5476,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6137,8 +5493,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6156,8 +5510,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6175,8 +5527,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6194,8 +5544,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6213,8 +5561,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6232,8 +5578,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6251,8 +5595,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6270,8 +5612,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6289,8 +5629,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6308,8 +5646,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6327,8 +5663,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6346,8 +5680,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6365,8 +5697,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6384,8 +5714,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6403,8 +5731,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6422,8 +5748,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6441,8 +5765,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6460,8 +5782,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6479,8 +5799,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6498,8 +5816,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6517,8 +5833,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6536,8 +5850,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6555,8 +5867,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6574,8 +5884,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6593,8 +5901,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6612,8 +5918,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6631,8 +5935,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6650,8 +5952,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6669,8 +5969,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6688,8 +5986,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6707,8 +6003,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6726,8 +6020,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6745,8 +6037,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6764,8 +6054,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6783,8 +6071,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6802,8 +6088,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6821,8 +6105,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6840,8 +6122,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cyclical rebound",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6859,8 +6139,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6878,8 +6156,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6897,8 +6173,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6916,8 +6190,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6935,8 +6207,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6954,8 +6224,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6973,8 +6241,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -6992,8 +6258,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7011,8 +6275,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7030,8 +6292,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7049,8 +6309,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7068,8 +6326,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -7087,8 +6343,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7106,8 +6360,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7125,8 +6377,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7144,8 +6394,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7163,8 +6411,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7182,8 +6428,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7201,8 +6445,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7220,8 +6462,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7239,8 +6479,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7258,8 +6496,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7277,8 +6513,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7296,8 +6530,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7315,8 +6547,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Quality compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7334,8 +6564,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7353,8 +6581,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7372,8 +6598,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7391,8 +6615,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7410,8 +6632,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7429,8 +6649,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7448,8 +6666,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7467,8 +6683,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7486,8 +6700,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -7505,8 +6717,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7524,8 +6734,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7543,8 +6751,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7562,8 +6768,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7581,8 +6785,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7600,8 +6802,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7619,8 +6819,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7638,8 +6836,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7657,8 +6853,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7676,8 +6870,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7695,8 +6887,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7714,8 +6904,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7733,8 +6921,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7752,8 +6938,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7771,8 +6955,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7790,8 +6972,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7809,8 +6989,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7828,8 +7006,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7847,8 +7023,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7866,8 +7040,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7885,8 +7057,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7904,8 +7074,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7923,8 +7091,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7942,8 +7108,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7961,8 +7125,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7980,8 +7142,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -7999,8 +7159,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8018,8 +7176,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8037,8 +7193,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8056,8 +7210,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8075,8 +7227,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8094,8 +7244,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8113,8 +7261,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8132,8 +7278,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -8151,8 +7295,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8170,8 +7312,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8189,8 +7329,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8208,8 +7346,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8227,8 +7363,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8246,8 +7380,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8265,8 +7397,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8284,8 +7414,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8303,8 +7431,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8322,8 +7448,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8341,8 +7465,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8360,8 +7482,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8379,8 +7499,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8398,8 +7516,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8417,8 +7533,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8436,8 +7550,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8455,8 +7567,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8474,8 +7584,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8493,8 +7601,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8512,8 +7618,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8531,8 +7635,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8550,8 +7652,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8569,8 +7669,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -8588,8 +7686,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8607,8 +7703,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8626,8 +7720,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8645,8 +7737,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8664,8 +7754,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8683,8 +7771,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -8702,8 +7788,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8721,8 +7805,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -8740,8 +7822,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8759,8 +7839,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8778,8 +7856,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -8797,8 +7873,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8816,8 +7890,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8835,8 +7907,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8854,8 +7924,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8873,8 +7941,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8892,8 +7958,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8911,8 +7975,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8930,8 +7992,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8949,8 +8009,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -8968,8 +8026,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -8987,8 +8043,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9006,8 +8060,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9025,8 +8077,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9044,8 +8094,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9063,8 +8111,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9082,8 +8128,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9101,8 +8145,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9120,8 +8162,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9139,8 +8179,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9158,8 +8196,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9177,8 +8213,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9196,8 +8230,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9215,8 +8247,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9234,8 +8264,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9253,8 +8281,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9272,8 +8298,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9291,8 +8315,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9310,8 +8332,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9329,8 +8349,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9348,8 +8366,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9367,8 +8383,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9386,8 +8400,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9405,8 +8417,6 @@
       "coverage": 100,
       "peak": true,
       "marg": false,
-      "archetype": "Peak-cycle trap",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -9424,8 +8434,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9443,8 +8451,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9462,8 +8468,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9481,8 +8485,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9500,8 +8502,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9519,8 +8519,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9538,8 +8536,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9557,8 +8553,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9576,8 +8570,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9595,8 +8587,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9614,8 +8604,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9633,8 +8621,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9652,8 +8638,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9671,8 +8655,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9690,8 +8672,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9709,8 +8689,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -9728,8 +8706,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -9747,8 +8723,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9766,8 +8740,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -9785,8 +8757,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9804,8 +8774,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9823,8 +8791,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9842,8 +8808,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9861,8 +8825,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9880,8 +8842,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -9899,8 +8859,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9918,8 +8876,6 @@
       "coverage": 100,
       "peak": true,
       "marg": false,
-      "archetype": "Peak-cycle trap",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -9937,8 +8893,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9956,8 +8910,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9975,8 +8927,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -9994,8 +8944,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10013,8 +8961,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10032,8 +8978,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10051,8 +8995,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10070,8 +9012,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10089,8 +9029,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10108,8 +9046,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -10127,8 +9063,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10146,8 +9080,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10165,8 +9097,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10184,8 +9114,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10203,8 +9131,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10222,8 +9148,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10241,8 +9165,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10260,8 +9182,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10279,8 +9199,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10298,8 +9216,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10317,8 +9233,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10336,8 +9250,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10355,8 +9267,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10374,8 +9284,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10393,8 +9301,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10412,8 +9318,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10431,8 +9335,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10450,8 +9352,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10469,8 +9369,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10488,8 +9386,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10507,8 +9403,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10526,8 +9420,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10545,8 +9437,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -10564,8 +9454,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -10583,8 +9471,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10602,8 +9488,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "DCA candidate",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -10621,8 +9505,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10640,8 +9522,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10659,8 +9539,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -10678,8 +9556,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Speculative watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -10697,8 +9573,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10716,8 +9590,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10735,8 +9607,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10754,8 +9624,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10773,8 +9641,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10792,8 +9658,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10811,8 +9675,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10830,8 +9692,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10849,8 +9709,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10868,8 +9726,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10887,8 +9743,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10906,8 +9760,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10925,8 +9777,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10944,8 +9794,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -10963,8 +9811,6 @@
       "coverage": 100,
       "peak": true,
       "marg": false,
-      "archetype": "Peak-cycle trap",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -10982,8 +9828,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11001,8 +9845,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11020,8 +9862,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11039,8 +9879,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11058,8 +9896,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11077,8 +9913,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11096,8 +9930,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11115,8 +9947,6 @@
       "coverage": 100,
       "peak": true,
       "marg": false,
-      "archetype": "Peak-cycle trap",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -11134,8 +9964,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11153,8 +9981,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11172,8 +9998,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11191,8 +10015,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11210,8 +10032,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11229,8 +10049,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11248,8 +10066,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11267,8 +10083,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11286,8 +10100,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11305,8 +10117,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11324,8 +10134,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11343,8 +10151,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11362,8 +10168,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11381,8 +10185,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11400,8 +10202,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11419,8 +10219,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11438,8 +10236,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11457,8 +10253,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11476,8 +10270,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11495,8 +10287,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11514,8 +10304,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11533,8 +10321,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11552,8 +10338,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11571,8 +10355,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11590,8 +10372,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11609,8 +10389,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11628,8 +10406,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11647,8 +10423,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11666,8 +10440,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11685,8 +10457,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11704,8 +10474,6 @@
       "coverage": 100,
       "peak": true,
       "marg": false,
-      "archetype": "Peak-cycle trap",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -11723,8 +10491,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -11742,8 +10508,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11761,8 +10525,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11780,8 +10542,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11799,8 +10559,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -11818,8 +10576,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -11837,8 +10593,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11856,8 +10610,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -11875,8 +10627,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11894,8 +10644,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -11913,8 +10661,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11932,8 +10678,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11951,8 +10695,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11970,8 +10712,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -11989,8 +10729,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12008,8 +10746,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12027,8 +10763,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12046,8 +10780,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -12065,8 +10797,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12084,8 +10814,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12103,8 +10831,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "HOLD",
       "has_data": true
     },
     {
@@ -12122,8 +10848,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12141,8 +10865,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12160,8 +10882,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12179,8 +10899,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12198,8 +10916,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12217,8 +10933,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12236,8 +10950,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12255,8 +10967,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12274,8 +10984,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12293,8 +11001,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -12312,8 +11018,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12331,8 +11035,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12350,8 +11052,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12369,8 +11069,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -12388,8 +11086,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -12407,8 +11103,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12426,8 +11120,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12445,8 +11137,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12464,8 +11154,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12483,8 +11171,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12502,8 +11188,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12521,8 +11205,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12540,8 +11222,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12559,8 +11239,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12578,8 +11256,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12597,8 +11273,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12616,8 +11290,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12635,8 +11307,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12654,8 +11324,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12673,8 +11341,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12692,8 +11358,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12711,8 +11375,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12730,8 +11392,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12749,8 +11409,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12768,8 +11426,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -12787,8 +11443,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12806,8 +11460,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -12825,8 +11477,6 @@
       "coverage": 60,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -12844,8 +11494,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12863,8 +11511,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12882,8 +11528,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12901,8 +11545,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -12920,8 +11562,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12939,8 +11579,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12958,8 +11596,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12977,8 +11613,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -12996,8 +11630,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13015,8 +11647,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13034,8 +11664,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13053,8 +11681,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13072,8 +11698,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13091,8 +11715,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13110,8 +11732,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13129,8 +11749,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13148,8 +11766,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13167,8 +11783,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13186,8 +11800,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13205,8 +11817,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13224,8 +11834,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13243,8 +11851,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13262,8 +11868,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13281,8 +11885,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13300,8 +11902,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13319,8 +11919,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13338,8 +11936,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13357,8 +11953,6 @@
       "coverage": 100,
       "peak": true,
       "marg": false,
-      "archetype": "Peak-cycle trap",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13376,8 +11970,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13395,8 +11987,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13414,8 +12004,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13433,8 +12021,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13452,8 +12038,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13471,8 +12055,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13490,8 +12072,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13509,8 +12089,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13528,8 +12106,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13547,8 +12123,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13566,8 +12140,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13585,8 +12157,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Impaired compounder",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13604,8 +12174,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13623,8 +12191,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13642,8 +12208,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13661,8 +12225,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Speculative watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13680,8 +12242,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -13699,8 +12259,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -13718,8 +12276,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13737,8 +12293,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13756,8 +12310,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13775,8 +12327,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -13794,8 +12344,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Cycle watch",
-      "watch_action": "PASS",
       "has_data": true
     },
     {
@@ -13813,8 +12361,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -13832,8 +12378,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13851,8 +12395,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13870,8 +12412,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13889,8 +12429,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -13908,8 +12446,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -13927,8 +12463,6 @@
       "coverage": 50,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -13946,8 +12480,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13965,8 +12497,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -13984,8 +12514,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -14003,8 +12531,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14022,8 +12548,6 @@
       "coverage": 100,
       "peak": false,
       "marg": false,
-      "archetype": "Rich compounder",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14041,8 +12565,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14060,8 +12582,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14079,8 +12599,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14098,8 +12616,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14117,8 +12633,6 @@
       "coverage": 60,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -14136,8 +12650,6 @@
       "coverage": 80,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14155,8 +12667,6 @@
       "coverage": 90,
       "peak": false,
       "marg": false,
-      "archetype": "Binary catalyst",
-      "watch_action": "WAIT",
       "has_data": true
     },
     {
@@ -14174,8 +12684,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -14193,8 +12701,6 @@
       "coverage": 50,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -14212,8 +12718,6 @@
       "coverage": 50,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -14231,8 +12735,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -14250,8 +12752,6 @@
       "coverage": 70,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     },
     {
@@ -14269,8 +12769,6 @@
       "coverage": 20,
       "peak": false,
       "marg": false,
-      "archetype": "Thin-data punt",
-      "watch_action": "RESEARCH",
       "has_data": true
     }
   ]

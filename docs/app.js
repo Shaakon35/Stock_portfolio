@@ -39,8 +39,6 @@ const GLOSSARY_CONV = [
   ["GAP", "Coverage < 75% — the score rests on thin data and should be trusted less."],
   ["PEAK?", "A cyclical whose low PEG is fake-cheap on peak-cycle earnings while the chart is extended (the memory/storage trap). Cuts cycle CONV ×0.85."],
   ["MARG?", "An early-cycle name whose net margin is compressing — the cycle tag and the margin data disagree (thesis unwinding or a stale tag). Annotation only; treat its VAL with caution."],
-  ["Archetype", "The stock ID-card label: a deterministic setup classification such as Quality compounder, Early-cycle setup, Late momentum or Peak-cycle trap."],
-  ["Action", "Watchlist triage: ADD, STARTER, WAIT, RESEARCH or PASS for unowned/re-add candidates. Held positions show HOLD."],
   ["Held only", "Filter toggle: show just the names with a live position (Book % > 0), hiding watch-only candidates."],
   ["Wave (W1–W7)", "The AI-allocation basket: W1 Silicon, W2 Power, W3 DC-Infra, W4 Cloud, W5 Software, W6 Spec, W7 Diversify. ET = surfaced via ETF look-through."],
   ["Grade", "The strategy-aware verdict: PRIME / KEEP-DCA (buy), MOMENTUM / QUALITY (hold-ish), RICH (wait for a better price), AVOID / IMPAIRED (pass). N/A = no fundamentals page exists for the name (e.g. a physical-commodity trust), so it cannot be scored — not a negative verdict."],
@@ -70,8 +68,6 @@ const COLUMNS = [
   { key: "wave",     label: "Wave",     align: "left",   num: false },
   { key: "strategy", label: "Strategy", align: "left",   num: false },
   { key: "grade",    label: "Grade",    align: "left",   num: false },
-  { key: "watch_action", label: "Action", align: "left", num: false },
-  { key: "archetype", label: "Archetype", align: "left", num: false },
   { key: "conv",     label: "CONV",     align: "right",  num: true  },
   { key: "F",        label: "F",        align: "right",  num: true  },
   { key: "V",        label: "V",        align: "right",  num: true  },
@@ -130,7 +126,7 @@ async function boot() {
     payload = await res.json();
   } catch (e) {
     document.getElementById("tbody").innerHTML =
-      '<tr><td colspan="13" class="empty">Could not load conviction.json. ' +
+      '<tr><td colspan="11" class="empty">Could not load conviction.json. ' +
       'Run <code>PORTFOLIO_USE=ai python3 scoring/score_holdings.py --json</code> first.</td></tr>';
     return;
   }
@@ -325,8 +321,6 @@ function row(r) {
     <td class="mut">${r.wave}</td>
     <td>${STRAT_LABEL[r.strategy] || r.strategy}</td>
     <td><span class="badge ${gc}">${gradeCell}</span></td>
-    <td><span class="badge b-mut">${r.watch_action || "—"}</span></td>
-    <td>${r.archetype || "—"}</td>
     <td class="td-num td-conv" ${convStyle}>${convCell}</td>
     ${layer("F", r.F)}${layer("V", r.V)}${layer("C", r.C)}
     <td class="td-num">${bookStr}</td>
