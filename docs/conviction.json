@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-08-12 07:58 UTC",
-  "csv": "fundamentals_2026-08-12.csv",
-  "count": 751,
+  "generated_utc": "2026-08-13 06:24 UTC",
+  "csv": "fundamentals_2026-08-13.csv",
+  "count": 752,
   "held_count": 45,
   "records": [
     {
@@ -617,6 +617,23 @@
       "has_data": true
     },
     {
+      "ticker": "ETERNAL.NS",
+      "wave": "WL",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "cycle",
+      "conv": 7.77,
+      "grade": "PRIME",
+      "F": 6.7,
+      "V": 7.6,
+      "C": 7.5,
+      "binding": "F",
+      "coverage": 100,
+      "peak": false,
+      "marg": false,
+      "has_data": true
+    },
+    {
       "ticker": "ADYEN.AS",
       "wave": "WL",
       "held": false,
@@ -731,23 +748,6 @@
       "C": 5.6,
       "binding": "C",
       "coverage": 100,
-      "peak": false,
-      "marg": false,
-      "has_data": true
-    },
-    {
-      "ticker": "ZOMATO.NS",
-      "wave": "WL",
-      "held": false,
-      "book_pct": 0.0,
-      "strategy": "cycle",
-      "conv": 7.67,
-      "grade": "PRIME",
-      "F": 6.7,
-      "V": 7.4,
-      "C": 7.2,
-      "binding": "F",
-      "coverage": 90,
       "peak": false,
       "marg": false,
       "has_data": true
@@ -8416,6 +8416,23 @@
       "binding": "C",
       "coverage": 100,
       "peak": true,
+      "marg": false,
+      "has_data": true
+    },
+    {
+      "ticker": "INSM",
+      "wave": "WL",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "cycle",
+      "conv": 5.26,
+      "grade": "AVOID",
+      "F": 3.6,
+      "V": 8.2,
+      "C": 5.9,
+      "binding": "F",
+      "coverage": 90,
+      "peak": false,
       "marg": false,
       "has_data": true
     },

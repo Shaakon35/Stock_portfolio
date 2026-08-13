@@ -2418,6 +2418,12 @@ WATCHLIST = {
              "area": "Interventional medtech (Boston Scientific)",
              "note": "High-growth cardio/interventional. Quality compounder — "
                      "DCA-grade."},
+    "INSM": {"strategy": "cycle",    "pos": "Mid",      "cagr": (15, 35),
+             "area": "Rare-disease biopharma (Insmed)",
+             "note": "Commercial rare-disease biotech with a bronchiectasis "
+                     "launch ramp on top of ARIKAYCE. Real revenue, but still "
+                     "loss-making and launch-execution sensitive — buy dips, "
+                     "trim into de-risking/rerate spikes."},
 
     # --- Financial Networks & Commodity Infrastructure ---
     "JPM":  {"strategy": "dca",      "pos": "Mid",      "cagr": (5, 10),
