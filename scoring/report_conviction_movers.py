@@ -99,10 +99,19 @@ def _records_by_ticker(payload):
     return out
 
 
-def resolve_previous_from_git(current_date_str):
+def resolve_previous_from_git(current_date_str, current_by=None):
     """Find the newest 'Refresh conviction data' commit whose date differs from
     the current snapshot's date, and return its docs/conviction.json content.
-    Falls back to HEAD~1's version, then to None if nothing is resolvable.
+    Falls back to any earlier commit that is genuinely different from the
+    current snapshot, then to None if nothing is resolvable.
+
+    `current_by` is the {ticker: record} map of the CURRENT snapshot. It is
+    used to reject any candidate whose content is identical to current — which
+    happens in a shallow (depth-1) clone where the only commit in `git log` is
+    this run's own refresh. Returning that tip as "previous" would diff the
+    snapshot against itself and produce a false all-zeros report. When that is
+    the only thing available we return None so the caller falls back to baseline
+    mode (an honest "first run" email) instead of a silent self-diff.
     """
     try:
         # List refresh commits (newest first) with their subject.
@@ -113,6 +122,12 @@ def resolve_previous_from_git(current_date_str):
     except (subprocess.CalledProcessError, FileNotFoundError):
         return None, None
 
+    def _is_current(content):
+        """True if a candidate snapshot is identical to the current one."""
+        if current_by is None:
+            return False
+        return _records_by_ticker(content) == current_by
+
     # Prefer explicit weekly refresh commits with a DIFFERENT date stamp.
     date_re = re.compile(r"Refresh conviction data \((\d{4}-\d{2}-\d{2})\)")
     for line in log:
@@ -120,14 +135,14 @@ def resolve_previous_from_git(current_date_str):
         m = date_re.search(subject)
         if m and m.group(1) != (current_date_str or ""):
             content = _git_show(sha, "docs/conviction.json")
-            if content is not None:
+            if content is not None and not _is_current(content):
                 return content, sha
-    # Fallback: any earlier commit that touched the file.
+    # Fallback: any earlier commit that touched the file and is not identical
+    # to the current snapshot (never self-diff — see docstring).
     for line in log:
         sha, _, subject = line.partition(" ")
         content = _git_show(sha, "docs/conviction.json")
-        if content is not None:
-            # Skip if identical to current (same tip); keep looking.
+        if content is not None and not _is_current(content):
             return content, sha
     return None, None
 
@@ -576,7 +591,7 @@ def generate(current_path, previous_arg, out_file=None, out_inline=None,
 
     prev_sha = None
     if previous_arg in (None, "-", "auto"):
-        prev_payload, prev_sha = resolve_previous_from_git(cur_date)
+        prev_payload, prev_sha = resolve_previous_from_git(cur_date, cur_by)
         if prev_payload is None:
             # First run / no history — baseline only.
             prev_payload = {"records": [], "generated_utc": "(baseline)"}

@@ -44,6 +44,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history (not the default shallow depth-1 clone): the weekly
+          # movers email resolves the PREVIOUS refresh commit from git log to
+          # diff against. A shallow clone only contains this run's own commit,
+          # so the resolver would fall back to diffing the snapshot against
+          # itself and email a false all-zeros report. See
+          # resolve_previous_from_git() in report_conviction_movers.py.
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
