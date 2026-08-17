@@ -63,6 +63,11 @@ MOVE_MIN_HI = 0.15       # >7 tier: min |Δconv| for a HELD name to be "moving"
 MOVE_MIN_LO = 0.40       # <=7 tier / all non-held: only show BIG movers
 ZOOM_TOP_N = 3           # how many top >7 movers to deep-dive in the zoom
 FLAG_ALWAYS_REPORT = True  # a peak/marg/grade/binding FLIP is always reported
+# "Watchlist opportunities": non-held names crossing into high conviction on a
+# meaningful UP move. Surfaced as its own INLINE section so a good riser is not
+# buried by decliners in the (capped) zoom. Tune the bar here.
+OPP_MIN_CONV = 7.5       # a non-held name must now be at/above this conv
+OPP_MIN_DCONV = 0.30     # ...AND have risen by at least this much week-over-week
 # ------------------------------------------------------------------------
 
 # Fallback palette if docs/style.css can't be parsed (kept in sync with it).
@@ -506,6 +511,16 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
     nonheld_hi = [m for m in nonheld_rows if m["conv1"] > CONV_TIER]
     nonheld_lo = [m for m in nonheld_rows if m["conv1"] <= CONV_TIER]
 
+    # Watchlist opportunities: non-held names now at/above OPP_MIN_CONV that
+    # ROSE by at least OPP_MIN_DCONV this week. Sorted best-conviction first so
+    # the strongest candidate leads. Shown INLINE (unlike the full non-held
+    # tables) so a good riser is never buried by the capped zoom.
+    opp_rows = sorted(
+        (m for m in nonheld_rows
+         if m["conv1"] >= OPP_MIN_CONV and m["d_conv"] >= OPP_MIN_DCONV),
+        key=lambda m: m["conv1"], reverse=True,
+    )
+
     style = _STYLE_TMPL.format(root=_root_css(tokens))
     title = "Conviction movers"
 
@@ -529,8 +544,16 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
     <h2>Zoom — biggest high-conviction movers (&gt;{CONV_TIER:g})</h2>
     {_zoom_cards(zoom_rows)}"""
 
+    opp_sec = f"""
+    <h2>Watchlist opportunities</h2>
+    <div class="panel">
+      <div class="sub" style="margin-bottom:8px">non-held · now conv &ge;
+        {OPP_MIN_CONV:g} · rose &ge; +{OPP_MIN_DCONV:g}</div>
+      {_movers_table(opp_rows)}
+    </div>"""
+
     if inline:
-        # Trimmed body: header + held table + zoom only.
+        # Trimmed body: header + held table + zoom + watchlist opportunities.
         foot = f"""
     <div class="foot">
       Full report attached. Live dashboard:
@@ -540,7 +563,7 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
   </div>"""
         return (f"<!doctype html><html><head><meta charset='utf-8'>"
                 f"<style>{style}</style></head><body>"
-                f"{header}{held_sec}{zoom_sec}{foot}</body></html>")
+                f"{header}{held_sec}{zoom_sec}{opp_sec}{foot}</body></html>")
 
     nonheld_sec = f"""
     <h2>Big movers — non-held (watchlist / bench)</h2>
@@ -569,7 +592,7 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
     return (f"<!doctype html><html lang='en'><head><meta charset='utf-8'>"
             f"<meta name='viewport' content='width=device-width, initial-scale=1'>"
             f"<title>{title}</title><style>{style}</style></head><body>"
-            f"{header}{held_sec}{zoom_sec}{nonheld_sec}{ee_sec}{foot}"
+            f"{header}{held_sec}{zoom_sec}{opp_sec}{nonheld_sec}{ee_sec}{foot}"
             f"</body></html>")
 
 
