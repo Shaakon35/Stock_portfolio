@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-09-21 11:18 UTC",
-  "csv": "fundamentals_2026-09-21.csv",
-  "count": 752,
+  "generated_utc": "2026-09-24 09:16 UTC",
+  "csv": "fundamentals_2026-09-24.csv",
+  "count": 753,
   "held_count": 45,
   "records": [
     {
@@ -5284,6 +5284,23 @@
       "grade": "KEEP-DCA",
       "F": 5.0,
       "V": 8.6,
+      "C": 5.9,
+      "binding": "F",
+      "coverage": 100,
+      "peak": false,
+      "marg": false,
+      "has_data": true
+    },
+    {
+      "ticker": "MCD",
+      "wave": "WL",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "dca",
+      "conv": 6.28,
+      "grade": "KEEP-DCA",
+      "F": 5.5,
+      "V": 7.4,
       "C": 5.9,
       "binding": "F",
       "coverage": 100,

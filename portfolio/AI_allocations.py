@@ -1955,6 +1955,15 @@ WATCHLIST = {
         "note":     "Unit-growth + pricing power; high-quality, premium multiple. DCA "
                     "on weakness.",
     },
+    "MCD": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (5, 10),
+        "area":     "Restaurants / global franchise (McDonald's) — LARGE",
+        "note":     "Global franchise moat, pricing power, dividend compounder. "
+                    "Lower-growth defensive DCA; interesting mainly on valuation "
+                    "weakness rather than explosive upside.",
+    },
     "PG": {
         "strategy": "dca",
         "pos":      "Mid",
