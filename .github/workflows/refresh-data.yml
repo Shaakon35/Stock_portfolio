@@ -81,7 +81,19 @@ jobs:
           set -euo pipefail
           # --overwrite refreshes mktcap / peg / ps / 200DMA distance / fwd
           # consensus on existing rows (curated net_margin & eps_beat preserved).
-          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --sync-csv --overwrite --no-fill-ttm
+          # stockanalysis.com may challenge GitHub-hosted runners. If the broad
+          # refresh fails, keep going to the Yahoo 200DMA fallback below so the
+          # valuation/cycle price-extension legs still move week-to-week.
+          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --sync-csv --overwrite --no-fill-ttm \
+            || echo "::warning::stockanalysis mechanical refresh failed; continuing with Yahoo 200DMA fallback."
+
+      - name: Refresh 200DMA price distance
+        if: ${{ github.event_name == 'schedule' || inputs.refresh_prices }}
+        run: |
+          set -euo pipefail
+          # Price-only fallback used directly by VAL and CYCLE layers. This uses
+          # Yahoo chart history, the same feed as docs/plot_history.json.
+          python3 scoring/score_holdings.py --csv "${{ steps.snap.outputs.csv }}" --watchlist --fill-200dma-yahoo
 
       - name: Refresh trailing revenue & net-margin series
         run: |

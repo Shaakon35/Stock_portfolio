@@ -1703,6 +1703,82 @@ def fill_ttm(csv_path, tickers):
     return csv_path
 
 
+def fill_200dma_yahoo(csv_path, tickers):
+    """Update pct_above_200dma from Yahoo chart history.
+
+    This is a price-only fallback for weeks when stockanalysis.com blocks the
+    statistics scraper. The score's VAL/CYCLE layers need one fresh market-price
+    input so they can move week-to-week; Yahoo's chart endpoint already powers
+    docs/plot_history.json reliably enough for this purpose. Existing values are
+    kept when a ticker has no usable Yahoo series or fewer than 200 closes.
+    """
+    import json
+    import time
+    import urllib.request
+    import urllib.error
+
+    chart_url = ("https://query1.finance.yahoo.com/v8/finance/chart/"
+                 "{ticker}?range=1y&interval=1d")
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; conviction-200dma)"}
+
+    def fetch_pct(ticker):
+        req = urllib.request.Request(chart_url.format(ticker=ticker),
+                                     headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                doc = json.load(resp)
+            result = doc["chart"]["result"][0]
+            closes = result["indicators"]["quote"][0].get("close") or []
+            vals = [float(c) for c in closes if c is not None]
+        except (urllib.error.URLError, urllib.error.HTTPError, KeyError,
+                IndexError, TypeError, ValueError, TimeoutError):
+            return None
+        if len(vals) < 200:
+            return None
+        dma = sum(vals[-200:]) / 200.0
+        if dma <= 0:
+            return None
+        pct = (vals[-1] - dma) / dma * 100.0
+        if abs(pct) > _DMA200_SANE:
+            return None
+        return pct
+
+    with open(csv_path, newline="") as fh:
+        raw = fh.readlines()
+    comments = [ln for ln in raw if ln.lstrip().startswith("#")]
+    data_lines = [ln for ln in raw if not ln.lstrip().startswith("#")]
+    reader = csv.DictReader(data_lines)
+    header = list(reader.fieldnames)
+    rows = list(reader)
+    want = set(tickers)
+    attempted = 0
+    updated = 0
+    for row in rows:
+        t = (row.get("ticker") or "").strip()
+        if t not in want:
+            continue
+        attempted += 1
+        pct = fetch_pct(t)
+        if pct is None:
+            print(f"  [200dma] {t}: no Yahoo figure "
+                  f"(kept existing '{row.get('pct_above_200dma','')}')")
+            time.sleep(0.05)
+            continue
+        row["pct_above_200dma"] = f"{pct:.1f}"
+        updated += 1
+        print(f"  [200dma] {t}: {pct:.1f}%")
+        time.sleep(0.05)
+
+    comments = _restamp_header_date(comments, csv_path)
+    with open(csv_path, "w", newline="") as fh:
+        fh.writelines(comments)
+        w = csv.DictWriter(fh, fieldnames=header, lineterminator="\n")
+        w.writeheader()
+        w.writerows(rows)
+    print(f"  [200dma] updated {updated}/{attempted} rows in {csv_path}")
+    return updated, attempted
+
+
 # =========================================================================
 # 6c. CSV SYNC — add rows for AI-allocation names missing from the snapshot.
 # =========================================================================
@@ -2232,6 +2308,9 @@ def main():
                     help="scrape ttm_rev_growth from stockanalysis.com /financials/ "
                          "and write it into the CSV in place (powers the "
                          "deceleration penalty); preserves all other cells")
+    ap.add_argument("--fill-200dma-yahoo", action="store_true",
+                    help="refresh pct_above_200dma from Yahoo chart history "
+                         "(price-only fallback when stockanalysis.com is blocked)")
     ap.add_argument("--sync-csv", action="store_true",
                     help="scrape & APPEND fundamentals rows for AI-allocation names "
                          "(held + watchlist) missing from the CSV; never edits "
@@ -2325,6 +2404,18 @@ def main():
                   ", ".join(sorted(t for t in _SOURCE_CORRUPT if t in port)) +
                   " — source-corrupted feed; hand-curated series preserved.")
         fill_ttm(args.csv, targets)
+        return
+
+    if args.fill_200dma_yahoo:
+        if not args.csv or not Path(args.csv).exists():
+            sys.exit("--fill-200dma-yahoo needs an existing CSV.")
+        targets = [t for t in port if t != "SMHV.SW"]
+        updated, attempted = fill_200dma_yahoo(args.csv, targets)
+        if attempted and updated / attempted < 0.50:
+            sys.exit(
+                "--fill-200dma-yahoo updated only "
+                f"{updated}/{attempted} rows; aborting stale price refresh."
+            )
         return
 
     if args.live:
