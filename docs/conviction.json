@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-09-24 09:17 UTC",
-  "csv": "fundamentals_2026-09-24.csv",
-  "count": 753,
+  "generated_utc": "2026-09-28 07:46 UTC",
+  "csv": "fundamentals_2026-09-28.csv",
+  "count": 754,
   "held_count": 45,
   "records": [
     {
@@ -1332,6 +1332,23 @@
     },
     {
       "ticker": "CSU.TO",
+      "wave": "WL",
+      "held": false,
+      "book_pct": 0.0,
+      "strategy": "dca",
+      "conv": 7.52,
+      "grade": "KEEP-DCA",
+      "F": 6.2,
+      "V": 9.1,
+      "C": 5.7,
+      "binding": "C",
+      "coverage": 100,
+      "peak": false,
+      "marg": false,
+      "has_data": true
+    },
+    {
+      "ticker": "CNSWF",
       "wave": "WL",
       "held": false,
       "book_pct": 0.0,

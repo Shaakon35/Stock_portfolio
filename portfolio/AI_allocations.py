@@ -2901,6 +2901,12 @@ WATCHLIST = {
     "CSU.TO": {"strategy": "dca", "pos": "Mid", "cagr": (12, 22),
              "area": "Software roll-up (Constellation Software) — Canada",
              "note": "Serial VMS acquirer; high-ROIC compounder. DCA quality."},
+    "CNSWF": {"strategy": "dca", "pos": "Mid", "cagr": (12, 22),
+             "area": "Software roll-up (Constellation Software) — US OTC",
+             "note": "US OTC mirror of CSU.TO. Same Constellation Software thesis: "
+                     "serial vertical-market-software acquirer, high-ROIC "
+                     "compounder. Use for US-access watchlist visibility; avoid "
+                     "double-counting with CSU.TO."},
     "TRI.TO": {"strategy": "dca", "pos": "Mid", "cagr": (6, 11),
              "area": "Info/analytics (Thomson Reuters) — Canada",
              "note": "Legal/tax data subscription annuity. Quality compounder — DCA."},
