@@ -494,11 +494,31 @@ def _header_stats(cur_payload, prev_payload, movers, prev_sha):
         "up": up, "dn": dn,
         "held_moved": len(held_movers),
         "total_moved": len(movers["moved"]),
+        "entries": len(movers["entries"]),
+        "exits": len(movers["exits"]),
         "cur_date": cur_date, "prev_date": prev_date,
         "csv": cur_payload.get("csv", "?"),
         "universe": cur_payload.get("count", "?"),
         "prev_sha": prev_sha or "n/a",
     }
+
+
+def _flat_common_snapshot(movers):
+    """True when every ticker common to prev/current has identical reportable
+    conviction fields. In that case a "0 movers" email is not just quiet market
+    drift: the current snapshot is effectively unchanged except entries/exits."""
+    prev_by, cur_by = movers["prev_by"], movers["cur_by"]
+    common = set(prev_by) & set(cur_by)
+    if not common:
+        return False
+    keys = ("conv", "F", "V", "C", "grade", "binding", "coverage", "held",
+            "book_pct")
+    for t in common:
+        p, c = prev_by[t], cur_by[t]
+        for k in keys:
+            if p.get(k) != c.get(k):
+                return False
+    return True
 
 
 def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
@@ -534,6 +554,19 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
       <span class="stat"><b class="down">▼ {st['dn']}</b><span>down</span></span>
       <span class="stat"><b>{st['held_moved']}</b><span>held moved</span></span>
       <span class="stat"><b>{st['total_moved']}</b><span>total movers</span></span>
+      <span class="stat"><b>{st['entries']}</b><span>new</span></span>
+      <span class="stat"><b>{st['exits']}</b><span>dropped</span></span>
+    </div>"""
+
+    flat_warn = ""
+    if _flat_common_snapshot(movers):
+        flat_warn = f"""
+    <div class="panel">
+      <span class="pill warn">check refresh</span>
+      <span class="mut">All tickers common to the previous and current snapshots
+      have identical conviction fields. This usually means the snapshot was
+      carried forward with only entries/exits, or the data refresh produced no
+      changed fundamentals.</span>
     </div>"""
 
     held_sec = f"""
@@ -553,7 +586,12 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
     </div>"""
 
     if inline:
-        # Trimmed body: header + held table + zoom + watchlist opportunities.
+        # Trimmed body: header + held table + zoom + watchlist opportunities +
+        # entries/exits, so a week with new names but no score deltas does not
+        # look like a broken all-zero report.
+        ee_inline = f"""
+    <h2>Entries / exits / crossings</h2>
+    <div class="panel">{_entries_exits(movers)}</div>"""
         foot = f"""
     <div class="foot">
       Full report attached. Live dashboard:
@@ -563,7 +601,8 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
   </div>"""
         return (f"<!doctype html><html><head><meta charset='utf-8'>"
                 f"<style>{style}</style></head><body>"
-                f"{header}{held_sec}{zoom_sec}{opp_sec}{foot}</body></html>")
+                f"{header}{flat_warn}{held_sec}{zoom_sec}{opp_sec}"
+                f"{ee_inline}{foot}</body></html>")
 
     nonheld_sec = f"""
     <h2>Big movers — non-held (watchlist / bench)</h2>
@@ -592,7 +631,8 @@ def render_html(cur_payload, prev_payload, movers, tokens, prev_sha,
     return (f"<!doctype html><html lang='en'><head><meta charset='utf-8'>"
             f"<meta name='viewport' content='width=device-width, initial-scale=1'>"
             f"<title>{title}</title><style>{style}</style></head><body>"
-            f"{header}{held_sec}{zoom_sec}{opp_sec}{nonheld_sec}{ee_sec}{foot}"
+            f"{header}{flat_warn}{held_sec}{zoom_sec}{opp_sec}{nonheld_sec}"
+            f"{ee_sec}{foot}"
             f"</body></html>")
 
 
@@ -600,7 +640,12 @@ def build_subject(cur_payload, movers):
     st_up = sum(1 for m in movers["moved"] if m["d_conv"] > 0)
     st_dn = sum(1 for m in movers["moved"] if m["d_conv"] < 0)
     date = (cur_payload.get("generated_utc", "") or "").split(" ")[0] or "?"
-    return f"Conviction movers — week of {date} (\u25b2{st_up} \u25bc{st_dn})"
+    extra = ""
+    if movers["entries"] or movers["exits"]:
+        extra = f", +{len(movers['entries'])} new, -{len(movers['exits'])} dropped"
+    if _flat_common_snapshot(movers):
+        extra += ", flat common snapshot"
+    return f"Conviction movers — week of {date} (\u25b2{st_up} \u25bc{st_dn}{extra})"
 
 
 # =========================================================================
