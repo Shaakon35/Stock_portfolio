@@ -1980,8 +1980,8 @@ def sync_csv(csv_path, wanted, overwrite=False):
     """Append fundamentals rows for `wanted` tickers missing from csv_path (and,
     with overwrite=True, refresh the mechanical fields on existing rows while
     preserving curated cells). Preserves the leading '#' header and LF endings.
-    Returns the list of tickers still missing fwd_rev_growth/fwd_eps_growth so
-    the caller can report what still needs hand entry."""
+    Returns (fwd_todo, added, refreshed, existing) so the caller can report what
+    still needs hand entry and detect failed overwrite refreshes."""
     with open(csv_path, newline="") as fh:
         raw = fh.readlines()
     comments = [ln for ln in raw if ln.lstrip().startswith("#")]
@@ -2037,7 +2037,7 @@ def sync_csv(csv_path, wanted, overwrite=False):
         w.writerows(rows)
     print(f"  [sync] added {len(added)}, refreshed {len(refreshed)} "
           f"-> {csv_path}")
-    return fwd_todo, added
+    return fwd_todo, added, refreshed, existing
 
 
 # =========================================================================
@@ -2281,7 +2281,20 @@ def main():
         for _t in _skipped:
             if _t != "MU":
                 print(f"  [sync] (i) skipping {_t} (no usable statistics page).")
-        fwd_todo, added = sync_csv(args.csv, targets, overwrite=args.overwrite)
+        fwd_todo, added, refreshed, existing = sync_csv(
+            args.csv, targets, overwrite=args.overwrite)
+        if args.overwrite and existing:
+            refresh_ratio = len(refreshed) / len(existing)
+            # A scheduled refresh that cannot scrape existing rows should fail
+            # before it sends a stale "0 movers" email. Some individual names
+            # can legitimately 404 / be skipped, but a broad failure means the
+            # external data source or network is unavailable.
+            if refresh_ratio < 0.50:
+                sys.exit(
+                    "--sync-csv --overwrite refreshed only "
+                    f"{len(refreshed)}/{len(existing)} existing rows "
+                    f"({refresh_ratio:.0%}); aborting stale refresh."
+                )
         # Auto-fill the trailing series for the rows we just added, so a single
         # --sync-csv produces fully-populated rows (no manual --fill-ttm step).
         # Scoped to `added` only, so this stays fast (it does NOT rescan the
