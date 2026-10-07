@@ -214,6 +214,7 @@ BOTTLENECK = {
     "BESI.AS": 1.0, "SMHN.DE": 1.0, "CAMT": 1.0, "CRDO": 1.0, "ALAB": 1.0,
     "COHR": 1.0, "FN": 0.5, "VRT": 1.0, "ANET": 0.5, "SIMO": 0.5,
     "CDNS": 1.0, "GEV": 1.0, "CCJ": 1.0, "ETN": 0.5, "HUBB": 0.5,
+    "TLN": 0.5,
     "PWR": 0.5, "OKLO": 0.5, "NOW": 0.5, "ZS": 0.5, "CRWD": 0.5,
     "PANW": 0.5, "DDOG": 0.5, "TMDX": 0.5, "AXON": 0.5, "IONQ": 0.5,
     "RKLB": 0.5, "SYM": 0.5, "SMHV.SW": 0.5, "SNOW": 0.5, "S": 0.5,

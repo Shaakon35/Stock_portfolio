@@ -238,35 +238,51 @@ W3_DCINFRA_TARGETS = {
     # VALUES ARE DIRECT BOOK % (2026-06 model change): e.g. 2.0 == 2.0% of total book.
     # The trailing "# CHANGED: 0.x ->" notes below are HISTORICAL sub-weight values from the
     # old normalized model; the live number on each line is now a direct percent.
-    "VRT":   2.3,# ROUNDED 2026-06: 2.2801 -> 2.3. CHANGED: 0.14664 -> 0.16902 (COHR-CUT 2026-06) — renormalized after
+    "VRT":   2.2,# REBALANCE 2026-10: 2.3 -> 2.2, trims a decimal to keep FN at
+                    # 0.5 while restoring CRDO/COHR/ALAB at 2.0% combined.
+                    # ROUNDED 2026-06: 2.2801 -> 2.3. CHANGED: 0.14664 -> 0.16902 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut to 0% (book ~unchanged at 2.28% since the wave shrank to 13.49%).
                     # Prior: 0.07997 -> 0.14664 (CONV-REBAL 2026-06) — GROWN to 2.27%
                     # book on the CONV gradient (CONV 6.46). Scores AVOID (GROWTH 5.8) but keeps a
                     # strong F=8.0, so trimmed not cut. Liquid cooling leader — CYCLE.
-    "ANET":  2.5,# ROUNDED 2026-06: 2.4509 -> 2.5. CHANGED: 0.15762 -> 0.18168 (COHR-CUT 2026-06) — renormalized after
+    "ANET":  2.4,# REBALANCE 2026-10: 2.5 -> 2.4, trims a decimal to keep FN at
+                    # 0.5 while restoring CRDO/COHR/ALAB at 2.0% combined.
+                    # ROUNDED 2026-06: 2.4509 -> 2.5. CHANGED: 0.15762 -> 0.18168 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut (book ~unchanged at 2.45%). Prior: 0.23991 -> 0.15762
                     # (CONV-REBAL 2026-06) — TRIMMED to 2.44%
                     # book on the CONV gradient (CONV 7.06). Still the best business in the wave
                     # (QUALITY 9.6) but its DCA-CONV is mid-pack here, so sized to the gradient.
                     # Arista — DC networking monopoly. 38% margin, $4.4B FCF, software moat. DCA.
-    "CRDO":  0.0,# CHANGED: 2.0 -> 0.0 (RESHAPE 2026-08) — CUT. Lowest-CONV name in W3
+    "CRDO":  0.7,# RE-ADD 2026-10 — starter restored after the de-rating
+                    # lifted CRDO to CONV ~7.4-7.6: F remains elite, V no longer blocks,
+                    # but C is still Mid/Late so size stays below core W3 positions.
+                    # CHANGED: 2.0 -> 0.0 (RESHAPE 2026-08) — CUT. Lowest-CONV name in W3
                     # (CONV 5.02, MOMENTUM) and carries the [PEAK?] flag: its low PEG is
                     # FAKE-CHEAP on peak earnings + an extended chart (the SK-Hynix/Micron
                     # trap). Its ~2.0% book funds SNPS (W1), the higher-conviction EDA name
                     # that also fills the silicon wave's missing chip-design-software leg.
                     # Kept as a 0% stub with its STRATEGY tag for easy re-add if the
                     # hypergrowth thesis re-accelerates off a normal base. CYCLE.
-    "COHR":  0.0,# CHANGED: 0.13243 -> 0.00 (COHR-CUT 2026-06) — CUT. Weakest blend in W3
+    "COHR":  0.7,# RE-ADD 2026-10 — starter restored after valuation cooled
+                    # and current CONV improved to ~7.4-7.6; kept modest because FUND is
+                    # still the binding layer (margin/FCF quality not yet elite).
+                    # CHANGED: 0.13243 -> 0.00 (COHR-CUT 2026-06) — CUT. Weakest blend in W3
                     # (low upside 6.4 + high risk 5.0, CONV 5.68) and redundant with CRDO/FN/CLS
                     # in optical/interconnect. Its ~2.05% book moved cross-wave to W5 (PLTR/APP).
                     # Coherent — optical; already ran, cyclical. MOMENTUM. CYCLE.
-    "FN":    2.2,# ROUNDED 2026-06: 2.2199 -> 2.2. CHANGED: 0.14276 -> 0.16456 (COHR-CUT 2026-06) — renormalized after
+    "FN":    0.5,# TRIMMED 2026-10 — kept as a small GARP optical contract-mfr
+                    # stub while CRDO/COHR/ALAB are restored at 2.0% combined. Funded
+                    # by FN's own trim plus 0.1% each from VRT/ANET/CLS.
+                    # ROUNDED 2026-06: 2.2199 -> 2.2. CHANGED: 0.14276 -> 0.16456 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut (book ~unchanged at 2.22%). Prior: 0.21326 -> 0.14276
                     # (CONV-REBAL 2026-06) — TRIMMED to 2.21%
                     # book on the CONV gradient (CONV 6.27).
                     # Fabrinet — optical contract mfr; cleanest growth-at-reasonable-price name
                     # (QUALITY quadrant, 8PT 5.11, net cash). CYCLE / Mid.
-    "ALAB":  0.0,# CHANGED: 2.0 -> 0.0 (RESHAPE 2026-08) — CUT. Second-lowest CONV in W3
+    "ALAB":  0.6,# RE-ADD 2026-10 — small optionality slot restored from FN funding.
+                    # Business quality remains elite, but valuation is still the binding
+                    # layer, so size is capped below CRDO/COHR and core W3 names.
+                    # CHANGED: 2.0 -> 0.0 (RESHAPE 2026-08) — CUT. Second-lowest CONV in W3
                     # (CONV 5.12, MOMENTUM) with the binding risk on VALUATION (V 2.2): most
                     # stretched name held, ~118x fwd P/E, fails 8-Point #6 (priced for
                     # perfection). It is also redundant — the book already holds 5+ AI-
@@ -275,7 +291,9 @@ W3_DCINFRA_TARGETS = {
                     # expensive momentum semi for a tech-uncorrelated sector. Kept as a 0%
                     # stub with its STRATEGY tag for easy re-add. Astera Labs — CXL/PCIe
                     # retimers, highest-beta name in the sleeve. CYCLE / Mid.
-    "CLS":   2.5,# ROUNDED 2026-06: 2.5112 -> 2.5. CHANGED: 0.16150 -> 0.18615 (COHR-CUT 2026-06) — renormalized after
+    "CLS":   2.4,# REBALANCE 2026-10: 2.5 -> 2.4, trims a decimal to keep FN at
+                    # 0.5 while restoring CRDO/COHR/ALAB at 2.0% combined.
+                    # ROUNDED 2026-06: 2.5112 -> 2.5. CHANGED: 0.16150 -> 0.18615 (COHR-CUT 2026-06) — renormalized after
                     # COHR cut + absorbs the tiny rounding residual (book ~unchanged at 2.51%).
                     # Prior: 0.09366 -> 0.16150 (CONV-REBAL 2026-06) — GROWN to 2.50%
                     # book, the gradient CEILING (top CONV 7.27 in the wave). Celestica — EMS for
