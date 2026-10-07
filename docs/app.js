@@ -609,6 +609,61 @@ function dedupeByIndex(ticks) {
   return out;
 }
 
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, ch => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[ch]));
+}
+
+function ensurePlotTooltip(svg) {
+  const chart = svg.closest(".plot-chart");
+  if (!chart) return null;
+  let tip = chart.querySelector(".plot-tooltip");
+  if (!tip) {
+    tip = document.createElement("div");
+    tip.className = "plot-tooltip";
+    chart.appendChild(tip);
+  }
+  return tip;
+}
+
+function movePlotTooltip(svg, ev, html) {
+  const tip = ensurePlotTooltip(svg);
+  if (!tip) return;
+  const chart = svg.closest(".plot-chart");
+  const box = chart.getBoundingClientRect();
+  tip.innerHTML = html;
+  tip.style.display = "block";
+  const pad = 12;
+  let x = ev.clientX - box.left + pad;
+  let y = ev.clientY - box.top + pad;
+  const tw = tip.offsetWidth || 180;
+  const th = tip.offsetHeight || 70;
+  if (x + tw > box.width - 6) x = ev.clientX - box.left - tw - pad;
+  if (y + th > box.height - 6) y = ev.clientY - box.top - th - pad;
+  tip.style.left = Math.max(6, x) + "px";
+  tip.style.top = Math.max(6, y) + "px";
+}
+
+function hidePlotTooltip(svg) {
+  const tip = ensurePlotTooltip(svg);
+  if (tip) tip.style.display = "none";
+}
+
+function addHoverPoint(svg, mk, attrs, htmlBuilder) {
+  const dot = mk("circle", {
+    ...attrs,
+    r: 3.1,
+    class: "plot-point",
+  });
+  dot.addEventListener("mouseenter", ev =>
+    movePlotTooltip(svg, ev, htmlBuilder()));
+  dot.addEventListener("mousemove", ev =>
+    movePlotTooltip(svg, ev, htmlBuilder()));
+  dot.addEventListener("mouseleave", () => hidePlotTooltip(svg));
+  svg.appendChild(dot);
+}
+
 // Draw the SVG chart for the selected tickers, rebased to % change.
 function drawPlot() {
   const svg = document.getElementById("plotSvg");
@@ -652,7 +707,8 @@ function drawPlot() {
     const vals = valueMode ? win.c.slice() : ret;
     for (const v of vals) { if (v < gmin) gmin = v; if (v > gmax) gmax = v; }
     if (win.t.length > maxLen) { maxLen = win.t.length; refDates = win.t; }
-    series.push({ ticker: tk, vals, ret, color: PLOT_COLORS[i % PLOT_COLORS.length] });
+    series.push({ ticker: tk, dates: win.t, prices: win.c, vals, ret,
+                  color: PLOT_COLORS[i % PLOT_COLORS.length] });
   });
   if (!isFinite(gmin)) return;
 
@@ -764,6 +820,22 @@ function drawPlot() {
       d += (i === 0 ? "M" : "L") + xOf(i, n).toFixed(1) + "," + yOf(s.vals[i]).toFixed(1) + " ";
     svg.appendChild(mk("path", { d: d.trim(), fill: "none",
       stroke: s.color, "stroke-width": 1.7 }));
+    for (let i = 0; i < n; i++) {
+      const x = xOf(i, n), y = yOf(s.vals[i]);
+      addHoverPoint(svg, mk, {
+        cx: x.toFixed(1), cy: y.toFixed(1), fill: s.color,
+      }, () => {
+        const price = s.prices[i];
+        const yVal = valueMode
+          ? price.toLocaleString("en-US", { maximumFractionDigits: price >= 100 ? 0 : 2 })
+          : `${s.vals[i] >= 0 ? "+" : ""}${s.vals[i].toFixed(1)}%`;
+        return `<div class="pt-title">${escapeHtml(s.ticker)}</div>` +
+          `<div><span>X</span><b>${escapeHtml(s.dates[i])}</b></div>` +
+          `<div><span>Y</span><b>${yVal}</b></div>` +
+          (valueMode ? "" :
+            `<div><span>Price</span><b>${price.toLocaleString("en-US", { maximumFractionDigits: price >= 100 ? 0 : 2 })}</b></div>`);
+      });
+    }
     if (legend) {
       const last = s.ret[s.ret.length - 1];
       // In value mode, prefix the current price before the window return.
@@ -860,18 +932,23 @@ function updateConvPlotCount() {
 
 function convPlotWindow(entry) {
   const days = PLOT_RANGE_DAYS[convPlotState.range];
-  const t = entry.t, c = entry.c;
-  if (days == null) return { t: t.slice(), c: c.slice() };
+  const t = entry.t, c = entry.c, F = entry.F || [], V = entry.V || [], C = entry.C || [];
+  if (days == null) {
+    return { t: t.slice(), c: c.slice(), F: F.slice(), V: V.slice(), C: C.slice() };
+  }
   const last = new Date(t[t.length - 1] + "T00:00:00Z").getTime();
   const cutoff = last - days * 86400000;
-  const ot = [], oc = [];
+  const ot = [], oc = [], oF = [], oV = [], oC = [];
   for (let i = 0; i < t.length; i++) {
     if (new Date(t[i] + "T00:00:00Z").getTime() >= cutoff) {
-      ot.push(t[i]); oc.push(c[i]);
+      ot.push(t[i]); oc.push(c[i]); oF.push(F[i]); oV.push(V[i]); oC.push(C[i]);
     }
   }
-  if (!ot.length) { ot.push(t[t.length - 1]); oc.push(c[c.length - 1]); }
-  return { t: ot, c: oc };
+  if (!ot.length) {
+    const i = t.length - 1;
+    ot.push(t[i]); oc.push(c[i]); oF.push(F[i]); oV.push(V[i]); oC.push(C[i]);
+  }
+  return { t: ot, c: oc, F: oF, V: oV, C: oC };
 }
 
 function drawConvPlot() {
@@ -905,7 +982,7 @@ function drawConvPlot() {
     const win = convPlotWindow(CONV_HISTORY[tk]);
     for (const v of win.c) { if (v < gmin) gmin = v; if (v > gmax) gmax = v; }
     if (win.t.length > maxLen) { maxLen = win.t.length; refDates = win.t; }
-    series.push({ ticker: tk, t: win.t, vals: win.c,
+    series.push({ ticker: tk, dates: win.t, vals: win.c, F: win.F, V: win.V, C: win.C,
                   color: PLOT_COLORS[i % PLOT_COLORS.length] });
   });
   if (!isFinite(gmin)) return;
@@ -957,6 +1034,18 @@ function drawConvPlot() {
       d += (i === 0 ? "M" : "L") + xOf(i, n).toFixed(1) + "," + yOf(s.vals[i]).toFixed(1) + " ";
     svg.appendChild(mk("path", { d: d.trim(), fill: "none",
       stroke: s.color, "stroke-width": 1.8 }));
+    for (let i = 0; i < n; i++) {
+      const x = xOf(i, n), y = yOf(s.vals[i]);
+      addHoverPoint(svg, mk, {
+        cx: x.toFixed(1), cy: y.toFixed(1), fill: s.color,
+      }, () =>
+        `<div class="pt-title">${escapeHtml(s.ticker)}</div>` +
+        `<div><span>X</span><b>${escapeHtml(s.dates[i])}</b></div>` +
+        `<div><span>Y / CONV</span><b>${s.vals[i].toFixed(2)}</b></div>` +
+        `<div><span>F</span><b>${Number(s.F[i]).toFixed(1)}</b></div>` +
+        `<div><span>V</span><b>${Number(s.V[i]).toFixed(1)}</b></div>` +
+        `<div><span>C</span><b>${Number(s.C[i]).toFixed(1)}</b></div>`);
+    }
     if (legend) {
       const first = s.vals[0], last = s.vals[s.vals.length - 1];
       const delta = last - first;
