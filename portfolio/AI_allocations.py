@@ -1377,6 +1377,25 @@ WATCHLIST = {
                     "APLD it is actually making money, which is why it's cycle/Early "
                     "not Binary. Capex-cyclical and competitive; size on confirmation.",
     },
+    "IESC": {
+        "strategy": "cycle",
+        "pos":      "Early/Mid",
+        "cagr":     (12, 28),
+        "area":     "Data-center electrical infrastructure (IES Holdings)",
+        "note":     "NET-NEW 2026-10 screen — electrical/technology systems contractor "
+                    "with data-center exposure and strong backlog. On-thesis W2/W3 "
+                    "infrastructure derivative, but contractor/capex-cyclical: buy dips, "
+                    "trim if DC buildout expectations get euphoric.",
+    },
+    "MOD": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 25),
+        "area":     "Data-center thermal management / cooling (Modine)",
+        "note":     "NET-NEW 2026-10 screen — VRT-adjacent thermal-management/cooling "
+                    "supplier with accelerating data-center demand. Real AI-infra fit, "
+                    "but still industrial/capex-cyclical rather than buy-forever DCA.",
+    },
 
     # --- AI health / drug discovery (new screen) ---
     "TEM": {
@@ -1645,6 +1664,24 @@ WATCHLIST = {
         "note":     "AI Breeze upsell, durable SMB CRM. Quality growth, rarely cheap; "
                     "DCA on weakness.",
     },
+    "GDDY": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (8, 16),
+        "area":     "SMB web presence / commerce software (GoDaddy)",
+        "note":     "NET-NEW 2026-10 screen — profitable SMB software platform with "
+                    "AI website/commerce tooling and heavy FCF/buyback profile. Lower "
+                    "growth than core AI software, but potentially strong V + steady F.",
+    },
+    "IOT": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (14, 26),
+        "area":     "Physical-operations data platform (Samsara)",
+        "note":     "NET-NEW 2026-10 screen — connected-operations SaaS with AI/data "
+                    "upsell into fleets and industrial workflows. Good business-quality "
+                    "candidate, but valuation may be the binding risk.",
+    },
     "WDAY": {
         "strategy": "dca",
         "pos":      "Mid",
@@ -1779,6 +1816,16 @@ WATCHLIST = {
         "area":     "Life-science / diagnostics (Danaher)",
         "note":     "Bioprocessing + diagnostics, recurring consumables. De-rated, "
                     "cheap-but-quality. DCA.",
+    },
+    "NTRA": {
+        "strategy": "dca",
+        "pos":      "Mid",
+        "cagr":     (15, 30),
+        "area":     "Molecular diagnostics / genetic testing (Natera)",
+        "note":     "NET-NEW 2026-10 screen — high-growth diagnostics platform with "
+                    "strong test-volume growth and expanding scale. Healthcare growth "
+                    "diversifier; valuation/profitability path must be checked before "
+                    "any DCA sizing.",
     },
     "VRTX": {
         "strategy": "dca",
@@ -2161,6 +2208,24 @@ WATCHLIST = {
         "area":     "Healthcare SaaS network (Doximity)",
         "note":     "Profitable physician network + pharma ads; high-margin, niche "
                     "moat. Quality DCA/cycle.",
+    },
+    "VSEC": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (10, 22),
+        "area":     "Aviation aftermarket / MRO distribution (VSE)",
+        "note":     "NET-NEW 2026-10 screen — aviation aftermarket compounder with "
+                    "strong revenue/EBITDA growth. Useful non-AI diversifier, but "
+                    "aircraft-cycle and integration risk keep it in cycle sizing.",
+    },
+    "FTAI": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (12, 28),
+        "area":     "Aviation aftermarket / engine modules (FTAI Aviation)",
+        "note":     "NET-NEW 2026-10 screen — aircraft-engine aftermarket platform "
+                    "with high growth and module-factory upside. More complex/levered "
+                    "than VSEC, so cycle watchlist rather than DCA.",
     },
     "9988.HK": {
         "strategy": "cycle",
