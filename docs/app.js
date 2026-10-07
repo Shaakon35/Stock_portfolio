@@ -86,6 +86,10 @@ const state = {
 // { ticker: { t: [ISO dates], c: [closes] } }. Empty until loaded.
 let PLOT_HISTORY = {};
 
+// Conviction history for the Conviction tab, loaded from conviction_history.json:
+// { ticker: { t: [snapshot dates], c: [conviction scores], F, V, C } }.
+let CONV_HISTORY = {};
+
 // Buy zones (accumulation bands) loaded from buy_zones.json:
 // { ticker: { low, high, source, note } }. Absolute prices; shaded on the Plot
 // tab only when a SINGLE ticker is selected. Empty until loaded.
@@ -97,6 +101,12 @@ const plotState = {
   selected: new Set(),   // tickers currently overlaid
   range: "5y",           // 1w | 1m | 6m | 1y | 2y | 5y | all
   mode: "pct",           // pct (rebased % change) | value (absolute price)
+  q: "",                 // ticker filter for the checkbox side panel
+};
+
+const convPlotState = {
+  selected: new Set(),   // tickers currently overlaid
+  range: "all",          // 1m | 6m | 1y | 2y | 5y | all
   q: "",                 // ticker filter for the checkbox side panel
 };
 
@@ -152,10 +162,26 @@ async function boot() {
     BUY_ZONES = {};
   }
 
+  // Conviction history for the Conviction tab. Optional: the main table and
+  // price plot still work if the generated history is not present yet.
+  try {
+    const cres = await fetch("conviction_history.json", { cache: "no-store" });
+    const cpayload = await cres.json();
+    CONV_HISTORY = cpayload.history || {};
+    const meta = document.getElementById("convPlotFootMeta");
+    if (meta) {
+      meta.textContent = `Generated ${cpayload.generated_utc} · ` +
+        `${cpayload.snapshot_count || 0} snapshots · ${cpayload.count || 0} names`;
+    }
+  } catch (e) {
+    CONV_HISTORY = {};
+  }
+
   // Default the Plot tab to every held name that has price history, so the
   // chart opens pre-populated with the active book instead of empty.
   for (const r of state.data) {
     if (r.held && PLOT_HISTORY[r.ticker]) plotState.selected.add(r.ticker);
+    if (r.held && CONV_HISTORY[r.ticker]) convPlotState.selected.add(r.ticker);
   }
 
   document.getElementById("navMeta").textContent =
@@ -169,6 +195,7 @@ async function boot() {
   buildHead();
   wireControls();
   wirePlotControls();
+  wireConvPlotControls();
   render();
 }
 
@@ -361,12 +388,16 @@ function render() {
   // Toggle between the data table, the Plot tab, and About.
   const isAbout = state.view === "about";
   const isPlot = state.view === "plot";
-  document.getElementById("dashboardView").hidden = isAbout || isPlot;
+  const isConvPlot = state.view === "convplot";
+  document.getElementById("dashboardView").hidden = isAbout || isPlot || isConvPlot;
   document.getElementById("aboutView").hidden = !isAbout;
   const plotView = document.getElementById("plotView");
   if (plotView) plotView.hidden = !isPlot;
+  const convPlotView = document.getElementById("convPlotView");
+  if (convPlotView) convPlotView.hidden = !isConvPlot;
   if (isAbout) return;
   if (isPlot) { renderPlot(); return; }
+  if (isConvPlot) { renderConvPlot(); return; }
 
   let rows = [...state.data];
   if (state.heldOnly) rows = rows.filter(r => r.held);
@@ -750,6 +781,193 @@ function drawPlot() {
         `<b>${s.ticker}</b> ` + price +
         `<span style="color:${last >= 0 ? "#34d399" : "#f87171"}">` +
         `${last >= 0 ? "+" : ""}${last.toFixed(1)}%</span>`;
+      legend.appendChild(chip);
+    }
+  });
+}
+
+// ==========================================================================
+// CONVICTION TAB — interactive multi-ticker conviction-score chart
+// ==========================================================================
+
+function wireConvPlotControls() {
+  const search = document.getElementById("convPlotSearch");
+  if (search) search.oninput = e => {
+    convPlotState.q = e.target.value.trim().toUpperCase();
+    renderConvPlotList();
+  };
+  document.querySelectorAll(".convplot-range-btn").forEach(btn => {
+    btn.onclick = () => {
+      convPlotState.range = btn.dataset.range;
+      syncConvPlotRange();
+      drawConvPlot();
+    };
+  });
+  const clear = document.getElementById("convPlotClear");
+  if (clear) clear.onclick = () => {
+    convPlotState.selected.clear();
+    renderConvPlotList();
+    drawConvPlot();
+  };
+  syncConvPlotRange();
+}
+
+function syncConvPlotRange() {
+  document.querySelectorAll(".convplot-range-btn").forEach(btn =>
+    btn.classList.toggle("plot-range-on", btn.dataset.range === convPlotState.range));
+}
+
+function renderConvPlot() {
+  renderConvPlotList();
+  drawConvPlot();
+}
+
+function renderConvPlotList() {
+  const box = document.getElementById("convPlotList");
+  if (!box) return;
+  const heldSet = new Set(state.data.filter(r => r.held).map(r => r.ticker));
+  let names = Object.keys(CONV_HISTORY);
+  if (convPlotState.q) names = names.filter(t => t.toUpperCase().includes(convPlotState.q));
+  names.sort((a, b) => {
+    const sa = convPlotState.selected.has(a), sb = convPlotState.selected.has(b);
+    if (sa !== sb) return sa ? -1 : 1;
+    const ha = heldSet.has(a), hb = heldSet.has(b);
+    if (ha !== hb) return ha ? -1 : 1;
+    return a.localeCompare(b);
+  });
+  box.innerHTML = names.map(t => {
+    const on = convPlotState.selected.has(t) ? " checked" : "";
+    const held = heldSet.has(t) ? ' <span class="plot-held">held</span>' : "";
+    return `<label class="plot-check"><input type="checkbox" value="${t}"${on}>` +
+           `<span>${t}</span>${held}</label>`;
+  }).join("") ||
+    '<div class="plot-empty">No tickers match.</div>';
+  box.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.onchange = () => {
+      if (cb.checked) convPlotState.selected.add(cb.value);
+      else convPlotState.selected.delete(cb.value);
+      updateConvPlotCount();
+      drawConvPlot();
+    };
+  });
+  updateConvPlotCount();
+}
+
+function updateConvPlotCount() {
+  const count = document.getElementById("convPlotCount");
+  if (count) count.textContent = `${convPlotState.selected.size} selected`;
+}
+
+function convPlotWindow(entry) {
+  const days = PLOT_RANGE_DAYS[convPlotState.range];
+  const t = entry.t, c = entry.c;
+  if (days == null) return { t: t.slice(), c: c.slice() };
+  const last = new Date(t[t.length - 1] + "T00:00:00Z").getTime();
+  const cutoff = last - days * 86400000;
+  const ot = [], oc = [];
+  for (let i = 0; i < t.length; i++) {
+    if (new Date(t[i] + "T00:00:00Z").getTime() >= cutoff) {
+      ot.push(t[i]); oc.push(c[i]);
+    }
+  }
+  if (!ot.length) { ot.push(t[t.length - 1]); oc.push(c[c.length - 1]); }
+  return { t: ot, c: oc };
+}
+
+function drawConvPlot() {
+  const svg = document.getElementById("convPlotSvg");
+  const legend = document.getElementById("convPlotLegend");
+  if (!svg) return;
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  if (legend) legend.innerHTML = "";
+
+  const W = 900, H = 460, padL = 50, padR = 18, padT = 18, padB = 40;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const NS = "http://www.w3.org/2000/svg";
+  const mk = (tag, attrs) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  };
+
+  const sel = [...convPlotState.selected].filter(t => CONV_HISTORY[t]);
+  if (!sel.length) {
+    const msg = mk("text", { x: W / 2, y: H / 2, "text-anchor": "middle",
+      fill: "#8b98a5", "font-size": "15" });
+    msg.textContent = "Select one or more tickers to plot.";
+    svg.appendChild(msg);
+    return;
+  }
+
+  const series = [];
+  let gmin = Infinity, gmax = -Infinity, refDates = null, maxLen = 0;
+  sel.forEach((tk, i) => {
+    const win = convPlotWindow(CONV_HISTORY[tk]);
+    for (const v of win.c) { if (v < gmin) gmin = v; if (v > gmax) gmax = v; }
+    if (win.t.length > maxLen) { maxLen = win.t.length; refDates = win.t; }
+    series.push({ ticker: tk, t: win.t, vals: win.c,
+                  color: PLOT_COLORS[i % PLOT_COLORS.length] });
+  });
+  if (!isFinite(gmin)) return;
+
+  // Conviction is a bounded 0–10 score. Pad the visible range for readability
+  // but keep the axis inside the model's true scale.
+  if (gmin === gmax) { gmin -= 0.5; gmax += 0.5; }
+  const pad = Math.max((gmax - gmin) * 0.15, 0.3);
+  gmin = Math.max(0, Math.floor((gmin - pad) * 2) / 2);
+  gmax = Math.min(10, Math.ceil((gmax + pad) * 2) / 2);
+  if (gmax - gmin < 1) {
+    const mid = (gmax + gmin) / 2;
+    gmin = Math.max(0, mid - 0.5);
+    gmax = Math.min(10, mid + 0.5);
+  }
+
+  const xOf = (i, n) => padL + (n <= 1 ? 0 : (i / (n - 1)) * (W - padL - padR));
+  const yOf = v => padT + (1 - (v - gmin) / (gmax - gmin)) * (H - padT - padB);
+  const step = Math.max(0.5, niceStep(gmax - gmin, 6, 0.5));
+
+  for (let val = gmin; val <= gmax + step * 1e-6; val += step) {
+    const y = yOf(val);
+    svg.appendChild(mk("line", { x1: padL, x2: W - padR, y1: y, y2: y,
+      stroke: "#212a33", "stroke-width": 1 }));
+    const lbl = mk("text", { x: padL - 8, y: y + 4, "text-anchor": "end",
+      fill: "#8b98a5", "font-size": "11" });
+    lbl.textContent = val.toFixed(step >= 1 ? 0 : 1);
+    svg.appendChild(lbl);
+  }
+
+  if (refDates && refDates.length) {
+    const n = refDates.length;
+    xAxisTicks(refDates).forEach(({ i, label }) => {
+      const x = xOf(i, n);
+      svg.appendChild(mk("line", { x1: x, x2: x, y1: padT, y2: H - padB,
+        stroke: "#1a222b", "stroke-width": 1 }));
+      const anchor = x <= padL + 2 ? "start" : (x >= W - padR - 2 ? "end" : "middle");
+      const tx = mk("text", { x, y: H - padB + 20, "text-anchor": anchor,
+        fill: "#8b98a5", "font-size": "11" });
+      tx.textContent = label;
+      svg.appendChild(tx);
+    });
+  }
+
+  series.forEach(s => {
+    const n = s.vals.length;
+    let d = "";
+    for (let i = 0; i < n; i++)
+      d += (i === 0 ? "M" : "L") + xOf(i, n).toFixed(1) + "," + yOf(s.vals[i]).toFixed(1) + " ";
+    svg.appendChild(mk("path", { d: d.trim(), fill: "none",
+      stroke: s.color, "stroke-width": 1.8 }));
+    if (legend) {
+      const first = s.vals[0], last = s.vals[s.vals.length - 1];
+      const delta = last - first;
+      const chip = document.createElement("span");
+      chip.className = "plot-legend-chip";
+      chip.innerHTML =
+        `<span class="plot-swatch" style="background:${s.color}"></span>` +
+        `<b>${s.ticker}</b> ` +
+        `<span class="plot-legend-price">${last.toFixed(2)}</span> ` +
+        `<span style="color:${delta >= 0 ? "#34d399" : "#f87171"}">` +
+        `${delta >= 0 ? "+" : ""}${delta.toFixed(2)}</span>`;
       legend.appendChild(chip);
     }
   });

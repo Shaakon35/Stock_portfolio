@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=11" />
+  <link rel="stylesheet" href="style.css?v=12" />
 </head>
 <body>
   <!-- ===== Top nav ===== -->
@@ -22,6 +22,7 @@
     <nav class="nav-tabs" id="navTabs">
       <button class="tab tab-active" data-view="stock">Stock</button>
       <button class="tab" data-view="plot">Plot</button>
+      <button class="tab" data-view="convplot">Conviction</button>
       <button class="tab" data-view="about">About</button>
     </nav>
     <div class="nav-meta" id="navMeta"></div>
@@ -141,6 +142,63 @@
         </span>
       </footer>
     </div><!-- /#plotView -->
+
+    <!-- ===== Conviction view (interactive multi-ticker score chart) ===== -->
+    <div id="convPlotView" hidden>
+      <section class="hero">
+        <span class="pill">CONVICTION HISTORY</span>
+        <h1>How conviction changed over time</h1>
+        <p class="hero-lede">
+          Pick any held or watchlist ticker to plot its historical
+          <strong>conviction score</strong> across the dated fundamentals
+          snapshots. The chart uses the same scoring engine as the Stock table,
+          so every point is the strategy-aware CONV value that existed for that
+          snapshot.
+        </p>
+      </section>
+
+      <div class="plot-layout">
+        <!-- Side panel: ticker checkboxes -->
+        <aside class="plot-side">
+          <input type="search" id="convPlotSearch" class="search plot-search"
+                 placeholder="Filter tickers…" autocomplete="off" />
+          <div class="plot-side-meta">
+            <span id="convPlotCount">0 selected</span>
+            <button type="button" id="convPlotClear" class="plot-clear">Clear</button>
+          </div>
+          <div class="plot-list" id="convPlotList"></div>
+        </aside>
+
+        <!-- Main panel: range buttons + SVG chart + legend -->
+        <div class="plot-main">
+          <div class="plot-controls">
+            <div class="plot-ranges">
+              <button type="button" class="convplot-range-btn" data-range="1m">1M</button>
+              <button type="button" class="convplot-range-btn" data-range="6m">6M</button>
+              <button type="button" class="convplot-range-btn" data-range="1y">1Y</button>
+              <button type="button" class="convplot-range-btn" data-range="2y">2Y</button>
+              <button type="button" class="convplot-range-btn" data-range="5y">5Y</button>
+              <button type="button" class="convplot-range-btn" data-range="all">All</button>
+            </div>
+          </div>
+          <div class="plot-body">
+            <div class="plot-chart">
+              <svg id="convPlotSvg" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+            <div class="plot-legend" id="convPlotLegend"></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="foot">
+        <span id="convPlotFootMeta"></span>
+        <span class="foot-note">
+          Conviction history is generated from the committed dated fundamentals
+          snapshots by <code>python3 scoring/export_conviction_history.py</code>.
+          Missing historical rows are skipped.
+        </span>
+      </footer>
+    </div><!-- /#convPlotView -->
 
     <!-- ===== About view (methodology + glossary) ===== -->
     <div id="aboutView" hidden>
@@ -271,6 +329,6 @@
     </div><!-- /#aboutView -->
   </main>
 
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>

@@ -4,17 +4,20 @@ A static website that shows the conviction score of every company in the AI
 allocation (held + watchlist) in one **Stock** table — filterable by wave and a
 "held only" toggle, sortable by clicking any column header. An **About** tab
 documents how the score is built (the reward × safety formula, both variants,
-the F/V/C layers) and carries a glossary of every acronym in the table. No build
-step, no dependencies — just static files.
+the F/V/C layers) and carries a glossary of every acronym in the table. The
+**Plot** tab overlays price history and the **Conviction** tab overlays
+historical conviction scores. No build step, no dependencies — just static
+files.
 
 ## Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | Page shell (nav, hero, stat bar, table container, About tab) |
+| `index.html` | Page shell (nav, hero, stat bar, table container, Plot/Conviction/About tabs) |
 | `style.css` | Dark theme, data table, badges, inline F/V/C bars |
-| `app.js` | Loads `conviction.json`, renders + filters + sorts the table; draws the Plot tab (price overlay + buy-zone band); also holds the About-tab glossary |
+| `app.js` | Loads `conviction.json`, renders + filters + sorts the table; draws the Plot and Conviction tabs; also holds the About-tab glossary |
 | `conviction.json` | **Generated data** — one record per scored name |
+| `conviction_history.json` | **Generated data** — conviction score history from dated fundamentals snapshots |
 | `plot_history.json` | **Generated data** — weekly price history for the Plot tab |
 | `buy_zones.json` | **Generated data** — buy zone (accumulation band) per held single stock |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is |
@@ -56,7 +59,9 @@ If you ever need to regenerate locally (e.g. testing before a push):
 
 ```bash
 PORTFOLIO_USE=ai python3 scoring/score_holdings.py --json docs/conviction.json
-git add docs/conviction.json && git commit -m "Refresh conviction data" && git push
+PORTFOLIO_USE=ai python3 scoring/export_conviction_history.py
+git add docs/conviction.json docs/conviction_history.json
+git commit -m "Refresh conviction data" && git push
 ```
 
 The export reuses the exact same scoring loop as the CLI table, so the web
