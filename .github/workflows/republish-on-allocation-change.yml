@@ -1,4 +1,4 @@
-# Auto-republish the dashboard when an ALLOCATION changes.
+# Auto-republish the dashboard when an ALLOCATION or fundamentals snapshot changes.
 #
 # This is the "I edited a book %" path. Unlike refresh-data.yml (which re-sources
 # prices from stockanalysis.com weekly), this workflow does NO scraping: it just
@@ -11,9 +11,9 @@
 #   2. commit & push to main
 #   3. this workflow regenerates + publishes the dashboard automatically
 #
-# Trigger: any push to main that touches the allocations module (or the scorer
-# itself). Skips its own generated-data commits via the commit-message guard so
-# it can never loop on itself.
+# Trigger: any push to main that touches the allocations module, the scorer, or
+# a fundamentals CSV snapshot. Skips its own generated-data commits via the
+# commit-message guard so it can never loop on itself.
 
 name: Republish on allocation change
 
@@ -22,6 +22,7 @@ on:
     branches: [main]
     paths:
       - "portfolio/AI_allocations.py"
+      - "scoring/fundamentals_*.csv"
       - "scoring/score_holdings.py"
 
 concurrency:

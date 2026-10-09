@@ -62,6 +62,12 @@ refreshing or extending the data.
   rows for names *already* referenced in the allocations/watchlist — it does not
   create watchlist entries, so a CSV-first batch will report `added 0` and still
   owes its `WATCHLIST` entries. Verify with the coverage check below.
+- **Website republish invariant — CSV changes must refresh the dashboard.** The
+  republish workflow must trigger on `scoring/fundamentals_*.csv` as well as
+  allocation/scorer changes, so pushing a sourced CSV snapshot automatically
+  regenerates `docs/conviction.json` and `docs/conviction_history.json` for
+  GitHub Pages. Do not remove that path trigger when editing
+  `.github/workflows/republish-on-allocation-change.yml`.
 
 ### 2. Column schema
 
