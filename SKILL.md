@@ -232,10 +232,18 @@ the richer PUMP-dashboard schema in `config/watchlist.py` documented later). Eac
 - `area` — short sector + company + market label.
 - `note` — one-line thesis; keep it factual.
 
-Classification shortcut for large-cap international names: **`dca`** for quality compounders
-(staples, pharma, quality tech/IT, luxury, regulated utilities), **`cycle`** for
-banks/insurers, energy, miners, and capex-driven industrials. Reserve `catalyst`/`lottery`
-(and therefore `Binary`) for genuine single-event or pre-revenue punts only.
+Classification rule for broad-index imports: **never use `dca` as the default.**
+Start unknown/index-sweep names as `cycle` unless the company/industry metadata gives a
+positive reason to use DCA. `dca` requires explicit durable-compounder evidence such as
+software/application infrastructure, medtech/devices, healthcare services, diagnostics,
+established drug manufacturers, packaged food/beverages/grocery staples, exchanges/payments,
+or another clearly recurring/high-ROIC model. Generic sector labels like `Consumer Staples`,
+`Health Care`, `Communication Services`, `Technology`, `Foods`, or `Services` are not enough
+by themselves; keep those as `cycle` until manually reviewed. Telecom, utilities, banks,
+insurers, energy, miners, commodities, semis/hardware, autos, advertising/media, travel,
+retail/apparel, real estate, industrials, transports, and other macro/capex/order-book-sensitive
+names are `cycle`. Reserve `catalyst`/`lottery` (and therefore `Binary`) for genuine
+single-event, pre-revenue, or product/pipeline-concentration punts only.
 
 #### Coverage check (run after adding tickers, and as part of the gate)
 

@@ -1247,9 +1247,9 @@ WATCHLIST = {
     "2802.T": {"pos": "Mid", "cagr": (5, 11), "strategy": "dca",
                "area": "Japan food ingredients / amino science (Ajinomoto)",
                "note": "Defensive branded ingredients and healthcare materials; steady but not explosive."},
-    "259960.KS": {"pos": "Mid", "cagr": (8, 16), "strategy": "dca",
+    "259960.KS": {"pos": "Mid", "cagr": (6, 16), "strategy": "cycle",
                   "area": "Korea game IP (Krafton)",
-                  "note": "High-margin PUBG franchise cash machine; hit concentration is the main risk."},
+                  "note": "High-margin PUBG franchise cash machine, but hit/IP concentration makes this a cycle/trend trade, not a buy-forever DCA."},
     "018260.KS": {"pos": "Mid", "cagr": (4, 10), "strategy": "dca",
                   "area": "Korea enterprise IT services (Samsung SDS)",
                   "note": "Steady IT/logistics platform; lower growth but profitable and cash generative."},
@@ -4026,9 +4026,9 @@ WATCHLIST = {
     "HDFCBANK.NS": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 18),
              "area": "Bank (HDFC Bank) — India",
              "note": "Top Indian private bank; structural credit growth. Cyclical-quality."},
-    "BHARTIARTL.NS": {"strategy": "dca", "pos": "Mid", "cagr": (8, 15),
+    "BHARTIARTL.NS": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 15),
              "area": "Telecom (Bharti Airtel) — India",
-             "note": "India + Africa mobile; ARPU + data growth. DCA-grade growth."},
+             "note": "India + Africa mobile; ARPU + data growth, but telecom is capex/regulatory/EM-FX sensitive. Treat as cycle-quality, not DCA."},
     "ICICIBANK.NS": {"strategy": "cycle", "pos": "Mid", "cagr": (10, 18),
              "area": "Bank (ICICI Bank) — India",
              "note": "Leading private bank; structural credit growth. Cyclical-quality."},
@@ -4566,11 +4566,12 @@ WATCHLIST = {
                      "cycle turnaround — BNPL P&L swings with charge-offs and "
                      "rates. Tagged catalyst/Binary (downside is real). The 8 is "
                      "an illusion; treat as a binary macro bet."},
-    "PINS": {"strategy": "dca", "pos": "Mid", "cagr": (8, 20),
+    "PINS": {"strategy": "cycle", "pos": "Mid", "cagr": (5, 20),
              "area": "Visual-discovery ad platform (Pinterest, US)",
              "note": "QC: CONV 7.80 (CYC binding), NEG-MARGIN-HIST (recent "
                      "GAAP-profit flip). Ad-cyclical; score flattered by the "
-                     "turnaround base. Durable score mid-6s."},
+                     "turnaround base. Retagged cycle so DCA conv no longer "
+                     "overstates the flat/advertising-cycle risk."},
     "APPF": {"strategy": "dca", "pos": "Mid", "cagr": (10, 22),
              "area": "Property-management SaaS (AppFolio, US)",
              "note": "QC: CONV 7.75 (CYC binding), NEG-MARGIN-HIST. Real "
@@ -4954,10 +4955,10 @@ WATCHLIST = {
     #     Removed from WATCHLIST; re-add here if it is ever cut to 0%.
     "CARS": {
         "pos":      "Mid",
-        "cagr":     (8, 16),
-        "strategy": "dca",
+        "cagr":     (0, 14),
+        "strategy": "cycle",
         "area":     'Auto marketplace (Cars.com)',
-        "note":     'Small-cap auto-listings SaaS; steady low-teens rev, FCF+. margin_hist noisy but positive.',
+        "note":     'Small-cap auto marketplace; revenue is near-flat and tied to auto dealer/ad cycles. Cheap value screen, not DCA.',
     },
     "FIS": {
         "pos":      "Mid",
@@ -4968,10 +4969,10 @@ WATCHLIST = {
     },
     "MTCH": {
         "pos":      "Mid",
-        "cagr":     (6, 14),
-        "strategy": "dca",
+        "cagr":     (0, 14),
+        "strategy": "cycle",
         "area":     'Online dating platforms (Match Group)',
-        "note":     'Tinder/Hinge owner; high 73% gross, ~19% net, cheap PEG 0.86. Flat rev is the risk — quality-cheap, not growth.',
+        "note":     'Tinder/Hinge owner; high gross margin and cheap, but flat revenue makes this a re-rating/turnaround screen, not DCA.',
     },
     "YELP": {
         "pos":      "Mid",
@@ -9316,11 +9317,11 @@ WATCHLIST = {
     },
     '000858.SZ': {
         "pos":      'Mid',
-        "cagr":     (6, 12),
-        "strategy": 'dca',
+        "cagr":     (0, 12),
+        "strategy": 'cycle',
         "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
-        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
-                    "source sector 'Consumer Staples'; thesis-review before action.",
+        "note":     'Retagged after high-conv QC: China baijiu/consumer value screen with'
+                    ' weak recent revenue; treat as China consumption cycle, not DCA.',
     },
     '000876.SZ': {
         "pos":      'Mid',
@@ -9837,12 +9838,12 @@ WATCHLIST = {
     },
     '003230.KS': {
         "pos":      'Mid',
-        "cagr":     (6, 12),
-        "strategy": 'dca',
+        "cagr":     (0, 16),
+        "strategy": 'cycle',
         "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
                     '200)',
-        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
-                    "source sector 'Consumer Staples'; thesis-review before action.",
+        "note":     'Retagged after high-conv QC: Korean food/export-momentum screen with'
+                    ' brand/trend risk and negative FCF; not clean DCA.',
     },
     '003240.KS': {
         "pos":      'Mid',
@@ -10414,12 +10415,12 @@ WATCHLIST = {
     },
     '032640.KS': {
         "pos":      'Mid',
-        "cagr":     (6, 12),
-        "strategy": 'dca',
+        "cagr":     (0, 10),
+        "strategy": 'cycle',
         "area":     'Broad-index constituent screen (South Korea; Communication Services;'
                     'KOSPI 200)',
-        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
-                    "source sector 'Communication Services'; thesis-review before action.",
+        "note":     'Retagged after high-conv QC: telecom/capex/regulatory value screen;'
+                    ' cheap but not a high-quality DCA compounder.',
     },
     '032830.KS': {
         "pos":      'Mid',
@@ -11118,12 +11119,12 @@ WATCHLIST = {
     },
     '259960.KS': {
         "pos":      'Mid',
-        "cagr":     (6, 12),
-        "strategy": 'dca',
+        "cagr":     (6, 16),
+        "strategy": 'cycle',
         "area":     'Broad-index constituent screen (South Korea; Communication Services;'
                     'KOSPI 200)',
-        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
-                    "source sector 'Communication Services'; thesis-review before action.",
+        "note":     'Retagged after high-conv QC: game-IP/hit-cycle exposure; strong'
+                    ' profitability but not a buy-forever DCA compounder.',
     },
     '267250.KS': {
         "pos":      'Mid',
@@ -11188,12 +11189,12 @@ WATCHLIST = {
     },
     '278470.KS': {
         "pos":      'Mid',
-        "cagr":     (6, 12),
-        "strategy": 'dca',
+        "cagr":     (0, 18),
+        "strategy": 'cycle',
         "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
                     '200)',
-        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
-                    "source sector 'Consumer Staples'; thesis-review before action.",
+        "note":     'Retagged after high-conv QC: K-beauty/consumer-trend growth screen;'
+                    ' strong numbers but short-cycle brand risk, not DCA until proven.',
     },
     '2801.T': {
         "pos":      'Mid',
@@ -11618,12 +11619,12 @@ WATCHLIST = {
                     "source sector 'Financials'; thesis-review before action.",
     },
     '326030.KS': {
-        "pos":      'Mid',
-        "cagr":     (6, 12),
-        "strategy": 'dca',
+        "pos":      'Binary',
+        "cagr":     (-20, 25),
+        "strategy": 'catalyst',
         "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
-        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
-                    "source sector 'Health Care'; thesis-review before action.",
+        "note":     'Retagged after high-conv QC: concentrated biopharma/product-risk name;'
+                    ' handle as catalyst/Binary rather than DCA.',
     },
     '3289.T': {
         "pos":      'Mid',
@@ -12029,12 +12030,12 @@ WATCHLIST = {
     },
     '483650.KS': {
         "pos":      'Mid',
-        "cagr":     (6, 12),
-        "strategy": 'dca',
+        "cagr":     (0, 18),
+        "strategy": 'cycle',
         "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
                     '200)',
-        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
-                    "source sector 'Consumer Staples'; thesis-review before action.",
+        "note":     'Retagged after high-conv QC: small K-beauty/consumer-trend growth screen;'
+                    ' strong score but not durable DCA yet.',
     },
     '4911.T': {
         "pos":      'Mid',
@@ -15499,6 +15500,95 @@ WATCHLIST = {
     },
 
 }
+
+
+_BROAD_INDEX_DCA_ALLOW = (
+    "software-application",
+    "software-infrastructure",
+    "internetcontent&information",
+    "informationtechnologyservices",
+    "medicaldevices",
+    "medicalinstruments",
+    "medicalcarefacilities",
+    "medicaldistribution",
+    "diagnostics&research",
+    "drugmanufacturers",
+    "pharmaceuticals",
+    "packagedfoods",
+    "beverages",
+    "grocerystores",
+    "fooddistribution",
+    "household&personalproducts",
+    "tobacco",
+    "wastemanagement",
+    "financialdata&stockexchanges",
+)
+
+_BROAD_INDEX_CYCLE_FORCE = (
+    "telecom",
+    "telecommunications",
+    "advertising",
+    "publishing",
+    "entertainment",
+    "media",
+    "electronicgaming",
+    "gaming",
+    "travel",
+    "leisure",
+    "apparel",
+    "retail",
+    "restaurant",
+    "automanufacturers",
+    "automobiles",
+    "autoparts",
+    "railway",
+    "bus",
+    "electricpower",
+    "utilities",
+    "gas",
+    "fishery",
+    "pulp&paper",
+    "textiles",
+    "precisioninstruments",
+    "othermanufacturing",
+    "consumerproductsandservices",
+    "informationandcommunication",
+)
+
+
+def _compact_label(s):
+    return "".join(ch for ch in s.lower() if ch.isalnum() or ch == "&")
+
+
+def _audit_broad_index_categories():
+    """Prevent broad-index imports from defaulting to DCA on sector labels alone."""
+    for entry in WATCHLIST.values():
+        area = entry.get("area", "")
+        if "broad index constituent screen" not in area.lower().replace("-", " "):
+            continue
+        if entry.get("strategy") != "dca":
+            continue
+
+        compact = _compact_label(area)
+        allowed_dca = any(token in compact for token in _BROAD_INDEX_DCA_ALLOW)
+        forced_cycle = any(token in compact for token in _BROAD_INDEX_CYCLE_FORCE)
+
+        if allowed_dca and not forced_cycle:
+            continue
+
+        lo, hi = entry.get("cagr", (0, 12))
+        entry["strategy"] = "cycle"
+        entry["cagr"] = (min(lo, 0), hi)
+        note = entry.get("note", "")
+        audit_note = (
+            " Category audit: broad-index metadata did not prove durable DCA; "
+            "score as cycle until a manual DCA thesis is written."
+        )
+        if "Category audit:" not in note:
+            entry["note"] = note + audit_note
+
+
+_audit_broad_index_categories()
 
 
 def validate_watchlist():
