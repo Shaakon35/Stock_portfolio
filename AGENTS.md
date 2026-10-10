@@ -68,6 +68,25 @@ refreshing or extending the data.
   regenerates `docs/conviction.json` and `docs/conviction_history.json` for
   GitHub Pages. Do not remove that path trigger when editing
   `.github/workflows/republish-on-allocation-change.yml`.
+- **Do not leave new watchlist names as neutral DCA placeholders.** Before
+  recomputing conviction or exporting the website after a CSV expansion,
+  classify every new ticker into the correct scoring box: `dca` for durable
+  compounders / quality software / staples / healthcare services-devices /
+  exchanges-payments; `cycle` for banks, insurers, energy, miners, commodities,
+  semis/hardware, autos, industrials, utilities, real estate, airlines and other
+  macro/order-book-sensitive names; `catalyst` or `lottery` with `pos="Binary"`
+  for biotech/event-driven or pre-revenue/single-outcome names. For broad index
+  sweeps, use StockAnalysis company-page sector/industry metadata as the first
+  pass, then override obvious edge cases by judgment. This prevents gold miners,
+  insurers, utilities, and other cyclical names from being ranked as DCA
+  compounders.
+- **Website export follows every CSV expansion.** After adding or refreshing
+  rows in the newest fundamentals CSV, run `PORTFOLIO_USE=ai python3
+  scoring/score_holdings.py --json docs/conviction.json` locally before
+  validation so the dashboard artifact matches the CSV. The
+  `republish-dashboard` GitHub workflow also watches `scoring/fundamentals_*.csv`
+  on `main`, so a committed CSV-only update regenerates and republishes
+  `docs/conviction.json` automatically.
 
 ### 2. Column schema
 

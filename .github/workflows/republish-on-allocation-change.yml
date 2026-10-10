@@ -1,4 +1,4 @@
-# Auto-republish the dashboard when an ALLOCATION or fundamentals snapshot changes.
+# Auto-republish the dashboard when an allocation or fundamentals snapshot changes.
 #
 # This is the "I edited a book %" path. Unlike refresh-data.yml (which re-sources
 # prices from stockanalysis.com weekly), this workflow does NO scraping: it just
@@ -15,7 +15,7 @@
 # a fundamentals CSV snapshot. Skips its own generated-data commits via the
 # commit-message guard so it can never loop on itself.
 
-name: Republish on allocation change
+name: Republish dashboard
 
 on:
   push:
@@ -55,8 +55,9 @@ jobs:
       - name: Regenerate dashboard JSON from the committed snapshot
         run: |
           set -euo pipefail
-          # Auto-picks the newest scoring/fundamentals_*.csv. No scraping — the
-          # scores change only because the allocation weights changed.
+          # Auto-picks the newest scoring/fundamentals_*.csv. No scraping here:
+          # scores change because allocations/scorer logic changed, or because a
+          # committed CSV expansion/refresh changed the deterministic snapshot.
           python3 scoring/score_holdings.py --json docs/conviction.json
           python3 scoring/export_conviction_history.py --out docs/conviction_history.json
 
@@ -87,7 +88,7 @@ jobs:
             echo "dashboard JSON already up to date — nothing to publish."
             exit 0
           fi
-          printf 'Republish dashboard after allocation change [skip republish]\n\nCo-authored-by: Ona <no-reply@ona.com>\n' | git commit -F -
+          printf 'Republish dashboard after input change [skip republish]\n\nCo-authored-by: Ona <no-reply@ona.com>\n' | git commit -F -
           # Rebase-and-retry: main can advance while this runs. Our commit only
           # rewrites generated JSON, so on conflict our fresh version wins.
           export GIT_EDITOR=true

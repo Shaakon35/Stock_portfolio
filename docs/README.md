@@ -27,10 +27,11 @@ files.
 `conviction.json` is produced by the scorer. There are two automated paths and
 one manual fallback.
 
-### Changing an allocation weight (automatic)
+### Changing an allocation weight or CSV snapshot (automatic)
 
-To change a holding's book %, just edit its number in
-`portfolio/AI_allocations.py` and push to `main`:
+To change a holding's book %, edit its number in `portfolio/AI_allocations.py`.
+To add or refresh fundamentals, update the newest `scoring/fundamentals_*.csv`.
+Then push to `main`:
 
 ```bash
 # edit e.g. "TLN": 3.5 -> 3.0 in portfolio/AI_allocations.py
@@ -39,12 +40,13 @@ git commit -m "Trim TLN to 3.0%"
 git push
 ```
 
-The **`republish-on-allocation-change`** workflow (`.github/workflows/`) fires on
-any push to `main` that touches `AI_allocations.py` (or the scorer). It
-regenerates `docs/conviction.json` from the committed CSV snapshot (no price
-scraping), runs the validation gate, and commits the result — so the site
-updates on its own within a minute or two. **You do not need to regenerate or
-commit the JSON yourself.**
+The **`republish-dashboard`** workflow (`.github/workflows/`) fires on any push
+to `main` that touches `AI_allocations.py`, `score_holdings.py`, or a
+`scoring/fundamentals_*.csv` snapshot. It regenerates `docs/conviction.json`
+from the committed CSV snapshot (no price scraping), runs the validation gate,
+and commits the result — so the site updates on its own within a minute or two.
+**You do not need to regenerate or commit the JSON yourself after a CSV-only
+change.**
 
 ### Refreshing prices / fundamentals (automatic, weekly)
 

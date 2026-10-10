@@ -28,6 +28,8 @@
 # of Constellation Software's primary CSU.TO listing, so the row mirrors CSU.TO
 # fundamentals to surface the OTC ticker in the conviction list without changing
 # the underlying company thesis.
+# ACHR conviction in the generated dashboard artifact for this snapshot:
+# CONV 2.97, grade AVOID, F 2.4 / V 7.6 / C 3.7 (docs/conviction.json).
 # Reproducible INPUT for scoring/score_holdings.py. Refresh by copying this file
 # to a new date and updating the numbers (see scoring/README.md / AGENTS.md).
 # The loader skips these leading '#' lines.

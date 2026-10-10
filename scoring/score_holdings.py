@@ -1451,12 +1451,32 @@ def strategy_grade(r, f):
 # it from the web (best-effort; the site's HTML can change, so failures fall
 # back to whatever the CSV already holds). Intentionally light: it only fills
 # the numeric fields it can parse, leaving blanks (-> neutral) otherwise.
+_SA_HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                   "Chrome/129 Safari/537.36"),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache",
+}
+
+
+def _sa_request(url):
+    """Browser-like request for stockanalysis.com pages/APIs.
+
+    The site can reject the old minimal `Mozilla/5.0` header with a 403 while
+    serving the same page to a normal browser header set.
+    """
+    import urllib.request
+    return urllib.request.Request(url, headers=_SA_HEADERS)
+
+
 def live_refresh(tickers, out_csv):
     import re
     import urllib.request
 
     def fetch(url):
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        req = _sa_request(url)
         with urllib.request.urlopen(req, timeout=20) as r:
             return r.read().decode("utf-8", "ignore")
 
@@ -1504,7 +1524,8 @@ def live_refresh(tickers, out_csv):
 # from --live (which overwrites the whole row from the thinner statistics page).
 _FIN_EXCH = {  # foreign listings use /quote/<exch>/<code>/financials/
     "KS": ("krx", lambda code: code),       # Korea: 000660.KS -> krx/000660
-    "HK": ("hkg", lambda code: code),       # Hong Kong: 1810.HK -> hkg/1810
+    "HK": ("hkg", lambda code: code.zfill(4) if code.isdigit() else code),
+    # Hong Kong: 1810.HK -> hkg/1810; short codes need padding: 700.HK -> hkg/0700
     "DE": ("etr", lambda code: code),       # Xetra
     "AS": ("ams", lambda code: code),       # Amsterdam
     "SW": ("swx", lambda code: code),       # SIX Swiss
@@ -1516,9 +1537,21 @@ _FIN_EXCH = {  # foreign listings use /quote/<exch>/<code>/financials/
     "AX": ("asx", lambda code: code),       # Australia ASX: BHP.AX -> asx/BHP
     "TW": ("tpe", lambda code: code),       # Taiwan TWSE: 2330.TW -> tpe/2330
     "MC": ("bme", lambda code: code),       # Spain BME (Madrid): ITX.MC -> bme/ITX
-    "ST": ("sto", lambda code: code),       # Sweden Stockholm: SAND.ST -> sto/SAND
+    "ST": ("sto", lambda code: code.replace("-", ".")),
+    # Sweden Stockholm: SAND.ST -> sto/SAND; class shares: ERIC-B.ST -> sto/ERIC.B
     "JO": ("jse", lambda code: code),       # South Africa JSE: NPN.JO -> jse/NPN
     "SR": ("tadawul", lambda code: code),   # Saudi Tadawul: 2222.SR -> tadawul/2222
+    "MI": ("bit", lambda code: code),       # Borsa Italiana: ENEL.MI -> bit/ENEL
+    "SI": ("sgx", lambda code: code),       # Singapore SGX: D05.SI -> sgx/D05
+    "BR": ("ebr", lambda code: code),       # Euronext Brussels: ABI.BR -> ebr/ABI
+    "CO": ("cph", lambda code: code.replace("-", ".")),
+    # Copenhagen: NOVO-B.CO -> cph/NOVO.B
+    "HE": ("hel", lambda code: code.replace("-", ".")),  # Helsinki
+    "OL": ("osl", lambda code: code),       # Oslo
+    "VI": ("vie", lambda code: code),       # Vienna
+    "LS": ("eli", lambda code: code),       # Lisbon
+    "SS": ("sha", lambda code: code),       # Shanghai A-shares
+    "SZ": ("she", lambda code: code),       # Shenzhen A-shares
 }
 
 
@@ -1567,7 +1600,7 @@ def ttm_growth_for(ticker):
     import urllib.request
     url = _fin_url(ticker)
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        req = _sa_request(url)
         with urllib.request.urlopen(req, timeout=25) as r:
             html = r.read().decode("utf-8", "ignore")
     except Exception:
@@ -1639,7 +1672,7 @@ def margin_hist_for(ticker):
     import urllib.request
     url = _fin_url(ticker)
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        req = _sa_request(url)
         with urllib.request.urlopen(req, timeout=25) as r:
             html = r.read().decode("utf-8", "ignore")
     except Exception:
@@ -1810,18 +1843,24 @@ _FX_PER_USD = {  # local currency units per 1 USD (divide local cap by this)
     "CAD": 1.37,    # Canada (.TO)
     "INR": 83.5,    # India (.NS)
     "AUD": 1.52,    # Australia (.AX)
+    "CNY": 7.10,    # China A-shares (.SS / .SZ)
     "TWD": 32.5,    # Taiwan (.TW)
     "SEK": 10.6,    # Sweden (.ST)
+    "DKK": 6.90,    # Denmark (.CO)
+    "NOK": 10.5,    # Norway (.OL)
     "ZAR": 18.2,    # South Africa (.JO)
     "SAR": 3.75,    # Saudi Arabia (.SR) — riyal is USD-pegged at 3.75
+    "SGD": 1.30,    # Singapore (.SI)
 }
-_EUR_USD = 1.08     # USD per 1 EUR (.AS / .DE / .MC listings priced in EUR)
+_EUR_USD = 1.08     # USD per 1 EUR (.AS / .DE / .MC / .MI / .BR)
 
 # Map the CSV ticker suffix to the local currency of its market-cap figure.
 _SUFFIX_CCY = {
     "KS": "KRW", "HK": "HKD", "AS": "EUR", "DE": "EUR", "SW": "CHF",
     "L": "GBP", "T": "JPY", "PA": "EUR", "TO": "CAD", "NS": "INR", "AX": "AUD",
     "TW": "TWD", "MC": "EUR", "ST": "SEK", "JO": "ZAR", "SR": "SAR",
+    "MI": "EUR", "SI": "SGD", "BR": "EUR", "CO": "DKK", "HE": "EUR",
+    "OL": "NOK", "VI": "EUR", "LS": "EUR", "SS": "CNY", "SZ": "CNY",
 }
 
 # DMA200-GUARD: max plausible |price − 200DMA| / 200DMA, in %. A real chart is
@@ -1849,7 +1888,7 @@ def _quote_price(ticker):
     import urllib.request
 
     def get(url):
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        req = _sa_request(url)
         with urllib.request.urlopen(req, timeout=20) as r:
             return r.read().decode("utf-8", "ignore")
 
@@ -1930,7 +1969,7 @@ def scrape_forecast(ticker):
     import urllib.request
 
     def get(url):
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        req = _sa_request(url)
         with urllib.request.urlopen(req, timeout=25) as r:
             return r.read().decode("utf-8", "ignore")
 
@@ -1959,7 +1998,7 @@ def scrape_stats(ticker):
     import urllib.request
 
     def get(url):
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        req = _sa_request(url)
         with urllib.request.urlopen(req, timeout=25) as r:
             return r.read().decode("utf-8", "ignore")
 

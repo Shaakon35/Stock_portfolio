@@ -2203,6 +2203,15 @@ WATCHLIST = {
     },
 
     # --- Transmission / cooling — considered for rotation, NOT added ---
+    "ROAD": {
+        "strategy": "cycle",
+        "pos":      "Mid",
+        "cagr":     (8, 18),
+        "area":     "Infrastructure / road construction (Construction Partners)",
+        "note":     "OFF-THESIS industrial/infrastructure benchmark. Profitable road "
+                    "construction roll-up with public-infrastructure tailwinds, but "
+                    "not an AI value-chain bottleneck. Cycle watchlist only.",
+    },
     "SIE.DE": {
         "strategy": "dca",
         "pos":      "Mid",
@@ -5825,6 +5834,9670 @@ WATCHLIST = {
         "area":     'Beauty retail (Ulta Beauty)',
         "note":     'Beauty-specialty retailer; FCF+, cheap, buy-backs. Discretionary-cyclical.',
     },
+    # --- Broad index sweep (2026-10-09): auto-sourced candidates ---
+    # Generated from list Y: <=100-stock index constituents missing from the
+    # fundamentals CSV, including FTSE 100. Classified by StockAnalysis
+    # sector/industry metadata; still thesis-review before portfolio action.
+    '1038.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Bermuda; Utilities; Utilities -'
+                    'Regulated Electric)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Electric). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    '1044.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer Staples;'
+                    'Household & Personal Products)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Household & Personal Products). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    '1088.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (China; Energy; Thermal Coal)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Thermal'
+                    'Coal). Auto-sourced candidate; refine thesis and sizing before action.',
+    },
+    '1093.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Hong Kong; Healthcare; Drug'
+                    'Manufacturers - General)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - General). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '1099.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (China; Healthcare; Medical'
+                    'Distribution)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Distribution). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    '1109.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Real Estate; Real'
+                    'Estate - Development)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate - Development). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '1113.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Real Estate; Real'
+                    'Estate - Development)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate - Development). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '1177.HK': {
+        "pos":      'Binary',
+        "cagr":     (-30, 60),
+        "strategy": 'catalyst',
+        "area":     'Broad index constituent screen (Cayman Islands; Healthcare;'
+                    'Biotechnology)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CATALYST (Healthcare;'
+                    'Biotechnology). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '1209.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Real Estate; Real'
+                    'Estate Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '1378.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Materials; Aluminum)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Aluminum). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    '1398.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (China; Financials; Banks -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '1876.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer Staples;'
+                    'Beverages - Brewers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Beverages - Brewers). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '1928.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer'
+                    'Discretionary; Resorts & Casinos)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Resorts & Casinos). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    '1929.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer'
+                    'Discretionary; Luxury Goods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Luxury Goods). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    '1997.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Real Estate; Real'
+                    'Estate Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '2057.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Industrials;'
+                    'Integrated Freight & Logistics)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Integrated Freight & Logistics). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    '2269.HK': {
+        "pos":      'Binary',
+        "cagr":     (-30, 60),
+        "strategy": 'catalyst',
+        "area":     'Broad index constituent screen (Cayman Islands; Healthcare;'
+                    'Biotechnology)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CATALYST (Healthcare;'
+                    'Biotechnology). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '2313.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer'
+                    'Discretionary; Textile Manufacturing)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Textile Manufacturing). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    '2319.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer Staples;'
+                    'Packaged Foods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Packaged Foods). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '2382.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Technology; Electronic'
+                    'Components)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Technology;'
+                    'Electronic Components). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '2388.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Hong Kong; Financials; Banks -'
+                    'Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    '2618.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Industrials;'
+                    'Integrated Freight & Logistics)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Integrated Freight & Logistics). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    '2628.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (China; Financials; Insurance - Life)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Life). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '2688.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Utilities; Utilities -'
+                    'Regulated Gas)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Gas). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '3692.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    '3988.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (China; Financials; Banks -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    '5E2.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Energy; Oil & Gas Equipment'
+                    '& Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Equipment & Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '6618.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Healthcare;'
+                    'Pharmaceutical Retailers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare;'
+                    'Pharmaceutical Retailers). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '6862.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer'
+                    'Discretionary; Restaurants)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Restaurants). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '9633.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (China; Consumer Staples; Beverages -'
+                    'Non-Alcoholic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Beverages - Non-Alcoholic). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '9888.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Communication'
+                    'Services; Internet Content & Information)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Internet Content & Information). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    '9961.HK': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer'
+                    'Discretionary; Travel Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Travel Services). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    '9992.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Consumer'
+                    'Discretionary; Leisure)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer'
+                    'Discretionary; Leisure). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    '9999.HK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Cayman Islands; Communication'
+                    'Services; Electronic Gaming & Multimedia)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Electronic Gaming & Multimedia). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    '9CI.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; Real Estate'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'A17U.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT -'
+                    'Industrial)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Industrial). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'A2A.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'AAF.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Communication'
+                    'Services; Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ABDN.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'ABF.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer Staples;'
+                    'Packaged Foods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Packaged Foods). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ABI.BR': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Belgium; Consumer Staples; Beverages -'
+                    'Brewers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Beverages - Brewers). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ABN.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Financials; Banks -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ABX.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Materials; Gold)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials; Gold).'
+                    'Auto-sourced candidate; refine thesis and sizing before action.',
+    },
+    'AC.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Consumer Discretionary;'
+                    'Lodging)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Lodging). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ACA.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'ACS.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Industrials; Engineering &'
+                    'Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ACX.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Materials; Steel)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Steel). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'ADANIENT.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Energy; Thermal Coal)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Thermal'
+                    'Coal). Auto-sourced candidate; refine thesis and sizing before action.',
+    },
+    'ADANIPORTS.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Industrials; Marine Shipping)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Marine Shipping). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ADM.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Insurance'
+                    '- Property & Casualty)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Property & Casualty). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'AEM.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Materials; Gold)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials; Gold).'
+                    'Auto-sourced candidate; refine thesis and sizing before action.',
+    },
+    'AGN.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Bermuda; Financials; Insurance -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'AJBU.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'AKZA.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Materials; Specialty'
+                    'Chemicals)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Specialty Chemicals). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ALFA.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Sweden; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'AMP.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Italy; Healthcare; Medical'
+                    'Distribution)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Distribution). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'AMRZ.SW': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Switzerland; Materials; Building'
+                    'Materials)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Building Materials). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ANA.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Industrials; Engineering &'
+                    'Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ANE.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Utilities; Utilities -'
+                    'Renewable)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Renewable). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ANTO.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Materials; Copper)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Copper). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'APOLLOHOSP.NS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (India; Healthcare; Medical Care'
+                    'Facilities)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Care Facilities). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ARGX.BR': {
+        "pos":      'Binary',
+        "cagr":     (-30, 60),
+        "strategy": 'catalyst',
+        "area":     'Broad index constituent screen (Netherlands; Healthcare;'
+                    'Biotechnology)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CATALYST (Healthcare;'
+                    'Biotechnology). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ASML.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Technology; Semiconductor'
+                    'Equipment & Materials)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Technology;'
+                    'Semiconductor Equipment & Materials). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'ASRNL.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Financials; Insurance -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'AUTO.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Communication'
+                    'Services; Internet Content & Information)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Internet Content & Information). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'AV.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Insurance'
+                    '- Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'AVIO.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Industrials; Aerospace &'
+                    'Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'AZM.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Asset Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United States; Industrials; Aerospace'
+                    '& Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BAB.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials;'
+                    'Engineering & Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BAJAJFINSV.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Financials; Financial'
+                    'Conglomerates)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Financial Conglomerates). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BAM.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Financials; Asset Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BAMI.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BAYN.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Germany; Healthcare; Drug'
+                    'Manufacturers - General)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - General). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BBOX.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Real Estate; REIT -'
+                    'Industrial)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Industrial). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BBVA.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Financials; Banks -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BBY.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials;'
+                    'Engineering & Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BC.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Consumer Discretionary; Luxury'
+                    'Goods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Luxury Goods). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'BCE.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Communication Services;'
+                    'Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BEL.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Industrials; Aerospace &'
+                    'Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BGEO.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Banks -'
+                    'Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BIP.UN.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Bermuda; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BKT.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BLND.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Real Estate; REIT -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BMED.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BMPS.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BN4.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Industrials; Conglomerates)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Conglomerates). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BNR.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Materials; Specialty'
+                    'Chemicals)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Specialty Chemicals). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BNZL.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer Staples; Food'
+                    'Distribution)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Food Distribution). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BOL.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Sweden; Materials; Other Industrial'
+                    'Metals & Mining)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials; Other'
+                    'Industrial Metals & Mining). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BPE.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BRBY.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Luxury Goods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Luxury Goods). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'BS6.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Industrials; Industrial -'
+                    'Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Industrial - Machinery). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BT.A.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Communication'
+                    'Services; Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'BTRW.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Residential Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Residential Construction). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'BUOU.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT -'
+                    'Industrial)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Industrial). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'BVI.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (France; Industrials; Consulting'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Industrials;'
+                    'Consulting Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'BZU.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Materials; Building Materials)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Building Materials). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'C09.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; Real Estate -'
+                    'Development)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate - Development). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'C38U.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT - Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Retail). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'C6L.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Industrials; Airlines)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Airlines). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'CA.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (France; Consumer Staples; Grocery'
+                    'Stores)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Grocery Stores). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'CABK.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'CAE.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Industrials; Aerospace &'
+                    'Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'CBK.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'CCC.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Technology;'
+                    'Information Technology Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Information Technology Services). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'CCH.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Switzerland; Consumer Staples;'
+                    'Beverages - Non-Alcoholic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Beverages - Non-Alcoholic). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'CCL.B.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Consumer Discretionary;'
+                    'Packaging & Containers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Packaging & Containers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'CCO.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Energy; Uranium)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Uranium).'
+                    'Auto-sourced candidate; refine thesis and sizing before action.',
+    },
+    'CIPLA.NS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (India; Healthcare; Drug Manufacturers'
+                    '- Specialty & Generic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'CLS.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Technology; Electronic'
+                    'Components)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Technology;'
+                    'Electronic Components). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'CNA.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Utilities; Utilities -'
+                    'Independent Power Producers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Independent Power Producers). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'COL.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Real Estate; REIT - Office)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Office). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'CON.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Consumer Discretionary; Auto'
+                    'Parts)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Parts). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'CPR.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Netherlands; Consumer Staples;'
+                    'Beverages - Wineries & Distilleries)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Beverages - Wineries & Distilleries). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'CRDA.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Materials; Specialty'
+                    'Chemicals)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Specialty Chemicals). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'CTC.A.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Consumer Discretionary;'
+                    'Specialty Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Specialty Retail). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'CTEC.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Healthcare; Medical'
+                    'Instruments & Supplies)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Instruments & Supplies). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'CVE.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Energy; Oil & Gas Integrated)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Integrated). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'D01.SI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Bermuda; Consumer Staples; Grocery'
+                    'Stores)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Grocery Stores). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'D05.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Financials; Banks)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Banks). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'DBK.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'DCC.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Ireland; Energy; Oil & Gas Refining &'
+                    'Marketing)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Refining & Marketing). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'DIA.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Italy; Healthcare; Diagnostics &'
+                    'Research)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare;'
+                    'Diagnostics & Research). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'DIS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Communication Services;'
+                    'Entertainment)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Entertainment). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'DPLM.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials;'
+                    'Industrial Distribution)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Industrials;'
+                    'Industrial Distribution). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'DRREDDY.NS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (India; Healthcare; Drug Manufacturers'
+                    '- Specialty & Generic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'DTG.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Industrials; Farm & Heavy'
+                    'Construction Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials; Farm'
+                    '& Heavy Construction Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'EICHERMOT.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Consumer Discretionary; Auto'
+                    'Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'ELE.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Utilities; Utilities -'
+                    'Regulated Electric)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Electric). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'EMA.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Utilities; Utilities -'
+                    'Regulated Electric)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Electric). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'EN.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Industrials; Engineering &'
+                    'Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ENEL.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ENG.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Utilities; Utilities -'
+                    'Regulated Gas)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Gas). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ENI.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Energy; Oil & Gas Integrated)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Integrated). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'ENR.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'ENX.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Netherlands; Financials; Financial'
+                    'Data & Stock Exchanges)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Financials;'
+                    'Financial Data & Stock Exchanges). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'EOAN.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'EQT.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Sweden; Financials; Asset Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'ERF.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Luxembourg; Healthcare; Diagnostics &'
+                    'Research)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare;'
+                    'Diagnostics & Research). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'EXO.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'EZJ.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Airlines)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Airlines). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'F34.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Consumer Staples;'
+                    'Agricultural Farm Products)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer Staples;'
+                    'Agricultural Farm Products). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'FBK.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'FCT.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Industrials; Aerospace &'
+                    'Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'FDR.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Consumer Discretionary;'
+                    'Leisure)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Leisure). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'FER.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Industrials; Engineering'
+                    '& Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'FFH.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Financials; Insurance -'
+                    'Property & Casualty)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Property & Casualty). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'FGR.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Industrials; Engineering &'
+                    'Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'FM.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Materials; Copper)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Copper). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'FME.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Germany; Healthcare; Medical Care'
+                    'Facilities)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Care Facilities). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'FRE.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Germany; Healthcare; Medical Care'
+                    'Facilities)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Care Facilities). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'FRES.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Materials; Other'
+                    'Precious Metals & Mining)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials; Other'
+                    'Precious Metals & Mining). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'FSV.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Real Estate; Real Estate'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'FTS.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Utilities; Utilities -'
+                    'Regulated Electric)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Electric). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'G.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Insurance -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'G13.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Consumer Discretionary;'
+                    'Gambling, Resorts & Casinos)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Gambling, Resorts & Casinos). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'G1A.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'G24.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Germany; Communication Services;'
+                    'Internet Content & Information)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Internet Content & Information). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'GALD.SW': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Switzerland; Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'GAW.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Leisure)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer'
+                    'Discretionary; Leisure). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'GIB.A.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Technology; Information'
+                    'Technology Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Information Technology Services). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'GIL.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Consumer Discretionary;'
+                    'Apparel Manufacturing)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Apparel Manufacturing). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'GLE.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'GOOGL': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Communication Services;'
+                    'Internet Content & Information)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Internet Content & Information). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'GRASIM.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Materials; Building Materials)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Building Materials). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'GRF.MC': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Spain; Healthcare; Drug Manufacturers'
+                    '- General)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - General). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'H.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Utilities; Utilities -'
+                    'Regulated Electric)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Electric). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'H78.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Bermuda; Real Estate; Real Estate -'
+                    'Development)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate - Development). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'HD': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United States; Consumer Discretionary;'
+                    'Home Improvement Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Home Improvement Retail). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'HDFCLIFE.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Financials; Insurance - Life)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Life). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'HEI.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Materials; Building'
+                    'Materials)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Building Materials). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'HER.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'HINDALCO.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Materials; Aluminum)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Aluminum). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'HLMA.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials;'
+                    'Conglomerates)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Industrials;'
+                    'Conglomerates). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'HLN.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'HNR1.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Financials; Insurance -'
+                    'Reinsurance)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Reinsurance). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'HONA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Industrials; Aerospace'
+                    '& Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'HSX.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Bermuda; Financials; Insurance -'
+                    'Property & Casualty)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Property & Casualty). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'HWDN.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Furnishings, Fixtures & Appliances)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Furnishings, Fixtures & Appliances). Auto-sourced'
+                    'candidate; refine thesis and sizing before action.',
+    },
+    'IAG.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Industrials; Airlines)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Airlines). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'IBM': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Technology; Information'
+                    'Technology Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Information Technology Services). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'ICG.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'IDR.MC': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Spain; Technology; Information'
+                    'Technology Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Information Technology Services). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'IG.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Utilities; Utilities -'
+                    'Regulated Gas)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Gas). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'IGG.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Capital'
+                    'Markets)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Capital Markets). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'IHG.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Lodging)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Lodging). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'III.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'IMB.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer Staples;'
+                    'Tobacco)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Tobacco). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'IMCD.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Materials; Specialty'
+                    'Chemicals)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Specialty Chemicals). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'IMI.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'IMO.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Energy; Oil & Gas Integrated)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Integrated). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'INDIGO.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Industrials; Airlines)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Airlines). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'INF.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Communication'
+                    'Services; Publishing)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Publishing). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'INW.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Real Estate; Real Estate'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'ISP.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'ITH.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Energy; Oil & Gas'
+                    'Exploration & Production)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Exploration & Production). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ITRK.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Specialty'
+                    'Business Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Industrials;'
+                    'Specialty Business Services). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'IVG.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Industrials; Farm & Heavy'
+                    'Construction Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials; Farm'
+                    '& Heavy Construction Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'J36.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Bermuda; Industrials; Conglomerates)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Conglomerates). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'J69U.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT - Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Retail). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'JD.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Apparel Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Apparel Retail). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'JIOFIN.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Financials; Asset Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'JNJ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Healthcare; Drug'
+                    'Manufacturers - General)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - General). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'JSWSTEEL.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Materials; Steel)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Steel). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'K.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Materials; Gold)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials; Gold).'
+                    'Auto-sourced candidate; refine thesis and sizing before action.',
+    },
+    'KGF.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Home Improvement Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Home Improvement Retail). Auto-sourced candidate;'
+                    'refine thesis and sizing before action.',
+    },
+    'KPN.AS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Netherlands; Communication Services;'
+                    'Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'LAND.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Real Estate; REIT -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'LDO.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Industrials; Aerospace &'
+                    'Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'LGEN.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'LMP.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Real Estate; REIT -'
+                    'Industrial)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Industrial). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'LOG.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Industrials; Integrated Freight'
+                    '& Logistics)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Integrated Freight & Logistics). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'LOGN.SW': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Switzerland; Technology; Computer'
+                    'Hardware)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Technology;'
+                    'Computer Hardware). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'LTMC.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Consumer Discretionary;'
+                    'Gambling)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Gambling). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'M&M.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Consumer Discretionary; Auto'
+                    'Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'M44U.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT -'
+                    'Industrial)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Industrial). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'MAP.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Financials; Insurance -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'MAXHEALTH.NS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (India; Healthcare; Medical Care'
+                    'Facilities)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Care Facilities). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'MB.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'ME8U.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT -'
+                    'Industrial)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Industrial). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'MG.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Consumer Discretionary; Auto'
+                    'Parts)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Parts). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'MKS.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Department Stores)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Department Stores). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'MNG.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'MONC.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Italy; Consumer Discretionary; Apparel'
+                    'Manufacturing)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer'
+                    'Discretionary; Apparel Manufacturing). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'MRK': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Healthcare; Drug'
+                    'Manufacturers - General)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - General). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'MRL.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Real Estate; REIT - Office)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Office). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'MRO.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'MRU.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Consumer Staples; Grocery'
+                    'Stores)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Grocery Stores). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'MT.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Luxembourg; Materials; Steel)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Steel). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'MTX.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Industrials; Aerospace &'
+                    'Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'N2IU.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; REIT -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'NESTLEIND.NS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (India; Consumer Staples; Packaged'
+                    'Foods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Packaged Foods). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'NEXI.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Italy; Technology; Software -'
+                    'Infrastructure)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Software - Infrastructure). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'NN.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Financials; Insurance -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'NTGY.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Utilities; Utilities -'
+                    'Regulated Gas)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Gas). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'NXT.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Apparel Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer'
+                    'Discretionary; Apparel Retail). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'O39.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Financials; Banks -'
+                    'Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'OTEX.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Technology; Software -'
+                    'Application)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Software - Application). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'PAH3.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Consumer Discretionary; Auto'
+                    'Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'POW.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Financials; Insurance - Life)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Life). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'PPL.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Energy; Oil & Gas Midstream)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Midstream). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'PRY.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Industrials; Electrical'
+                    'Equipment & Parts)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Electrical Equipment & Parts). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'PSH.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Guernsey; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'PSON.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Communication'
+                    'Services; Publishing)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Publishing). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'PST.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Industrials; Integrated Freight'
+                    '& Logistics)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Integrated Freight & Logistics). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'PUB.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (France; Communication Services;'
+                    'Advertising Agencies)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Advertising Agencies). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'PUIG.MC': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Spain; Consumer Staples; Household &'
+                    'Personal Products)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Household & Personal Products). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'QSR.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Consumer Discretionary;'
+                    'Restaurants)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer'
+                    'Discretionary; Restaurants). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'RACE.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Netherlands; Consumer Discretionary;'
+                    'Auto Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'RAND.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Industrials; Staffing &'
+                    'Employment Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Staffing & Employment Services). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'RCI.B.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Communication Services;'
+                    'Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'REC.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Italy; Healthcare; Drug Manufacturers'
+                    '- General)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - General). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'RED.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Utilities; Utilities -'
+                    'Regulated Electric)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Electric). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'REP.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Energy; Oil & Gas Integrated)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Integrated). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'RNO.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Consumer Discretionary; Auto'
+                    'Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'ROP.SW': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Switzerland; Healthcare; Drug'
+                    'Manufacturers - General)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - General). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ROVI.MC': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Spain; Healthcare; Drug Manufacturers'
+                    '- Specialty & Generic)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Drug'
+                    'Manufacturers - Specialty & Generic). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'RTO.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Specialty'
+                    'Business Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Industrials;'
+                    'Specialty Business Services). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'RWE.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'S58.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Industrials; General'
+                    'Transportation)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'General Transportation). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'S63.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Industrials; Aerospace &'
+                    'Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'S68.SI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Singapore; Financials; Financial Data'
+                    '& Stock Exchanges)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Financials;'
+                    'Financial Data & Stock Exchanges). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'SAB.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Financials; Banks -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SAN.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Financials; Banks -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Diversified). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SAP.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Germany; Technology; Software -'
+                    'Application)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Software - Application). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'SAP.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Consumer Staples; Packaged'
+                    'Foods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Packaged Foods). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SBILIFE.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Financials; Insurance - Life)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Life). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SBRY.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer Staples;'
+                    'Grocery Stores)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Grocery Stores). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SCYR.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Industrials; Engineering &'
+                    'Construction)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Engineering & Construction). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'SDLF.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Insurance'
+                    '- Life)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Life). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SGO.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Industrials; Building Products'
+                    '& Equipment)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Building Products & Equipment). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'SGRO.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Real Estate; REIT -'
+                    'Industrial)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Industrial). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'SHL.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Germany; Healthcare; Medical Devices)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Devices). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'SHOP.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Technology; Software -'
+                    'Application)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Software - Application). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'SHRIRAMFIN.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Financials; Credit Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Credit Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SHW': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Materials; Specialty'
+                    'Chemicals)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Materials;'
+                    'Specialty Chemicals). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SLF.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Financials; Insurance -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'SLR.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Utilities; Utilities -'
+                    'Renewable)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Renewable). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'SMIN.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'SN.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United Kingdom; Healthcare; Medical'
+                    'Devices)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Healthcare; Medical'
+                    'Devices). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'SPCX': {
+        "pos":      'Binary',
+        "cagr":     (-30, 60),
+        "strategy": 'catalyst',
+        "area":     'Broad index constituent screen (United States; Industrials; Aerospace'
+                    '& Defense)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CATALYST (Industrials;'
+                    'Aerospace & Defense). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SPM.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Energy; Oil & Gas Equipment &'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Equipment & Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'SPX.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'SRG.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Utilities; Utilities -'
+                    'Regulated Gas)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Gas). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'SSE.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'STJ.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Financials; Asset'
+                    'Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Asset'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'STLAM.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Consumer Discretionary;'
+                    'Auto Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'STMPA.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Netherlands; Technology;'
+                    'Semiconductors)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Technology;'
+                    'Semiconductors). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'SVT.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Utilities; Utilities -'
+                    'Regulated Water)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Water). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'SY1.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Germany; Materials; Specialty'
+                    'Chemicals)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Materials;'
+                    'Specialty Chemicals). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'T.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Communication Services;'
+                    'Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'TATACONSUM.NS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (India; Consumer Staples; Packaged'
+                    'Foods)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Packaged Foods). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'TATASTEEL.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Materials; Steel)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Steel). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'TECHM.NS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (India; Technology; Information'
+                    'Technology Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Technology;'
+                    'Information Technology Services). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'TECK.B.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Materials; Copper)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials;'
+                    'Copper). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'TEF.MC': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Spain; Communication Services; Telecom'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'TELIA.ST': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Sweden; Communication Services;'
+                    'Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'TEN.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Luxembourg; Energy; Oil & Gas'
+                    'Equipment & Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Equipment & Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'TIT.MI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Italy; Communication Services; Telecom'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'TMPV.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Consumer Discretionary; Auto'
+                    'Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'TOU.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Energy; Oil & Gas Exploration'
+                    '& Production)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Energy; Oil & Gas'
+                    'Exploration & Production). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'TRENT.NS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (India; Consumer Discretionary; Apparel'
+                    'Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Apparel Retail). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'TRN.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Utilities; Utilities -'
+                    'Regulated Electric)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Electric). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'U11.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Financials; Banks -'
+                    'Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'U14.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Real Estate; Real Estate -'
+                    'Development)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate - Development). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'U96.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Utilities; Utilities -'
+                    'Diversified)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Diversified). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'UCG.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'UMG.AS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Netherlands; Communication Services;'
+                    'Entertainment)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Entertainment). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'UNI.MC': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Spain; Financials; Banks - Regional)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials; Banks'
+                    '- Regional). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'UNI.MI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Italy; Financials; Insurance -'
+                    'Property & Casualty)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Financials;'
+                    'Insurance - Property & Casualty). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'URW.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (France; Real Estate; REIT - Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; REIT'
+                    '- Retail). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'UU.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Utilities; Utilities -'
+                    'Regulated Water)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Utilities;'
+                    'Utilities - Regulated Water). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'V03.SI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Singapore; Technology; Hardware,'
+                    'Equipment & Parts)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Technology;'
+                    'Hardware, Equipment & Parts). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'VNA.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Real Estate; Real Estate'
+                    'Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Real Estate; Real'
+                    'Estate Services). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'VOW3.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Consumer Discretionary; Auto'
+                    'Manufacturers)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Auto Manufacturers). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'VZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (United States; Communication Services;'
+                    'Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'WCN.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Industrials; Waste Management)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Industrials; Waste'
+                    'Management). Auto-sourced candidate; refine thesis and sizing before'
+                    'action.',
+    },
+    'WEIR.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Industrials; Specialty'
+                    'Industrial Machinery)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Industrials;'
+                    'Specialty Industrial Machinery). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'WN.TO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Canada; Consumer Staples; Grocery'
+                    'Stores)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Grocery Stores). Auto-sourced candidate; refine thesis and sizing'
+                    'before action.',
+    },
+    'WPM.TO': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Canada; Materials; Gold)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Materials; Gold).'
+                    'Auto-sourced candidate; refine thesis and sizing before action.',
+    },
+    'WPP.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Jersey; Communication Services;'
+                    'Advertising Agencies)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Advertising Agencies). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    'WTB.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (United Kingdom; Consumer'
+                    'Discretionary; Lodging)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Lodging). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'Y92.SI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Thailand; Consumer Staples; Beverages'
+                    '- Wineries & Distilleries)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Consumer Staples;'
+                    'Beverages - Wineries & Distilleries). Auto-sourced candidate; refine'
+                    'thesis and sizing before action.',
+    },
+    'Z74.SI': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad index constituent screen (Singapore; Communication Services;'
+                    'Telecom Services)',
+        "note":     'Retagged after 2026-10-09 broad-index review: DCA (Communication'
+                    'Services; Telecom Services). Auto-sourced candidate; refine thesis and'
+                    'sizing before action.',
+    },
+    'ZAL.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad index constituent screen (Germany; Consumer Discretionary;'
+                    'Internet Retail)',
+        "note":     'Retagged after 2026-10-09 broad-index review: CYCLE (Consumer'
+                    'Discretionary; Internet Retail). Auto-sourced candidate; refine thesis'
+                    'and sizing before action.',
+    },
+    # --- Large-index expansion (2026-10-10): requested FTSE/STOXX/Nikkei/CSI/KOSPI/ASX candidates ---
+    '000001.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '000002.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Real Estate; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '000063.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '000069.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Real Estate; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '000080.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '000100.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '000100.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '000120.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '000150.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '000157.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '000166.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '000210.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '000240.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '000301.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '000333.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '000408.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '000425.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '000538.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '000568.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '000596.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '000617.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '000625.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '000651.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '000661.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '000670.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '000708.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '000720.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '000725.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '000733.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '000768.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '000776.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '000786.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '000792.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '000800.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '000810.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '000858.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '000876.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '000877.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '000880.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '000895.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '000938.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '000963.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '000977.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '000983.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Energy; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Energy'; thesis-review before action.",
+    },
+    '000990.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '000999.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '001040.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '001430.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '001440.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '001450.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '001680.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '001800.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '001979.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Real Estate; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '002001.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '002007.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '002027.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Communication; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Communication'; thesis-review before action.",
+    },
+    '002030.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '002049.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002050.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '002074.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '002129.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002142.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '002179.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002180.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002202.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '002230.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002236.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002241.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002252.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '002271.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002304.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '002311.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '002352.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '002371.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002380.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '002410.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002415.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002459.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002460.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002466.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002475.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002493.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002555.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Communication; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Communication'; thesis-review before action.",
+    },
+    '002601.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002603.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '002648.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002709.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002714.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '002736.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '002790.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '002812.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '002821.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '002840.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '002841.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002916.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '002920.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '002938.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '003030.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '003090.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '003230.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '003240.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '003490.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '003550.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '003670.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '004000.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '004020.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '004170.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '004370.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '004990.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '005300.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '005420.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '005830.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '005850.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '005940.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '006040.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '006260.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '006280.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '006650.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '006800.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '007070.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '007310.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '007340.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '007660.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '008730.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '008770.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '008930.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '009150.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '009240.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '009420.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '009540.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '009830.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '009970.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '010060.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '010120.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '010130.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '010140.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '010950.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '011070.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '011170.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '011200.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '011210.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '011780.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '011790.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '012450.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '0126Z0.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '012750.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '014680.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '014820.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '015760.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '016360.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '017670.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '017800.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '017960.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '018260.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '018880.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '021240.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '022100.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '023530.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '024110.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '026960.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '028050.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '028260.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '028670.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '029780.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '030000.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '030200.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '032640.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '032830.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '033780.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '034020.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '034220.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '034230.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '034730.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '035250.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '035720.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '036460.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '036570.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '039490.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '042660.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '042700.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '047040.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '047050.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '047810.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '051600.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '051900.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '052690.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '055550.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '062040.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '064350.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '064400.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '066570.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '066970.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '069260.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '069620.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '069960.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '071050.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '071320.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '071970.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '073240.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '078930.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '079550.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '081660.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '082740.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '086280.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '086790.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '088350.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '090430.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '093370.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '096770.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '097950.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '103140.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Steels & Materials; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Steels & Materials'; thesis-review before action.",
+    },
+    '111770.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '112610.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '120110.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '128940.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '1332.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Fishery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Fishery'; thesis-review before action.",
+    },
+    '137310.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '138040.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '138930.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '139130.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '139480.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '1605.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Mining; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Mining'; thesis-review before action.",
+    },
+    '161390.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '161890.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '1721.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '175330.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '1801.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '1802.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '1803.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '180640.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '1808.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '1812.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '185750.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '192080.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '1925.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '1928.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '192820.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '1963.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Construction; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Construction'; thesis-review before action.",
+    },
+    '2002.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '204320.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '2269.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '2282.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '2413.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '241560.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '2432.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '2501.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '2502.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '2503.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '251270.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '259960.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '267250.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '267260.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '267270.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '268280.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '271560.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '272210.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '2768.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Trading Companies; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Trading Companies'; thesis-review before action.",
+    },
+    '278470.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '2801.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '2802.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '280360.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '282330.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '285130.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '285A.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '2871.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '2914.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Foods; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Foods'; thesis-review before action.",
+    },
+    '298020.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '298040.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '298050.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '300014.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '300015.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '300033.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '300059.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '300122.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '300124.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '300142.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '300223.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300274.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '300308.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300316.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300347.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '300408.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300413.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Communication; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Communication'; thesis-review before action.",
+    },
+    '300433.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300450.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '300454.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300496.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300498.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '300628.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300661.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300720.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '300750.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '300751.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300759.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '300760.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '300763.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '300782.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '300896.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '300919.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '300957.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '300979.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '300999.SZ': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '301269.SZ': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '302440.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '307950.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '3086.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '3092.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '3099.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '316140.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '323410.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '326030.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Health Care; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '3289.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Real Estate; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '329180.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '3382.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '3401.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Textiles & Apparel; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Textiles & Apparel'; thesis-review before action.",
+    },
+    '3402.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Textiles & Apparel; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Textiles & Apparel'; thesis-review before action.",
+    },
+    '3405.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '3407.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '3436.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '352820.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Communication Services;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    '361610.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '3659.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '3697.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '375500.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Constructions; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Constructions'; thesis-review before action.",
+    },
+    '377300.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Financials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '383220.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Discretionary;'
+                    'KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '3861.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pulp & Paper; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pulp & Paper'; thesis-review before action.",
+    },
+    '4004.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4005.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4021.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '402340.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; IT; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'IT'; thesis-review before action.",
+    },
+    '4042.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4043.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4061.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4062.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '4151.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pharmaceuticals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pharmaceuticals'; thesis-review before action.",
+    },
+    '4183.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4188.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4208.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4307.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '4324.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '4385.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '443060.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '4452.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '450080.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Industrials; KOSPI 200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '4502.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pharmaceuticals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pharmaceuticals'; thesis-review before action.",
+    },
+    '4503.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pharmaceuticals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pharmaceuticals'; thesis-review before action.",
+    },
+    '4506.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pharmaceuticals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pharmaceuticals'; thesis-review before action.",
+    },
+    '4507.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pharmaceuticals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pharmaceuticals'; thesis-review before action.",
+    },
+    '4523.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pharmaceuticals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pharmaceuticals'; thesis-review before action.",
+    },
+    '454910.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Heavy Industries; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Heavy Industries'; thesis-review before action.",
+    },
+    '456040.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '457190.KS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (South Korea; Energy & Chemicals; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified CYCLE from'
+                    "source sector 'Energy & Chemicals'; thesis-review before action.",
+    },
+    '4578.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Pharmaceuticals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Pharmaceuticals'; thesis-review before action.",
+    },
+    '4661.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '4689.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '4704.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '4751.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '4755.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '483650.KS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (South Korea; Consumer Staples; KOSPI'
+                    '200)',
+        "note":     'Added from requested index expansion (KOSPI 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '4911.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '4DX.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Healthcare; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Healthcare'; thesis-review before action.",
+    },
+    '5016.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5019.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Petroleum; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Petroleum'; thesis-review before action.",
+    },
+    '5020.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Petroleum; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Petroleum'; thesis-review before action.",
+    },
+    '5101.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Rubber; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Rubber'; thesis-review before action.",
+    },
+    '5108.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Rubber; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Rubber'; thesis-review before action.",
+    },
+    '5201.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Glass & Ceramics; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Glass & Ceramics'; thesis-review before action.",
+    },
+    '5214.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Glass & Ceramics; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Glass & Ceramics'; thesis-review before action.",
+    },
+    '5233.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Glass & Ceramics; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Glass & Ceramics'; thesis-review before action.",
+    },
+    '5301.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Glass & Ceramics; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Glass & Ceramics'; thesis-review before action.",
+    },
+    '5332.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Glass & Ceramics; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Glass & Ceramics'; thesis-review before action.",
+    },
+    '5333.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Glass & Ceramics; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Glass & Ceramics'; thesis-review before action.",
+    },
+    '5401.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Steel; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Steel'; thesis-review before action.",
+    },
+    '5406.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Steel; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Steel'; thesis-review before action.",
+    },
+    '5411.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Steel; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Steel'; thesis-review before action.",
+    },
+    '5631.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '5706.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5711.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5713.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5714.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5801.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5802.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5803.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Nonferrous Metals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Nonferrous Metals'; thesis-review before action.",
+    },
+    '5831.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '600000.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600009.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600010.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600015.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600016.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600018.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600019.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600023.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600025.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600029.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600030.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600031.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600036.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600039.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600048.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Real Estate; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '600050.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Communication; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Communication'; thesis-review before action.",
+    },
+    '600061.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600085.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '600089.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600104.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '600111.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600115.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600132.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '600150.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600176.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600183.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600196.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '600219.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600233.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600276.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '600309.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600332.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '600346.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600372.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600406.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600426.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600436.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '600438.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600460.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600489.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600515.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Real Estate; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '600519.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '600547.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600570.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600584.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600585.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600588.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600600.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '600606.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Real Estate; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '600660.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '600674.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600690.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '600732.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600741.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '600745.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600754.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '600760.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600795.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600803.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600809.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '600845.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '600886.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600887.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '600893.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '600900.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600905.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '600918.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600919.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600926.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600958.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '600989.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '600999.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601006.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601009.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601012.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '601021.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601059.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601100.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601117.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601138.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '601155.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Real Estate; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '601166.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601169.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601186.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601211.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601225.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Energy; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Energy'; thesis-review before action.",
+    },
+    '601229.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601236.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601238.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '601318.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601336.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601360.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '601377.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601390.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601601.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601607.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '601615.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601668.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601669.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601688.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601689.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '601698.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Communication; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Communication'; thesis-review before action.",
+    },
+    '601699.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Energy; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Energy'; thesis-review before action.",
+    },
+    '601766.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601788.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601799.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '601816.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601818.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601838.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601872.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Energy; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Energy'; thesis-review before action.",
+    },
+    '601877.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '601878.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601888.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '601899.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '601901.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '601985.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Utilities; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Utilities'; thesis-review before action.",
+    },
+    '601998.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Financials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Financials'; thesis-review before action.",
+    },
+    '603019.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '603195.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '603259.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '603260.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '603288.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '603290.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '603369.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '603392.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '603486.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '603501.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '603659.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '603799.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '603806.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '603833.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Consumer Discretionary; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Consumer Discretionary'; thesis-review before action.",
+    },
+    '603899.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '603986.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '603993.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '605117.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Industrials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Industrials'; thesis-review before action.",
+    },
+    '605499.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Consumer Staples; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    '6103.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6113.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6178.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '6301.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6302.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6305.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6326.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6361.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6471.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6472.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6473.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '6479.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6504.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6506.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6525.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6526.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6532.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '6645.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6701.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6702.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6723.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6724.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6752.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6753.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6770.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6841.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '688008.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688012.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688036.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688041.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688065.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Materials; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Materials'; thesis-review before action.",
+    },
+    '688111.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688126.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688223.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688256.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688271.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '688303.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688363.SS': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (China; Health Care; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified DCA from'
+                    "source sector 'Health Care'; thesis-review before action.",
+    },
+    '688396.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688561.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '688599.SS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (China; Information Technology; CSI 300)',
+        "note":     'Added from requested index expansion (CSI 300). Classified CYCLE from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    '6963.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6971.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6976.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '6988.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Chemicals; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Chemicals'; thesis-review before action.",
+    },
+    '7011.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '7012.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Shipbuilding; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Shipbuilding'; thesis-review before action.",
+    },
+    '7013.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Machinery'; thesis-review before action.",
+    },
+    '7186.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '7201.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Automobiles & Auto parts; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Automobiles & Auto parts'; thesis-review before action.",
+    },
+    '7202.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Automobiles & Auto parts; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Automobiles & Auto parts'; thesis-review before action.",
+    },
+    '7211.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Automobiles & Auto parts; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Automobiles & Auto parts'; thesis-review before action.",
+    },
+    '7261.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Automobiles & Auto parts; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Automobiles & Auto parts'; thesis-review before action.",
+    },
+    '7269.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Automobiles & Auto parts; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Automobiles & Auto parts'; thesis-review before action.",
+    },
+    '7270.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Automobiles & Auto parts; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Automobiles & Auto parts'; thesis-review before action.",
+    },
+    '7272.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Automobiles & Auto parts; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Automobiles & Auto parts'; thesis-review before action.",
+    },
+    '7453.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '7532.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '7731.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Precision Instruments; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Precision Instruments'; thesis-review before action.",
+    },
+    '7733.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Precision Instruments; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Precision Instruments'; thesis-review before action.",
+    },
+    '7735.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '7751.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '7752.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Electric Machinery; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Electric Machinery'; thesis-review before action.",
+    },
+    '7832.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Other Manufacturing; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Other Manufacturing'; thesis-review before action.",
+    },
+    '7911.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Other Manufacturing; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Other Manufacturing'; thesis-review before action.",
+    },
+    '7912.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Other Manufacturing; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Other Manufacturing'; thesis-review before action.",
+    },
+    '7951.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Other Manufacturing; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Other Manufacturing'; thesis-review before action.",
+    },
+    '8002.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Trading Companies; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Trading Companies'; thesis-review before action.",
+    },
+    '8015.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Trading Companies; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Trading Companies'; thesis-review before action.",
+    },
+    '8031.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Trading Companies; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Trading Companies'; thesis-review before action.",
+    },
+    '8053.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Trading Companies; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Trading Companies'; thesis-review before action.",
+    },
+    '8233.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '8252.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '8253.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Other Financial Services; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Other Financial Services'; thesis-review before action.",
+    },
+    '8267.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    '8304.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '8308.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '8309.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '8331.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '8354.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '8411.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Banking; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Banking'; thesis-review before action.",
+    },
+    '8591.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Other Financial Services; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Other Financial Services'; thesis-review before action.",
+    },
+    '8601.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Securities; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Securities'; thesis-review before action.",
+    },
+    '8604.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Securities; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Securities'; thesis-review before action.",
+    },
+    '8630.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Insurance; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Insurance'; thesis-review before action.",
+    },
+    '8697.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Other Financial Services; Nikkei'
+                    '225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Other Financial Services'; thesis-review before action.",
+    },
+    '8725.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Insurance; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Insurance'; thesis-review before action.",
+    },
+    '8750.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Insurance; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Insurance'; thesis-review before action.",
+    },
+    '8795.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Insurance; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Insurance'; thesis-review before action.",
+    },
+    '8801.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Real Estate; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '8802.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Real Estate; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '8804.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Real Estate; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '8830.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Real Estate; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Real Estate'; thesis-review before action.",
+    },
+    '8TRA.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Germany; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    '9001.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9005.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9007.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9008.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9009.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9020.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9021.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9022.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Railway & Bus; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Railway & Bus'; thesis-review before action.",
+    },
+    '9064.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Land Transport; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Land Transport'; thesis-review before action.",
+    },
+    '9101.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Marine Transport; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Marine Transport'; thesis-review before action.",
+    },
+    '9104.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Marine Transport; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Marine Transport'; thesis-review before action.",
+    },
+    '9107.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Marine Transport; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Marine Transport'; thesis-review before action.",
+    },
+    '9147.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Land Transport; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Land Transport'; thesis-review before action.",
+    },
+    '9201.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Air Transport; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Air Transport'; thesis-review before action.",
+    },
+    '9202.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Air Transport; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Air Transport'; thesis-review before action.",
+    },
+    '9434.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '9501.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Electric Power; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Electric Power'; thesis-review before action.",
+    },
+    '9502.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Electric Power; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Electric Power'; thesis-review before action.",
+    },
+    '9503.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Electric Power; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Electric Power'; thesis-review before action.",
+    },
+    '9531.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Gas; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Gas'; thesis-review before action.",
+    },
+    '9532.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Gas; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Gas'; thesis-review before action.",
+    },
+    '9602.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '9697.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '9735.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Services; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Services'; thesis-review before action.",
+    },
+    '9766.T': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Japan; Information and communication;'
+                    'Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified DCA from'
+                    "source sector 'Information and communication'; thesis-review before"
+                    'action.',
+    },
+    '9843.T': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Japan; Retail; Nikkei 225)',
+        "note":     'Added from requested index expansion (Nikkei 225). Classified CYCLE from'
+                    "source sector 'Retail'; thesis-review before action.",
+    },
+    'ADEN.SW': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Switzerland; Industrial Goods and'
+                    'Services; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'AF.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (France; Travel and Leisure; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Travel and Leisure'; thesis-review before action.",
+    },
+    'AFI.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'AFX.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Germany; Health Care; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'AGL.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Utilities; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Utilities'; thesis-review before action.",
+    },
+    'AGS.BR': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Belgium; Insurance; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Insurance'; thesis-review before action.",
+    },
+    'AIXA.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Germany; Technology; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Technology'; thesis-review before action.",
+    },
+    'AKE.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Chemicals; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Chemicals'; thesis-review before action.",
+    },
+    'ALD.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Energy; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Energy'; thesis-review before action.",
+    },
+    'ALK.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'ALO.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'ALQ.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'ALX.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'AMBU-B.CO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Denmark; Health Care; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'AML.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (United Kingdom; Automobiles and Parts;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Automobiles and Parts'; thesis-review before"
+                    'action.',
+    },
+    'AMP.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'ANN.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Healthcare; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Healthcare'; thesis-review before action.",
+    },
+    'APA.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Utilities; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Utilities'; thesis-review before action.",
+    },
+    'APE.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Consumer Discretionary;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Consumer Discretionary'; thesis-review before"
+                    'action.',
+    },
+    'ARB.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Consumer Discretionary;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Consumer Discretionary'; thesis-review before"
+                    'action.',
+    },
+    'ARG.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'ASB.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'ASK.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'ASSA-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Construction and Materials;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Construction and Materials'; thesis-review"
+                    'before action.',
+    },
+    'ASX.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'ATCO-A.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'AUB.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'AZE.BR': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Belgium; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'AZJ.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'BALD-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Real Estate; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'BARN.SW': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Switzerland; Food, Beverage and Tobacco;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Food, Beverage and Tobacco'; thesis-review before"
+                    'action.',
+    },
+    'BEN.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'BEZ.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (United Kingdom; Insurance; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Insurance'; thesis-review before action.",
+    },
+    'BFL.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'BGA.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Consumer Staples; S&P/ASX'
+                    '200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    'BGL.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'BKG.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (United Kingdom; Consumer Products and'
+                    'Services; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Consumer Products and Services'; thesis-review"
+                    'before action.',
+    },
+    'BME.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (United Kingdom; Retail; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Retail'; thesis-review before action.",
+    },
+    'BOL.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'BOQ.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'BOSS.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Germany; Consumer Products and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Consumer Products and Services'; thesis-review"
+                    'before action.',
+    },
+    'BPOST.BR': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Belgium; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'BPT.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Energy; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Energy'; thesis-review before action.",
+    },
+    'BRG.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Consumer Discretionary;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Consumer Discretionary'; thesis-review before"
+                    'action.',
+    },
+    'BSL.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'BWP.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'BXB.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'BYG.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (United Kingdom; Real Estate; STOXX'
+                    'Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'CAR.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Communication Services;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    'CAST.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Real Estate; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'CDA.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Information Technology;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    'CGF.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'CHC.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'CIA.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'CIP.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'CLN.SW': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Switzerland; Chemicals; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Chemicals'; thesis-review before action.",
+    },
+    'CLW.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'CMM.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'COLR.BR': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Belgium; Personal Care, Drug and Grocery'
+                    'Stores; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Personal Care, Drug and Grocery Stores';"
+                    'thesis-review before action.',
+    },
+    'CPU.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Information Technology;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Information Technology'; thesis-review before action.",
+    },
+    'CQR.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'CSC.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'CTD.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Consumer Discretionary;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Consumer Discretionary'; thesis-review before"
+                    'action.',
+    },
+    'CWY.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'CYL.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'DBI.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'DEMANT.CO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Denmark; Health Care; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'DHER.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Germany; Retail; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Retail'; thesis-review before action.",
+    },
+    'DIA.MC': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Spain; Personal Care, Drug and Grocery'
+                    'Stores; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Personal Care, Drug and Grocery Stores';"
+                    'thesis-review before action.',
+    },
+    'DIE.BR': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Belgium; Automobiles and Parts; STOXX'
+                    'Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Automobiles and Parts'; thesis-review before"
+                    'action.',
+    },
+    'DLN.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (United Kingdom; Real Estate; STOXX'
+                    'Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'DNL.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'DOCM.SW': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Switzerland; Health Care; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'DOW.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'DRO.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'DRR.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'DXS.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'DYL.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Energy; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Energy'; thesis-review before action.",
+    },
+    'EBS.VI': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Austria; Banks; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Banks'; thesis-review before action.",
+    },
+    'EDEN.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'EDP.LS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Portugal; Utilities; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Utilities'; thesis-review before action.",
+    },
+    'EDPR.LS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Portugal; Utilities; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Utilities'; thesis-review before action.",
+    },
+    'EDV.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Consumer Staples; S&P/ASX'
+                    '200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Consumer Staples'; thesis-review before action.",
+    },
+    'ELISA.HE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Finland; Telecommunications; STOXX'
+                    'Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Telecommunications'; thesis-review before action.",
+    },
+    'ELUX-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Sweden; Consumer Products and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Consumer Products and Services'; thesis-review"
+                    'before action.',
+    },
+    'EMR.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'EMSN.SW': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Switzerland; Chemicals; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Chemicals'; thesis-review before action.",
+    },
+    'ENT.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (United Kingdom; Travel and Leisure;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Travel and Leisure'; thesis-review before action.",
+    },
+    'EOS.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'EPI-A.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'ERIC-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Sweden; Telecommunications; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Telecommunications'; thesis-review before action.",
+    },
+    'EVK.DE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Germany; Chemicals; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Chemicals'; thesis-review before action.",
+    },
+    'EVN.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'EVT.AX': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Australia; Communication Services;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified DCA from'
+                    "source sector 'Communication Services'; thesis-review before action.",
+    },
+    'EVT.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Germany; Health Care; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'FLOW.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Netherlands; Financial Services; STOXX'
+                    'Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Financial Services'; thesis-review before"
+                    'action.',
+    },
+    'FLT.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Consumer Discretionary;'
+                    'S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Consumer Discretionary'; thesis-review before"
+                    'action.',
+    },
+    'FNTN.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Germany; Telecommunications; STOXX'
+                    'Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Telecommunications'; thesis-review before action.",
+    },
+    'FORTUM.HE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Finland; Utilities; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Utilities'; thesis-review before action.",
+    },
+    'FRVIA.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Automobiles and Parts; STOXX'
+                    'Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Automobiles and Parts'; thesis-review before"
+                    'action.',
+    },
+    'GALE.SW': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Switzerland; Health Care; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'GET.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'GF.SW': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Switzerland; Industrial Goods and'
+                    'Services; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'GFC.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Real Estate; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'GGP.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'GQG.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Financials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Financials'; thesis-review before action.",
+    },
+    'KNEBV.HE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Finland; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'NEX.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'NHY.OL': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Norway; Basic Resources; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Basic Resources'; thesis-review before action.",
+    },
+    'NIBE-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Construction and Materials;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Construction and Materials'; thesis-review"
+                    'before action.',
+    },
+    'NOKIA.HE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Finland; Technology; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Technology'; thesis-review before action.",
+    },
+    'NOVO-B.CO': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Denmark; Health Care; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'NWH.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'ORI.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'PDN.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Energy; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Energy'; thesis-review before action.",
+    },
+    'PRU.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'PXA.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Real Estate; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Real Estate'; thesis-review before action.",
+    },
+    'QUB.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'SRT3.DE': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Germany; Health Care; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Health Care'; thesis-review before action.",
+    },
+    'SW.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (France; Travel and Leisure; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Travel and Leisure'; thesis-review before action.",
+    },
+    'TATE.L': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (United Kingdom; Food, Beverage and'
+                    'Tobacco; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Food, Beverage and Tobacco'; thesis-review before"
+                    'action.',
+    },
+    'TEL2-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Sweden; Telecommunications; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Telecommunications'; thesis-review before action.",
+    },
+    'TPK.L': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (United Kingdom; Retail; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Retail'; thesis-review before action.",
+    },
+    'TREL-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'UBI.PA': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (France; Consumer Products and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Consumer Products and Services'; thesis-review"
+                    'before action.',
+    },
+    'UPM.HE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Finland; Basic Resources; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Basic Resources'; thesis-review before action.",
+    },
+    'VALMT.HE': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Finland; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'VEA.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Energy; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Energy'; thesis-review before action.",
+    },
+    'VGN.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'VK.PA': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (France; Basic Resources; STOXX Europe'
+                    '600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Basic Resources'; thesis-review before action.",
+    },
+    'VNT.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Industrials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Industrials'; thesis-review before action.",
+    },
+    'VOLV-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Sweden; Industrial Goods and Services;'
+                    'STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'VPK.AS': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Netherlands; Industrial Goods and'
+                    'Services; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified'
+                    "CYCLE from source sector 'Industrial Goods and Services'; thesis-review"
+                    'before action.',
+    },
+    'VPLAY-B.ST': {
+        "pos":      'Mid',
+        "cagr":     (6, 12),
+        "strategy": 'dca',
+        "area":     'Broad-index constituent screen (Sweden; Media; STOXX Europe 600)',
+        "note":     'Added from requested index expansion (STOXX Europe 600). Classified DCA'
+                    "from source sector 'Media'; thesis-review before action.",
+    },
+    'WAF.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+    'WHC.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Energy; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Energy'; thesis-review before action.",
+    },
+    'ZIM.AX': {
+        "pos":      'Mid',
+        "cagr":     (0, 25),
+        "strategy": 'cycle',
+        "area":     'Broad-index constituent screen (Australia; Materials; S&P/ASX 200)',
+        "note":     'Added from requested index expansion (S&P/ASX 200). Classified CYCLE'
+                    "from source sector 'Materials'; thesis-review before action.",
+    },
+
 }
 
 
